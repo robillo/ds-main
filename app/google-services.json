@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "130045325039",
+    "firebase_url": "https://dailysuvichar-708d4.firebaseio.com",
+    "project_id": "dailysuvichar-708d4",
+    "storage_bucket": "dailysuvichar-708d4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:130045325039:android:4b2c7c308286e789",
+        "android_client_info": {
+          "package_name": "com.example.sasuke.dailysuvichar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "130045325039-k64hpsii4pvkml2m1dh40q9ijo2fhot5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.sasuke.dailysuvichar",
+            "certificate_hash": "dbea9757a5f8bb23907d231c9311d2219ce758af"
+          }
+        },
+        {
+          "client_id": "130045325039-u2f8vn86nltd4a84o23l26h6aano2caf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_TKvTDTeUIwPnIR95wzOCUSBzY4a8tMY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "130045325039-u2f8vn86nltd4a84o23l26h6aano2caf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

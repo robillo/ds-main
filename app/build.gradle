@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    buildToolsVersion "25.0.0"
     defaultConfig {
         applicationId "com.example.sasuke.dailysuvichar"
         minSdkVersion 16
@@ -31,7 +31,6 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
 
     // SUPPORT LIBRARIES
@@ -76,4 +75,7 @@ dependencies {
     compile 'com.ogaclejapan.smarttablayout:library:1.6.1@aar'
     compile 'com.ogaclejapan.smarttablayout:utils-v4:1.6.1@aar'
     compile 'com.github.GrenderG:Toasty:1.1.5'
+    compile 'com.google.firebase:firebase-auth:10.2.1'
+    compile 'com.google.android.gms:play-services-auth:10.2.1'
 }
+apply plugin: 'com.google.gms.google-services'
