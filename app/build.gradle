@@ -71,7 +71,7 @@ dependencies {
     //OTHERS
     compile 'com.mobsandgeeks:android-saripaar:2.0.3'
     compile 'org.greenrobot:eventbus:3.0.0'
-    compile 'com.facebook.android:facebook-android-sdk:4.+'
+    compile 'com.facebook.android:facebook-android-sdk:[4,5)'
     compile 'com.ogaclejapan.smarttablayout:library:1.6.1@aar'
     compile 'com.ogaclejapan.smarttablayout:utils-v4:1.6.1@aar'
     compile 'com.github.GrenderG:Toasty:1.1.5'

@@ -32,4 +32,7 @@
     <string name="trending">Trending</string>
     <string name="gurus">Gurus</string>
 
+    <!--LoginFragment-->
+    <string name="facebook_app_id">298302307256927</string>
+
 </resources>

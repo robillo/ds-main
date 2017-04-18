@@ -75,13 +75,12 @@
 
     </com.google.android.gms.common.SignInButton>
 
-    <!--<com.facebook.login.widget.LoginButton-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_below="@+id/google_sign_in"-->
-        <!--android:id="@+id/facebook_sign_in"-->
-        <!--android:layout_centerHorizontal="true"-->
-        <!--android:layout_margin="10sp"-->
-        <!--android:text="Connect With Facebook"/>-->
+    <com.facebook.login.widget.LoginButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/google_sign_in"
+        android:id="@+id/fb"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10sp"/>
 
 </RelativeLayout>
