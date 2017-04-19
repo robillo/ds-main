@@ -20,7 +20,7 @@ public class LoginActivity extends SingleFragmentActivity {
 
     @Override
     protected String setActionBarTitle() {
-        return "Login";
+        return getResources().getString(R.string.login_activity_title);
     }
 
     @Override
@@ -35,7 +35,7 @@ public class LoginActivity extends SingleFragmentActivity {
 
     public static Intent newIntent(Context context) {
         Intent intent = new Intent(context, LoginActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         return intent;
     }
 }

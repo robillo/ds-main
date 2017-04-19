@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">Daily Suvichar</string>
+
+    <string name="validation_successful">Validation Successful</string>
+    <string name="registered_successfully">Registered Successfully</string>
+    <string name="registration_unsuccessfully">Registration Unsuccessfully</string>
+
+    <!-- Login Activity -->
+    <string name="login_activity_title">Login</string>
+    <string name="email_number">Email ID / Phone</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="forgot_password">Forgot your Password?</string>
+
+
+    <!-- Main Activity -->
+    <string name="choose_language">Choose Language-</string>
+    <string name="english">English</string>
+    <string name="hindi">Hindi</string>
+    <string name="next">Next</string>
 </resources>

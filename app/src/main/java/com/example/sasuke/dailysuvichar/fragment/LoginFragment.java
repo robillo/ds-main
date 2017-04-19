@@ -54,7 +54,7 @@ public class LoginFragment extends BaseFragment {
             public void onValidationSucceeded() {
                 String email = getStringFromEditText(mEtEmail);
                 String password = getStringFromEditText(mEtPassword);
-                Toast.makeText(getContext(), "Validation Successful", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), getResources().getString(R.string.validation_successful), Toast.LENGTH_SHORT).show();
             }
         });
     }
