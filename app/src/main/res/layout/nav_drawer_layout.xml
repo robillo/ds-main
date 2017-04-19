@@ -25,7 +25,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginTop="25dp"
-                android:src="@drawable/logo_transparent" />
+                android:src="@drawable/logo_full_transparent" />
 
             <ImageView
                 android:layout_width="match_parent"
@@ -46,7 +46,7 @@
                     android:layout_width="@dimen/drawer_icon_size"
                     android:layout_height="@dimen/drawer_icon_size"
                     android:padding="3dp"
-                    android:src="@drawable/logo_transparent"
+                    android:src="@drawable/ic_home"
                     android:tint="@color/white" />
 
                 <TextView
@@ -75,7 +75,7 @@
                 <ImageView
                     android:layout_width="@dimen/drawer_icon_size"
                     android:layout_height="@dimen/drawer_icon_size"
-                    android:src="@drawable/logo_transparent"
+                    android:src="@drawable/ic_profile"
                     android:tint="@color/white" />
 
                 <TextView
@@ -104,7 +104,7 @@
                 <ImageView
                     android:layout_width="@dimen/drawer_icon_size"
                     android:layout_height="@dimen/drawer_icon_size"
-                    android:src="@drawable/logo_transparent"
+                    android:src="@drawable/ic_feeds"
                     android:tint="@color/white" />
 
                 <TextView
@@ -135,7 +135,7 @@
                     android:layout_width="@dimen/drawer_icon_size"
                     android:layout_height="@dimen/drawer_icon_size"
                     android:padding="2dp"
-                    android:src="@drawable/logo_transparent"
+                    android:src="@drawable/ic_settings"
                     android:tint="@color/white" />
 
                 <TextView
@@ -164,7 +164,7 @@
                 <ImageView
                     android:layout_width="@dimen/drawer_icon_size"
                     android:layout_height="@dimen/drawer_icon_size"
-                    android:src="@drawable/logo_transparent"
+                    android:src="@drawable/ic_settings"
                     android:tint="@color/white" />
 
                 <TextView
@@ -205,7 +205,7 @@
         <ImageView
             android:layout_width="@dimen/drawer_icon_size"
             android:layout_height="@dimen/drawer_icon_size"
-            android:src="@drawable/ic_back"
+            android:src="@drawable/ic_logout"
             android:tint="@color/white" />
 
         <TextView
