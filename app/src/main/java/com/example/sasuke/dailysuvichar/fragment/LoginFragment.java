@@ -78,30 +78,12 @@ public class LoginFragment extends BaseFragment implements GoogleApiClient.OnCon
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
+        FacebookSdk.sdkInitialize(getActivity().getApplicationContext());
         super.onCreate(savedInstanceState);
 
         mFirebaseAuth = FirebaseAuth.getInstance();
-        callbackManager = CallbackManager.Factory.create();
 
-//        facebookSignIn.setFragment(this);
-//        facebookSignIn.setReadPermissions("public_profile");
-//        facebookSignIn.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-//            @Override
-//            public void onSuccess(LoginResult loginResult) {
-//                Log.d("STATUS", "facebook:onSuccess:" + loginResult);
-//                handleFacebookAccessToken(loginResult.getAccessToken());
-//            }
-//
-//            @Override
-//            public void onCancel() {
-//                Log.d("STATUS", "facebook:onCancel");
-//            }
-//
-//            @Override
-//            public void onError(FacebookException error) {
-//                Log.d("STATUS", "facebook:onError", error);
-//            }
-//        });
+        callbackManager = CallbackManager.Factory.create();
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -146,6 +128,31 @@ public class LoginFragment extends BaseFragment implements GoogleApiClient.OnCon
     public void signIn(){
         Intent i = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(i, RC_GSIGN_IN);
+    }
+
+    @OnClick(R.id.fb)
+    public void signInFB(){
+        Log.e(TAG, "button use called");
+        facebookSignIn.setFragment(this);
+        facebookSignIn.setReadPermissions("public_profile");
+        facebookSignIn.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                Log.d("STATUS", "facebook:onSuccess:" + loginResult);
+                handleFacebookAccessToken(loginResult.getAccessToken());
+            }
+
+            @Override
+            public void onCancel() {
+                Log.d("STATUS", "facebook:onCancel");
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                Log.d("STATUS", "facebook:onError", error);
+            }
+        });
+
     }
 
     @Override
@@ -204,7 +211,7 @@ public class LoginFragment extends BaseFragment implements GoogleApiClient.OnCon
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d("STATUS", "signInWithCredential:onComplete:" + task.isSuccessful());
-
+                        login();
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.

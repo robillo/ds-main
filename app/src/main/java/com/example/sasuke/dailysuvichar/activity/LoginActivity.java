@@ -14,7 +14,6 @@ public class LoginActivity extends SingleFragmentActivity {
 
     @Override
     protected Fragment createFragment() {
-        FacebookSdk.sdkInitialize(getApplicationContext());
         return LoginFragment.newInstance();
     }
 
