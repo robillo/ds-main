@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.activity.HomeActivity;
+import com.example.sasuke.dailysuvichar.models.UserAuth;
 import com.example.sasuke.dailysuvichar.utils.ValidationListener;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -123,6 +125,15 @@ public class LoginFragment extends BaseFragment implements GoogleApiClient.OnCon
         return new LoginFragment();
     }
 
+    @OnClick(R.id.btn_register)
+    public void register(){
+        RegisterFragment registerFragment = new RegisterFragment();
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container, registerFragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
+
     @OnClick(R.id.btn_login)
     public void login() {
 //        startActivity(HomeActivity.newIntent(getContext()));
@@ -174,9 +185,9 @@ public class LoginFragment extends BaseFragment implements GoogleApiClient.OnCon
     }
 
     private void writeNewUser(String userId, String name, String email) {
-//        User user = new User(email, name);
-//
-//        databaseReference.child("users").child(userId).setValue(user);
+        UserAuth user = new UserAuth(email, name);
+
+        databaseReference.child("users").child(userId).setValue(user);
     }
 
     private boolean validateForm() {
@@ -285,7 +296,7 @@ public class LoginFragment extends BaseFragment implements GoogleApiClient.OnCon
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d("STATUS", "signInWithCredential:onComplete:" + task.isSuccessful());
-                        login();
+                        startActivity(HomeActivity.newIntent(getContext()));
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
@@ -295,7 +306,6 @@ public class LoginFragment extends BaseFragment implements GoogleApiClient.OnCon
                                     Toast.LENGTH_SHORT).show();
                         }
 
-                        // ...
                     }
                 });
     }
