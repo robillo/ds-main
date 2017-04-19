@@ -71,7 +71,6 @@ public class LoginFragment extends BaseFragment implements GoogleApiClient.OnCon
     private static final int RC_GSIGN_IN = 9001;
     private static final String TAG = "STATUS";
     private GoogleApiClient mGoogleApiClient;
-    private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
     private FirebaseAuth mFirebaseAuth;
     private CallbackManager callbackManager;
@@ -138,7 +137,7 @@ public class LoginFragment extends BaseFragment implements GoogleApiClient.OnCon
         String email = mEtEmail.getText().toString();
         String password = mEtPassword.getText().toString();
 
-        firebaseAuth.signInWithEmailAndPassword(email, password)
+        mFirebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener((Activity) getContext(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
