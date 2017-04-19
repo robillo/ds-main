@@ -12,4 +12,8 @@ public class HomeFragment extends BaseFragment {
     protected int getLayoutResId() {
         return R.layout.fragment_home;
     }
+
+    public static HomeFragment newInstance() {
+        return new HomeFragment();
+    }
 }

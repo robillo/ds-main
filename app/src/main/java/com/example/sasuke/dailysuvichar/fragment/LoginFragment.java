@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.sasuke.dailysuvichar.R;
+import com.example.sasuke.dailysuvichar.activity.HomeActivity;
 import com.example.sasuke.dailysuvichar.utils.ValidationListener;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.Email;
@@ -70,6 +71,6 @@ public class LoginFragment extends BaseFragment {
 
     @OnClick(R.id.btn_login)
     public void login() {
-
+        startActivity(HomeActivity.newIntent(getContext()));
     }
 }
