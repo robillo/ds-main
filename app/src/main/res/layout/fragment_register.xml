@@ -66,6 +66,15 @@
         android:textSize="15sp"
         android:layout_margin="15sp"
         android:id="@+id/redirect_to_login"/>
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/redirect_to_login"
+        android:layout_centerHorizontal="true"
+        android:background="@color/blue_text"
+        android:text="@string/login"
+        android:textColor="@color/white" />
 
 
 </RelativeLayout>
