@@ -28,6 +28,6 @@ public class MainActivity extends BaseActivity {
 
     @OnClick(R.id.btn_next)
     public void openLoginActivity() {
-        startActivity(LoginActivity.newIntent(this));
+        startActivity(ChooseInterestActivity.newIntent(this));
     }
 }
