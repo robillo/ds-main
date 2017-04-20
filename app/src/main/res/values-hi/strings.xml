@@ -1,44 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Daily Suvichar</string>
-    <string name="click_back_again_to_exit">Click back again to exit</string>
+    <string name="click_back_again_to_exit">बाहर निकलने के लिए वापस फिर से क्लिक करें</string>
 
-    <string name="validation_successful">Validation Successful</string>
-    <string name="registered_successfully">Registered Successfully</string>
-    <string name="registration_unsuccessfully">Registration Unsuccessfully</string>
+    <string name="validation_successful">मान्यकरण सफल</string>
+    <string name="registered_successfully">सफलतापूर्वक पंजीकृत</string>
+    <string name="registration_unsuccessfully">पंजीकरण असफल</string>
 
     <!-- Login Activity -->
-    <string name="login_activity_title">Login</string>
-    <string name="email_number">Email ID / Phone</string>
-    <string name="password">Password</string>
-    <string name="login">Login</string>
-    <string name="logout">Logout</string>
-    <string name="forgot_password">Forgot your Password?</string>
+    <string name="login_activity_title">लॉग इन करें</string>
+    <string name="email_number">ईमेल आईडी / फोन</string>
+    <string name="password">पासवर्ड</string>
+    <string name="login">लॉग इन</string>
+    <string name="logout">लोग आउट</string>
+    <string name="forgot_password">क्या आप पासवर्ड भूल गए?</string>
 
     <!--Register Activity -->
-    <string name="password_again">Re-Enter Password</string>
-    <string name="register">Register</string>
-    <string name="redirect_to_login">Already have an Account? Login</string>
+    <string name="password_again">पासवर्ड फिर से दर्ज करें</string>
+    <string name="register">रजिस्टर</string>
+    <string name="redirect_to_login">क्या आपके पास पहले से एक खाता मौजूद है? लॉग इन करें</string>
 
     <!-- Main Activity -->
     <string name="choose_language">Choose Language-</string>
     <string name="english">English</string>
     <string name="hindi">Hindi\t\t</string>
-    <string name="next">Next</string>
+    <string name="next">आगामी</string>
 
     <!-- Navigation Drawer -->
-    <string name="Feeds">Feeds</string>
-    <string name="home">Home</string>
-    <string name="settings">Settings</string>
-    <string name="profile">Profile</string>
-    <string name="tab">Tab</string>
+    <string name="Feeds">फ़ीड्स</string>
+    <string name="home">घर</string>
+    <string name="settings">सेटिंग्स</string>
+    <string name="profile">प्रोफाइल</string>
+    <string name="tab">टैब</string>
 
     <!-- Home Activity -->
-    <string name="trending">Trending</string>
-    <string name="gurus">Gurus</string>
+    <string name="trending">रुझान</string>
+    <string name="gurus">गुरु</string>
 
     <!--LoginFragment-->
     <string name="facebook_app_id">298302307256927</string>
+
+    <!--Choose Interest Activity -->
+    <string name="choose_interest">रुचि चुनें</string>
+    <string name="please_choose_at_least_three_interests">कृपया कम से कम 3 रुचियां चुनें:</string>
+
+    <!-- Interests -->
+    <string name="astrology">ज्योतिष</string>
+    <string name="soul">अन्त: मन</string>
+    <string name="karma">कर्म</string>
+    <string name="diet">आहार</string>
+    <string name="god">परमेश्वर</string>
+    <string name="meditation">ध्यान</string>
+    <string name="yoga">योगा</string>
+    <string name="motivation">प्रेरणा</string>
+    <string name="health">स्वास्थ्य</string>
+    <string name="love">मोहब्बत</string>
+    <string name="peace">शांति</string>
 
     <string name="hindi_text">Hindi Text Accessed</string>
 
