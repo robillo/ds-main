@@ -219,7 +219,7 @@ public class LoginFragment extends BaseFragment implements GoogleApiClient.OnCon
     public void signInFB(){
         Log.e(TAG, "button use called");
         facebookSignIn.setFragment(this);
-        facebookSignIn.setReadPermissions("public_profile");
+        facebookSignIn.setReadPermissions("public_profile", "email");
         facebookSignIn.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
