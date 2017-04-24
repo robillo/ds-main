@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.0"
+    buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "com.example.sasuke.dailysuvichar"
         minSdkVersion 17
@@ -27,6 +27,7 @@ dependencies {
     final DAGGER_VERSION = '2.10'
     final LEAK_CANARY_VERSION = '1.5'
     final FIREBASE_VERSION = '10.2.0'
+    final BUTTERKNIFE_VERSION = '8.5.1'
 
     //TEST LIBRARIES
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -43,11 +44,10 @@ dependencies {
     compile "com.android.support:support-v4:$SUPPORT_LIBRARY_VERSION"
     compile "com.android.support:customtabs:$SUPPORT_LIBRARY_VERSION"
 
-
     //NETWORK LIBRARIES
     compile "com.squareup.retrofit2:retrofit:$RETROFIT_VERSION"
     compile "com.squareup.retrofit2:converter-gson:$RETROFIT_VERSION"
-   
+
     compile "com.squareup.okhttp3:okhttp:$OKHTTP_VERSION"
     compile "com.squareup.okhttp3:logging-interceptor:$OKHTTP_VERSION"
     compile 'com.jakewharton.picasso:picasso2-okhttp3-downloader:1.1.0'
@@ -64,8 +64,8 @@ dependencies {
     provided 'javax.annotation:jsr250-api:1.0'
 
     //BUTTERKNIFE
-    compile 'com.jakewharton:butterknife:8.5.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+    compile "com.jakewharton:butterknife:$BUTTERKNIFE_VERSION"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$BUTTERKNIFE_VERSION"
 
     //DATA
     compile 'com.google.code.gson:gson:2.8.0'

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -25,11 +25,11 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginBottom="10dp"
-            android:layout_marginLeft="40dp"
+            android:layout_marginLeft="10dp"
             android:layout_marginRight="50dp"
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@id/action_bar_home_icon"
-            android:text="@string/choose_interest"
+            android:text="@string/choose_more_interest"
             android:textColor="@color/white"
             android:textSize="@dimen/font_larger" />
 
@@ -46,22 +46,10 @@
             android:textStyle="bold" />
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/tv_header"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/action_bar"
-        android:gravity="center"
-        android:padding="8dp"
-        android:text="@string/please_choose_at_least_three_interests"
-        android:textColor="@color/black"
-        android:textSize="@dimen/font_large" />
-
     <com.igalata.bubblepicker.rendering.BubblePicker
-        android:id="@+id/picker"
+        android:id="@+id/picker_sub_interest"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/tv_header"
         app:backgroundColor="@android:color/white" />
 
-</RelativeLayout>
+</LinearLayout>

@@ -5,17 +5,17 @@ import android.content.Intent;
 import android.support.v4.app.Fragment;
 
 import com.example.sasuke.dailysuvichar.R;
-import com.example.sasuke.dailysuvichar.fragment.ChooseInterestFragment;
+import com.example.sasuke.dailysuvichar.fragment.SubInterestFragment;
 
 /**
- * Created by Sasuke on 4/19/2017.
+ * Created by Sasuke on 4/24/2017.
  */
 
-public class ChooseInterestActivity extends SingleFragmentActivity {
+public class SubInterestActivity extends SingleFragmentActivity {
 
     @Override
     protected Fragment createFragment() {
-        return ChooseInterestFragment.newInstance();
+        return SubInterestFragment.newInstance();
     }
 
     @Override
@@ -34,6 +34,6 @@ public class ChooseInterestActivity extends SingleFragmentActivity {
     }
 
     public static Intent newIntent(Context context) {
-        return new Intent(context, ChooseInterestActivity.class);
+        return new Intent(context, SubInterestActivity.class);
     }
 }

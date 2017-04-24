@@ -4,10 +4,9 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
-import android.widget.TextView;
 
 import com.example.sasuke.dailysuvichar.R;
-import com.example.sasuke.dailysuvichar.activity.SubInterestActivity;
+import com.example.sasuke.dailysuvichar.activity.HomeActivity;
 import com.igalata.bubblepicker.BubblePickerListener;
 import com.igalata.bubblepicker.model.BubbleGradient;
 import com.igalata.bubblepicker.model.PickerItem;
@@ -21,12 +20,12 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- * Created by Sasuke on 4/19/2017.
+ * Created by Sasuke on 4/24/2017.
  */
 
-public class ChooseInterestFragment extends BaseFragment implements BubblePickerListener {
+public class SubInterestFragment extends BaseFragment implements BubblePickerListener {
 
-    @BindView(R.id.picker)
+    @BindView(R.id.picker_sub_interest)
     BubblePicker mPicker;
 
     private static final int BUBBLE_COLOR = 0xffc11313;
@@ -41,11 +40,11 @@ public class ChooseInterestFragment extends BaseFragment implements BubblePicker
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.fragment_choose_interest;
+        return R.layout.fragment_sub_interest;
     }
 
-    public static ChooseInterestFragment newInstance() {
-        return new ChooseInterestFragment();
+    public static SubInterestFragment newInstance() {
+        return new SubInterestFragment();
     }
 
     @Override
@@ -56,7 +55,6 @@ public class ChooseInterestFragment extends BaseFragment implements BubblePicker
         mPicker.setCenterImmediately(true);
         mPicker.setListener(this);
     }
-
 
     @Override
     public void onResume() {
@@ -80,12 +78,8 @@ public class ChooseInterestFragment extends BaseFragment implements BubblePicker
         mSelectedItems.remove(pickerItem);
     }
 
-    @OnClick(R.id.tv_next)
-    public void openSubInterestActivity() {
-        startActivity(SubInterestActivity.newIntent(getActivity()));
-    }
-
     public ArrayList<PickerItem> getItems() {
+        // TODO: FETCH THE INTEREST FROM THE SERVER AND ADD THEM HERE
         ArrayList<PickerItem> itemList = new ArrayList<>();
         itemList.add(new PickerItem(getResources().getString(R.string.astrology), getResources().getDrawable(R.drawable.ic_astrology),
                 ICON_ON_TOP, BUBBLE_COLOR, BUBBLE_GRADIENT, OVERLAY_ALPHA, Typeface.DEFAULT_BOLD, TEXT_COLOR,
@@ -121,5 +115,10 @@ public class ChooseInterestFragment extends BaseFragment implements BubblePicker
     @OnClick(R.id.action_bar_home_icon)
     public void returnToPreviousActivity() {
         getActivity().finish();
+    }
+
+    @OnClick(R.id.tv_next)
+    public void openHomeActivity() {
+        startActivity(HomeActivity.newIntent(getActivity()));
     }
 }

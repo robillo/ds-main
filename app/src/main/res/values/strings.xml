@@ -48,18 +48,17 @@
     <string name="choose_interest">Choose Interest</string>
     <string name="please_choose_at_least_three_interests">Please choose at least 3 interests</string>
 
+    <!-- Sub Interest Activity -->
+    <string name="choose_more_interest">Choose more interest</string>
+
     <!-- Interests -->
     <string name="astrology">ASTROLOGY</string>
-    <string name="soul">SOUL</string>
-    <string name="karma">KARMA</string>
     <string name="diet">DIET</string>
-    <string name="god">GOD</string>
-    <string name="meditation">MEDITATION</string>
+    <string name="religion">RELIGION</string>
+    <string name="ayurveda">AYURVEDA</string>
     <string name="yoga">YOGA</string>
     <string name="motivation">MOTIVATION</string>
     <string name="health">HEALTH</string>
-    <string name="love">LOVE</string>
-    <string name="peace">PEACE</string>
 
     <!--Motivation Array-->
     <string-array name="motivation_array">
