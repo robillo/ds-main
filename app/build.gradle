@@ -84,5 +84,6 @@ dependencies {
     compile 'com.github.GrenderG:Toasty:1.1.5'
     compile 'au.com.dardle:labellayout:1.0.0'
     compile 'com.github.igalata:Bubble-Picker:v0.2.1'
+    compile 'berlin.volders:badger:0.2.1'
 }
 apply plugin: 'com.google.gms.google-services'

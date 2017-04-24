@@ -24,8 +24,6 @@ import butterknife.ButterKnife;
 
 public class HomeActivity extends BaseActivity {
 
-    @BindView(R.id.drawer_layout)
-    DrawerLayout drawer;
     private static final int DELAY_TIME = 2000;
     private static long back_pressed;
 
@@ -40,16 +38,10 @@ public class HomeActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
-        replaceFragment(HomeFragment.newInstance(), HomeFragment.class.getName());
     }
 
     @Override
     public void onBackPressed() {
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-            return;
-        }
-
         if (back_pressed + DELAY_TIME > System.currentTimeMillis()) {
             back_pressed = 0;
             super.onBackPressed();
@@ -59,10 +51,6 @@ public class HomeActivity extends BaseActivity {
         }
 
 
-    }
-
-    private void closeDrawer() {
-        drawer.closeDrawer(GravityCompat.START);
     }
 
 

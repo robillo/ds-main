@@ -33,8 +33,6 @@ public class LoginActivity extends SingleFragmentActivity {
     }
 
     public static Intent newIntent(Context context) {
-        Intent intent = new Intent(context, LoginActivity.class);
-        //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        return intent;
+        return new Intent(context, LoginActivity.class);
     }
 }
