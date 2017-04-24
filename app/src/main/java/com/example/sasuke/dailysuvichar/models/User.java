@@ -1,5 +1,6 @@
 package com.example.sasuke.dailysuvichar.models;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -20,6 +21,15 @@ public class User {
     private String gender;
     private String phone;
     private int age;
+    ArrayList<Post> posts;
+
+    public void setPosts(ArrayList<Post> posts) {
+        this.posts = posts;
+    }
+
+    public ArrayList<Post> getPosts() {
+        return posts;
+    }
 
     public void setName(String name) {
         this.name = name;
@@ -97,7 +107,12 @@ public class User {
         this.age = age;
     }
 
-    public User(String name, String email, String bio, String preferredLang, String photoUrl, String coverUrl, HashMap<String, Boolean> motivation, HashMap<String, Boolean> religion, HashMap<String, Boolean> astrology, HashMap<String, Boolean> yoga, HashMap<String, Boolean> ayurveda, HashMap<String, Boolean> health, HashMap<String, Boolean> diet, Boolean standardUser, HashMap<String, HashMap<String, Boolean>> allInterests, String DOB, String gender, String phone, int age) {
+    public User(String name, String email, String bio, String preferredLang, String photoUrl,
+                String coverUrl, HashMap<String, Boolean> motivation, HashMap<String, Boolean> religion,
+                HashMap<String, Boolean> astrology, HashMap<String, Boolean> yoga, HashMap<String,
+            Boolean> ayurveda, HashMap<String, Boolean> health, HashMap<String, Boolean> diet,
+                Boolean standardUser, HashMap<String, HashMap<String, Boolean>> allInterests,
+                String DOB, String gender, String phone, int age, ArrayList<Post> posts) {
         this.name = name;
         this.email = email;
         this.bio = bio;
@@ -117,9 +132,12 @@ public class User {
         this.gender = gender;
         this.phone = phone;
         this.age = age;
+        this.posts = posts;
     }
 
-    public User(String name, String email, String bio, String preferredLang, String photoUrl, String coverUrl, Boolean standardUser, HashMap<String, HashMap<String, Boolean>> allInterests, String DOB, String gender, String phone, int age) {
+    public User(String name, String email, String bio, String preferredLang, String photoUrl,
+                String coverUrl, Boolean standardUser, HashMap<String, HashMap<String, Boolean>> allInterests,
+                String DOB, String gender, String phone, int age) {
         this.name = name;
         this.email = email;
         this.bio = bio;
