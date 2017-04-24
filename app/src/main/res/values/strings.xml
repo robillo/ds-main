@@ -40,6 +40,9 @@
     <!-- Home Activity -->
     <string name="trending">Trending</string>
     <string name="gurus">Gurus</string>
+    <string name="search_for_gurus">Search for Gurus</string>
+    <string name="suggested">Suggested</string>
+    <string name="menu">Menu</string>
 
     <!--LoginFragment-->
     <string name="facebook_app_id">298302307256927</string>

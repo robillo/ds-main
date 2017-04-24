@@ -13,6 +13,7 @@
     <color name="blue_text">#0098f0</color>
     <color name="blue_toggle">#007aff</color>
     <color name="blue">#0098f0</color>
+    <color name="blue_dark">#0673b3</color>
 
     <color name="orange">#FF9D2F</color>
     <color name="red">#FF432F</color>
@@ -24,4 +25,8 @@
     <color name="transparent_blue">#bbdefb</color>
     <color name="transparent">#00000000</color>
     <color name="very_light_transparent">#10000000</color>
+
+    <!-- gray scale -->
+    <color name="gray">#939393</color>
+    <color name="gray_light">#DBDBDB</color>
 </resources>
