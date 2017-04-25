@@ -1,15 +1,35 @@
 package com.example.sasuke.dailysuvichar.fragment;
 
-import com.example.sasuke.dailysuvichar.R;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
+import android.widget.Button;
+import android.widget.EditText;
 
-/**
- * Created by Sasuke on 4/19/2017.
- */
+import com.example.sasuke.dailysuvichar.R;
+import com.mobsandgeeks.saripaar.annotation.NotEmpty;
+
+import butterknife.BindView;
 
 public class FeedsFragment extends BaseFragment {
 
+    @NotEmpty
+    @BindView(R.id.recyclerview)
+    RecyclerView recyclerView;
+    @BindView(R.id.edittext)
+    EditText editText;
+    @BindView(R.id.send)
+    Button send;
+
     @Override
     protected int getLayoutResId() {
-        return R.layout.fragment_login;
+        return R.layout.fragment_feeds;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+
     }
 }
