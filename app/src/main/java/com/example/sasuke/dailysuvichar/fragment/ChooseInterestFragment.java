@@ -49,6 +49,7 @@ public class ChooseInterestFragment extends BaseFragment implements BubblePicker
 
     private ArrayList<PickerItem> mSelectedItems = new ArrayList<>();
     private ArrayList<String> mSelectedInterests;
+    private ArrayList<String> mSelectedSubInterests;
     private HashMap<String,ArrayList<String>> mAllInterests;
     private HashMap<String,ArrayList<String>> mMap;
 
@@ -70,6 +71,7 @@ public class ChooseInterestFragment extends BaseFragment implements BubblePicker
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
         mSelectedInterests = new ArrayList<>();
         mAllInterests = new HashMap<>();
+        mSelectedSubInterests = new ArrayList<>();
         mMap = new HashMap<>();
 
         mPicker.setItems(getItems());
@@ -128,6 +130,7 @@ public class ChooseInterestFragment extends BaseFragment implements BubblePicker
         mSelectedItems.add(pickerItem);
         mSelectedInterests.add(pickerItem.getTitle().toLowerCase());
         mAllInterests.put(pickerItem.getTitle().toLowerCase(),mMap.get(pickerItem.getTitle().toLowerCase()));
+        mSelectedSubInterests.addAll(mMap.get(pickerItem.getTitle().toLowerCase()));
     }
 
     @Override
@@ -140,13 +143,14 @@ public class ChooseInterestFragment extends BaseFragment implements BubblePicker
         mSelectedItems.remove(pickerItem);
         mSelectedInterests.remove(pickerItem.getTitle().toLowerCase());
         mAllInterests.remove(pickerItem.getTitle().toLowerCase());
+        mSelectedSubInterests.removeAll(mMap.get(pickerItem.getTitle().toLowerCase()));
     }
 
     @OnClick(R.id.tv_next)
     public void openSubInterestActivity() {
 
         User user = new User("Rishabh", "abcd@gmail.com",
-                "Bio....", "EN",mSelectedInterests,mAllInterests,"DP.JPG", "COVER.PNG",
+                "Bio....", "EN",mSelectedSubInterests,mSelectedInterests,mAllInterests,"DP.JPG", "COVER.PNG",
                 "02.01.95", "MALE", "9999999999", 22);
         mDatabase.child(mFirebaseUser.getUid()).setValue(user);
         startActivity(SubInterestActivity.newIntent(getActivity()));

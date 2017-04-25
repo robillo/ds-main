@@ -51,6 +51,7 @@ public class SubInterestFragment extends BaseFragment implements BubblePickerLis
     private DatabaseReference mDatabase;
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
+    private ArrayList<String> mSubInterests;
     private ArrayList<String> mMainInterests;
     private HashMap<String,ArrayList<String>> mAllInterests;
 
@@ -80,6 +81,7 @@ public class SubInterestFragment extends BaseFragment implements BubblePickerLis
                 User user = dataSnapshot.getValue(User.class);
                 mMainInterests = user.getInterests();
                 mAllInterests = user.getAllInterests();
+                mSubInterests = user.getAllSubInterests();
                 Log.d(TAG, "onDataChange: "+ mMainInterests.get(1));
             }
 

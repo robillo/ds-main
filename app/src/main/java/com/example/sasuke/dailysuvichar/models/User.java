@@ -22,6 +22,15 @@ public class User {
     private String phone;
     private int age;
     ArrayList<Post> posts;
+    private ArrayList<String> allSubInterests;
+
+    public ArrayList<String> getAllSubInterests() {
+        return allSubInterests;
+    }
+
+    public void setAllSubInterests(ArrayList<String> allSubInterests) {
+        this.allSubInterests = allSubInterests;
+    }
 
     public User(){
         //Empty Constructor
@@ -71,11 +80,12 @@ public class User {
         this.astrology = astrology;
     }
 
-    public User(String name, String email, String bio, String preferredLang, ArrayList<String> interests, HashMap<String, ArrayList<String>> allInterests, String photoUrl, String coverUrl, String DOB, String gender, String phone, int age) {
+    public User(String name, String email, String bio, String preferredLang, ArrayList<String> allSubInterests, ArrayList<String> interests, HashMap<String, ArrayList<String>> allInterests, String photoUrl, String coverUrl, String DOB, String gender, String phone, int age) {
         this.name = name;
         this.email = email;
         this.bio = bio;
         this.preferredLang = preferredLang;
+        this.allSubInterests = allSubInterests;
         this.interests = interests;
         this.photoUrl = photoUrl;
         this.coverUrl = coverUrl;
