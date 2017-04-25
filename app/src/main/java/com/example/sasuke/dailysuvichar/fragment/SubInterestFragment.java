@@ -24,6 +24,7 @@ import com.igalata.bubblepicker.rendering.BubblePicker;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -51,6 +52,7 @@ public class SubInterestFragment extends BaseFragment implements BubblePickerLis
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
     private ArrayList<String> mMainInterests;
+    private HashMap<String,ArrayList<String>> mAllInterests;
 
     private ArrayList<PickerItem> mSelectedItems = new ArrayList<>();
 
@@ -77,6 +79,7 @@ public class SubInterestFragment extends BaseFragment implements BubblePickerLis
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
                 mMainInterests = user.getInterests();
+                mAllInterests = user.getAllInterests();
                 Log.d(TAG, "onDataChange: "+ mMainInterests.get(1));
             }
 

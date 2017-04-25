@@ -16,7 +16,7 @@ public class User {
     private String photoUrl;
     private String coverUrl;
     private HashMap<String, Boolean> motivation, religion, astrology, yoga, ayurveda, health, diet;
-    private HashMap<String, HashMap<String, Boolean>> allInterests;
+    private HashMap<String, ArrayList<String>> allInterests;
     private String DOB;
     private String gender;
     private String phone;
@@ -71,7 +71,7 @@ public class User {
         this.astrology = astrology;
     }
 
-    public User(String name, String email, String bio, String preferredLang, ArrayList<String> interests, String photoUrl, String coverUrl, String DOB, String gender, String phone, int age) {
+    public User(String name, String email, String bio, String preferredLang, ArrayList<String> interests, HashMap<String, ArrayList<String>> allInterests, String photoUrl, String coverUrl, String DOB, String gender, String phone, int age) {
         this.name = name;
         this.email = email;
         this.bio = bio;
@@ -83,6 +83,7 @@ public class User {
         this.gender = gender;
         this.phone = phone;
         this.age = age;
+        this.allInterests = allInterests;
     }
 
     public void setYoga(HashMap<String, Boolean> yoga) {
@@ -101,10 +102,6 @@ public class User {
         this.diet = diet;
     }
 
-
-    public void setAllInterests(HashMap<String, HashMap<String, Boolean>> allInterests) {
-        this.allInterests = allInterests;
-    }
 
     public void setDOB(String DOB) {
         this.DOB = DOB;
@@ -184,8 +181,12 @@ public class User {
         return diet;
     }
 
-    public HashMap<String, HashMap<String, Boolean>> getAllInterests() {
+    public HashMap<String, ArrayList<String>> getAllInterests() {
         return allInterests;
+    }
+
+    public void setAllInterests(HashMap<String, ArrayList<String>> allInterests) {
+        this.allInterests = allInterests;
     }
 
     public String getDOB() {

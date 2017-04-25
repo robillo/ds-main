@@ -45,10 +45,12 @@ public class ChooseInterestFragment extends BaseFragment implements BubblePicker
     private static final float OVERLAY_ALPHA = 0.2f;
     private static final boolean ICON_ON_TOP = true;
     private static final BubbleGradient BUBBLE_GRADIENT = null; //ADD GRADIENT IF NEEDED IN FUTURE
-    private HashMap<String,Boolean> allInterests, diet, yoga, health, religion, motivation, ayurveda, astrology;
+    private ArrayList<String> allInterests, diet, yoga, health, religion, motivation, ayurveda, astrology;
 
     private ArrayList<PickerItem> mSelectedItems = new ArrayList<>();
     private ArrayList<String> mSelectedInterests;
+    private HashMap<String,ArrayList<String>> mAllInterests;
+    private HashMap<String,ArrayList<String>> mMap;
 
     @Override
     protected int getLayoutResId() {
@@ -67,20 +69,45 @@ public class ChooseInterestFragment extends BaseFragment implements BubblePicker
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
         mSelectedInterests = new ArrayList<>();
+        mAllInterests = new HashMap<>();
+        mMap = new HashMap<>();
 
         mPicker.setItems(getItems());
         mPicker.setBubbleSize(BUBBLE_SIZE);
         mPicker.setCenterImmediately(true);
         mPicker.setListener(this);
 
-//        allInterests = getResources().getStringArray(R.array.allInterests);
-//        diet = getResources().getStringArray(R.array.diet_array);
-//        yoga = getResources().getStringArray(R.array.yoga_array);
-//        health = getResources().getStringArray(R.array.health_array);
-//        religion = getResources().getStringArray(R.array.religion_array);
-//        motivation = getResources().getStringArray(R.array.motivation_array);
-//        ayurveda = getResources().getStringArray(R.array.ayurveda_array);
-//        astrology = getResources().getStringArray(R.array.astrology_array);
+        arraysInit();
+        mMapInit();
+    }
+
+    private void mMapInit() {
+        mMap.put("diet",diet);
+        mMap.put("yoga",yoga);
+        mMap.put("health",health);
+        mMap.put("religion",religion);
+        mMap.put("motivation",motivation);
+        mMap.put("ayurveda",ayurveda);
+        mMap.put("astrology",astrology);
+    }
+
+    private void arraysInit() {
+        //        allInterests = getResources().getStringArray(R.array.allInterests);
+        diet = stringToList(diet,getResources().getStringArray(R.array.diet_array));
+        yoga = stringToList(yoga,getResources().getStringArray(R.array.yoga_array));
+        health = stringToList(health,getResources().getStringArray(R.array.health_array));
+        religion = stringToList(religion,getResources().getStringArray(R.array.religion_array));
+        motivation = stringToList(motivation,getResources().getStringArray(R.array.motivation_array));
+        ayurveda = stringToList(ayurveda,getResources().getStringArray(R.array.ayurveda_array));
+        astrology = stringToList(astrology,getResources().getStringArray(R.array.astrology_array));
+    }
+    
+    private ArrayList<String> stringToList(ArrayList<String>list, String[] array){
+        list = new ArrayList<>();
+        for(int i=0;i<array.length;i++) {
+            list.add(i,array[i]);
+        }
+        return list;
     }
 
 
@@ -100,6 +127,7 @@ public class ChooseInterestFragment extends BaseFragment implements BubblePicker
     public void onBubbleSelected(@NotNull PickerItem pickerItem) {
         mSelectedItems.add(pickerItem);
         mSelectedInterests.add(pickerItem.getTitle().toLowerCase());
+        mAllInterests.put(pickerItem.getTitle().toLowerCase(),mMap.get(pickerItem.getTitle().toLowerCase()));
     }
 
     @Override
@@ -111,13 +139,14 @@ public class ChooseInterestFragment extends BaseFragment implements BubblePicker
     public void onBubbleDeselected(@NotNull PickerItem pickerItem) {
         mSelectedItems.remove(pickerItem);
         mSelectedInterests.remove(pickerItem.getTitle().toLowerCase());
+        mAllInterests.remove(pickerItem.getTitle().toLowerCase());
     }
 
     @OnClick(R.id.tv_next)
     public void openSubInterestActivity() {
 
         User user = new User("Rishabh", "abcd@gmail.com",
-                "Bio....", "EN",mSelectedInterests,"DP.JPG", "COVER.PNG",
+                "Bio....", "EN",mSelectedInterests,mAllInterests,"DP.JPG", "COVER.PNG",
                 "02.01.95", "MALE", "9999999999", 22);
         mDatabase.child(mFirebaseUser.getUid()).setValue(user);
         startActivity(SubInterestActivity.newIntent(getActivity()));
