@@ -12,16 +12,20 @@ public class User {
     private String email;
     private String bio;
     private String preferredLang;
+    private ArrayList<String> interests;
     private String photoUrl;
     private String coverUrl;
     private HashMap<String, Boolean> motivation, religion, astrology, yoga, ayurveda, health, diet;
-    private Boolean standardUser = Boolean.TRUE;
     private HashMap<String, HashMap<String, Boolean>> allInterests;
     private String DOB;
     private String gender;
     private String phone;
     private int age;
     ArrayList<Post> posts;
+
+    public User(){
+        //Empty Constructor
+    }
 
     public void setPosts(ArrayList<Post> posts) {
         this.posts = posts;
@@ -67,6 +71,20 @@ public class User {
         this.astrology = astrology;
     }
 
+    public User(String name, String email, String bio, String preferredLang, ArrayList<String> interests, String photoUrl, String coverUrl, String DOB, String gender, String phone, int age) {
+        this.name = name;
+        this.email = email;
+        this.bio = bio;
+        this.preferredLang = preferredLang;
+        this.interests = interests;
+        this.photoUrl = photoUrl;
+        this.coverUrl = coverUrl;
+        this.DOB = DOB;
+        this.gender = gender;
+        this.phone = phone;
+        this.age = age;
+    }
+
     public void setYoga(HashMap<String, Boolean> yoga) {
         this.yoga = yoga;
     }
@@ -83,9 +101,6 @@ public class User {
         this.diet = diet;
     }
 
-    public void setStandardUser(Boolean standardUser) {
-        this.standardUser = standardUser;
-    }
 
     public void setAllInterests(HashMap<String, HashMap<String, Boolean>> allInterests) {
         this.allInterests = allInterests;
@@ -107,50 +122,15 @@ public class User {
         this.age = age;
     }
 
-    public User(String name, String email, String bio, String preferredLang, String photoUrl,
-                String coverUrl, HashMap<String, Boolean> motivation, HashMap<String, Boolean> religion,
-                HashMap<String, Boolean> astrology, HashMap<String, Boolean> yoga, HashMap<String,
-            Boolean> ayurveda, HashMap<String, Boolean> health, HashMap<String, Boolean> diet,
-                Boolean standardUser, HashMap<String, HashMap<String, Boolean>> allInterests,
-                String DOB, String gender, String phone, int age, ArrayList<Post> posts) {
-        this.name = name;
-        this.email = email;
-        this.bio = bio;
-        this.preferredLang = preferredLang;
-        this.photoUrl = photoUrl;
-        this.coverUrl = coverUrl;
-        this.motivation = motivation;
-        this.religion = religion;
-        this.astrology = astrology;
-        this.yoga = yoga;
-        this.ayurveda = ayurveda;
-        this.health = health;
-        this.diet = diet;
-        this.standardUser = standardUser;
-        this.allInterests = allInterests;
-        this.DOB = DOB;
-        this.gender = gender;
-        this.phone = phone;
-        this.age = age;
-        this.posts = posts;
+    public void setInterests(ArrayList<String> interests) {
+        this.interests = interests;
     }
 
-    public User(String name, String email, String bio, String preferredLang, String photoUrl,
-                String coverUrl, Boolean standardUser, HashMap<String, HashMap<String, Boolean>> allInterests,
-                String DOB, String gender, String phone, int age) {
-        this.name = name;
-        this.email = email;
-        this.bio = bio;
-        this.preferredLang = preferredLang;
-        this.photoUrl = photoUrl;
-        this.coverUrl = coverUrl;
-        this.standardUser = standardUser;
-        this.allInterests = allInterests;
-        this.DOB = DOB;
-        this.gender = gender;
-        this.phone = phone;
-        this.age = age;
+    public ArrayList<String> getInterests() {
+
+        return interests;
     }
+
 
     public String getName() {
         return name;
@@ -202,10 +182,6 @@ public class User {
 
     public HashMap<String, Boolean> getDiet() {
         return diet;
-    }
-
-    public Boolean getStandardUser() {
-        return standardUser;
     }
 
     public HashMap<String, HashMap<String, Boolean>> getAllInterests() {

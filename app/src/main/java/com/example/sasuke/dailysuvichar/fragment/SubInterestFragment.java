@@ -3,10 +3,19 @@ package com.example.sasuke.dailysuvichar.fragment;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.activity.HomeActivity;
+import com.example.sasuke.dailysuvichar.models.User;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.igalata.bubblepicker.BubblePickerListener;
 import com.igalata.bubblepicker.model.BubbleGradient;
 import com.igalata.bubblepicker.model.PickerItem;
@@ -18,6 +27,8 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * Created by Sasuke on 4/24/2017.
@@ -36,6 +47,11 @@ public class SubInterestFragment extends BaseFragment implements BubblePickerLis
     private static final boolean ICON_ON_TOP = true;
     private static final BubbleGradient BUBBLE_GRADIENT = null; //ADD GRADIENT IF NEEDED IN FUTURE
 
+    private DatabaseReference mDatabase;
+    private FirebaseAuth mFirebaseAuth;
+    private FirebaseUser mFirebaseUser;
+    private ArrayList<String> mMainInterests;
+
     private ArrayList<PickerItem> mSelectedItems = new ArrayList<>();
 
     @Override
@@ -50,6 +66,26 @@ public class SubInterestFragment extends BaseFragment implements BubblePickerLis
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+
+        mDatabase = FirebaseDatabase.getInstance().getReference("users");
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        mFirebaseUser = mFirebaseAuth.getCurrentUser();
+
+        mDatabase.child(mFirebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                mMainInterests = user.getInterests();
+                Log.d(TAG, "onDataChange: "+ mMainInterests.get(1));
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d(TAG, "onCancelled: "+databaseError.getMessage());
+            }
+        });
+
         mPicker.setItems(getItems());
         mPicker.setBubbleSize(BUBBLE_SIZE);
         mPicker.setCenterImmediately(true);

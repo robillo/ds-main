@@ -4,10 +4,14 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
-import android.widget.TextView;
 
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.activity.SubInterestActivity;
+import com.example.sasuke.dailysuvichar.models.User;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.igalata.bubblepicker.BubblePickerListener;
 import com.igalata.bubblepicker.model.BubbleGradient;
 import com.igalata.bubblepicker.model.PickerItem;
@@ -16,6 +20,7 @@ import com.igalata.bubblepicker.rendering.BubblePicker;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -29,6 +34,10 @@ public class ChooseInterestFragment extends BaseFragment implements BubblePicker
     @BindView(R.id.picker)
     BubblePicker mPicker;
 
+    private DatabaseReference mDatabase;
+    private FirebaseAuth mFirebaseAuth;
+    private FirebaseUser mFirebaseUser;
+
     private static final int BUBBLE_COLOR = 0xffc11313;
     private static final int BUBBLE_SIZE = 15;
     private static final int TEXT_SIZE = 30;
@@ -36,9 +45,10 @@ public class ChooseInterestFragment extends BaseFragment implements BubblePicker
     private static final float OVERLAY_ALPHA = 0.2f;
     private static final boolean ICON_ON_TOP = true;
     private static final BubbleGradient BUBBLE_GRADIENT = null; //ADD GRADIENT IF NEEDED IN FUTURE
-    private String[] allInterests, diet, yoga, health, religion, motivation, ayurveda, astrology;
+    private HashMap<String,Boolean> allInterests, diet, yoga, health, religion, motivation, ayurveda, astrology;
 
     private ArrayList<PickerItem> mSelectedItems = new ArrayList<>();
+    private ArrayList<String> mSelectedInterests;
 
     @Override
     protected int getLayoutResId() {
@@ -52,19 +62,25 @@ public class ChooseInterestFragment extends BaseFragment implements BubblePicker
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        mDatabase = FirebaseDatabase.getInstance().getReference("users");
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        mFirebaseUser = mFirebaseAuth.getCurrentUser();
+        mSelectedInterests = new ArrayList<>();
+
         mPicker.setItems(getItems());
         mPicker.setBubbleSize(BUBBLE_SIZE);
         mPicker.setCenterImmediately(true);
         mPicker.setListener(this);
 
-        allInterests = getResources().getStringArray(R.array.allInterests);
-        diet = getResources().getStringArray(R.array.diet_array);
-        yoga = getResources().getStringArray(R.array.yoga_array);
-        health = getResources().getStringArray(R.array.health_array);
-        religion = getResources().getStringArray(R.array.religion_array);
-        motivation = getResources().getStringArray(R.array.motivation_array);
-        ayurveda = getResources().getStringArray(R.array.ayurveda_array);
-        astrology = getResources().getStringArray(R.array.astrology_array);
+//        allInterests = getResources().getStringArray(R.array.allInterests);
+//        diet = getResources().getStringArray(R.array.diet_array);
+//        yoga = getResources().getStringArray(R.array.yoga_array);
+//        health = getResources().getStringArray(R.array.health_array);
+//        religion = getResources().getStringArray(R.array.religion_array);
+//        motivation = getResources().getStringArray(R.array.motivation_array);
+//        ayurveda = getResources().getStringArray(R.array.ayurveda_array);
+//        astrology = getResources().getStringArray(R.array.astrology_array);
     }
 
 
@@ -83,15 +99,27 @@ public class ChooseInterestFragment extends BaseFragment implements BubblePicker
     @Override
     public void onBubbleSelected(@NotNull PickerItem pickerItem) {
         mSelectedItems.add(pickerItem);
+        mSelectedInterests.add(pickerItem.getTitle().toLowerCase());
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
     }
 
     @Override
     public void onBubbleDeselected(@NotNull PickerItem pickerItem) {
         mSelectedItems.remove(pickerItem);
+        mSelectedInterests.remove(pickerItem.getTitle().toLowerCase());
     }
 
     @OnClick(R.id.tv_next)
     public void openSubInterestActivity() {
+
+        User user = new User("Rishabh", "abcd@gmail.com",
+                "Bio....", "EN",mSelectedInterests,"DP.JPG", "COVER.PNG",
+                "02.01.95", "MALE", "9999999999", 22);
+        mDatabase.child(mFirebaseUser.getUid()).setValue(user);
         startActivity(SubInterestActivity.newIntent(getActivity()));
     }
 
