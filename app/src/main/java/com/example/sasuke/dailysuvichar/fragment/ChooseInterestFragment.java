@@ -36,6 +36,7 @@ public class ChooseInterestFragment extends BaseFragment implements BubblePicker
     private static final float OVERLAY_ALPHA = 0.2f;
     private static final boolean ICON_ON_TOP = true;
     private static final BubbleGradient BUBBLE_GRADIENT = null; //ADD GRADIENT IF NEEDED IN FUTURE
+    private String[] allInterests, diet, yoga, health, religion, motivation, ayurveda, astrology;
 
     private ArrayList<PickerItem> mSelectedItems = new ArrayList<>();
 
@@ -55,6 +56,15 @@ public class ChooseInterestFragment extends BaseFragment implements BubblePicker
         mPicker.setBubbleSize(BUBBLE_SIZE);
         mPicker.setCenterImmediately(true);
         mPicker.setListener(this);
+
+        allInterests = getResources().getStringArray(R.array.allInterests);
+        diet = getResources().getStringArray(R.array.diet_array);
+        yoga = getResources().getStringArray(R.array.yoga_array);
+        health = getResources().getStringArray(R.array.health_array);
+        religion = getResources().getStringArray(R.array.religion_array);
+        motivation = getResources().getStringArray(R.array.motivation_array);
+        ayurveda = getResources().getStringArray(R.array.ayurveda_array);
+        astrology = getResources().getStringArray(R.array.astrology_array);
     }
 
 

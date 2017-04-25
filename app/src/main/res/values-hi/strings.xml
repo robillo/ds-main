@@ -45,6 +45,16 @@
     <string name="please_choose_at_least_three_interests">कृपया कम से कम 3 रुचियां चुनें:</string>
 
     <!-- Interests -->
+    <array name="allInterests">
+        <item>diet</item>
+        <item>yoga</item>
+        <item>health</item>
+        <item>religion</item>
+        <item>motivation</item>
+        <item>ayurveda</item>
+        <item>astrology</item>
+    </array>
+
     <string name="astrology">ज्योतिष</string>
     <string name="soul">अन्त: मन</string>
     <string name="karma">कर्म</string>
@@ -56,6 +66,147 @@
     <string name="health">स्वास्थ्य</string>
     <string name="love">मोहब्बत</string>
     <string name="peace">शांति</string>
+
+    <!--Motivation Array-->
+    <string-array name="motivation_array">
+
+        <item>Inspiration</item>
+        <item>Stories</item>
+        <item>Life</item>
+        <item>Learning</item>
+        <item>Good Thoughts</item>
+        <item>Thought of the day</item>
+        <item>Speeches</item>
+        <item>Moral Stories</item>
+        <item>Real Life Inspiration</item>
+        <item>Quotes</item>
+        <item>Courage</item>
+        <item>Happiness</item>
+        <item>Confidence</item>
+        <item>Psychology</item>
+        <item>Fight Deperssion</item>
+        <item>Career motivation</item>
+
+    </string-array>
+
+    <!--Religion Array-->
+    <string-array name="religion_array">
+        <item>God</item>
+        <item>Geeta</item>
+        <item>Mahabharat</item>
+        <item>Quotes</item>
+        <item>Bhajan</item>
+        <item>Prayers</item>
+        <item>Stories</item>
+        <item>Ramayan</item>
+        <item>Temples</item>
+        <item>Pandits</item>
+        <item>Pooja</item>
+        <item>Festival</item>
+        <item>Krishna</item>
+        <item>Ram</item>
+        <item>Durga</item>
+        <item>Ganesh</item>
+        <item>Laxmi</item>
+        <item>Daily Darshan</item>
+    </string-array>
+
+    <!--Ayurveda Array-->
+    <string-array name="ayurveda_array">
+        <item>Ayurvedic Tips</item>
+        <item>Ayurvedic Medicines</item>
+        <item>DIY</item>
+        <item>Home Remedies</item>
+        <item>Ayurvedic Culture</item>
+        <item>Ayurvedic Products</item>
+        <item>Ayurvedic Treatment</item>
+        <item>Ayurvedic Clinics</item>
+        <item>Ayurvedic Herbs</item>
+        <item>Ayurvedic Tourism</item>
+        <item>Ayurvedic Skin care</item>
+        <item>Origin</item>
+        <item>Sex</item>
+        <item>Ayurvedic Doctors</item>
+        <item>Ayurvedic Cooking</item>
+    </string-array>
+
+    <!--Health Array-->
+    <string-array name="health_array">
+        <item>Health Tips</item>
+        <item>Gym Tips</item>
+        <item>Mudra Healing</item>
+        <item>Home health remedies</item>
+        <item>Weight loss</item>
+        <item>Weight Gain</item>
+        <item>Beauty</item>
+        <item>Skincare</item>
+        <item>Health Food</item>
+        <item>Healthy Lifestyle</item>
+        <item>Workouts</item>
+        <item>Gym Workouts</item>
+        <item>Meditation</item>
+    </string-array>
+
+    <!--Diet Array-->
+    <string-array name="diet_array">
+        <item>Fitness Food</item>
+        <item>Indian Diet</item>
+        <item>Vegetarian Diet</item>
+        <item>Daily Diet</item>
+        <item>Balanced Diet</item>
+        <item>DIY Diet</item>
+        <item>Green Diet</item>
+        <item>Fruit Diet</item>
+        <item>0 Fat Diet</item>
+        <item>Diet Tips</item>
+        <item>Dinner Diet</item>
+        <item>Lunch Diet</item>
+        <item>Breakfast Diet</item>
+        <item>Protein Diet</item>
+        <item>Calcium Diet</item>
+        <item>Diet Combinations</item>
+    </string-array>
+
+    <!--Astrology Array-->
+    <string-array name="astrology_array">
+        <item>Prediction</item>
+        <item>Tip of the day</item>
+        <item>Horoscope</item>
+        <item>Learn</item>
+        <item>Aries</item>
+        <item>Leo</item>
+        <item>Sagittarius</item>
+        <item>Taurus</item>
+        <item>Virgo</item>
+        <item>Capricon</item>
+        <item>Gemini</item>
+        <item>Libra</item>
+        <item>Aquarius</item>
+        <item>Cancer</item>
+        <item>Scorpio</item>
+        <item>Piesces</item>
+    </string-array>
+
+    <!--Yoga Array-->
+    <string-array name="yoga_array">
+        <item>Aasana</item>
+        <item>Power Yoga</item>
+        <item>Yoga Tips</item>
+        <item>Fitness Yoga</item>
+        <item>Daily Yoga</item>
+        <item>30 sec Yoga</item>
+        <item>Yoga Quotes</item>
+        <item>Yoga Videos</item>
+        <item>Advanced Yoga</item>
+        <item>Professional Yoga</item>
+        <item>Yoga Exercises</item>
+        <item>Yoga Philosophy</item>
+        <item>Yoga History</item>
+        <item>Yoga Poses</item>
+        <item>Ramdev Yoga</item>
+        <item>Osho Yoga</item>
+        <item>Meditation</item>
+    </string-array>
 
     <string name="hindi_text">Hindi Text Accessed</string>
 

@@ -63,9 +63,18 @@
     <string name="motivation">MOTIVATION</string>
     <string name="health">HEALTH</string>
 
+    <array name="allInterests">
+        <item>diet</item>
+        <item>yoga</item>
+        <item>health</item>
+        <item>religion</item>
+        <item>motivation</item>
+        <item>ayurveda</item>
+        <item>astrology</item>
+    </array>
+
     <!--Motivation Array-->
     <string-array name="motivation_array">
-
         <item>Inspiration</item>
         <item>Stories</item>
         <item>Life</item>
@@ -82,7 +91,6 @@
         <item>Psychology</item>
         <item>Fight Deperssion</item>
         <item>Career motivation</item>
-
     </string-array>
 
     <!--Religion Array-->
@@ -203,5 +211,6 @@
         <item>Osho Yoga</item>
         <item>Meditation</item>
     </string-array>
+
     <string name="hindi_text">English Text Accessed</string>
 </resources>

@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.sasuke.dailysuvichar.R;
+import com.example.sasuke.dailysuvichar.fragment.FeedsFragment;
 import com.example.sasuke.dailysuvichar.fragment.HomeFragment;
 import com.example.sasuke.dailysuvichar.view.TabBar;
 
@@ -82,6 +83,8 @@ public class HomeActivity extends BaseActivity implements TabBar.OnItemSelect {
                 mTabBar.setOnItemSelectListner(HomeActivity.this);
             }
         }, 250);
+
+        replaceFragment(new FeedsFragment(), "ROBIN");
     }
 
     private void replaceFragment(final Fragment fragment, final String tag) {
