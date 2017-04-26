@@ -9,20 +9,16 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.fragment.FeedsFragment;
-import com.example.sasuke.dailysuvichar.fragment.HomeFragment;
 import com.example.sasuke.dailysuvichar.view.TabBar;
 
 import java.util.List;
 
-import berlin.volders.badger.BadgeDrawable;
 import berlin.volders.badger.BadgeShape;
 import berlin.volders.badger.Badger;
 import berlin.volders.badger.CountBadge;

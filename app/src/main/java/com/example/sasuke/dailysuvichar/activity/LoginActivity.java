@@ -6,9 +6,6 @@ import android.support.v4.app.Fragment;
 
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.fragment.LoginFragment;
-import com.facebook.FacebookSdk;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends SingleFragmentActivity {
 

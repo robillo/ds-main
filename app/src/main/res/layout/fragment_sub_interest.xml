@@ -46,10 +46,8 @@
             android:textStyle="bold" />
     </RelativeLayout>
 
-    <com.igalata.bubblepicker.rendering.BubblePicker
-        android:id="@+id/picker_sub_interest"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_sub_interest"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:backgroundColor="@android:color/white" />
-
+        android:layout_height="match_parent" />
 </LinearLayout>

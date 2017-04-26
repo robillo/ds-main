@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.0"
+    buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "com.example.sasuke.dailysuvichar"
         minSdkVersion 17
@@ -16,6 +16,9 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    dexOptions {
+        jumboMode true
     }
 }
 
@@ -85,5 +88,7 @@ dependencies {
     compile 'au.com.dardle:labellayout:1.0.0'
     compile 'com.github.igalata:Bubble-Picker:v0.2.1'
     compile 'berlin.volders:badger:0.2.1'
+    compile 'com.willowtreeapps.spruce:spruce-android:1.0.0'
+    compile 'com.afollestad.material-dialogs:commons:0.9.4.4'
 }
 apply plugin: 'com.google.gms.google-services'

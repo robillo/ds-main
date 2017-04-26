@@ -4,6 +4,8 @@
     <string name="validation_successful">Validation Successful</string>
     <string name="registered_successfully">Registered Successfully</string>
     <string name="registration_unsuccessfully">Registration Unsuccessfully</string>
+    <string name="divider">Divider</string>
+    <string name="logo">Logo</string>
 
     <!-- Login Activity -->
     <string name="login_activity_title">Login</string>
@@ -13,6 +15,7 @@
     <string name="redirect_to_register">Don\'t have an Account? Register Here</string>
     <string name="logout">Logout</string>
     <string name="forgot_password">Forgot your Password?</string>
+    <string name="please_wait">Please wait...</string>
 
     <!--Register Activity -->
     <string name="password_again">Re-Enter Password</string>
@@ -21,7 +24,8 @@
     <string name="invalid_email">Invalid Email</string>
     <string name="invalid_password">Password Length should be > 6</string>
     <string name="invalid_password_again">Password Doesn\'t Match</string>
-    <string name="signup_failed">Sign Up Failed! Retry</string>
+    <string name="sign_up_failed">Sign Up Failed! Retry</string>
+    <string name="sign_up_successful">Sign Up Successful!</string>
 
 
     <!-- Main Activity -->
@@ -46,6 +50,9 @@
 
     <!--LoginFragment-->
     <string name="facebook_app_id">298302307256927</string>
+    <string name="sign_in_failed">Sign In Failed</string>
+    <string name="play_services_error">PLAY SERVICES ERROR</string>
+    <string name="authentication_failed">Authentication failed</string>
 
     <!--Choose Interest Activity -->
     <string name="choose_interest">Choose Interest</string>

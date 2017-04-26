@@ -14,7 +14,6 @@ import com.mobsandgeeks.saripaar.Validator;
 
 import java.util.List;
 
-import butterknife.ButterKnife;
 
 /**
  * Created by Sasuke on 4/17/2017.

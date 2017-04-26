@@ -8,6 +8,7 @@ import android.net.NetworkInfo;
 
 import com.example.sasuke.dailysuvichar.activity.LoginActivity;
 import com.example.sasuke.dailysuvichar.event.TokenExpiredEvent;
+import com.facebook.FacebookSdk;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -31,6 +32,7 @@ public class DailySuvicharApp extends Application {
         instance = this;
         sContext = getApplicationContext();
         EventBus.getDefault().register(this);
+        FacebookSdk.sdkInitialize(getApplicationContext());
 
     }
 
@@ -40,8 +42,6 @@ public class DailySuvicharApp extends Application {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
-
-
 
 
     public static boolean hasNetwork() {

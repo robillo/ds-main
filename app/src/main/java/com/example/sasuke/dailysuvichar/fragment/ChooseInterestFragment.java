@@ -4,6 +4,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.activity.SubInterestActivity;
@@ -45,13 +46,12 @@ public class ChooseInterestFragment extends BaseFragment implements BubblePicker
     private static final float OVERLAY_ALPHA = 0.2f;
     private static final boolean ICON_ON_TOP = true;
     private static final BubbleGradient BUBBLE_GRADIENT = null; //ADD GRADIENT IF NEEDED IN FUTURE
-    private ArrayList<String> allInterests, diet, yoga, health, religion, motivation, ayurveda, astrology;
+    private ArrayList<String> diet, yoga, health, religion, motivation, ayurveda, astrology;
 
-    private ArrayList<PickerItem> mSelectedItems = new ArrayList<>();
     private ArrayList<String> mSelectedInterests;
     private ArrayList<String> mSelectedSubInterests;
-    private HashMap<String,ArrayList<String>> mAllInterests;
-    private HashMap<String,ArrayList<String>> mMap;
+    private HashMap<String, ArrayList<String>> mAllInterests;
+    private HashMap<String, ArrayList<String>> mMap;
 
     @Override
     protected int getLayoutResId() {
@@ -63,8 +63,8 @@ public class ChooseInterestFragment extends BaseFragment implements BubblePicker
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
         mDatabase = FirebaseDatabase.getInstance().getReference("users");
         mFirebaseAuth = FirebaseAuth.getInstance();
@@ -74,40 +74,43 @@ public class ChooseInterestFragment extends BaseFragment implements BubblePicker
         mSelectedSubInterests = new ArrayList<>();
         mMap = new HashMap<>();
 
-        mPicker.setItems(getItems());
-        mPicker.setBubbleSize(BUBBLE_SIZE);
-        mPicker.setCenterImmediately(true);
-        mPicker.setListener(this);
-
         arraysInit();
         mMapInit();
     }
 
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mPicker.setItems(getItems());
+        mPicker.setBubbleSize(BUBBLE_SIZE);
+        mPicker.setCenterImmediately(true);
+        mPicker.setListener(this);
+    }
+
     private void mMapInit() {
-        mMap.put("diet",diet);
-        mMap.put("yoga",yoga);
-        mMap.put("health",health);
-        mMap.put("religion",religion);
-        mMap.put("motivation",motivation);
-        mMap.put("ayurveda",ayurveda);
-        mMap.put("astrology",astrology);
+        mMap.put("diet", diet);
+        mMap.put("yoga", yoga);
+        mMap.put("health", health);
+        mMap.put("religion", religion);
+        mMap.put("motivation", motivation);
+        mMap.put("ayurveda", ayurveda);
+        mMap.put("astrology", astrology);
     }
 
     private void arraysInit() {
-        //        allInterests = getResources().getStringArray(R.array.allInterests);
-        diet = stringToList(diet,getResources().getStringArray(R.array.diet_array));
-        yoga = stringToList(yoga,getResources().getStringArray(R.array.yoga_array));
-        health = stringToList(health,getResources().getStringArray(R.array.health_array));
-        religion = stringToList(religion,getResources().getStringArray(R.array.religion_array));
-        motivation = stringToList(motivation,getResources().getStringArray(R.array.motivation_array));
-        ayurveda = stringToList(ayurveda,getResources().getStringArray(R.array.ayurveda_array));
-        astrology = stringToList(astrology,getResources().getStringArray(R.array.astrology_array));
+        diet = stringToList(diet, getResources().getStringArray(R.array.diet_array));
+        yoga = stringToList(yoga, getResources().getStringArray(R.array.yoga_array));
+        health = stringToList(health, getResources().getStringArray(R.array.health_array));
+        religion = stringToList(religion, getResources().getStringArray(R.array.religion_array));
+        motivation = stringToList(motivation, getResources().getStringArray(R.array.motivation_array));
+        ayurveda = stringToList(ayurveda, getResources().getStringArray(R.array.ayurveda_array));
+        astrology = stringToList(astrology, getResources().getStringArray(R.array.astrology_array));
     }
-    
-    private ArrayList<String> stringToList(ArrayList<String>list, String[] array){
+
+    private ArrayList<String> stringToList(ArrayList<String> list, String[] array) {
         list = new ArrayList<>();
-        for(int i=0;i<array.length;i++) {
-            list.add(i,array[i]);
+        for (int i = 0; i < array.length; i++) {
+            list.add(i, array[i]);
         }
         return list;
     }
@@ -127,33 +130,33 @@ public class ChooseInterestFragment extends BaseFragment implements BubblePicker
 
     @Override
     public void onBubbleSelected(@NotNull PickerItem pickerItem) {
-        mSelectedItems.add(pickerItem);
-        mSelectedInterests.add(pickerItem.getTitle().toLowerCase());
-        mAllInterests.put(pickerItem.getTitle().toLowerCase(),mMap.get(pickerItem.getTitle().toLowerCase()));
-        mSelectedSubInterests.addAll(mMap.get(pickerItem.getTitle().toLowerCase()));
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
+        if (pickerItem.getTitle() != null) {
+            mSelectedInterests.add(pickerItem.getTitle().toLowerCase());
+            mAllInterests.put(pickerItem.getTitle().toLowerCase(), mMap.get(pickerItem.getTitle().toLowerCase()));
+            mSelectedSubInterests.addAll(mMap.get(pickerItem.getTitle().toLowerCase()));
+        }
     }
 
     @Override
     public void onBubbleDeselected(@NotNull PickerItem pickerItem) {
-        mSelectedItems.remove(pickerItem);
-        mSelectedInterests.remove(pickerItem.getTitle().toLowerCase());
-        mAllInterests.remove(pickerItem.getTitle().toLowerCase());
-        mSelectedSubInterests.removeAll(mMap.get(pickerItem.getTitle().toLowerCase()));
+        if (pickerItem.getTitle() != null) {
+            mSelectedInterests.remove(pickerItem.getTitle().toLowerCase());
+            mAllInterests.remove(pickerItem.getTitle().toLowerCase());
+            mSelectedSubInterests.removeAll(mMap.get(pickerItem.getTitle().toLowerCase()));
+        }
     }
 
     @OnClick(R.id.tv_next)
     public void openSubInterestActivity() {
-
-        User user = new User("Rishabh", "abcd@gmail.com",
-                "Bio....", "EN",mSelectedSubInterests,mSelectedInterests,mAllInterests,"DP.JPG", "COVER.PNG",
-                "02.01.95", "MALE", "9999999999", 22);
-        mDatabase.child(mFirebaseUser.getUid()).setValue(user);
-        startActivity(SubInterestActivity.newIntent(getActivity()));
+        if (mSelectedInterests.size() < 3) {
+            Toast.makeText(getContext(), getResources().getString(R.string.please_choose_at_least_three_interests), Toast.LENGTH_SHORT).show();
+        } else {
+            User user = new User("Rishabh", "abcd@gmail.com",
+                    "Bio....", "EN", mSelectedSubInterests, mSelectedInterests, mAllInterests, "DP.JPG", "COVER.PNG",
+                    "02.01.95", "MALE", "9999999999", 22);
+            mDatabase.child(mFirebaseUser.getUid()).setValue(user);
+            startActivity(SubInterestActivity.newIntent(getActivity()));
+        }
     }
 
     public ArrayList<PickerItem> getItems() {
