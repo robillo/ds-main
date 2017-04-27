@@ -158,6 +158,7 @@ public class LoginFragment extends BaseFragment implements GoogleApiClient.OnCon
         // Write new user
         writeNewUser(user.getUid(), username, user.getEmail());
         startActivity(ChooseInterestActivity.newIntent(getContext()));
+        dismissDialog();
 
     }
 
@@ -172,7 +173,6 @@ public class LoginFragment extends BaseFragment implements GoogleApiClient.OnCon
     private void writeNewUser(String userId, String name, String email) {
         UserAuth user = new UserAuth(email, name);
         databaseReference.child("users").child(userId).setValue(user);
-        dismissDialog();
     }
 
     @OnClick(R.id.google_sign_in)

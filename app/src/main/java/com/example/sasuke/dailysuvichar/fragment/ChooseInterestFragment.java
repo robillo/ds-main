@@ -1,5 +1,6 @@
 package com.example.sasuke.dailysuvichar.fragment;
 
+import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -39,14 +40,17 @@ public class ChooseInterestFragment extends BaseFragment implements BubblePicker
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
 
-    private static final int BUBBLE_COLOR = 0xffc11313;
-    private static final int BUBBLE_SIZE = 15;
-    private static final int TEXT_SIZE = 30;
+    private static final int BUBBLE_COLOR = 0xffab110b;
+    private static final int BUBBLE_SIZE = 20;
+    private static final BubbleGradient BUBBLE_GRADIENT = null; //ADD GRADIENT IF NEEDED IN FUTURE
+    private static final int TEXT_SIZE = 40;
     private static final int TEXT_COLOR = 0xffffffff;
     private static final float OVERLAY_ALPHA = 0.2f;
     private static final boolean ICON_ON_TOP = true;
-    private static final BubbleGradient BUBBLE_GRADIENT = null; //ADD GRADIENT IF NEEDED IN FUTURE
+
     private ArrayList<String> diet, yoga, health, religion, motivation, ayurveda, astrology;
+
+//        private static final BubbleGradient BUBBLE_GRADIENT = new BubbleGradient(colors.getColor((1 * 1), 0), colors.getColor((1 * 1), 0), BubbleGradient.VERTICAL);
 
     private ArrayList<String> mSelectedInterests;
     private ArrayList<String> mSelectedSubInterests;
@@ -65,7 +69,6 @@ public class ChooseInterestFragment extends BaseFragment implements BubblePicker
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         mDatabase = FirebaseDatabase.getInstance().getReference("users");
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
@@ -163,31 +166,31 @@ public class ChooseInterestFragment extends BaseFragment implements BubblePicker
         ArrayList<PickerItem> itemList = new ArrayList<>();
         itemList.add(new PickerItem(getResources().getString(R.string.astrology), getResources().getDrawable(R.drawable.ic_astrology),
                 ICON_ON_TOP, BUBBLE_COLOR, BUBBLE_GRADIENT, OVERLAY_ALPHA, Typeface.DEFAULT_BOLD, TEXT_COLOR,
-                TEXT_SIZE, getResources().getDrawable(R.drawable.background)));
+                TEXT_SIZE, getResources().getDrawable(R.drawable.astrology)));
 
         itemList.add(new PickerItem(getResources().getString(R.string.diet), getResources().getDrawable(R.drawable.ic_diet),
-                ICON_ON_TOP, BUBBLE_COLOR, BUBBLE_GRADIENT, OVERLAY_ALPHA, Typeface.DEFAULT_BOLD, TEXT_COLOR, TEXT_SIZE,
-                getResources().getDrawable(R.drawable.background)));
+                ICON_ON_TOP, BUBBLE_COLOR,BUBBLE_GRADIENT , OVERLAY_ALPHA, Typeface.DEFAULT_BOLD, TEXT_COLOR, TEXT_SIZE,
+                getResources().getDrawable(R.drawable.diet)));
 
         itemList.add(new PickerItem(getResources().getString(R.string.religion), getResources().getDrawable(R.drawable.ic_god),
                 ICON_ON_TOP, BUBBLE_COLOR, BUBBLE_GRADIENT, OVERLAY_ALPHA, Typeface.DEFAULT_BOLD, TEXT_COLOR, TEXT_SIZE,
-                getResources().getDrawable(R.drawable.background)));
+                getResources().getDrawable(R.drawable.religion)));
 
         itemList.add(new PickerItem(getResources().getString(R.string.yoga), getResources().getDrawable(R.drawable.ic_yoga),
                 ICON_ON_TOP, BUBBLE_COLOR, BUBBLE_GRADIENT, OVERLAY_ALPHA, Typeface.DEFAULT_BOLD, TEXT_COLOR,
-                TEXT_SIZE, getResources().getDrawable(R.drawable.background)));
+                TEXT_SIZE, getResources().getDrawable(R.drawable.yoga)));
 
         itemList.add(new PickerItem(getResources().getString(R.string.motivation), getResources().getDrawable(R.drawable.ic_motivation),
                 ICON_ON_TOP, BUBBLE_COLOR, BUBBLE_GRADIENT, OVERLAY_ALPHA, Typeface.DEFAULT_BOLD, TEXT_COLOR,
-                TEXT_SIZE, getResources().getDrawable(R.drawable.background)));
+                TEXT_SIZE, getResources().getDrawable(R.drawable.motivation)));
 
         itemList.add(new PickerItem(getResources().getString(R.string.health), getResources().getDrawable(R.drawable.ic_health),
                 ICON_ON_TOP, BUBBLE_COLOR, BUBBLE_GRADIENT, OVERLAY_ALPHA, Typeface.DEFAULT_BOLD, TEXT_COLOR,
-                TEXT_SIZE, getResources().getDrawable(R.drawable.background)));
+                TEXT_SIZE, getResources().getDrawable(R.drawable.health)));
 
         itemList.add(new PickerItem(getResources().getString(R.string.ayurveda), getResources().getDrawable(R.drawable.ic_health),
                 ICON_ON_TOP, BUBBLE_COLOR, BUBBLE_GRADIENT, OVERLAY_ALPHA, Typeface.DEFAULT_BOLD, TEXT_COLOR,
-                TEXT_SIZE, getResources().getDrawable(R.drawable.background)));
+                TEXT_SIZE, getResources().getDrawable(R.drawable.ayurveda)));
 
         return itemList;
     }

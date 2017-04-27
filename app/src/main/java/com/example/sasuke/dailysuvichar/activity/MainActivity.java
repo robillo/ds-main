@@ -25,7 +25,6 @@ public class MainActivity extends BaseActivity {
     RadioButton mRbEnglish;
     @BindView(R.id.rb_hindi)
     RadioButton mRbHindi;
-    private static final String TAG = "FORCE";
 
 
     public static Intent newIntent(Context context) {

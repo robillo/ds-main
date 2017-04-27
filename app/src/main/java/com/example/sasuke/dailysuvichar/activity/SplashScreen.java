@@ -12,6 +12,7 @@ public class SplashScreen extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //TODO: CHECK FOR SAVED USER AND START CORRESPONDING ACTIVITY
         startActivity(MainActivity.newIntent(this));
     }
 }

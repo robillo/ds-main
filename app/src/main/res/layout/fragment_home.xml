@@ -4,20 +4,88 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+    <RelativeLayout
+        android:id="@+id/action_bar_top"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_alignParentTop="true"
-        android:background="@color/blue_text"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+        android:layout_height="?android:actionBarSize"
+        android:background="@color/blue_text">
+
+        <ImageView
+            android:id="@+id/iv_notification"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:padding="10dp"
+            android:src="@drawable/logo_transparent" />
+
+        <LinearLayout
+            android:id="@+id/et_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_toRightOf="@+id/iv_notification"
+            android:background="@drawable/view_search_background"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="2dp">
+
+            <EditText
+                android:id="@+id/et_search_destination_guide"
+                android:layout_width="0dp"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:drawableLeft="@drawable/search_icon"
+                android:drawablePadding="@dimen/padding_small"
+                android:hint="@string/search_for_gurus"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:maxLength="20"
+                android:maxLines="1"
+                android:paddingLeft="@dimen/padding_small"
+                android:paddingRight="@dimen/padding_small"
+                android:textSize="@dimen/font_normal" />
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
+                android:layout_marginRight="10dp"
+                android:indeterminateDrawable="@drawable/progress"
+                android:indeterminateDuration="1000" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_friend_requests"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@+id/iv_messages"
+            android:padding="10dp"
+            android:src="@drawable/ic_meditation" />
+
+        <ImageView
+            android:id="@+id/iv_messages"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:padding="10dp"
+            android:src="@drawable/ic_motivation" />
+
+    </RelativeLayout>
 
     <com.ogaclejapan.smarttablayout.SmartTabLayout
         android:id="@+id/tab_bar"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_below="@+id/toolbar"
+        android:layout_below="@+id/action_bar_top"
         android:background="@color/blue_text"
         app:stl_clickable="true"
         app:stl_defaultTabBackground="?attr/selectableItemBackground"
