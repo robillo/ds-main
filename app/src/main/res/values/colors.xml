@@ -28,6 +28,16 @@
     <color name="transparent">#00000000</color>
     <color name="very_light_transparent">#10000000</color>
 
+    <array name="rvItemColors">
+        <item>#EF5350</item>
+        <item>#FF5722</item>
+        <item>#689F38</item>
+        <item>#3F51B5</item>
+        <item>#009688</item>
+        <item>#FFCA28</item>
+        <item>#0097A7</item>
+    </array>
+
     <!-- gray scale -->
     <color name="gray">#939393</color>
     <color name="gray_light">#DBDBDB</color>
