@@ -2,8 +2,9 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    buildToolsVersion "25.0.0"
     defaultConfig {
+        multiDexEnabled true
         applicationId "com.example.sasuke.dailysuvichar"
         minSdkVersion 17
         targetSdkVersion 25
@@ -25,7 +26,7 @@ android {
 dependencies {
     final SUPPORT_LIBRARY_VERSION = '25.3.1'
     final LEAK_CANARY_VERSION = '1.5'
-    final FIREBASE_VERSION = '10.2.0'
+    final FIREBASE_VERSION = '10.2.1'
     final BUTTERKNIFE_VERSION = '8.5.1'
 
     //TEST LIBRARIES
@@ -55,6 +56,7 @@ dependencies {
     compile "com.google.android.gms:play-services-auth:$FIREBASE_VERSION"
 
     //OTHERS
+    compile 'com.android.support:multidex:1.0.1'
     compile 'com.mobsandgeeks:android-saripaar:2.0.3'
     compile 'org.greenrobot:eventbus:3.0.0'
     compile 'com.facebook.android:facebook-android-sdk:[4,5)'

@@ -118,6 +118,10 @@ public class ChooseInterestFragment extends BaseFragment implements BubblePicker
         return list;
     }
 
+    private void initNull(String[] headInterest, boolean bool){
+
+    }
+
 
     @Override
     public void onResume() {
