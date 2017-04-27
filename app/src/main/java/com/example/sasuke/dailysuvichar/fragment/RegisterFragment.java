@@ -150,11 +150,4 @@ public class RegisterFragment extends BaseFragment {
             mDialog.dismiss();
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        if (mDialog != null)
-            dismissDialog();
-    }
-
 }

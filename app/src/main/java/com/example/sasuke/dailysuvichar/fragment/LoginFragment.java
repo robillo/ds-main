@@ -4,7 +4,6 @@ package com.example.sasuke.dailysuvichar.fragment;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,6 +16,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.activity.ChooseInterestActivity;
 import com.example.sasuke.dailysuvichar.models.UserAuth;
+import com.example.sasuke.dailysuvichar.utils.SharedPrefs;
 import com.example.sasuke.dailysuvichar.utils.ValidationListener;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -97,6 +97,12 @@ public class LoginFragment extends BaseFragment implements GoogleApiClient.OnCon
                 .build();
         setupDialog();
         validator = new Validator(this);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
         validator.setValidationListener(new ValidationListener() {
 
             @Override
@@ -109,11 +115,7 @@ public class LoginFragment extends BaseFragment implements GoogleApiClient.OnCon
                 FirebaseSignIn();
             }
         });
-    }
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
     }
 
     public static LoginFragment newInstance() {
@@ -144,6 +146,7 @@ public class LoginFragment extends BaseFragment implements GoogleApiClient.OnCon
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             onAuthSuccess(task.getResult().getUser());
+                            SharedPrefs.setLoginToken(task.getResult().getUser().getToken(true).toString());
                         } else {
                             dismissDialog();
                             Toast.makeText(getContext(), getResources().getString(R.string.sign_in_failed), Toast.LENGTH_SHORT).show();
@@ -154,12 +157,10 @@ public class LoginFragment extends BaseFragment implements GoogleApiClient.OnCon
 
     private void onAuthSuccess(FirebaseUser user) {
         String username = usernameFromEmail(user.getEmail());
-
         // Write new user
         writeNewUser(user.getUid(), username, user.getEmail());
         startActivity(ChooseInterestActivity.newIntent(getContext()));
         dismissDialog();
-
     }
 
     private String usernameFromEmail(String email) {
@@ -188,6 +189,7 @@ public class LoginFragment extends BaseFragment implements GoogleApiClient.OnCon
         facebookSignIn.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
+                showDialog("", getResources().getString(R.string.please_wait));
                 handleFacebookAccessToken(loginResult.getAccessToken());
             }
 
@@ -224,7 +226,7 @@ public class LoginFragment extends BaseFragment implements GoogleApiClient.OnCon
         }
     }
 
-    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
+    private void firebaseAuthWithGoogle(final GoogleSignInAccount acct) {
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mFirebaseAuth.signInWithCredential(credential)
                 .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
@@ -234,6 +236,7 @@ public class LoginFragment extends BaseFragment implements GoogleApiClient.OnCon
                             Toast.makeText(getActivity(), getResources().getString(R.string.authentication_failed),
                                     Toast.LENGTH_SHORT).show();
                         } else {
+                            SharedPrefs.setLoginToken(acct.getIdToken());
                             startActivity(ChooseInterestActivity.newIntent(getContext()));
                             getActivity().finish();
                         }
@@ -248,7 +251,11 @@ public class LoginFragment extends BaseFragment implements GoogleApiClient.OnCon
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (!task.isSuccessful()) {
+                            dismissDialog();
                             Toast.makeText(getActivity(), getResources().getString(R.string.authentication_failed), Toast.LENGTH_SHORT).show();
+                        } else {
+                            startActivity(ChooseInterestActivity.newIntent(getContext()));
+                            dismissDialog();
                         }
                     }
                 });
@@ -270,12 +277,5 @@ public class LoginFragment extends BaseFragment implements GoogleApiClient.OnCon
     public void dismissDialog() {
         if (mDialog.isShowing())
             mDialog.dismiss();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        if (mDialog != null)
-            dismissDialog();
     }
 }
