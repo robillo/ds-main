@@ -2,6 +2,7 @@ package com.example.sasuke.dailysuvichar.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -62,7 +63,7 @@ public class SubInterestFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mRvSubInterest.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRvSubInterest.setLayoutManager(new GridLayoutManager(getContext(), 3));
         mAdapter = new SubInterestAdapter();
         mRvSubInterest.setAdapter(mAdapter);
 

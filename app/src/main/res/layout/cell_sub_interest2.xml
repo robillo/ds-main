@@ -5,44 +5,31 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_margin="4sp"
-    app:cardElevation="4sp"
     android:id="@+id/cardView"
-    app:cardBackgroundColor="@color/white"
     android:clickable="false">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="100sp"
         android:orientation="vertical"
         android:id="@+id/ll">
 
-        <FrameLayout
+        <ImageView
             android:layout_width="match_parent"
             android:layout_height="60sp"
-            android:layout_margin="2sp">
+            android:clickable="false"
+            android:background="@color/colorPrimaryDark"
+            android:padding="10sp"
+            android:layout_margin="5sp"
+            android:id="@+id/imageView">
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clickable="false"
-                android:padding="10sp"
-                android:id="@+id/imageView">
-            </ImageView>
+        </ImageView>
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clickable="false"
-                android:padding="10sp"
-                android:id="@+id/imageView2">
-            </ImageView>
-
-        </FrameLayout>
-
-        <TextView
+        <CheckedTextView
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:gravity="center"
             android:padding="4sp"
             android:text="LIGHT"
             android:textAlignment="center"

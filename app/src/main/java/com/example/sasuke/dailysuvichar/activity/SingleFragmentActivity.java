@@ -19,10 +19,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-/**
- * Created by Sasuke on 4/17/2017.
- */
-
 public abstract class SingleFragmentActivity extends BaseActivity {
 
 

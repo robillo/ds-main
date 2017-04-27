@@ -14,11 +14,6 @@ import com.mobsandgeeks.saripaar.Validator;
 
 import java.util.List;
 
-
-/**
- * Created by Sasuke on 4/17/2017.
- */
-
 public abstract class BaseActivity extends AppCompatActivity implements Validator.ValidationListener {
 
     protected Validator validator;

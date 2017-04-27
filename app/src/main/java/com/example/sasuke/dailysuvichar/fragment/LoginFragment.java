@@ -48,10 +48,6 @@ import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-/**
- * Created by Sasuke on 4/17/2017.
- */
-
 public class LoginFragment extends BaseFragment implements GoogleApiClient.OnConnectionFailedListener {
 
     @NotEmpty

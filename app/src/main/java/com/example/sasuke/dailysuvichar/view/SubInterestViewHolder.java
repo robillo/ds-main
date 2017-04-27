@@ -26,5 +26,4 @@ public class SubInterestViewHolder extends RecyclerView.ViewHolder {
         ButterKnife.bind(this, itemView);
     }
 
-
 }

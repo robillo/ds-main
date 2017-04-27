@@ -3,6 +3,7 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#0098f0</color>
+    <color name="colorHighlight">#FF1744</color>
 
     <!-- basic colors -->
     <color name="green">#27D34D</color>
