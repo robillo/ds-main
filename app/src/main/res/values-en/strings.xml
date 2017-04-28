@@ -6,6 +6,9 @@
     <string name="validation_successful">Validation Successful</string>
     <string name="registered_successfully">Registered Successfully</string>
     <string name="registration_unsuccessfully">Registration Unsuccessfully</string>
+    <string name="divider">Divider</string>
+    <string name="logo">Logo</string>
+
 
     <!-- Login Activity -->
     <string name="login_activity_title">Login</string>
@@ -14,17 +17,24 @@
     <string name="login">Login</string>
     <string name="logout">Logout</string>
     <string name="forgot_password">Forgot your Password?</string>
+    <string name="redirect_to_register">Don\'t have an Account? Register Here</string>
+    <string name="please_wait">Please wait...</string>
 
     <!--Register Activity -->
     <string name="password_again">Re-Enter Password</string>
     <string name="register">Register</string>
     <string name="redirect_to_login">Already have an Account? Login</string>
+    <string name="invalid_email">Invalid Email</string>
+    <string name="invalid_password">Password Length should be > 6</string>
+    <string name="invalid_password_again">Password Doesn\'t Match</string>
 
     <!-- Main Activity -->
     <string name="choose_language">Choose Language-</string>
     <string name="english">English</string>
     <string name="hindi">Hindi\t\t</string>
     <string name="next">Next</string>
+    <string name="sign_up_failed">Sign Up Failed! Retry</string>
+    <string name="sign_up_successful">Sign Up Successful!</string>
 
     <!-- Navigation Drawer -->
     <string name="Feeds">Feeds</string>
@@ -36,26 +46,31 @@
     <!-- Home Activity -->
     <string name="trending">Trending</string>
     <string name="gurus">Gurus</string>
+    <string name="search_for_gurus">Search for Gurus</string>
+    <string name="suggested">Suggested</string>
+    <string name="menu">Menu</string>
 
     <!--LoginFragment-->
     <string name="facebook_app_id">298302307256927</string>
+    <string name="sign_in_failed">Sign In Failed</string>
+    <string name="play_services_error">PLAY SERVICES ERROR</string>
+    <string name="authentication_failed">Authentication failed</string>
 
     <!--Choose Interest Activity -->
     <string name="choose_interest">Choose Interest</string>
     <string name="please_choose_at_least_three_interests">Please choose at least 3 interests</string>
 
+    <!-- Sub Interest Activity -->
+    <string name="choose_more_interest">Choose more interest</string>
+
     <!-- Interests -->
     <string name="astrology">ASTROLOGY</string>
-    <string name="soul">SOUL</string>
-    <string name="karma">KARMA</string>
     <string name="diet">DIET</string>
-    <string name="god">GOD</string>
-    <string name="meditation">MEDITATION</string>
+    <string name="religion">RELIGION</string>
+    <string name="ayurveda">AYURVEDA</string>
     <string name="yoga">YOGA</string>
     <string name="motivation">MOTIVATION</string>
     <string name="health">HEALTH</string>
-    <string name="love">LOVE</string>
-    <string name="peace">PEACE</string>
 
     <!--Motivation Array-->
     <string-array name="motivation_array">
