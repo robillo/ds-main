@@ -4,8 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="?attr/actionBarSize"
-    android:background="@color/white"
+    android:background="@drawable/gradient"
     android:orientation="vertical"
+    android:gravity="center_vertical"
     tools:context="com.example.sasuke.dailysuvichar.activity.MainActivity">
 
     <ScrollView
@@ -61,7 +62,7 @@
                 android:layout_below="@+id/et_password_again"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
-                android:background="@color/green_very_dark"
+                android:background="?attr/selectableItemBackground"
                 android:text="@string/register"
                 android:textColor="@color/white" />
 
@@ -82,7 +83,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/redirect_to_login"
                 android:layout_centerHorizontal="true"
-                android:background="@color/blue_text"
+                android:background="?attr/selectableItemBackground"
                 android:text="@string/login"
                 android:textColor="@color/white" />
 
