@@ -6,6 +6,8 @@
     <string name="validation_successful">मान्यकरण सफल</string>
     <string name="registered_successfully">सफलतापूर्वक पंजीकृत</string>
     <string name="registration_unsuccessfully">पंजीकरण असफल</string>
+    <string name="divider">Divider</string>
+    <string name="logo">Logo</string>
 
     <!-- Login Activity -->
     <string name="login_activity_title">लॉग इन करें</string>
@@ -14,17 +16,24 @@
     <string name="login">लॉग इन</string>
     <string name="logout">लोग आउट</string>
     <string name="forgot_password">क्या आप पासवर्ड भूल गए?</string>
+    <string name="redirect_to_register">Don\'t have an Account? Register Here</string>
+    <string name="please_wait">Please wait...</string>
 
     <!--Register Activity -->
     <string name="password_again">पासवर्ड फिर से दर्ज करें</string>
     <string name="register">रजिस्टर</string>
     <string name="redirect_to_login">क्या आपके पास पहले से एक खाता मौजूद है? लॉग इन करें</string>
+    <string name="invalid_email">Invalid Email</string>
+    <string name="invalid_password">Password Length should be > 6</string>
+    <string name="invalid_password_again">Password Doesn\'t Match</string>
 
     <!-- Main Activity -->
     <string name="choose_language">Choose Language-</string>
     <string name="english">English</string>
     <string name="hindi">Hindi\t\t</string>
     <string name="next">आगामी</string>
+    <string name="sign_up_failed">Sign Up Failed! Retry</string>
+    <string name="sign_up_successful">Sign Up Successful!</string>
 
     <!-- Navigation Drawer -->
     <string name="Feeds">फ़ीड्स</string>
@@ -36,13 +45,31 @@
     <!-- Home Activity -->
     <string name="trending">रुझान</string>
     <string name="gurus">गुरु</string>
+    <string name="search_for_gurus">Search for Gurus</string>
+    <string name="suggested">Suggested</string>
+    <string name="menu">Menu</string>
 
     <!--LoginFragment-->
     <string name="facebook_app_id">298302307256927</string>
+    <string name="sign_in_failed">Sign In Failed</string>
+    <string name="play_services_error">PLAY SERVICES ERROR</string>
+    <string name="authentication_failed">Authentication failed</string>
 
     <!--Choose Interest Activity -->
     <string name="choose_interest">रुचि चुनें</string>
     <string name="please_choose_at_least_three_interests">कृपया कम से कम 3 रुचियां चुनें:</string>
+
+    <!-- Sub Interest Activity -->
+    <string name="choose_more_interest">Choose more interest</string>
+
+    <!-- Interests -->
+    <string name="astrology">ASTROLOGY</string>
+    <string name="diet">DIET</string>
+    <string name="religion">RELIGION</string>
+    <string name="ayurveda">AYURVEDA</string>
+    <string name="yoga">YOGA</string>
+    <string name="motivation">MOTIVATION</string>
+    <string name="health">HEALTH</string>
 
     <!-- Interests -->
     <array name="allInterests">
@@ -54,18 +81,6 @@
         <item>ayurveda</item>
         <item>astrology</item>
     </array>
-
-    <string name="astrology">ज्योतिष</string>
-    <string name="soul">अन्त: मन</string>
-    <string name="karma">कर्म</string>
-    <string name="diet">आहार</string>
-    <string name="god">परमेश्वर</string>
-    <string name="meditation">ध्यान</string>
-    <string name="yoga">योगा</string>
-    <string name="motivation">प्रेरणा</string>
-    <string name="health">स्वास्थ्य</string>
-    <string name="love">मोहब्बत</string>
-    <string name="peace">शांति</string>
 
     <!--Motivation Array-->
     <string-array name="motivation_array">

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="?attr/actionBarSize"
-    android:background="@color/white"
+    android:background="@drawable/gradient"
     android:orientation="vertical"
     tools:context="com.example.sasuke.dailysuvichar.activity.MainActivity">
 
@@ -60,7 +60,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="20dp"
                     android:layout_weight="1"
-                    android:background="@color/blue_text"
+                    android:background="?attr/selectableItemBackground"
                     android:text="@string/login"
                     android:textColor="@color/white" />
 
@@ -71,7 +71,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="20dp"
                     android:layout_weight="1"
-                    android:background="@color/green_very_dark"
+                    android:background="?attr/selectableItemBackground"
                     android:text="@string/register"
                     android:textColor="@color/white" />
 
