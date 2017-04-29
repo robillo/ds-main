@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -47,6 +48,8 @@ import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static com.bumptech.glide.gifdecoder.GifHeaderParser.TAG;
 
 public class LoginFragment extends BaseFragment implements GoogleApiClient.OnConnectionFailedListener {
 
@@ -215,8 +218,11 @@ public class LoginFragment extends BaseFragment implements GoogleApiClient.OnCon
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = googleSignInResult.getSignInAccount();
                 firebaseAuthWithGoogle(account);
+            }else{
+                Log.d(TAG, "onActivityResult: failed "+googleSignInResult.getStatus());
             }
         } else {
+            Log.d(TAG, "onActivityResult: ");
             // Pass the activity result back to the Facebook SDK
             callbackManager.onActivityResult(requestCode, resultCode, data);
         }
@@ -229,9 +235,11 @@ public class LoginFragment extends BaseFragment implements GoogleApiClient.OnCon
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (!task.isSuccessful()) {
+                            Log.d(TAG, "onComplete: failed");
                             Toast.makeText(getActivity(), getResources().getString(R.string.authentication_failed),
                                     Toast.LENGTH_SHORT).show();
                         } else {
+                            Log.d(TAG, "onComplete: passed");
                             SharedPrefs.setLoginToken(acct.getIdToken());
                             startActivity(ChooseInterestActivity.newIntent(getContext()));
                             getActivity().finish();

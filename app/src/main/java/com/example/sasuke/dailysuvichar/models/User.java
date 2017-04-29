@@ -21,6 +21,32 @@ public class User {
     private String gender;
     private String phone;
     private int age;
+    private ArrayList<String> selectedSubInterests;
+
+    public User(String name, String email, String bio, String preferredLang, String photoUrl, String coverUrl, HashMap<String, ArrayList<String>> allInterests, String DOB, String gender, String phone, int age, ArrayList<String> selectedSubInterests) {
+        this.name = name;
+        this.email = email;
+        this.bio = bio;
+        this.preferredLang = preferredLang;
+        this.photoUrl = photoUrl;
+        this.coverUrl = coverUrl;
+        this.allInterests = allInterests;
+        this.DOB = DOB;
+        this.gender = gender;
+        this.phone = phone;
+        this.age = age;
+        this.selectedSubInterests = selectedSubInterests;
+    }
+
+    public ArrayList<String> getSelectedSubInterests() {
+
+        return selectedSubInterests;
+    }
+
+    public void setSelectedSubInterests(ArrayList<String> selectedSubInterests) {
+        this.selectedSubInterests = selectedSubInterests;
+    }
+
     ArrayList<Post> posts;
     private ArrayList<String> allSubInterests;
 

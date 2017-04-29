@@ -15,7 +15,7 @@
       },
       "oauth_client": [
         {
-          "client_id": "130045325039-k64hpsii4pvkml2m1dh40q9ijo2fhot5.apps.googleusercontent.com",
+          "client_id": "130045325039-10c6gsi8dtj0ulpl953fs260ch219oii.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.sasuke.dailysuvichar",
@@ -29,7 +29,7 @@
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyA_TKvTDTeUIwPnIR95wzOCUSBzY4a8tMY"
+          "current_key": "AIzaSyDupJW1_BCWoTZVM8ro7OxmIR0vLHp98dM"
         }
       ],
       "services": {

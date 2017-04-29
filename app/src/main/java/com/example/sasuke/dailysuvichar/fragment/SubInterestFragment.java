@@ -49,6 +49,7 @@ public class SubInterestFragment extends BaseFragment {
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
     private ArrayList<String> mSubInterests;
+    private ArrayList<String> mSelectedSubInterests;
     private boolean mVisitedAlready = false;
     private HashMap<String,ArrayList<String>> mAllInterests;
 
@@ -189,6 +190,17 @@ public class SubInterestFragment extends BaseFragment {
 
     @OnClick(R.id.tv_next)
     public void openHomeActivity() {
+        mSelectedSubInterests= new ArrayList<>();
+        for(Data d:data){
+            if(d.getSelected()==true){
+                mSelectedSubInterests.add(d.getHeader().toLowerCase());
+            }
+        }
+        User user = new User("Rishabh", "abcd@gmail.com",
+                "Bio....", "EN", "DP.JPG", "COVER.PNG", mAllInterests,
+                "02.01.95", "MALE", "9999999999", 22, mSelectedSubInterests);
+        mDatabase.child(mFirebaseUser.getUid()).setValue(user);
+
         startActivity(HomeActivity.newIntent(getActivity()));
     }
 }

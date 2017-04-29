@@ -58,6 +58,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<View_Holder>{
                 if(!isLongClick){
                     if(!mSelectedItems.contains(holder.header.getText().toString()) && !list.get(position).getSelected()){
                         mSelectedItems.add(holder.header.getText().toString());
+                        list.get(position).setSelected(true);
                         Glide.with(context)
                                 .load(R.drawable.ic_check_circle_white_24dp)
                                 .into(holder.drawable);
@@ -65,6 +66,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<View_Holder>{
                     }
                     else {
                         mSelectedItems.remove(holder.header.getText().toString());
+                        list.get(position).setSelected(false);
                         Glide.with(context)
                                 .load(list.get(position).getDrawable())
                                 .into(holder.drawable);
