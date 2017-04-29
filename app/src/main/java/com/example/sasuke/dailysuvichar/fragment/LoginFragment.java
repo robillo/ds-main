@@ -102,6 +102,9 @@ public class LoginFragment extends BaseFragment implements GoogleApiClient.OnCon
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        googleSignIn.setSize(SignInButton.SIZE_WIDE);
+        googleSignIn.setColorScheme(SignInButton.COLOR_AUTO);
+
         validator.setValidationListener(new ValidationListener() {
 
             @Override
