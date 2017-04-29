@@ -196,6 +196,7 @@ public class SubInterestFragment extends BaseFragment {
                 mSelectedSubInterests.add(d.getHeader().toLowerCase());
             }
         }
+
         User user = new User("Rishabh", "abcd@gmail.com",
                 "Bio....", "EN", "DP.JPG", "COVER.PNG", mAllInterests,
                 "02.01.95", "MALE", "9999999999", 22, mSelectedSubInterests);
