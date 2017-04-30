@@ -36,4 +36,8 @@ public class FeedsFragment extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
     }
+
+    public static FeedsFragment newInstance() {
+        return new FeedsFragment();
+    }
 }

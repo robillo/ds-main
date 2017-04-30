@@ -10,6 +10,10 @@ public class TrendingFragment extends BaseFragment {
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.fragment_login;
+        return R.layout.fragment_feeds;
+    }
+
+    public static TrendingFragment newInstance() {
+        return new TrendingFragment();
     }
 }

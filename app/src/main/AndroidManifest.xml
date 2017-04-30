@@ -30,8 +30,7 @@
         <activity android:name=".activity.ChooseInterestActivity" />
         <activity android:name=".activity.SubInterestActivity" />
         <activity
-            android:name=".activity.HomeActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:name=".activity.HomeActivity"/>
     </application>
 
 </manifest>

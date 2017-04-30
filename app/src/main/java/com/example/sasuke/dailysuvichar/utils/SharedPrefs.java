@@ -30,5 +30,12 @@ public class SharedPrefs {
         editor.putString(LOGIN_TOKEN, token);
         editor.commit();
     }
+
+    public static void clearLoggedInUser() {
+        SharedPreferences.Editor editor = getPrefrences().edit();
+        editor.remove(LOGIN_TOKEN);
+        editor.commit();
+    }
+
 }
 

@@ -4,118 +4,60 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:id="@+id/action_bar_top"
-        android:layout_width="match_parent"
-        android:layout_height="?android:actionBarSize"
-        android:background="@color/blue_text">
-
-        <ImageView
-            android:id="@+id/iv_notification"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:layout_centerVertical="true"
-            android:padding="10dp"
-            android:src="@drawable/logo_transparent" />
-
-        <LinearLayout
-            android:id="@+id/et_search"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_toRightOf="@+id/iv_notification"
-            android:background="@drawable/view_search_background"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:padding="2dp">
-
-            <EditText
-                android:id="@+id/et_search_destination_guide"
-                android:layout_width="0dp"
-                android:layout_height="20dp"
-                android:layout_weight="1"
-                android:background="@color/white"
-                android:drawableLeft="@drawable/search_icon"
-                android:drawablePadding="@dimen/padding_small"
-                android:hint="@string/search_for_gurus"
-                android:imeOptions="actionSearch"
-                android:inputType="text"
-                android:maxLength="20"
-                android:maxLines="1"
-                android:paddingLeft="@dimen/padding_small"
-                android:paddingRight="@dimen/padding_small"
-                android:textSize="@dimen/font_normal" />
-
-            <ProgressBar
-                android:id="@+id/progress_bar"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_gravity="center"
-                android:layout_marginRight="10dp"
-                android:indeterminateDrawable="@drawable/progress"
-                android:indeterminateDuration="1000" />
-
-        </LinearLayout>
-
-        <ImageView
-            android:id="@+id/iv_friend_requests"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="5dp"
-            android:layout_toLeftOf="@+id/iv_messages"
-            android:padding="10dp"
-            android:src="@drawable/ic_meditation" />
-
-        <ImageView
-            android:id="@+id/iv_messages"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:padding="10dp"
-            android:src="@drawable/ic_motivation" />
-
-    </RelativeLayout>
-
-    <com.ogaclejapan.smarttablayout.SmartTabLayout
-        android:id="@+id/tab_bar"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_below="@+id/action_bar_top"
-        android:background="@color/blue_text"
-        app:stl_clickable="true"
-        app:stl_defaultTabBackground="?attr/selectableItemBackground"
-        app:stl_defaultTabTextAllCaps="true"
-        app:stl_defaultTabTextColor="@color/white"
-        app:stl_defaultTabTextHorizontalPadding="16dp"
-        app:stl_defaultTabTextMinWidth="0dp"
-        app:stl_defaultTabTextSize="@dimen/font_normal"
-        app:stl_distributeEvenly="true"
-        app:stl_dividerColor="@color/white"
-        app:stl_dividerThickness="1dp"
-        app:stl_drawDecorationAfterTab="false"
-        app:stl_indicatorColor="@color/white"
-        app:stl_indicatorCornerRadius="2dp"
-        app:stl_indicatorGravity="bottom"
-        app:stl_indicatorInFront="false"
-        app:stl_indicatorInterpolation="smart"
-        app:stl_indicatorThickness="4dp"
-        app:stl_indicatorWidth="auto"
-        app:stl_indicatorWithoutPadding="false"
-        app:stl_overlineColor="@color/white"
-        app:stl_overlineThickness="0dp"
-        app:stl_titleOffset="24dp"
-        app:stl_underlineColor="@color/white"
-        app:stl_underlineThickness="1dp" />
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewpager"
+    <FrameLayout
+        android:id="@+id/child_fragment_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tab_bar" />
+        android:layout_marginBottom="60dp" />
+
+    <com.example.sasuke.dailysuvichar.view.TabBar
+        android:id="@+id/tab_bar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        app:background_color="@color/blue_text"
+        app:icons_color="@color/white"
+        app:image_height="@dimen/tabbar_image_height"
+        app:image_width="@dimen/tabbar_image_width"
+        app:select_color="@color/blue_dark"
+        app:text_size="@dimen/tabbar_text_size">
+
+        <com.example.sasuke.dailysuvichar.view.Tab
+            android:id="@+id/tab_home"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            app:image_drawable="@drawable/ic_home"
+            app:name="@string/home" />
+
+        <com.example.sasuke.dailysuvichar.view.Tab
+            android:id="@+id/tab_gurus"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            app:image_drawable="@drawable/ic_guru"
+            app:name="@string/gurus" />
+
+        <com.example.sasuke.dailysuvichar.view.Tab
+            android:id="@+id/tab_trending"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            app:image_drawable="@drawable/ic_settings"
+            app:name="@string/trending" />
+
+        <com.example.sasuke.dailysuvichar.view.Tab
+            android:id="@+id/tab_notification"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            app:image_drawable="@drawable/ic_notification"
+            app:name="@string/notification" />
+
+    </com.example.sasuke.dailysuvichar.view.TabBar>
 
 </RelativeLayout>

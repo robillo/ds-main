@@ -39,7 +39,8 @@
     <string name="home">Home</string>
     <string name="settings">Settings</string>
     <string name="profile">Profile</string>
-    <string name="tab">Tab</string>
+    <string name="updates">Updates</string>
+    <string name="notification">Notification</string>
 
     <!-- Home Activity -->
     <string name="trending">Trending</string>
