@@ -5,9 +5,10 @@ package com.example.sasuke.dailysuvichar.models;
  */
 
 public class Video {
-    String thumbnail;
-    String videoUrl;
-    String title;
+
+    private String thumbnail;
+    private String videoUrl;
+    private String title;
 
     public String getThumbnail() {
         return thumbnail;

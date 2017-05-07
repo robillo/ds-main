@@ -25,7 +25,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginTop="25dp"
-                android:src="@drawable/logo_test" />
+                android:src="@drawable/profile" />
 
             <ImageView
                 android:layout_width="match_parent"

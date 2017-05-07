@@ -1,63 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/gray_light"
+    android:orientation="vertical">
 
-    <FrameLayout
-        android:id="@+id/child_fragment_container"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="60dp" />
+        android:background="@color/blue_text"
+        android:padding="8dp">
 
-    <com.example.sasuke.dailysuvichar.view.TabBar
-        android:id="@+id/tab_bar"
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/iv_profile"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/profile"
+            app:civ_border_color="@color/white"
+            app:civ_border_width="2dp"
+            app:civ_shadow="true"
+            app:civ_shadow_color="@color/gray"
+            app:civ_shadow_radius="10" />
+
+        <ImageView
+            android:layout_width="1dp"
+            android:layout_height="70dp"
+            android:layout_toRightOf="@+id/iv_profile"
+            android:background="@color/white" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/iv_profile">
+
+            <TextView
+                android:id="@+id/tv_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+                android:text="Share your suvichar"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_normal" />
+
+            <TextView
+                android:id="@+id/tv_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_header"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:text="Status"
+                android:textColor="@color/white" />
+
+            <ImageView
+                android:layout_width="1dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="30dp"
+                android:layout_toRightOf="@+id/tv_status"
+                android:background="@color/white" />
+
+            <TextView
+                android:id="@+id/tv_photo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_header"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="20dp"
+                android:layout_toEndOf="@+id/tv_status"
+                android:text="Photo"
+                android:textColor="@color/white" />
+
+
+            <ImageView
+                android:layout_width="1dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="30dp"
+                android:layout_toRightOf="@+id/tv_photo"
+                android:background="@color/white" />
+
+            <TextView
+                android:id="@+id/tv_video"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_header"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="20dp"
+                android:layout_toEndOf="@+id/tv_photo"
+                android:text="Video"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_normal" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_home"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_alignParentBottom="true"
-        app:background_color="@color/blue_text"
-        app:icons_color="@color/white"
-        app:image_height="@dimen/tabbar_image_height"
-        app:image_width="@dimen/tabbar_image_width"
-        app:select_color="@color/blue_dark"
-        app:text_size="@dimen/tabbar_text_size">
+        android:layout_height="match_parent" />
 
-        <com.example.sasuke.dailysuvichar.view.Tab
-            android:id="@+id/tab_home"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            app:image_drawable="@drawable/ic_home"
-            app:name="@string/home" />
-
-        <com.example.sasuke.dailysuvichar.view.Tab
-            android:id="@+id/tab_gurus"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            app:image_drawable="@drawable/ic_guru"
-            app:name="@string/gurus" />
-
-        <com.example.sasuke.dailysuvichar.view.Tab
-            android:id="@+id/tab_trending"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            app:image_drawable="@drawable/ic_settings"
-            app:name="@string/trending" />
-
-        <com.example.sasuke.dailysuvichar.view.Tab
-            android:id="@+id/tab_notification"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            app:image_drawable="@drawable/ic_notification"
-            app:name="@string/notification" />
-
-    </com.example.sasuke.dailysuvichar.view.TabBar>
-
-</RelativeLayout>
+</LinearLayout>

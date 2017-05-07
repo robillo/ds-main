@@ -25,7 +25,7 @@ public class MainFragment extends BaseFragment implements TabBar.OnItemSelect {
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.fragment_home;
+        return R.layout.fragment_main;
     }
 
     public static MainFragment newInstance() {
@@ -50,9 +50,9 @@ public class MainFragment extends BaseFragment implements TabBar.OnItemSelect {
             case R.id.tab_trending:
                 replaceFragment(TrendingFragment.newInstance(), TrendingFragment.class.getName());
                 break;
-            case R.id.tab_notification:
-                replaceFragment(NotificationFragment.newInstance(), NotificationFragment.class.getName());
-                break;
+//            case R.id.tab_notification:
+//                replaceFragment(NotificationFragment.newInstance(), NotificationFragment.class.getName());
+//                break;
         }
     }
 

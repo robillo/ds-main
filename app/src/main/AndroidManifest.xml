@@ -30,7 +30,9 @@
         <activity android:name=".activity.ChooseInterestActivity" />
         <activity android:name=".activity.SubInterestActivity" />
         <activity
-            android:name=".activity.HomeActivity"/>
+            android:name=".activity.HomeActivity"
+            android:configChanges="orientation|screenSize"
+            android:hardwareAccelerated="true" />
     </application>
 
 </manifest>
