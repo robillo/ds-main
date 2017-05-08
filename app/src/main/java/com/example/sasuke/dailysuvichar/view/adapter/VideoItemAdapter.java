@@ -1,6 +1,7 @@
 package com.example.sasuke.dailysuvichar.view.adapter;
 
 import android.app.Activity;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,7 +33,12 @@ public class VideoItemAdapter extends ItemViewBinder<Video, VideoViewHolder> {
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull final VideoViewHolder holder, @NonNull Video item) {
-        holder.mVideoView.loadYoutubeVideo(activity, item.getVideoUrl());
+    protected void onBindViewHolder(@NonNull final VideoViewHolder holder, @NonNull final Video item) {
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                holder.mVideoView.loadYoutubeVideo(activity, item.getVideoUrl());
+            }
+        });
     }
 }

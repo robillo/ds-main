@@ -19,7 +19,7 @@ import butterknife.ButterKnife;
 public class PhotoViewHolder extends RecyclerView.ViewHolder {
 
     @BindView(R.id.photo)
-    ImageView mIvPhoto;
+    public ImageView mIvPhoto;
     @BindView(R.id.button_like)
     LikeButton mBtnLike;
 

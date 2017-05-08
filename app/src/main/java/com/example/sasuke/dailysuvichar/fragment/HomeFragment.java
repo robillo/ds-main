@@ -62,6 +62,8 @@ public class HomeFragment extends BaseFragment {
         slide_up = AnimationUtils.loadAnimation(getContext(), R.anim.slide_up);
 
         mLayoutManager = new LinearLayoutManager(getContext());
+        mLayoutManager.setItemPrefetchEnabled(true);
+        mLayoutManager.setInitialPrefetchItemCount(10);
         mRvHome.setLayoutManager(mLayoutManager);
         mAdapter = new MultiTypeAdapter();
         mAdapter.register(Status.class, new StatusItemAdapter());
@@ -83,7 +85,7 @@ public class HomeFragment extends BaseFragment {
         photo.setPhoto(R.drawable.astrology);
         items.add(photo);
 
-        video = new Video("", "R_HNRK9t3lI", "");
+        video = new Video("", "-2eiKIUyTKk", "");
         items.add(video);
 
         status = new Status();
@@ -94,7 +96,7 @@ public class HomeFragment extends BaseFragment {
         photo.setPhoto(R.drawable.ayurveda);
         items.add(photo);
 
-        video = new Video("", "R_HNRK9t3lI", "");
+        video = new Video("", "-2eiKIUyTKk", "");
         items.add(video);
 
         status = new Status();
@@ -105,36 +107,36 @@ public class HomeFragment extends BaseFragment {
         photo.setPhoto(R.drawable.health);
         items.add(photo);
 
-        video = new Video("", "R_HNRK9t3lI", "");
+        video = new Video("", "-2eiKIUyTKk", "");
         items.add(video);
 
         status = new Status();
-        status.setStatus("LAKSHAY DEEP");
+        status.setStatus("Watching bahubali 2 with Aditya Tyagi and 2 others at PVR.");
         items.add(status);
 
         photo = new Photo();
         photo.setPhoto(R.drawable.yoga);
         items.add(photo);
 
-        video = new Video("", "R_HNRK9t3lI", "");
+        video = new Video("", "-2eiKIUyTKk", "");
         items.add(video);
 
         status = new Status();
-        status.setStatus("ANMOL VARSHNEY");
+        status.setStatus("Watching bahubali 2 with Aditya Tyagi and 2 others at PVR.");
         items.add(status);
 
         photo = new Photo();
         photo.setPhoto(R.drawable.motivation);
         items.add(photo);
 
-        video = new Video("", "R_HNRK9t3lI", "");
+        video = new Video("", "-2eiKIUyTKk", "");
         items.add(video);
 
         photo = new Photo();
         photo.setPhoto(R.drawable.religion);
         items.add(photo);
 
-        video = new Video("", "R_HNRK9t3lI", "");
+        video = new Video("", "-2eiKIUyTKk", "");
         items.add(video);
 
         mAdapter.setItems(items);
