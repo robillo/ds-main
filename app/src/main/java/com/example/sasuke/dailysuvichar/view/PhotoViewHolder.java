@@ -5,6 +5,8 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.example.sasuke.dailysuvichar.R;
+import com.like.LikeButton;
+import com.like.OnLikeListener;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
@@ -18,10 +20,23 @@ public class PhotoViewHolder extends RecyclerView.ViewHolder {
 
     @BindView(R.id.photo)
     ImageView mIvPhoto;
+    @BindView(R.id.button_like)
+    LikeButton mBtnLike;
 
     public PhotoViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
+        mBtnLike.setOnLikeListener(new OnLikeListener() {
+            @Override
+            public void liked(LikeButton likeButton) {
+                likeButton.setLiked(true);
+            }
+
+            @Override
+            public void unLiked(LikeButton likeButton) {
+                likeButton.setLiked(false);
+            }
+        });
     }
 
     public void setImage(int photo) {

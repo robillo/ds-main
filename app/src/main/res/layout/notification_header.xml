@@ -17,10 +17,18 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_toEndOf="@+id/iv_profile"
-        android:text="Ashu Tyagi shared an update"
+        android:text="Ashu Tyagi"
         android:textColor="@color/black"
         android:textSize="@dimen/font_normal"
         android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/tv_user_name"
+        android:text=" shared an update"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_normal" />
 
     <TextView
         android:id="@+id/tv_post_time"

@@ -5,10 +5,16 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.sasuke.dailysuvichar.R;
+import com.example.sasuke.dailysuvichar.event.DoubleTabEvent;
 import com.example.sasuke.dailysuvichar.view.TabBar;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -28,7 +34,9 @@ public class MainFragment extends BaseFragment implements TabBar.OnItemSelect {
         return R.layout.fragment_main;
     }
 
-    public static MainFragment newInstance() {
+    public static MainFragment newInstance()
+
+    {
         return new MainFragment();
     }
 
@@ -36,6 +44,25 @@ public class MainFragment extends BaseFragment implements TabBar.OnItemSelect {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         tabBar.setOnItemSelectListner(MainFragment.this);
+        tabBar.gestureDetector.setOnDoubleTapListener(new GestureDetector.OnDoubleTapListener() {
+            @Override
+            public boolean onSingleTapConfirmed(MotionEvent e) {
+                return false;
+            }
+
+            @Override
+            public boolean onDoubleTap(MotionEvent e) {
+                Toast.makeText(getContext(), "DOUBLE TAP ON TAB BAR", Toast.LENGTH_SHORT).show();
+                EventBus.getDefault().post(new DoubleTabEvent());
+                return true;
+            }
+
+            @Override
+            public boolean onDoubleTapEvent(MotionEvent e) {
+                Toast.makeText(getContext(), "DOUBLE TAP EVENT", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
     }
 
     @Override
