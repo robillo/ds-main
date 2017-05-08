@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -17,10 +18,16 @@ import com.example.sasuke.dailysuvichar.models.Video;
 import com.example.sasuke.dailysuvichar.view.adapter.PhotoItemAdapter;
 import com.example.sasuke.dailysuvichar.view.adapter.StatusItemAdapter;
 import com.example.sasuke.dailysuvichar.view.adapter.VideoItemAdapter;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.HashMap;
 
 import butterknife.BindView;
 import me.drakeet.multitype.Items;
@@ -40,6 +47,11 @@ public class HomeFragment extends BaseFragment {
     RelativeLayout mRlMenu;
 
     private LinearLayoutManager mLayoutManager;
+    private FirebaseUser mFirebaseUser;
+    private String uid;
+    private HashMap<String, String> userMap;
+    private DatabaseReference mDatabaseReference;
+    private static  final String TAG = "ROBILLO", STATUS = "status";
 
     private Animation slide_down;
     private Animation slide_up;
@@ -57,6 +69,11 @@ public class HomeFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        uid = mFirebaseUser.getUid();
+
+        Log.e(TAG, uid);
 
         slide_down = AnimationUtils.loadAnimation(getContext(), R.anim.slide_down);
         slide_up = AnimationUtils.loadAnimation(getContext(), R.anim.slide_up);
@@ -140,30 +157,33 @@ public class HomeFragment extends BaseFragment {
         mAdapter.setItems(items);
         mAdapter.notifyDataSetChanged();
 
-        mRvHome.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                if (dy > 0 || dy < 0) {
-                    if (CHECK == 1) {
-                        CHECK++;
-                    } else {
-//                        mRlMenu.startAnimation(slide_up);
-                        mRlMenu.setVisibility(View.GONE);
-                    }
-                }
-            }
+//        mRvHome.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//            @Override
+//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+//                if (dy > 0 || dy < 0) {
+//                    if (CHECK == 1) {
+//                        CHECK++;
+//                    } else {
+////                        mRlMenu.startAnimation(slide_up);
+//                        mRlMenu.setVisibility(View.GONE);
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+//
+//                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+//                    mRlMenu.startAnimation(slide_down);
+//                    mRlMenu.setVisibility(View.VISIBLE);
+//                }
+//                super.onScrollStateChanged(recyclerView, newState);
+//            }
+//        });
 
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-
-                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    mRlMenu.startAnimation(slide_down);
-                    mRlMenu.setVisibility(View.VISIBLE);
-                }
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-        });
-
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference();
+        mDatabaseReference.child("users").child(uid).child("items").setValue(items);
+        mDatabaseReference.push();
     }
 
     @Override

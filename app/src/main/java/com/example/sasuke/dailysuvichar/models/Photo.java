@@ -8,6 +8,13 @@ import android.support.annotation.NonNull;
 
 public class Photo {
 
+    public Photo() {
+    }
+
+    public Photo(@NonNull int photo) {
+        this.photo = photo;
+    }
+
     @NonNull
     private int photo;
 

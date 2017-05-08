@@ -8,6 +8,13 @@ import android.support.annotation.NonNull;
 
 public class Status {
 
+    public Status() {
+    }
+
+    public Status(@NonNull String status) {
+        this.status = status;
+    }
+
     @NonNull
     private String status;
 
