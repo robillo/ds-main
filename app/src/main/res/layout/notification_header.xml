@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rv_header"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <ImageView
+        android:id="@+id/iv_profile"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/profile" />
+
+    <TextView
+        android:id="@+id/tv_user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_toEndOf="@+id/iv_profile"
+        android:text="Ashu Tyagi shared an update"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_normal"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_post_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_user_name"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@+id/iv_profile"
+        android:text="21 mins"
+        android:textColor="@color/gray"
+        android:textSize="@dimen/font_small" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_user_name"
+        android:layout_marginStart="5dp"
+        android:layout_toEndOf="@+id/tv_post_time"
+        android:text="."
+        android:textColor="@color/gray"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_below="@+id/tv_user_name"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="4dp"
+        android:layout_toEndOf="@+id/tv_post_time"
+        android:src="@drawable/ic_globe" />
+
+    <ImageView
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="5dp"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/ic_down" />
+</RelativeLayout>

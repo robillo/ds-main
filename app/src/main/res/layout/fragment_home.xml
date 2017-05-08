@@ -1,121 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/gray_light"
+    android:orientation="vertical">
 
     <RelativeLayout
-        android:id="@+id/action_bar_top"
-        android:layout_width="match_parent"
-        android:layout_height="?android:actionBarSize"
-        android:background="@color/blue_text">
-
-        <ImageView
-            android:id="@+id/iv_notification"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:layout_centerVertical="true"
-            android:padding="10dp"
-            android:src="@drawable/logo_transparent" />
-
-        <LinearLayout
-            android:id="@+id/et_search"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_toRightOf="@+id/iv_notification"
-            android:background="@drawable/view_search_background"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:padding="2dp">
-
-            <EditText
-                android:id="@+id/et_search_destination_guide"
-                android:layout_width="0dp"
-                android:layout_height="20dp"
-                android:layout_weight="1"
-                android:background="@color/white"
-                android:drawableLeft="@drawable/search_icon"
-                android:drawablePadding="@dimen/padding_small"
-                android:hint="@string/search_for_gurus"
-                android:imeOptions="actionSearch"
-                android:inputType="text"
-                android:maxLength="20"
-                android:maxLines="1"
-                android:paddingLeft="@dimen/padding_small"
-                android:paddingRight="@dimen/padding_small"
-                android:textSize="@dimen/font_normal" />
-
-            <ProgressBar
-                android:id="@+id/progress_bar"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_gravity="center"
-                android:layout_marginRight="10dp"
-                android:indeterminateDrawable="@drawable/progress"
-                android:indeterminateDuration="1000" />
-
-        </LinearLayout>
-
-        <ImageView
-            android:id="@+id/iv_friend_requests"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="5dp"
-            android:layout_toLeftOf="@+id/iv_messages"
-            android:padding="10dp"
-            android:src="@drawable/ic_meditation" />
-
-        <ImageView
-            android:id="@+id/iv_messages"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:padding="10dp"
-            android:src="@drawable/ic_motivation" />
-
-    </RelativeLayout>
-
-    <com.ogaclejapan.smarttablayout.SmartTabLayout
-        android:id="@+id/tab_bar"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_below="@+id/action_bar_top"
-        android:background="@color/blue_text"
-        app:stl_clickable="true"
-        app:stl_defaultTabBackground="?attr/selectableItemBackground"
-        app:stl_defaultTabTextAllCaps="true"
-        app:stl_defaultTabTextColor="@color/white"
-        app:stl_defaultTabTextHorizontalPadding="16dp"
-        app:stl_defaultTabTextMinWidth="0dp"
-        app:stl_defaultTabTextSize="@dimen/font_normal"
-        app:stl_distributeEvenly="true"
-        app:stl_dividerColor="@color/white"
-        app:stl_dividerThickness="1dp"
-        app:stl_drawDecorationAfterTab="false"
-        app:stl_indicatorColor="@color/white"
-        app:stl_indicatorCornerRadius="2dp"
-        app:stl_indicatorGravity="bottom"
-        app:stl_indicatorInFront="false"
-        app:stl_indicatorInterpolation="smart"
-        app:stl_indicatorThickness="4dp"
-        app:stl_indicatorWidth="auto"
-        app:stl_indicatorWithoutPadding="false"
-        app:stl_overlineColor="@color/white"
-        app:stl_overlineThickness="0dp"
-        app:stl_titleOffset="24dp"
-        app:stl_underlineColor="@color/white"
-        app:stl_underlineThickness="1dp" />
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tab_bar" />
+        android:background="@color/blue_text"
+        android:padding="8dp">
 
-</RelativeLayout>
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/iv_profile"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/profile"
+            app:civ_border_color="@color/white"
+            app:civ_border_width="2dp"
+            app:civ_shadow="true"
+            app:civ_shadow_color="@color/gray"
+            app:civ_shadow_radius="10" />
+
+        <ImageView
+            android:layout_width="1dp"
+            android:layout_height="70dp"
+            android:layout_toRightOf="@+id/iv_profile"
+            android:background="@color/white" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/iv_profile">
+
+            <TextView
+                android:id="@+id/tv_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+                android:text="Share your suvichar"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_normal" />
+
+            <TextView
+                android:id="@+id/tv_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_header"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:text="Status"
+                android:textColor="@color/white" />
+
+            <ImageView
+                android:layout_width="1dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="30dp"
+                android:layout_toRightOf="@+id/tv_status"
+                android:background="@color/white" />
+
+            <TextView
+                android:id="@+id/tv_photo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_header"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="20dp"
+                android:layout_toEndOf="@+id/tv_status"
+                android:text="Photo"
+                android:textColor="@color/white" />
+
+
+            <ImageView
+                android:layout_width="1dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="30dp"
+                android:layout_toRightOf="@+id/tv_photo"
+                android:background="@color/white" />
+
+            <TextView
+                android:id="@+id/tv_video"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_header"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="20dp"
+                android:layout_toEndOf="@+id/tv_photo"
+                android:text="Video"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_normal" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_home"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

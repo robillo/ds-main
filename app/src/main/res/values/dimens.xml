@@ -22,5 +22,6 @@
     <!-- TABBAR -->
     <dimen name="tabbar_image_height">50dp</dimen>
     <dimen name="tabbar_image_width">50dp</dimen>
+    <dimen name="tabbar_text_size">8sp</dimen>
 
 </resources>
