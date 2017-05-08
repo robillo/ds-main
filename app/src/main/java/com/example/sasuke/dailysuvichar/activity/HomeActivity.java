@@ -3,6 +3,7 @@ package com.example.sasuke.dailysuvichar.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -84,7 +85,12 @@ public class HomeActivity extends BaseActivity {
     @OnClick(R.id.nav_home)
     public void onMyFeedClick() {
         closeDrawer();
-        replaceFragment(MainFragment.newInstance(), MainFragment.class.getName());
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                replaceFragment(MainFragment.newInstance(), MainFragment.class.getName());
+            }
+        }, 250);
     }
 
     @OnClick(R.id.nav_updates)
