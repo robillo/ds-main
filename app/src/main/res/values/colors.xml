@@ -41,4 +41,5 @@
     <!-- gray scale -->
     <color name="gray">#c7c7c7</color>
     <color name="gray_light">#e4e3e3</color>
+    <color name="gray_dark">#747474</color>
 </resources>

@@ -5,6 +5,9 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
@@ -29,10 +32,13 @@ public class TabBar extends LinearLayout implements View.OnClickListener {
     private OnItemSelect mOnItemSelect;
     private int mDefaultSelectedTab;
 
+    public GestureDetector gestureDetector;
+
     public TabBar(Context context, AttributeSet attrs) {
         super(context, attrs);
         setOrientation(HORIZONTAL);
 
+        gestureDetector = new GestureDetector(context, new TabBar.GestureListener());
         TypedArray a = context.getTheme().obtainStyledAttributes(
                 attrs,
                 R.styleable.tabbar,
@@ -109,5 +115,30 @@ public class TabBar extends LinearLayout implements View.OnClickListener {
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         mOnItemSelect = null;
+    }
+
+
+    @Override
+    public boolean onTouchEvent(MotionEvent e) {
+        return gestureDetector.onTouchEvent(e);
+    }
+
+    private class GestureListener extends GestureDetector.SimpleOnGestureListener {
+
+        @Override
+        public boolean onDown(MotionEvent e) {
+            return true;
+        }
+
+        // event when double tap occurs
+        @Override
+        public boolean onDoubleTap(MotionEvent e) {
+            float x = e.getX();
+            float y = e.getY();
+
+            Log.d("Double Tap", "Tapped at: (" + x + "," + y + ")");
+
+            return true;
+        }
     }
 }

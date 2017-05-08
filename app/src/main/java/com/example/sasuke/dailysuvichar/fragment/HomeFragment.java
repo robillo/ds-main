@@ -5,14 +5,22 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.RelativeLayout;
 
 import com.example.sasuke.dailysuvichar.R;
+import com.example.sasuke.dailysuvichar.event.DoubleTabEvent;
 import com.example.sasuke.dailysuvichar.models.Photo;
 import com.example.sasuke.dailysuvichar.models.Status;
 import com.example.sasuke.dailysuvichar.models.Video;
 import com.example.sasuke.dailysuvichar.view.adapter.PhotoItemAdapter;
 import com.example.sasuke.dailysuvichar.view.adapter.StatusItemAdapter;
 import com.example.sasuke.dailysuvichar.view.adapter.VideoItemAdapter;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import me.drakeet.multitype.Items;
@@ -28,6 +36,14 @@ public class HomeFragment extends BaseFragment {
 
     @BindView(R.id.rv_home)
     RecyclerView mRvHome;
+    @BindView(R.id.rl_menu)
+    RelativeLayout mRlMenu;
+
+    private LinearLayoutManager mLayoutManager;
+
+    private Animation slide_down;
+    private Animation slide_up;
+    private int CHECK = 1;
 
     @Override
     protected int getLayoutResId() {
@@ -42,7 +58,11 @@ public class HomeFragment extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mRvHome.setLayoutManager(new LinearLayoutManager(getContext()));
+        slide_down = AnimationUtils.loadAnimation(getContext(), R.anim.slide_down);
+        slide_up = AnimationUtils.loadAnimation(getContext(), R.anim.slide_up);
+
+        mLayoutManager = new LinearLayoutManager(getContext());
+        mRvHome.setLayoutManager(mLayoutManager);
         mAdapter = new MultiTypeAdapter();
         mAdapter.register(Status.class, new StatusItemAdapter());
         mAdapter.register(Photo.class, new PhotoItemAdapter());
@@ -63,7 +83,7 @@ public class HomeFragment extends BaseFragment {
         photo.setPhoto(R.drawable.astrology);
         items.add(photo);
 
-        video = new Video("", "v6IAJOOmDMg", "");
+        video = new Video("", "R_HNRK9t3lI", "");
         items.add(video);
 
         status = new Status();
@@ -74,7 +94,7 @@ public class HomeFragment extends BaseFragment {
         photo.setPhoto(R.drawable.ayurveda);
         items.add(photo);
 
-        video = new Video("", "NGLxoKOvzu4", "");
+        video = new Video("", "R_HNRK9t3lI", "");
         items.add(video);
 
         status = new Status();
@@ -85,7 +105,7 @@ public class HomeFragment extends BaseFragment {
         photo.setPhoto(R.drawable.health);
         items.add(photo);
 
-        video = new Video("", "JGwWNGJdvx8", "");
+        video = new Video("", "R_HNRK9t3lI", "");
         items.add(video);
 
         status = new Status();
@@ -96,7 +116,7 @@ public class HomeFragment extends BaseFragment {
         photo.setPhoto(R.drawable.yoga);
         items.add(photo);
 
-        video = new Video("", "papuvlVeZg8", "");
+        video = new Video("", "R_HNRK9t3lI", "");
         items.add(video);
 
         status = new Status();
@@ -107,18 +127,60 @@ public class HomeFragment extends BaseFragment {
         photo.setPhoto(R.drawable.motivation);
         items.add(photo);
 
-        video = new Video("", "weeI1G46q0o", "");
+        video = new Video("", "R_HNRK9t3lI", "");
         items.add(video);
 
         photo = new Photo();
         photo.setPhoto(R.drawable.religion);
         items.add(photo);
 
-        video = new Video("", "cHOrHGpL4u0", "");
+        video = new Video("", "R_HNRK9t3lI", "");
         items.add(video);
 
         mAdapter.setItems(items);
         mAdapter.notifyDataSetChanged();
+
+        mRvHome.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0 || dy < 0) {
+                    if (CHECK == 1) {
+                        CHECK++;
+                    } else {
+//                        mRlMenu.startAnimation(slide_up);
+                        mRlMenu.setVisibility(View.GONE);
+                    }
+                }
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    mRlMenu.startAnimation(slide_down);
+                    mRlMenu.setVisibility(View.VISIBLE);
+                }
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+        });
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(DoubleTabEvent event) {
+        mRvHome.getLayoutManager().scrollToPosition(1);
     }
 
 }

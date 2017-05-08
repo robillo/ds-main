@@ -7,6 +7,8 @@ import android.widget.TextView;
 
 
 import com.example.sasuke.dailysuvichar.R;
+import com.like.LikeButton;
+import com.like.OnLikeListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,10 +21,23 @@ public class StatusViewHolder extends RecyclerView.ViewHolder {
 
     @BindView(R.id.status)
     TextView mTvStatus;
+    @BindView(R.id.button_like)
+    LikeButton mBtnLike;
 
     public StatusViewHolder(@NonNull View itemView) {
         super(itemView);
-        ButterKnife.bind(this,itemView);
+        ButterKnife.bind(this, itemView);
+        mBtnLike.setOnLikeListener(new OnLikeListener() {
+            @Override
+            public void liked(LikeButton likeButton) {
+                likeButton.setLiked(true);
+            }
+
+            @Override
+            public void unLiked(LikeButton likeButton) {
+                likeButton.setLiked(false);
+            }
+        });
     }
 
     public void setStatus(String status) {

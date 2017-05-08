@@ -27,7 +27,7 @@ public class VideoItemAdapter extends ItemViewBinder<Video, VideoViewHolder> {
     @NonNull
     @Override
     protected VideoViewHolder onCreateViewHolder(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
-        View view = inflater.inflate(R.layout.cel_video, parent, false);
+        View view = inflater.inflate(R.layout.cell_video, parent, false);
         return new VideoViewHolder(view);
     }
 
