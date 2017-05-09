@@ -1,5 +1,6 @@
 package com.example.sasuke.dailysuvichar.view.adapter;
 
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,7 +26,12 @@ public class StatusItemAdapter extends ItemViewBinder<Status, StatusViewHolder> 
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull StatusViewHolder holder, @NonNull Status item) {
-        holder.setStatus(item.getStatus());
+    protected void onBindViewHolder(@NonNull final StatusViewHolder holder, @NonNull final Status item) {
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                holder.setStatus(item.getStatus());
+            }
+        });
     }
 }

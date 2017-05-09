@@ -1,5 +1,6 @@
 package com.example.sasuke.dailysuvichar.view.adapter;
 
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.models.Photo;
 import com.example.sasuke.dailysuvichar.view.PhotoViewHolder;
+import com.squareup.picasso.Picasso;
 
 import me.drakeet.multitype.ItemViewBinder;
 
@@ -25,7 +27,12 @@ public class PhotoItemAdapter extends ItemViewBinder<Photo, PhotoViewHolder> {
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull PhotoViewHolder holder, @NonNull Photo item) {
-        holder.setImage(item.getPhoto());
+    protected void onBindViewHolder(@NonNull final PhotoViewHolder holder, @NonNull final Photo item) {
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                holder.setImage(item.getPhoto());
+            }
+        });
     }
 }

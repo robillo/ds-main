@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -18,10 +17,6 @@ import com.example.sasuke.dailysuvichar.models.Video;
 import com.example.sasuke.dailysuvichar.view.adapter.PhotoItemAdapter;
 import com.example.sasuke.dailysuvichar.view.adapter.StatusItemAdapter;
 import com.example.sasuke.dailysuvichar.view.adapter.VideoItemAdapter;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -79,6 +74,8 @@ public class HomeFragment extends BaseFragment {
         slide_up = AnimationUtils.loadAnimation(getContext(), R.anim.slide_up);
 
         mLayoutManager = new LinearLayoutManager(getContext());
+        mLayoutManager.setItemPrefetchEnabled(true);
+        mLayoutManager.setInitialPrefetchItemCount(10);
         mRvHome.setLayoutManager(mLayoutManager);
         mAdapter = new MultiTypeAdapter();
         mAdapter.register(Status.class, new StatusItemAdapter());
@@ -101,7 +98,7 @@ public class HomeFragment extends BaseFragment {
         photo.setPhoto(R.drawable.astrology);
         items.add(photo);
 
-        video = new Video("", "R_HNRK9t3lI", "");
+        video = new Video("", "-2eiKIUyTKk", "");
         items.add(video);
 
         status = new Status("ROBILLO", mFirebaseUser.getDisplayName());
@@ -112,7 +109,7 @@ public class HomeFragment extends BaseFragment {
         photo.setPhoto(R.drawable.ayurveda);
         items.add(photo);
 
-        video = new Video("", "R_HNRK9t3lI", "");
+        video = new Video("", "-2eiKIUyTKk", "");
         items.add(video);
 
         status = new Status("I got a laptop in my back pocket. :)", "Playing cricket with Jatin Verma and 10 others.");

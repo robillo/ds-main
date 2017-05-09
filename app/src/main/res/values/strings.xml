@@ -6,6 +6,7 @@
     <string name="registration_unsuccessfully">Registration Unsuccessfully</string>
     <string name="divider">Divider</string>
     <string name="logo">Logo</string>
+    <string name="seperator">Seperator</string>
 
     <!-- Login Activity -->
     <string name="login_activity_title">Login</string>
@@ -48,6 +49,12 @@
     <string name="search_for_gurus">Search for Gurus</string>
     <string name="suggested">Suggested</string>
     <string name="menu">Menu</string>
+
+    <!-- Home Menu -->
+    <string name="share_your_suvichar">Share your suvichar</string>
+    <string name="status">Status</string>
+    <string name="photo">Photo</string>
+    <string name="video">Video</string>
 
     <!--LoginFragment-->
     <string name="facebook_app_id">298302307256927</string>
