@@ -33,6 +33,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Map;
 
 import butterknife.BindView;
 import me.drakeet.multitype.Items;
@@ -94,7 +95,7 @@ public class HomeFragment extends BaseFragment {
         mRvHome.setAdapter(mAdapter);
 
         Items items = new Items();
-
+        HashMap<String, Status> statuses = new HashMap<>();
         Status status;
 
 
@@ -107,7 +108,8 @@ public class HomeFragment extends BaseFragment {
 
         status = new Status();
         status.setStatus("Watching bahubali 2 with Aditya Tyagi and 2 others at PVR.");
-        mDatabaseReference.child("users").child(uid).child("status").setValue(status);
+        mDatabaseReference.child("users").child(uid).child("status").push().setValue(status);
+        statuses.put(mFirebaseUser.getEmail(), status);
         items.add(status);
 
         photo = new Photo();
@@ -119,7 +121,7 @@ public class HomeFragment extends BaseFragment {
 
         status = new Status();
         status.setStatus("ROBILLO");
-        mDatabaseReference.child("users").child(uid).child("status").setValue(status);
+        statuses.put(mFirebaseUser.getEmail(), status);
         items.add(status);
 
         photo = new Photo();
@@ -131,7 +133,8 @@ public class HomeFragment extends BaseFragment {
 
         status = new Status();
         status.setStatus("I got a laptop in my back pocket. :) Playing cricket with Jatin Verma and 10 others.");
-        mDatabaseReference.child("users").child(uid).child("status").setValue(status);
+        mDatabaseReference.child("users").child(uid).child("status").push().setValue(status);
+        statuses.put(mFirebaseUser.getEmail(), status);
         items.add(status);
 
         photo = new Photo();
@@ -143,7 +146,8 @@ public class HomeFragment extends BaseFragment {
 
         status = new Status();
         status.setStatus("ROBILLO is the username for ROBIN");
-        mDatabaseReference.child("users").child(uid).child("status").setValue(status);
+        mDatabaseReference.child("users").child(uid).child("status").push().setValue(status);
+        statuses.put(mFirebaseUser.getEmail(), status);
         items.add(status);
 
         photo = new Photo();
@@ -194,7 +198,6 @@ public class HomeFragment extends BaseFragment {
 //            }
 //        });
 
-        mDatabaseReference.push();
     }
 
     @Override
