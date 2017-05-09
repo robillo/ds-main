@@ -11,12 +11,29 @@ public class Status {
     public Status() {
     }
 
+    public Status(@NonNull String status, @NonNull String user) {
+        this.status = status;
+        this.user = user;
+    }
+
     public Status(@NonNull String status) {
         this.status = status;
     }
 
     @NonNull
     private String status;
+
+    @NonNull
+    private String user;
+
+    @NonNull
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(@NonNull String user) {
+        this.user = user;
+    }
 
     @NonNull
     public String getStatus() {
