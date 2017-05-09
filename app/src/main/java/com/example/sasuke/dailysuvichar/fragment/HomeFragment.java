@@ -1,6 +1,7 @@
 package com.example.sasuke.dailysuvichar.fragment;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,7 +28,11 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 
 import butterknife.BindView;
 import me.drakeet.multitype.Items;
@@ -91,12 +96,18 @@ public class HomeFragment extends BaseFragment {
         Items items = new Items();
 
         Status status;
+
+
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference();
+        Log.e(TAG, uid);
+        Log.e(TAG, mDatabaseReference.toString());
+
         Photo photo;
         Video video;
-        userStatus = new HashMap<>();
 
-        status = new Status("Watching bahubali 2 with Aditya Tyagi and 2 others at PVR.", mFirebaseUser.getDisplayName());
-        userStatus.put(status.getUser(), status.getStatus());
+        status = new Status();
+        status.setStatus("Watching bahubali 2 with Aditya Tyagi and 2 others at PVR.");
+        mDatabaseReference.child("users").child(uid).child("status").setValue(status);
         items.add(status);
 
         photo = new Photo();
@@ -106,8 +117,9 @@ public class HomeFragment extends BaseFragment {
         video = new Video("", "-2eiKIUyTKk", "");
         items.add(video);
 
-        status = new Status("ROBILLO", mFirebaseUser.getDisplayName());
-        userStatus.put(status.getUser(), status.getStatus());
+        status = new Status();
+        status.setStatus("ROBILLO");
+        mDatabaseReference.child("users").child(uid).child("status").setValue(status);
         items.add(status);
 
         photo = new Photo();
@@ -117,8 +129,9 @@ public class HomeFragment extends BaseFragment {
         video = new Video("", "-2eiKIUyTKk", "");
         items.add(video);
 
-        status = new Status("I got a laptop in my back pocket. :)", "Playing cricket with Jatin Verma and 10 others.");
-        userStatus.put(status.getUser(), status.getStatus());
+        status = new Status();
+        status.setStatus("I got a laptop in my back pocket. :) Playing cricket with Jatin Verma and 10 others.");
+        mDatabaseReference.child("users").child(uid).child("status").setValue(status);
         items.add(status);
 
         photo = new Photo();
@@ -128,8 +141,9 @@ public class HomeFragment extends BaseFragment {
         video = new Video("", "R_HNRK9t3lI", "");
         items.add(video);
 
-        status = new Status("ROBILLO is the username for ROBIN", mFirebaseUser.getDisplayName());
-        userStatus.put(status.getUser(), status.getStatus());
+        status = new Status();
+        status.setStatus("ROBILLO is the username for ROBIN");
+        mDatabaseReference.child("users").child(uid).child("status").setValue(status);
         items.add(status);
 
         photo = new Photo();
@@ -138,10 +152,6 @@ public class HomeFragment extends BaseFragment {
 
         video = new Video("", "R_HNRK9t3lI", "");
         items.add(video);
-
-        status = new Status("RISHZ is the username for Rishabh", mFirebaseUser.getDisplayName());
-        userStatus.put(status.getUser(), status.getStatus());
-        items.add(status);
 
         photo = new Photo();
         photo.setPhoto(R.drawable.motivation);
@@ -184,9 +194,6 @@ public class HomeFragment extends BaseFragment {
 //            }
 //        });
 
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference();
-        Log.e(TAG, uid);
-        mDatabaseReference.child("users").child(uid).child("allstatus").setValue(userStatus);
         mDatabaseReference.push();
     }
 

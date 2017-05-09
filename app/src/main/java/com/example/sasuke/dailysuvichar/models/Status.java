@@ -11,15 +11,6 @@ public class Status {
     public Status() {
     }
 
-    public Status(@NonNull String status, @NonNull String user) {
-        this.status = status;
-        this.user = user;
-    }
-
-    public Status(@NonNull String status) {
-        this.status = status;
-    }
-
     @NonNull
     private String status;
 
