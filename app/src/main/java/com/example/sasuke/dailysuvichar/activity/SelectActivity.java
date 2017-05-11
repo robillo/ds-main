@@ -3,6 +3,8 @@ package com.example.sasuke.dailysuvichar.activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.sasuke.dailysuvichar.R;
+import com.example.sasuke.dailysuvichar.view.RVTags;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,8 +43,10 @@ public class SelectActivity extends BaseActivity{
     Button next;
     @BindView(R.id.grid)
     GridLayout grid;
+    @BindView(R.id.recyclerview)
+    RecyclerView recyclerView;
 
-    private List<String> interests, subInterests;
+    private List<String> interests, subInterests, data;
     private Context context;
 
     @Override
@@ -125,8 +130,19 @@ public class SelectActivity extends BaseActivity{
                 addToSubinterests(temp);
             }
             grid.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+            recyclerView.setLayoutManager(new GridLayoutManager(context, 3));
+//            data = fillWithData();
+            recyclerView.setAdapter(new RVTags(context, subInterests));
         }
     }
+
+//    private List<String> fillWithData(){
+//        data = new ArrayList<>();
+//        for(String s: subInterests){
+//
+//        }
+//    }
 
     private void addToSubinterests(String[] temp){
         for(String s: temp){
@@ -141,7 +157,7 @@ public class SelectActivity extends BaseActivity{
         }
         else {
             interests.add(temp);
-            view.setBackgroundColor(getResources().getColor(R.color.red));
+            view.setBackgroundColor(getResources().getColor(R.color.green));
         }
     }
 }
