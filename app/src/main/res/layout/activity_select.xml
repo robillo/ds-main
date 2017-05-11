@@ -20,18 +20,35 @@ android:fitsSystemWindows="true">
             android:background="?attr/colorPrimary"
             android:elevation="@dimen/app_bar_elevation"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-            <TextView
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
-                android:gravity="center"
-                android:text="Details Screen"
-                android:textColor="#FFF"
-                android:fontFamily="cursive"
-                android:textSize="20sp"
-                android:layout_weight="1"
-                android:id="@+id/textView"
-                android:textStyle="normal|bold" />
+                android:layout_height="?actionBarSize"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorPrimary"
+                    android:gravity="start"
+                    android:text="Your Suvichar"
+                    android:textColor="#FFF"
+                    android:textAlignment="viewStart"
+                    android:fontFamily="cursive"
+                    android:textSize="20sp"
+                    android:layout_weight="1"
+                    android:id="@+id/textView"
+                    android:textStyle="normal|bold" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Post"
+                    android:textColor="@color/white"
+                    android:background="?attr/selectableItemBackground"/>
+
+            </LinearLayout>
 
         </android.support.v7.widget.Toolbar>
 
