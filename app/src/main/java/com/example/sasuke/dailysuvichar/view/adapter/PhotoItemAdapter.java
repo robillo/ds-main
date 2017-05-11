@@ -30,7 +30,7 @@ public class PhotoItemAdapter extends ItemViewBinder<Photo, PhotoViewHolder> {
         new Handler().post(new Runnable() {
             @Override
             public void run() {
-                holder.setImage(item.getPhotoURL());
+                holder.setImage(item.getPhoto());
             }
         });
     }

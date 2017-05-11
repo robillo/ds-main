@@ -53,7 +53,7 @@
     <!-- Home Menu -->
     <string name="share_your_suvichar">Share your suvichar</string>
     <string name="status">Status</string>
-    <string name="photoURL">Photo</string>
+    <string name="photo">Photo</string>
     <string name="video">Video</string>
 
     <!--LoginFragment-->

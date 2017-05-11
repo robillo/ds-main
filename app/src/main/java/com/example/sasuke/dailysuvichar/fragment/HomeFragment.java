@@ -142,7 +142,7 @@ public class HomeFragment extends BaseFragment {
         items.add(status);
 
         photo = new Photo();
-        photo.setPhotoURL(R.drawable.astrology);
+        photo.setPhoto(R.drawable.astrology);
         items.add(photo);
 
         video = new Video("", "-2eiKIUyTKk", "");
@@ -156,7 +156,7 @@ public class HomeFragment extends BaseFragment {
         items.add(status);
 
         photo = new Photo();
-        photo.setPhotoURL(R.drawable.ayurveda);
+        photo.setPhoto(R.drawable.ayurveda);
         items.add(photo);
 
         video = new Video("", "-2eiKIUyTKk", "");
@@ -171,7 +171,7 @@ public class HomeFragment extends BaseFragment {
         items.add(status);
 
         photo = new Photo();
-        photo.setPhotoURL(R.drawable.health);
+        photo.setPhoto(R.drawable.health);
         items.add(photo);
 
         video = new Video("", "R_HNRK9t3lI", "");
@@ -186,7 +186,7 @@ public class HomeFragment extends BaseFragment {
         items.add(status);
 
         photo = new Photo();
-        photo.setPhotoURL(R.drawable.yoga);
+        photo.setPhoto(R.drawable.yoga);
         items.add(photo);
 
         video = new Video("", "R_HNRK9t3lI", "");
@@ -197,14 +197,14 @@ public class HomeFragment extends BaseFragment {
 //        items.add(status);
 
         photo = new Photo();
-        photo.setPhotoURL(R.drawable.motivation);
+        photo.setPhoto(R.drawable.motivation);
         items.add(photo);
 
         video = new Video("", "R_HNRK9t3lI", "");
         items.add(video);
 
         photo = new Photo();
-        photo.setPhotoURL(R.drawable.religion);
+        photo.setPhoto(R.drawable.religion);
         items.add(photo);
 
         video = new Video("", "R_HNRK9t3lI", "");

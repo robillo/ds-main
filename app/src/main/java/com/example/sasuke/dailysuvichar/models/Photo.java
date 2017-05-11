@@ -1,5 +1,6 @@
 package com.example.sasuke.dailysuvichar.models;
 
+import android.net.Uri;
 import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ public class Photo {
     @NonNull
     private String encoding;
 
-    public Photo(@NonNull String name, @NonNull Long size, @NonNull String language, @NonNull String encoding, @NonNull String bucket, @NonNull String user, @NonNull Long timestamp, @NonNull Integer likes, @NonNull Integer shares, @NonNull ArrayList<Comment> comments, @NonNull String caption, @NonNull String uid, @NonNull ArrayList<String> tags, @NonNull int photoURL) {
+    public Photo(@NonNull String name, @NonNull Long size, @NonNull String language, @NonNull String encoding, @NonNull String bucket, @NonNull String user, @NonNull Long timestamp, @NonNull Integer likes, @NonNull Integer shares, @NonNull ArrayList<Comment> comments, @NonNull String caption, @NonNull String uid, @NonNull ArrayList<String> tags, @NonNull Uri photoURL) {
         this.name = name;
         this.size = size;
         this.language = language;
@@ -183,19 +184,31 @@ public class Photo {
     public Photo() {
     }
 
-    public Photo(@NonNull int photoURL) {
-        this.photoURL = photoURL;
+    public Photo(@NonNull int photo) {
+        this.photo = photo;
     }
 
     @NonNull
-    private int photoURL;
+    private int photo;
 
     @NonNull
-    public int getPhotoURL() {
+    private Uri photoURL;
+
+    @NonNull
+    public Uri getPhotoURL() {
         return photoURL;
     }
 
-    public void setPhotoURL(@NonNull int photoURL) {
+    public void setPhotoURL(@NonNull Uri photoURL) {
         this.photoURL = photoURL;
+    }
+
+    @NonNull
+    public int getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(@NonNull int photo) {
+        this.photo = photo;
     }
 }

@@ -191,6 +191,7 @@ public class SelectActivity extends BaseActivity {
         }
         Toast.makeText(context,"Post successful!", Toast.LENGTH_SHORT).show();
         startActivity(new Intent(this,HomeActivity.class));
+        finish();
     }
 
 }

@@ -35,6 +35,8 @@
             android:hardwareAccelerated="true" />
         <activity android:name=".activity.SelectActivity" android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".activity.SelectPhotoActivity" android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan"/>
     </application>
 
 </manifest>

@@ -93,7 +93,7 @@
                         android:id="@+id/tv_photo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/photoURL"
+                        android:text="@string/photo"
                         android:textColor="@color/white" />
                 </LinearLayout>
 
