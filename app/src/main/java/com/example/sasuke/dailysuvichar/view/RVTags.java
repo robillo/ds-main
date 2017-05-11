@@ -18,6 +18,7 @@ public class RVTags extends RecyclerView.Adapter<VHTags>{
     private Context context, pContext;
     private List<String> list = Collections.emptyList();
     private ArrayList<String> mSelectedItems = new ArrayList<>();
+    private Boolean[] isSelected;
 
     public RVTags(Context context, List<String> list) {
         this.context = context;
@@ -28,16 +29,36 @@ public class RVTags extends RecyclerView.Adapter<VHTags>{
     public VHTags onCreateViewHolder(ViewGroup parent, int viewType) {
         pContext = parent.getContext();
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_tags, parent, false);
+        isSelected = new Boolean[list.size()];
+        for(int i = 0; i<list.size(); i++){
+            isSelected[i] = false;
+        }
         return new VHTags(v);
     }
 
     @Override
-    public void onBindViewHolder(VHTags holder, final int position) {
+    public void onBindViewHolder(final VHTags holder, final int position) {
         holder.tag.setText(list.get(position));
+        holder.tag.setBackgroundColor(pContext.getResources().getColor(R.color.white));
+        holder.tag.setTextColor(pContext.getResources().getColor(R.color.black));
+        if(mSelectedItems.contains(holder.tag.getText().toString())){
+            holder.tag.setBackgroundColor(pContext.getResources().getColor(R.color.black));
+            holder.tag.setTextColor(pContext.getResources().getColor(R.color.white));
+        }
         holder.tag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(pContext, list.get(position), Toast.LENGTH_SHORT).show();
+                if(mSelectedItems.contains(holder.tag.getText().toString()) && isSelected[position]){
+                    mSelectedItems.remove(holder.tag.getText().toString());
+                    holder.tag.setBackgroundColor(pContext.getResources().getColor(R.color.white));
+                    holder.tag.setTextColor(pContext.getResources().getColor(R.color.black));
+                }
+                else {
+                    isSelected[position] = true;
+                    mSelectedItems.add(holder.tag.getText().toString());
+                    holder.tag.setBackgroundColor(pContext.getResources().getColor(R.color.black));
+                    holder.tag.setTextColor(pContext.getResources().getColor(R.color.white));
+                }
             }
         });
     }

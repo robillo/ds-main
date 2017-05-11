@@ -157,7 +157,7 @@ public class SelectActivity extends BaseActivity{
         }
         else {
             interests.add(temp);
-            view.setBackgroundColor(getResources().getColor(R.color.green));
+            view.setBackgroundColor(getResources().getColor(R.color.very_light_transparent));
         }
     }
 }
