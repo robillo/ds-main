@@ -33,6 +33,7 @@
             android:name=".activity.HomeActivity"
             android:configChanges="orientation|screenSize"
             android:hardwareAccelerated="true" />
+        <activity android:name=".activity.SelectActivity" android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

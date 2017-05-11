@@ -1,5 +1,6 @@
 package com.example.sasuke.dailysuvichar.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,8 +11,10 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.example.sasuke.dailysuvichar.R;
+import com.example.sasuke.dailysuvichar.activity.SelectActivity;
 import com.example.sasuke.dailysuvichar.event.DoubleTabEvent;
 import com.example.sasuke.dailysuvichar.models.Photo;
 import com.example.sasuke.dailysuvichar.models.Status;
@@ -36,6 +39,7 @@ import java.util.ListIterator;
 import java.util.Map;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
 
@@ -51,6 +55,8 @@ public class HomeFragment extends BaseFragment {
     RecyclerView mRvHome;
     @BindView(R.id.rl_menu)
     RelativeLayout mRlMenu;
+    @BindView(R.id.tv_status)
+    TextView status;
 
     private LinearLayoutManager mLayoutManager;
     private FirebaseUser mFirebaseUser;
@@ -198,6 +204,11 @@ public class HomeFragment extends BaseFragment {
 //            }
 //        });
 
+    }
+
+    @OnClick(R.id.tv_status)
+    public void intent(){
+        startActivity(new Intent(getActivity(), SelectActivity.class));
     }
 
     @Override
