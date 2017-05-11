@@ -42,7 +42,7 @@ android:fitsSystemWindows="true">
                     android:textStyle="normal|bold" />
 
                 <Button
-                    android:id="@+id/btnPost"
+                    android:id="@+id/btnPostStatus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="?attr/selectableItemBackground"
@@ -55,14 +55,15 @@ android:fitsSystemWindows="true">
         </android.support.v7.widget.Toolbar>
 
         <EditText
+            android:id="@+id/etStatus"
             android:layout_width="match_parent"
             android:layout_height="0sp"
             android:layout_weight="6"
+            android:fontFamily="sans-serif"
+            android:gravity="top|left"
             android:hint="@string/write_something"
             android:textColor="@color/black"
-            android:gravity="top|left"
-            android:textSize="18dp"
-            android:fontFamily="sans-serif">
+            android:textSize="18dp">
 
         </EditText>
         <TextView

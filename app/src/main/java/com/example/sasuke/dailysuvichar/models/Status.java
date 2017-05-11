@@ -14,10 +14,90 @@ public class Status {
     private String uid;
 
     @NonNull
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(@NonNull String uid) {
+        this.uid = uid;
+    }
+
+    @NonNull
+    public String getName() {
+        return name;
+    }
+
+    public void setName(@NonNull String name) {
+        this.name = name;
+    }
+
+    @NonNull
+    public Long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(@NonNull Long timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    @NonNull
+    public Integer getLikes() {
+        return likes;
+    }
+
+    public void setLikes(@NonNull Integer likes) {
+        this.likes = likes;
+    }
+
+    @NonNull
+    public Integer getShares() {
+        return shares;
+    }
+
+    public void setShares(@NonNull Integer shares) {
+        this.shares = shares;
+    }
+
+    @NonNull
+    public ArrayList<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(@NonNull ArrayList<Comment> comments) {
+        this.comments = comments;
+    }
+
+    @NonNull
+    public ArrayList<String> getTags() {
+        return tags;
+
+    }
+
+    public void setTags(@NonNull ArrayList<String> tags) {
+        this.tags = tags;
+    }
+
+    @NonNull
+    private ArrayList<String> tags;
+
+    public Status(@NonNull String uid, @NonNull ArrayList<String> tags, @NonNull String name, @NonNull Long timestamp, @NonNull Integer likes, @NonNull Integer shares, @NonNull ArrayList<Comment> comments, @NonNull String status, @NonNull String user) {
+
+        this.uid = uid;
+        this.tags = tags;
+        this.name = name;
+        this.timestamp = timestamp;
+        this.likes = likes;
+        this.shares = shares;
+        this.comments = comments;
+        this.status = status;
+        this.user = user;
+    }
+
+    @NonNull
     private String name;
 
     @NonNull
-    private String timestamp;
+    private Long timestamp;
 
     @NonNull
     private Integer likes;
