@@ -17,12 +17,13 @@ public class RVTags extends RecyclerView.Adapter<VHTags>{
 
     private Context context, pContext;
     private List<String> list = Collections.emptyList();
-    public ArrayList<String> mSelectedItems = new ArrayList<>();
+    private List<String> mSelectedItems = new ArrayList<>();
     private Boolean[] isSelected;
 
-    public RVTags(Context context, List<String> list) {
+        public RVTags(Context context, List<String> list, List<String> mSelectedItems) {
         this.context = context;
         this.list = list;
+        this.mSelectedItems = mSelectedItems;
     }
 
     @Override

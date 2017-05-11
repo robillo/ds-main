@@ -48,7 +48,7 @@ public class SelectActivity extends BaseActivity{
     @BindView(R.id.submit_subinterests)
     Button submit;
 
-    private List<String> interests, subInterests, data;
+    private List<String> interests, subInterests, data, mSlectedItems;
     private Context context;
 
     @Override
@@ -60,6 +60,7 @@ public class SelectActivity extends BaseActivity{
         context = getApplicationContext();
         interests = new ArrayList<>();
         subInterests = new ArrayList<>();
+        mSlectedItems = new ArrayList<>();
     }
 
     @OnClick(R.id.diet)
@@ -135,14 +136,19 @@ public class SelectActivity extends BaseActivity{
             recyclerView.setVisibility(View.VISIBLE);
             recyclerView.setLayoutManager(new GridLayoutManager(context, 3));
 //            data = fillWithData();
+            recyclerView.setAdapter(new RVTags(context, subInterests, mSlectedItems));
             submit.setVisibility(View.VISIBLE);
-            recyclerView.setAdapter(new RVTags(context, subInterests));
         }
     }
 
     @OnClick(R.id.submit_subinterests)
     public void setSubmit(){
-
+        if(mSlectedItems.size()<1){
+            Toast.makeText(context, "Please Select Atleast One Subcategory.", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            Toast.makeText(context, " " + mSlectedItems.size(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void addToSubinterests(String[] temp){
