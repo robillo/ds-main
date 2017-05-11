@@ -3,7 +3,9 @@ package com.example.sasuke.dailysuvichar.activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.View;
 import android.widget.Button;
+import android.widget.GridLayout;
 import android.widget.TextView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,6 +38,8 @@ public class SelectActivity extends BaseActivity{
     TextView astrology;
     @BindView(R.id.next)
     Button next;
+    @BindView(R.id.grid)
+    GridLayout grid;
 
     private List<String> interests, subInterests;
     private Context context;
@@ -53,37 +57,37 @@ public class SelectActivity extends BaseActivity{
 
     @OnClick(R.id.diet)
     public void diet(){
-        interests.add("diet");
+        setAptBG("diet", diet);
     }
 
     @OnClick(R.id.yoga)
     public void yoga(){
-        interests.add("yoga");
+        setAptBG("yoga", yoga);
     }
 
     @OnClick(R.id.health)
     public void health(){
-        interests.add("health");
+        setAptBG("health", health);
     }
 
     @OnClick(R.id.religion)
     public void religion(){
-        interests.add("religion");
+        setAptBG("religion", religion);
     }
 
     @OnClick(R.id.motivation)
     public void motivation(){
-        interests.add("motivation");
+        setAptBG("motivation", motivation);
     }
 
     @OnClick(R.id.ayurveda)
     public void ayurveda(){
-        interests.add("ayurveda");
+        setAptBG("ayurveda", ayurveda);
     }
 
     @OnClick(R.id.astrology)
     public void astrology(){
-        interests.add("astrology");
+        setAptBG("astrology", astrology);
     }
 
     @OnClick(R.id.next)
@@ -120,12 +124,24 @@ public class SelectActivity extends BaseActivity{
                 String[] temp = getResources().getStringArray(R.array.astrology_array);
                 addToSubinterests(temp);
             }
+            grid.setVisibility(View.GONE);
         }
     }
 
     private void addToSubinterests(String[] temp){
         for(String s: temp){
             subInterests.add(s);
+        }
+    }
+
+    private void setAptBG(String temp, TextView view){
+        if(interests.contains(temp)){
+            interests.remove(temp);
+            view.setBackgroundColor(getResources().getColor(R.color.white));
+        }
+        else {
+            interests.add(temp);
+            view.setBackgroundColor(getResources().getColor(R.color.red));
         }
     }
 }
