@@ -52,6 +52,7 @@ dependencies {
 
     //FIREBASE
     compile "com.google.firebase:firebase-auth:$FIREBASE_VERSION"
+    compile "com.google.firebase:firebase-storage:$FIREBASE_VERSION"
     compile "com.google.firebase:firebase-database:$FIREBASE_VERSION"
     compile "com.google.android.gms:play-services-auth:$FIREBASE_VERSION"
 

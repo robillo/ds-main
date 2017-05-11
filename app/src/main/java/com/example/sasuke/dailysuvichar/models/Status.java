@@ -11,6 +11,15 @@ public class Status {
     public Status() {
     }
 
+    public Status( @NonNull String user,@NonNull String status) {
+        this.status = status;
+        this.user = user;
+    }
+
+    public Status(@NonNull String status) {
+        this.status = status;
+    }
+
     @NonNull
     private String status;
 

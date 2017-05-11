@@ -228,4 +228,5 @@
     </string-array>
 
     <string name="hindi_text">English Text Accessed</string>
+    <string name="select_tags">SELECT TAGS</string>
 </resources>

@@ -1,7 +1,11 @@
 package com.example.sasuke.dailysuvichar.fragment;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +16,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.activity.SelectActivity;
@@ -22,26 +27,30 @@ import com.example.sasuke.dailysuvichar.models.Video;
 import com.example.sasuke.dailysuvichar.view.adapter.PhotoItemAdapter;
 import com.example.sasuke.dailysuvichar.view.adapter.StatusItemAdapter;
 import com.example.sasuke.dailysuvichar.view.adapter.VideoItemAdapter;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.util.Collection;
+import java.io.IOException;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by Sasuke on 4/30/2017.
@@ -63,7 +72,11 @@ public class HomeFragment extends BaseFragment {
     private String uid;
     private HashMap<String, String> userStatus;
     private DatabaseReference mDatabaseReference;
+    private StorageReference mStorageReference;
+
     private static  final String TAG = "ROBILLO", STATUS = "status";
+    private static final int PICK_IMAGE_REQUEST = 250;
+    private Uri filePath;
 
     private Animation slide_down;
     private Animation slide_up;
@@ -83,6 +96,8 @@ public class HomeFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
 
         mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        mStorageReference = FirebaseStorage.getInstance().getReference();
+
         uid = mFirebaseUser.getUid();
 
         Log.e(TAG, uid);
@@ -116,6 +131,8 @@ public class HomeFragment extends BaseFragment {
         status.setStatus("Watching bahubali 2 with Aditya Tyagi and 2 others at PVR.");
         mDatabaseReference.child("users").child(uid).child("status").push().setValue(status);
         statuses.put(mFirebaseUser.getEmail(), status);
+//        status = new Status(mFirebaseUser.getDisplayName(),"Watching bahubali 2 with Aditya Tyagi and 2 others at PVR.");
+//        userStatus.put(status.getUser(), status.getStatus());
         items.add(status);
 
         photo = new Photo();
@@ -125,6 +142,8 @@ public class HomeFragment extends BaseFragment {
         video = new Video("", "-2eiKIUyTKk", "");
         items.add(video);
 
+//        status = new Status(mFirebaseUser.getDisplayName(),"ROBILLO");
+//        userStatus.put(status.getUser(), status.getStatus());
         status = new Status();
         status.setStatus("ROBILLO");
         statuses.put(mFirebaseUser.getEmail(), status);
@@ -141,6 +160,8 @@ public class HomeFragment extends BaseFragment {
         status.setStatus("I got a laptop in my back pocket. :) Playing cricket with Jatin Verma and 10 others.");
         mDatabaseReference.child("users").child(uid).child("status").push().setValue(status);
         statuses.put(mFirebaseUser.getEmail(), status);
+//        status = new Status(mFirebaseUser.getDisplayName(),"I got a laptop in my back pocket. :)");
+//        userStatus.put(status.getUser(), status.getStatus());
         items.add(status);
 
         photo = new Photo();
@@ -154,6 +175,8 @@ public class HomeFragment extends BaseFragment {
         status.setStatus("ROBILLO is the username for ROBIN");
         mDatabaseReference.child("users").child(uid).child("status").push().setValue(status);
         statuses.put(mFirebaseUser.getEmail(), status);
+//        status = new Status(mFirebaseUser.getDisplayName(),"ROBILLO is the username for ROBIN");
+//        userStatus.put(status.getUser(), status.getStatus());
         items.add(status);
 
         photo = new Photo();
@@ -162,6 +185,10 @@ public class HomeFragment extends BaseFragment {
 
         video = new Video("", "R_HNRK9t3lI", "");
         items.add(video);
+
+//        status = new Status(mFirebaseUser.getDisplayName(),"RISHZ is the username for Rishabh");
+//        userStatus.put(status.getUser(), status.getStatus());
+//        items.add(status);
 
         photo = new Photo();
         photo.setPhoto(R.drawable.motivation);
@@ -226,6 +253,74 @@ public class HomeFragment extends BaseFragment {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(DoubleTabEvent event) {
         mRvHome.getLayoutManager().scrollToPosition(1);
+    }
+
+    @OnClick(R.id.tv_photo)
+    public void uploadImage(){
+        showFileChooser();
+        uploadToFirebase();
+    }
+
+    private void showFileChooser() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            filePath = data.getData();
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), filePath);
+//                some_imageView.setImageBitmap(bitmap);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void uploadToFirebase(){
+        if (filePath != null) {
+            final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+            progressDialog.setTitle("Uploading");
+            progressDialog.show();
+
+            StorageReference riversRef = mStorageReference.child("images/pic.jpg");
+            riversRef.putFile(filePath)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            progressDialog.dismiss();
+
+                            Toast.makeText(getActivity(), "File Uploaded ", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            progressDialog.dismiss();
+
+                            Log.d(TAG, "onFailure: "+exception.getMessage());
+
+                        }
+                    })
+                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                            double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+
+                            progressDialog.setMessage("Uploaded " + ((int) progress) + "%...");
+                        }
+                    });
+        }
+        else {
+            Log.d(TAG, "uploadToFirebase: No file chosen!");
+
+        }
     }
 
 }
