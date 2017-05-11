@@ -1,18 +1,131 @@
 package com.example.sasuke.dailysuvichar.activity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.sasuke.dailysuvichar.R;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class SelectActivity extends BaseActivity{
+
+    @BindView(R.id.diet)
+    TextView diet;
+    @BindView(R.id.yoga)
+    TextView yoga;
+    @BindView(R.id.health)
+    TextView health;
+    @BindView(R.id.religion)
+    TextView religion;
+    @BindView(R.id.motivation)
+    TextView motivation;
+    @BindView(R.id.ayurveda)
+    TextView ayurveda;
+    @BindView(R.id.astrology)
+    TextView astrology;
+    @BindView(R.id.next)
+    Button next;
+
+    private List<String> interests, subInterests;
+    private Context context;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select);
         ButterKnife.bind(this);
+
+        context = getApplicationContext();
+        interests = new ArrayList<>();
+        subInterests = new ArrayList<>();
+    }
+
+    @OnClick(R.id.diet)
+    public void diet(){
+        interests.add("diet");
+    }
+
+    @OnClick(R.id.yoga)
+    public void yoga(){
+        interests.add("yoga");
+    }
+
+    @OnClick(R.id.health)
+    public void health(){
+        interests.add("health");
+    }
+
+    @OnClick(R.id.religion)
+    public void religion(){
+        interests.add("religion");
+    }
+
+    @OnClick(R.id.motivation)
+    public void motivation(){
+        interests.add("motivation");
+    }
+
+    @OnClick(R.id.ayurveda)
+    public void ayurveda(){
+        interests.add("ayurveda");
+    }
+
+    @OnClick(R.id.astrology)
+    public void astrology(){
+        interests.add("astrology");
+    }
+
+    @OnClick(R.id.next)
+    public void nextIsSubinterests(){
+        if(interests.size()<1){
+            Toast.makeText(context, "Please Choose The Interest Category", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            if(interests.contains("diet")){
+                String[] temp = getResources().getStringArray(R.array.diet_array);
+                addToSubinterests(temp);
+            }
+            if(interests.contains("yoga")){
+                String[] temp = getResources().getStringArray(R.array.yoga_array);
+                addToSubinterests(temp);
+            }
+            if(interests.contains("health")){
+                String[] temp = getResources().getStringArray(R.array.health_array);
+                addToSubinterests(temp);
+            }
+            if(interests.contains("religion")){
+                String[] temp = getResources().getStringArray(R.array.religion_array);
+                addToSubinterests(temp);
+            }
+            if(interests.contains("motivation")){
+                String[] temp = getResources().getStringArray(R.array.motivation_array);
+                addToSubinterests(temp);
+            }
+            if(interests.contains("ayurveda")){
+                String[] temp = getResources().getStringArray(R.array.ayurveda_array);
+                addToSubinterests(temp);
+            }
+            if(interests.contains("astrology")){
+                String[] temp = getResources().getStringArray(R.array.astrology_array);
+                addToSubinterests(temp);
+            }
+        }
+    }
+
+    private void addToSubinterests(String[] temp){
+        for(String s: temp){
+            subInterests.add(s);
+        }
     }
 }

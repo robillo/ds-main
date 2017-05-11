@@ -21,7 +21,11 @@
             android:layout_margin="5sp"
             app:cardBackgroundColor="@color/white">
 
-            <Button
+            <TextView
+                android:gravity="center"
+                android:padding="5sp"
+                android:textSize="15sp"
+                android:fontFamily="sans-serif-smallcaps"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="Diet"
@@ -40,7 +44,11 @@
             android:layout_margin="5sp"
             app:cardBackgroundColor="@color/white">
 
-            <Button
+            <TextView
+                android:gravity="center"
+                android:padding="5sp"
+                android:textSize="15sp"
+                android:fontFamily="sans-serif-smallcaps"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="Yoga"
@@ -59,7 +67,11 @@
             android:layout_margin="5sp"
             app:cardBackgroundColor="@color/white">
 
-            <Button
+            <TextView
+                android:gravity="center"
+                android:padding="5sp"
+                android:textSize="15sp"
+                android:fontFamily="sans-serif-smallcaps"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="Health"
@@ -78,7 +90,11 @@
             android:layout_margin="5sp"
             app:cardBackgroundColor="@color/white">
 
-            <Button
+            <TextView
+                android:gravity="center"
+                android:padding="5sp"
+                android:textSize="15sp"
+                android:fontFamily="sans-serif-smallcaps"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="Religion"
@@ -97,7 +113,11 @@
             android:layout_margin="5sp"
             app:cardBackgroundColor="@color/white">
 
-            <Button
+            <TextView
+                android:gravity="center"
+                android:padding="5sp"
+                android:textSize="15sp"
+                android:fontFamily="sans-serif-smallcaps"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="Motivation"
@@ -116,7 +136,11 @@
             android:layout_margin="5sp"
             app:cardBackgroundColor="@color/white">
 
-            <Button
+            <TextView
+                android:gravity="center"
+                android:padding="5sp"
+                android:textSize="15sp"
+                android:fontFamily="sans-serif-smallcaps"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="Ayurveda"
@@ -135,7 +159,11 @@
             android:layout_margin="5sp"
             app:cardBackgroundColor="@color/white">
 
-            <Button
+            <TextView
+                android:gravity="center"
+                android:padding="5sp"
+                android:textSize="15sp"
+                android:fontFamily="sans-serif-smallcaps"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="Astrology"
@@ -156,6 +184,10 @@
             app:cardBackgroundColor="@color/colorPrimary">
 
             <Button
+                android:gravity="center"
+                android:padding="5sp"
+                android:textSize="15sp"
+                android:fontFamily="sans-serif-smallcaps"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="Next"
@@ -166,5 +198,13 @@
         </android.support.v7.widget.CardView>
 
     </GridLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/recyclerview"
+        android:visibility="gone">
+
+    </android.support.v7.widget.RecyclerView>
 
 </LinearLayout>
