@@ -1,38 +1,18 @@
 package com.example.sasuke.dailysuvichar.activity;
 
-import android.content.Context;
-import android.content.Intent;
-import android.support.v4.app.Fragment;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 
-import com.example.sasuke.dailysuvichar.fragment.SelectFragment;
+import com.example.sasuke.dailysuvichar.R;
 
-/**
- * Created by robinkamboj on 11/05/17.
- */
+import butterknife.ButterKnife;
 
-public class SelectActivity extends SingleFragmentActivity{
+public class SelectActivity extends BaseActivity{
 
     @Override
-    protected Fragment createFragment() {
-        return SelectFragment.newInstance();
-    }
-
-    @Override
-    protected String setActionBarTitle() {
-        return null;
-    }
-
-    @Override
-    protected boolean showActionBar() {
-        return false;
-    }
-
-    @Override
-    protected int setActionBarColor() {
-        return 0;
-    }
-
-    public static Intent newIntent(Context context) {
-        return new Intent(context, HomeActivity.class);
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_select);
+        ButterKnife.bind(this);
     }
 }

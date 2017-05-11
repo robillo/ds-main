@@ -10,6 +10,7 @@
     <dimen name="font_small">11sp</dimen>
     <dimen name="font_smaller">9sp</dimen>
     <dimen name="font_smallest">4sp</dimen>
+    <dimen name="app_bar_elevation">8sp</dimen>
 
     <dimen name="drawer_icon_size">25dp</dimen>
 
