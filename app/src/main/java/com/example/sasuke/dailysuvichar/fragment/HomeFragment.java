@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.activity.SelectActivity;
+import com.example.sasuke.dailysuvichar.activity.SelectPhotoActivity;
 import com.example.sasuke.dailysuvichar.event.DoubleTabEvent;
 import com.example.sasuke.dailysuvichar.models.Photo;
 import com.example.sasuke.dailysuvichar.models.Status;
@@ -141,7 +142,7 @@ public class HomeFragment extends BaseFragment {
         items.add(status);
 
         photo = new Photo();
-        photo.setPhoto(R.drawable.astrology);
+        photo.setPhotoURL(R.drawable.astrology);
         items.add(photo);
 
         video = new Video("", "-2eiKIUyTKk", "");
@@ -155,7 +156,7 @@ public class HomeFragment extends BaseFragment {
         items.add(status);
 
         photo = new Photo();
-        photo.setPhoto(R.drawable.ayurveda);
+        photo.setPhotoURL(R.drawable.ayurveda);
         items.add(photo);
 
         video = new Video("", "-2eiKIUyTKk", "");
@@ -170,7 +171,7 @@ public class HomeFragment extends BaseFragment {
         items.add(status);
 
         photo = new Photo();
-        photo.setPhoto(R.drawable.health);
+        photo.setPhotoURL(R.drawable.health);
         items.add(photo);
 
         video = new Video("", "R_HNRK9t3lI", "");
@@ -185,7 +186,7 @@ public class HomeFragment extends BaseFragment {
         items.add(status);
 
         photo = new Photo();
-        photo.setPhoto(R.drawable.yoga);
+        photo.setPhotoURL(R.drawable.yoga);
         items.add(photo);
 
         video = new Video("", "R_HNRK9t3lI", "");
@@ -196,14 +197,14 @@ public class HomeFragment extends BaseFragment {
 //        items.add(status);
 
         photo = new Photo();
-        photo.setPhoto(R.drawable.motivation);
+        photo.setPhotoURL(R.drawable.motivation);
         items.add(photo);
 
         video = new Video("", "R_HNRK9t3lI", "");
         items.add(video);
 
         photo = new Photo();
-        photo.setPhoto(R.drawable.religion);
+        photo.setPhotoURL(R.drawable.religion);
         items.add(photo);
 
         video = new Video("", "R_HNRK9t3lI", "");
@@ -262,8 +263,7 @@ public class HomeFragment extends BaseFragment {
 
     @OnClick(R.id.tv_photo)
     public void uploadImage(){
-        showFileChooser();
-        uploadToFirebase();
+        startActivity(new Intent(getActivity(), SelectPhotoActivity.class));
     }
 
     private void showFileChooser() {
@@ -324,7 +324,6 @@ public class HomeFragment extends BaseFragment {
         }
         else {
             Log.d(TAG, "uploadToFirebase: No file chosen!");
-
         }
     }
 

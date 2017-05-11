@@ -1,6 +1,7 @@
 package com.example.sasuke.dailysuvichar.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
@@ -188,7 +189,8 @@ public class SelectActivity extends BaseActivity {
 
             }
         }
-        Toast.makeText(context, String.valueOf(mSelectedItems.size()), Toast.LENGTH_SHORT).show();
+        Toast.makeText(context,"Post successful!", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(this,HomeActivity.class));
     }
 
 }
