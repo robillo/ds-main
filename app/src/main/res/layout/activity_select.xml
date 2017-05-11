@@ -54,12 +54,17 @@ android:fitsSystemWindows="true">
 
         </android.support.v7.widget.Toolbar>
 
-        <View
+        <EditText
             android:layout_width="match_parent"
             android:layout_height="0sp"
-            android:layout_weight="6">
-        </View>
+            android:layout_weight="6"
+            android:hint="@string/write_something"
+            android:textColor="@color/black"
+            android:gravity="top|left"
+            android:textSize="18dp"
+            android:fontFamily="sans-serif">
 
+        </EditText>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -75,7 +80,8 @@ android:fitsSystemWindows="true">
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0sp"
-            android:layout_weight="4">
+            android:layout_weight="4"
+            >
 
             <include layout="@layout/include_layout"/>
 

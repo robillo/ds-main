@@ -6,9 +6,9 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.GridLayout;
-import android.widget.TextView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,7 +16,6 @@ import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.view.RVTags;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -45,10 +44,9 @@ public class SelectActivity extends BaseActivity{
     GridLayout grid;
     @BindView(R.id.recyclerview)
     RecyclerView recyclerView;
-    @BindView(R.id.submit_subinterests)
-    Button submit;
 
-    private List<String> interests, subInterests, data, mSlectedItems;
+
+    private List<String> interests, subInterests, data, mSelectedItems;
     private Context context;
 
     @Override
@@ -56,11 +54,12 @@ public class SelectActivity extends BaseActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select);
         ButterKnife.bind(this);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         context = getApplicationContext();
         interests = new ArrayList<>();
         subInterests = new ArrayList<>();
-        mSlectedItems = new ArrayList<>();
+        mSelectedItems = new ArrayList<>();
     }
 
     @OnClick(R.id.diet)
@@ -136,20 +135,15 @@ public class SelectActivity extends BaseActivity{
             recyclerView.setVisibility(View.VISIBLE);
             recyclerView.setLayoutManager(new GridLayoutManager(context, 3));
 //            data = fillWithData();
-            recyclerView.setAdapter(new RVTags(context, subInterests, mSlectedItems));
-            submit.setVisibility(View.VISIBLE);
+            recyclerView.setAdapter(new RVTags(context, subInterests, mSelectedItems));
+//            submit.setVisibility(View.VISIBLE);
         }
     }
 
-    @OnClick(R.id.submit_subinterests)
-    public void setSubmit(){
-        if(mSlectedItems.size()<1){
-            Toast.makeText(context, "Please Select Atleast One Subcategory.", Toast.LENGTH_SHORT).show();
-        }
-        else {
-            Toast.makeText(context, " " + mSlectedItems.size(), Toast.LENGTH_SHORT).show();
-        }
-    }
+//    @OnClick(R.id.submit_subinterests)
+//    public void setSubmit(){
+//
+//    }
 
     private void addToSubinterests(String[] temp){
         for(String s: temp){
@@ -167,6 +161,15 @@ public class SelectActivity extends BaseActivity{
             interests.add(temp);
             view.setBackgroundColor(getResources().getColor(R.color.black));
             view.setTextColor(getResources().getColor(R.color.white));
+        }
+    }
+    @OnClick(R.id.btnPost)
+    public void postStatus(){
+        if(mSelectedItems.size()<1){
+            Toast.makeText(context, "Please Select Atleast One Subcategory.", Toast.LENGTH_SHORT).show();
+        }
+        else {
+
         }
     }
 }

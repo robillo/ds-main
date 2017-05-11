@@ -2,11 +2,31 @@ package com.example.sasuke.dailysuvichar.models;
 
 import android.support.annotation.NonNull;
 
+import java.util.ArrayList;
+
 /**
  * Created by Sasuke on 5/7/2017.
  */
 
 public class Status {
+
+    @NonNull
+    private String uid;
+
+    @NonNull
+    private String name;
+
+    @NonNull
+    private String timestamp;
+
+    @NonNull
+    private Integer likes;
+
+    @NonNull
+    private Integer shares;
+
+    @NonNull
+    private ArrayList<Comment> comments;
 
     public Status() {
     }
