@@ -45,6 +45,8 @@ public class SelectActivity extends BaseActivity{
     GridLayout grid;
     @BindView(R.id.recyclerview)
     RecyclerView recyclerView;
+    @BindView(R.id.submit_subinterests)
+    Button submit;
 
     private List<String> interests, subInterests, data;
     private Context context;
@@ -133,16 +135,15 @@ public class SelectActivity extends BaseActivity{
             recyclerView.setVisibility(View.VISIBLE);
             recyclerView.setLayoutManager(new GridLayoutManager(context, 3));
 //            data = fillWithData();
+            submit.setVisibility(View.VISIBLE);
             recyclerView.setAdapter(new RVTags(context, subInterests));
         }
     }
 
-//    private List<String> fillWithData(){
-//        data = new ArrayList<>();
-//        for(String s: subInterests){
-//
-//        }
-//    }
+    @OnClick(R.id.submit_subinterests)
+    public void setSubmit(){
+
+    }
 
     private void addToSubinterests(String[] temp){
         for(String s: temp){
@@ -154,10 +155,12 @@ public class SelectActivity extends BaseActivity{
         if(interests.contains(temp)){
             interests.remove(temp);
             view.setBackgroundColor(getResources().getColor(R.color.white));
+            view.setTextColor(getResources().getColor(R.color.black));
         }
         else {
             interests.add(temp);
-            view.setBackgroundColor(getResources().getColor(R.color.very_light_transparent));
+            view.setBackgroundColor(getResources().getColor(R.color.black));
+            view.setTextColor(getResources().getColor(R.color.white));
         }
     }
 }

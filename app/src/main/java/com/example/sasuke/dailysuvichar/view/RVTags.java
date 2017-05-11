@@ -17,7 +17,7 @@ public class RVTags extends RecyclerView.Adapter<VHTags>{
 
     private Context context, pContext;
     private List<String> list = Collections.emptyList();
-    private ArrayList<String> mSelectedItems = new ArrayList<>();
+    public ArrayList<String> mSelectedItems = new ArrayList<>();
     private Boolean[] isSelected;
 
     public RVTags(Context context, List<String> list) {

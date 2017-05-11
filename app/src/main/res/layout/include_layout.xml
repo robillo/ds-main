@@ -29,7 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="Diet"
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/black"
                 android:id="@+id/diet"
                 android:background="?attr/selectableItemBackground"/>
 
@@ -53,7 +53,7 @@
                 android:layout_height="match_parent"
                 android:text="Yoga"
                 android:id="@+id/yoga"
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/black"
                 android:background="?attr/selectableItemBackground"/>
 
         </android.support.v7.widget.CardView>
@@ -76,7 +76,7 @@
                 android:layout_height="match_parent"
                 android:text="Health"
                 android:id="@+id/health"
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/black"
                 android:background="?attr/selectableItemBackground"/>
 
         </android.support.v7.widget.CardView>
@@ -99,7 +99,7 @@
                 android:layout_height="match_parent"
                 android:text="Religion"
                 android:id="@+id/religion"
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/black"
                 android:background="?attr/selectableItemBackground"/>
 
         </android.support.v7.widget.CardView>
@@ -122,7 +122,7 @@
                 android:layout_height="match_parent"
                 android:text="Motivation"
                 android:id="@+id/motivation"
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/black"
                 android:background="?attr/selectableItemBackground"/>
 
         </android.support.v7.widget.CardView>
@@ -145,7 +145,7 @@
                 android:layout_height="match_parent"
                 android:text="Ayurveda"
                 android:id="@+id/ayurveda"
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/black"
                 android:background="?attr/selectableItemBackground"/>
 
         </android.support.v7.widget.CardView>
@@ -168,7 +168,7 @@
                 android:layout_height="match_parent"
                 android:text="Astrology"
                 android:id="@+id/astrology"
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/black"
                 android:background="?attr/selectableItemBackground"/>
 
         </android.support.v7.widget.CardView>
@@ -199,9 +199,21 @@
 
     </GridLayout>
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/black"
+        android:textStyle="bold"
+        android:visibility="gone"
+        android:text="Submit Interest Category"
+        android:layout_gravity="bottom"
+        android:id="@+id/submit_subinterests"
+        android:fontFamily="sans-serif-smallcaps"
+        android:textColor="@color/white"/>
+
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/recyclerview"
         android:visibility="gone">
 
