@@ -140,11 +140,6 @@ public class SelectActivity extends BaseActivity{
         }
     }
 
-//    @OnClick(R.id.submit_subinterests)
-//    public void setSubmit(){
-//
-//    }
-
     private void addToSubinterests(String[] temp){
         for(String s: temp){
             subInterests.add(s);
