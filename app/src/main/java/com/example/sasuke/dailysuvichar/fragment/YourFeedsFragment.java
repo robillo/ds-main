@@ -60,7 +60,7 @@ import me.drakeet.multitype.MultiTypeAdapter;
 
 import static android.app.Activity.RESULT_OK;
 
-public class YourFeedsFragment  extends BaseFragment {
+public class YourFeedsFragment extends BaseFragment {
 
     private MultiTypeAdapter mAdapter;
 
@@ -90,6 +90,7 @@ public class YourFeedsFragment  extends BaseFragment {
     private Animation slide_up;
     private int CHECK = 1;
     private HashMap<String, Boolean> isDone;
+    private HashMap<String, Boolean> isPhotoDone;
 
     private static final int SECOND_MILLIS = 1000;
     private static final int MINUTE_MILLIS = 60 * SECOND_MILLIS;
@@ -141,7 +142,8 @@ public class YourFeedsFragment  extends BaseFragment {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        fetchDataFromFirebase();
+                        fetchStatusFromFirebase();
+                        fetchPhotosFromFirebase();
 
                         mPullToRefresh.setRefreshing(false);
                     }
@@ -165,9 +167,10 @@ public class YourFeedsFragment  extends BaseFragment {
                 Log.d(TAG, "onDataChange: SUBINTS " + dataSnapshot.child("selectedSubInterests"));
                 Log.d(TAG, "onDataChange: SUBINTS " + dataSnapshot.getChildrenCount());
 //                User user = dataSnapshot.getValue(User.class);
-                Log.d(TAG, "onDataChange: INTTTT "+dataSnapshot.child("selectedSubInterests").getValue());
+                Log.d(TAG, "onDataChange: INTTTT " + dataSnapshot.child("selectedSubInterests").getValue());
                 mSelectedSubInterests.addAll((Collection<? extends String>) dataSnapshot.child("selectedSubInterests").getValue());
-                fetchDataFromFirebase();
+                fetchStatusFromFirebase();
+                fetchPhotosFromFirebase();
             }
 
             @Override
@@ -175,7 +178,8 @@ public class YourFeedsFragment  extends BaseFragment {
             }
         });
 
-        fetchDataFromFirebase();
+        fetchStatusFromFirebase();
+        fetchPhotosFromFirebase();
 
 //        status = new Status();
 //        status.setStatus("Watching bahubali 2 with Aditya Tyagi and 2 others at PVR.");
@@ -283,56 +287,80 @@ public class YourFeedsFragment  extends BaseFragment {
 
     }
 
-    private void fetchDataFromFirebase() {
 
-        isDone= new HashMap<>();
+    private void fetchPhotosFromFirebase() {
+
+        isPhotoDone = new HashMap<>();
+
+        mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("users").child(mFirebaseUser.getUid()).child("posts");
+        mStorageReference = FirebaseStorage.getInstance().getReference("posts").child("images");
+
+        mDatabaseReferencePosts.child("photo").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    Photo photoSnap = postSnapshot.getValue(Photo.class);
+                    photoSnap.setStorageReference(mStorageReference.child(postSnapshot.getKey()));
+
+                    if (!isPhotoDone.containsKey(postSnapshot.getKey())) {
+
+                        items.add(photoSnap);
+                        isPhotoDone.put(postSnapshot.getKey(), true);
+                    }
+                    mAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d(TAG, "onCancelled: " + databaseError.getMessage());
+            }
+        });
+
+
+        Log.d(TAG, "fetchStatusFromFirebase: " + items.size());
+        mAdapter.setItems(items);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    private void fetchStatusFromFirebase() {
+
+        isDone = new HashMap<>();
 
         items = new Items();
-        if (mSelectedSubInterests.size() > 0) {
-            Log.d(TAG, "fetchDataFromFirebase: SIZE " +mSelectedSubInterests.size());
-            Log.d(TAG, "fetchDataFromFirebase: "+mSelectedSubInterests);
+        Log.d(TAG, "fetchStatusFromFirebase: SIZE " + mSelectedSubInterests.size());
+        Log.d(TAG, "fetchStatusFromFirebase: " + mSelectedSubInterests);
 
-            mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("tags");
-            for (String subInt : mSelectedSubInterests) {
-                Log.d(TAG, "fetchDataFromFirebase: INSIDE FOR" );
+        mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("users").child(mFirebaseUser.getUid()).child("posts");
 
 //                mDatabaseReferencePosts.child(subInt).child("status");
-
-                mDatabaseReferencePosts.child(subInt).child("status").addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-
-                        Log.i(TAG, "onDataChange2222: " + dataSnapshot.getValue());
-                        Log.i(TAG, "onDataChange2222: " + dataSnapshot.getChildrenCount());
+        Log.d(TAG, "fetchStatusFromFirebase: URLL " + mDatabaseReferencePosts);
+        mDatabaseReferencePosts.child("status").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
 
 //                        Log.i(TAG, "onDataChange: "+mUserList.size()+" ");
 
-                        for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                            Status status = postSnapshot.getValue(Status.class);
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    Status status = postSnapshot.getValue(Status.class);
 
-                            if(!isDone.containsKey(postSnapshot.getKey())) {
-                                items.add(status);
-                                isDone.put(postSnapshot.getKey(),true);
-                            }
-                            mAdapter.notifyDataSetChanged();
-//                            mUserList.add(user);
-//                            if(adapter!=null){
-//                                adapter.notifyDataSetChanged();
-//                            }
-                        }
-
-
+                    if (!isDone.containsKey(postSnapshot.getKey())) {
+                        items.add(status);
+                        isDone.put(postSnapshot.getKey(), true);
                     }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        Log.d(TAG, "onCancelled: " + databaseError.getMessage());
-                    }
-                });
-
+                    mAdapter.notifyDataSetChanged();
+                }
             }
-        }
-        Log.d(TAG, "fetchDataFromFirebase: " + items.size());
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d(TAG, "onCancelled: " + databaseError.getMessage());
+            }
+        });
+
+
+        Log.d(TAG, "fetchStatusFromFirebase: " + items.size());
         mAdapter.setItems(items);
         mAdapter.notifyDataSetChanged();
     }
