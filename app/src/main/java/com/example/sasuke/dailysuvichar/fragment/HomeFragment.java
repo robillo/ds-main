@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -18,6 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cleveroad.pulltorefresh.firework.FireworkyPullToRefreshLayout;
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.activity.SelectActivity;
 import com.example.sasuke.dailysuvichar.event.DoubleTabEvent;
@@ -66,6 +68,8 @@ public class HomeFragment extends BaseFragment {
     RelativeLayout mRlMenu;
     @BindView(R.id.tv_status)
     TextView status;
+    @BindView(R.id.pullToRefresh)
+    FireworkyPullToRefreshLayout mPullToRefresh;
 
     private LinearLayoutManager mLayoutManager;
     private FirebaseUser mFirebaseUser;
@@ -114,6 +118,21 @@ public class HomeFragment extends BaseFragment {
         mAdapter.register(Photo.class, new PhotoItemAdapter());
         mAdapter.register(Video.class, new VideoItemAdapter(getActivity()));
         mRvHome.setAdapter(mAdapter);
+
+        mPullToRefresh.setOnRefreshListener(new FireworkyPullToRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mPullToRefresh.setRefreshing(false);
+                    }
+                }, 5000);
+            }
+        });
 
         Items items = new Items();
         HashMap<String, Status> statuses = new HashMap<>();
