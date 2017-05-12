@@ -289,7 +289,7 @@ public class SelectPhotoActivity extends BaseActivity{
                             mFirebaseUser.getUid(), mSelectedItems, downloadUrl);
 
                     for (String subInt : mSelectedItems) {
-                        mDatabaseReferenceTag.child(subInt).child("photo").child(postID).setValue(photo);
+                        mDatabaseReferenceTag.child(subInt.toLowerCase()).child("photo").child(postID).setValue(photo);
                     }
 
                     mDatabaseReferenceUser = FirebaseDatabase.getInstance().getReference();
@@ -305,8 +305,6 @@ public class SelectPhotoActivity extends BaseActivity{
                 Toast.makeText(this, "No file chosen", Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "uploadToFirebase: No file chosen!");
             }
-
-
         }
     }
 

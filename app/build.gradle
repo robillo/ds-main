@@ -55,6 +55,8 @@ dependencies {
     compile "com.google.firebase:firebase-storage:$FIREBASE_VERSION"
     compile "com.google.firebase:firebase-database:$FIREBASE_VERSION"
     compile "com.google.android.gms:play-services-auth:$FIREBASE_VERSION"
+    compile 'com.firebaseui:firebase-ui-storage:0.6.0'
+
 
     //OTHERS
     compile 'com.android.support:multidex:1.0.1'

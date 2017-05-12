@@ -90,6 +90,7 @@ public class HomeFragment extends BaseFragment {
     private Animation slide_up;
     private int CHECK = 1;
     private HashMap<String, Boolean> isDone;
+    private HashMap<String, Boolean> isPhotoDone;
 
     private static final int SECOND_MILLIS = 1000;
     private static final int MINUTE_MILLIS = 60 * SECOND_MILLIS;
@@ -141,7 +142,8 @@ public class HomeFragment extends BaseFragment {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        fetchDataFromFirebase();
+                        fetchStatusFromFirebase();
+                        fetchPhotosFromFirebase();
 
                         mPullToRefresh.setRefreshing(false);
                     }
@@ -167,7 +169,8 @@ public class HomeFragment extends BaseFragment {
 //                User user = dataSnapshot.getValue(User.class);
                 Log.d(TAG, "onDataChange: INTTTT "+dataSnapshot.child("selectedSubInterests").getValue());
                 mSelectedSubInterests.addAll((Collection<? extends String>) dataSnapshot.child("selectedSubInterests").getValue());
-                fetchDataFromFirebase();
+                fetchStatusFromFirebase();
+                fetchPhotosFromFirebase();
             }
 
             @Override
@@ -175,7 +178,9 @@ public class HomeFragment extends BaseFragment {
             }
         });
 
-        fetchDataFromFirebase();
+        fetchStatusFromFirebase();
+
+        fetchPhotosFromFirebase();
 
 //        status = new Status();
 //        status.setStatus("Watching bahubali 2 with Aditya Tyagi and 2 others at PVR.");
@@ -283,18 +288,61 @@ public class HomeFragment extends BaseFragment {
 
     }
 
-    private void fetchDataFromFirebase() {
+    private void fetchPhotosFromFirebase() {
+
+        isPhotoDone= new HashMap<>();
+
+//        items = new Items();
+        if (mSelectedSubInterests.size() > 0) {
+
+            mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("tags");
+            mStorageReference = FirebaseStorage.getInstance().getReference("posts").child("images");
+
+            for (String subInt : mSelectedSubInterests) {
+
+                mDatabaseReferencePosts.child(subInt).child("photo").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                        for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                            Photo photoSnap = postSnapshot.getValue(Photo.class);
+                            photoSnap.setStorageReference(mStorageReference.child(postSnapshot.getKey()));
+
+                            if(!isPhotoDone.containsKey(postSnapshot.getKey())) {
+                                Log.d(TAG, "onDataChange: KEY "+postSnapshot.getKey());
+
+                                items.add(photoSnap);
+                                isPhotoDone.put(postSnapshot.getKey(),true);
+                            }
+                            mAdapter.notifyDataSetChanged();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.d(TAG, "onCancelled: " + databaseError.getMessage());
+                    }
+                });
+
+            }
+        }
+        Log.d(TAG, "fetchStatusFromFirebase: " + items.size());
+        mAdapter.setItems(items);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    private void fetchStatusFromFirebase() {
 
         isDone= new HashMap<>();
 
         items = new Items();
         if (mSelectedSubInterests.size() > 0) {
-            Log.d(TAG, "fetchDataFromFirebase: SIZE " +mSelectedSubInterests.size());
-            Log.d(TAG, "fetchDataFromFirebase: "+mSelectedSubInterests);
+            Log.d(TAG, "fetchStatusFromFirebase: SIZE " +mSelectedSubInterests.size());
+            Log.d(TAG, "fetchStatusFromFirebase: "+mSelectedSubInterests);
 
             mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("tags");
             for (String subInt : mSelectedSubInterests) {
-                Log.d(TAG, "fetchDataFromFirebase: INSIDE FOR" );
+                Log.d(TAG, "fetchStatusFromFirebase: INSIDE FOR" );
 
 //                mDatabaseReferencePosts.child(subInt).child("status");
 
@@ -332,7 +380,7 @@ public class HomeFragment extends BaseFragment {
 
             }
         }
-        Log.d(TAG, "fetchDataFromFirebase: " + items.size());
+        Log.d(TAG, "fetchStatusFromFirebase: " + items.size());
         mAdapter.setItems(items);
         mAdapter.notifyDataSetChanged();
     }

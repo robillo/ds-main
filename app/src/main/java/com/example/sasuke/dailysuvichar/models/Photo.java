@@ -3,6 +3,8 @@ package com.example.sasuke.dailysuvichar.models;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 
+import com.google.firebase.storage.StorageReference;
+
 import java.util.ArrayList;
 
 /**
@@ -19,6 +21,18 @@ public class Photo {
     private String language;
     @NonNull
     private String encoding;
+
+    @NonNull
+    private StorageReference storageReference;
+
+    @NonNull
+    public StorageReference getStorageReference() {
+        return storageReference;
+    }
+
+    public void setStorageReference(@NonNull StorageReference storageReference) {
+        this.storageReference = storageReference;
+    }
 
     public Photo(@NonNull String name, @NonNull Long size, @NonNull String language, @NonNull String encoding, @NonNull String bucket, @NonNull String user, @NonNull Long timestamp, @NonNull Integer likes, @NonNull Integer shares, @NonNull ArrayList<Comment> comments, @NonNull String caption, @NonNull String uid, @NonNull ArrayList<String> tags, @NonNull Uri photoURL) {
         this.name = name;
