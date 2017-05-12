@@ -13,10 +13,6 @@ import com.example.sasuke.dailysuvichar.view.PhotoViewHolder;
 
 import me.drakeet.multitype.ItemViewBinder;
 
-/**
- * Created by Sasuke on 5/7/2017.
- */
-
 public class PhotoItemAdapter extends ItemViewBinder<Photo, PhotoViewHolder> {
 
     private Context context;

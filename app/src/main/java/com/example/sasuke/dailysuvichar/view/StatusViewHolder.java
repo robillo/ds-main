@@ -3,6 +3,9 @@ package com.example.sasuke.dailysuvichar.view;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
@@ -12,10 +15,6 @@ import com.like.OnLikeListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-/**
- * Created by Sasuke on 5/7/2017.
- */
 
 public class StatusViewHolder extends RecyclerView.ViewHolder {
 
@@ -33,6 +32,14 @@ public class StatusViewHolder extends RecyclerView.ViewHolder {
     LikeButton mBtnLike;
     @BindView(R.id.tv_like)
     TextView tv_like;
+    @BindView(R.id.comment)
+    public LinearLayout comment;
+    @BindView(R.id.invisible)
+    public LinearLayout invisible;
+    @BindView(R.id.edittext)
+    public EditText editText;
+    @BindView(R.id.post_comment)
+    public Button postComment;
 
     public StatusViewHolder(@NonNull View itemView) {
         super(itemView);

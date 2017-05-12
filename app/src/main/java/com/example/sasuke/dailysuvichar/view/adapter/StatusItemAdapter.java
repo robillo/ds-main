@@ -49,6 +49,12 @@ public class StatusItemAdapter extends ItemViewBinder<Status, StatusViewHolder> 
                 }
             }
         });
+        holder.comment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.invisible.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     public static String getTimeAgo(long time) {

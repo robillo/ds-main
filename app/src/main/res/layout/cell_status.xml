@@ -53,5 +53,34 @@
         android:padding="4dp">
 
         <include layout="@layout/button_like_comment" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/invisible">
+
+            <EditText
+                android:layout_width="0sp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:id="@+id/edittext"
+                android:hint="Post Comment Here..."/>
+
+            <Button
+                android:layout_width="0sp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:id="@+id/post_comment"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-smallcaps"
+                android:text="Submit Comment"
+                android:background="@color/colorAccent"
+                android:textColor="@color/white"/>
+
+        </LinearLayout>
+
     </LinearLayout>
 </LinearLayout>
