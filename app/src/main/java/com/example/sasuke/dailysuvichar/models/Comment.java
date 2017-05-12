@@ -7,6 +7,22 @@ package com.example.sasuke.dailysuvichar.models;
 public class Comment {
     String commenterName;
     String commentDescription;
+    Integer commentLikes;
+
+    public Integer getCommentLikes() {
+        return commentLikes;
+    }
+
+    public void setCommentLikes(Integer commentLikes) {
+        this.commentLikes = commentLikes;
+    }
+
+    public Comment(String commenterName, String commentDescription, Integer commentLikes) {
+
+        this.commenterName = commenterName;
+        this.commentDescription = commentDescription;
+        this.commentLikes = commentLikes;
+    }
 
     public Comment(String commenterName, String commentDescription) {
         this.commenterName = commenterName;

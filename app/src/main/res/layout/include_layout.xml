@@ -8,6 +8,7 @@
     android:background="@color/colorAccent">
 
     <GridLayout
+        android:isScrollContainer="false"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/grid"
@@ -200,22 +201,11 @@
 
     </GridLayout>
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/black"
-        android:textStyle="bold"
-        android:visibility="gone"
-        android:text="Submit Interest Category"
-        android:layout_gravity="bottom"
-        android:id="@+id/submit_subinterests"
-        android:fontFamily="sans-serif-smallcaps"
-        android:textColor="@color/white"/>
-
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/recyclerview"
+        android:isScrollContainer="false"
         android:visibility="gone">
 
     </android.support.v7.widget.RecyclerView>

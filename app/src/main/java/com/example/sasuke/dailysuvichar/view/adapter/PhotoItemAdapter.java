@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.models.Photo;
 import com.example.sasuke.dailysuvichar.view.PhotoViewHolder;
-import com.squareup.picasso.Picasso;
 
 import me.drakeet.multitype.ItemViewBinder;
 
