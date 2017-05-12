@@ -144,6 +144,7 @@ public class SelectActivity extends BaseActivity {
             recyclerView.setVisibility(View.VISIBLE);
             recyclerView.setLayoutManager(new GridLayoutManager(context, 3));
 //            data = fillWithData();
+            subInterests.add("Others");
             recyclerView.setAdapter(new RVTags(context, subInterests, mSelectedItems));
 //            submit.setVisibility(View.VISIBLE);
         }
