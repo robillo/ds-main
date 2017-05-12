@@ -60,7 +60,7 @@ import me.drakeet.multitype.MultiTypeAdapter;
 
 import static android.app.Activity.RESULT_OK;
 
-public class HomeFragment extends BaseFragment {
+public class YourFeedsFragment  extends BaseFragment {
 
     private MultiTypeAdapter mAdapter;
 
@@ -98,11 +98,11 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.fragment_home;
+        return R.layout.fragment_your_feeds;
     }
 
-    public static HomeFragment newInstance() {
-        return new HomeFragment();
+    public static YourFeedsFragment newInstance() {
+        return new YourFeedsFragment();
     }
 
     @Override

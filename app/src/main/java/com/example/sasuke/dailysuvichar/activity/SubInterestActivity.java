@@ -6,10 +6,6 @@ import android.support.v4.app.Fragment;
 
 import com.example.sasuke.dailysuvichar.fragment.SubInterestFragment;
 
-/**
- * Created by Sasuke on 4/24/2017.
- */
-
 public class SubInterestActivity extends SingleFragmentActivity {
 
     @Override

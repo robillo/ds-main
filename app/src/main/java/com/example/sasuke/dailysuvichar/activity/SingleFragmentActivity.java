@@ -21,7 +21,6 @@ import butterknife.OnClick;
 
 public abstract class SingleFragmentActivity extends BaseActivity {
 
-
     protected abstract Fragment createFragment();
 
     protected abstract String setActionBarTitle();

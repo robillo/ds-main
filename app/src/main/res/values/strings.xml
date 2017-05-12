@@ -230,4 +230,5 @@
     <string name="hindi_text">English Text Accessed</string>
     <string name="select_tags">SELECT TAGS</string>
     <string name="write_something">Write something here...</string>
+    <string name="your_feeds">Your Feeds</string>
 </resources>

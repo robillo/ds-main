@@ -127,6 +127,35 @@
                 android:background="@color/transparent_blue" />
 
             <LinearLayout
+                android:id="@+id/your_feeds"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:gravity="center_vertical"
+                android:padding="10dp">
+
+                <ImageView
+                    android:layout_width="@dimen/drawer_icon_size"
+                    android:layout_height="@dimen/drawer_icon_size"
+                    android:src="@drawable/ic_home"
+                    android:tint="@color/white" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="15dp"
+                    android:text="@string/your_feeds"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:background="@color/transparent_blue" />
+
+            <LinearLayout
                 android:id="@+id/nav_settings"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

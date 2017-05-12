@@ -20,10 +20,6 @@ import java.util.List;
 
 import butterknife.BindView;
 
-/**
- * Created by Sasuke on 4/19/2017.
- */
-
 public class MainFragment extends BaseFragment implements TabBar.OnItemSelect {
 
     @BindView(R.id.tab_bar)
