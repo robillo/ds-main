@@ -2,7 +2,10 @@ package com.example.sasuke.dailysuvichar.view;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.sasuke.dailysuvichar.R;
@@ -13,19 +16,23 @@ import com.squareup.picasso.Picasso;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * Created by Sasuke on 5/7/2017.
- */
 
 public class PhotoViewHolder extends RecyclerView.ViewHolder {
 
     @BindView(R.id.photo)
     public ImageView mIvPhoto;
     @BindView(R.id.button_like)
-    LikeButton mBtnLike;
+    public LikeButton mBtnLike;
     @BindView(R.id.tv_like)
-    TextView tv_like;
-
+    public TextView tv_like;
+    @BindView(R.id.comment)
+    public LinearLayout comment;
+    @BindView(R.id.invisible)
+    public LinearLayout invisible;
+    @BindView(R.id.edittext)
+    public EditText editText;
+    @BindView(R.id.post_comment)
+    public Button postComment;
 
     public PhotoViewHolder(View itemView) {
         super(itemView);
