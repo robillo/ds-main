@@ -65,7 +65,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0sp"
                 android:layout_weight="5"
-                android:background="@color/blue_very_light"
+                android:background="@drawable/gradient"
                 android:contentDescription="@string/app_name" />
 
             <EditText
