@@ -334,7 +334,6 @@ public class YourFeedsFragment extends BaseFragment {
 
         mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("users").child(mFirebaseUser.getUid()).child("posts");
 
-//                mDatabaseReferencePosts.child(subInt).child("status");
         Log.d(TAG, "fetchStatusFromFirebase: URLL " + mDatabaseReferencePosts);
         mDatabaseReferencePosts.child("status").addValueEventListener(new ValueEventListener() {
             @Override
