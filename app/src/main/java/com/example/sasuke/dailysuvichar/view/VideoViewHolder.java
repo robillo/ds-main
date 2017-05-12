@@ -2,6 +2,7 @@ package com.example.sasuke.dailysuvichar.view;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.sasuke.dailysuvichar.R;
 import com.like.LikeButton;
@@ -9,7 +10,6 @@ import com.like.OnLikeListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created by Sasuke on 5/7/2017.
@@ -21,6 +21,9 @@ public class VideoViewHolder extends RecyclerView.ViewHolder {
     public YoutubeWebView mVideoView;
     @BindView(R.id.button_like)
     LikeButton mBtnLike;
+    @BindView(R.id.tv_like)
+    TextView tv_like;
+
 
     public VideoViewHolder(View itemView) {
         super(itemView);
@@ -34,6 +37,16 @@ public class VideoViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void unLiked(LikeButton likeButton) {
                 likeButton.setLiked(false);
+            }
+        });
+        tv_like.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mBtnLike.isLiked()){
+                    mBtnLike.setLiked(false);
+                }else{
+                    mBtnLike.setLiked(true);
+                }
             }
         });
     }

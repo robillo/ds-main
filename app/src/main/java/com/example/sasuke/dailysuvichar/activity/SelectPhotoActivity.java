@@ -236,69 +236,71 @@ public class SelectPhotoActivity extends BaseActivity{
         if (mSelectedItems.size() < 1) {
             Toast.makeText(context, "Please Select Atleast One Subcategory.", Toast.LENGTH_SHORT).show();
         } else {
-            if (filePath != null && etCaption.length()>=1) {
+            if (filePath != null) {
+                if(etCaption.length()>=1) {
+                    progressDialog = new ProgressDialog(this);
+                    progressDialog.setTitle("Uploading");
+                    progressDialog.show();
 
-                progressDialog = new ProgressDialog(this);
-                progressDialog.setTitle("Uploading");
-                progressDialog.show();
+                    mDatabaseReferenceTag = FirebaseDatabase.getInstance().getReference("tags");
+                    final String postID = mDatabaseReferenceTag.push().getKey();
+                    StorageReference riversRef = mStorageReference.child(postID);
+                    riversRef.putFile(filePath)
+                            .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                @Override
+                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-                mDatabaseReferenceTag = FirebaseDatabase.getInstance().getReference("tags");
-                final String postID = mDatabaseReferenceTag.push().getKey();
-                StorageReference riversRef = mStorageReference.child(postID);
-                riversRef.putFile(filePath)
-                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                            @Override
-                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                    Log.d(TAG, "onSuccess: " + taskSnapshot.getMetadata().getSizeBytes());
+                                    Log.d(TAG, "onSuccess: " + taskSnapshot.getDownloadUrl());
 
-                                Log.d(TAG, "onSuccess: "+taskSnapshot.getMetadata().getSizeBytes());
-                                Log.d(TAG, "onSuccess: "+taskSnapshot.getDownloadUrl());
-
-                                size = taskSnapshot.getMetadata().getSizeBytes();
-                                lang = taskSnapshot.getMetadata().getContentLanguage();
-                                encoding = taskSnapshot.getMetadata().getContentEncoding();
-                                bucket = taskSnapshot.getMetadata().getBucket();
-                                downloadUrl = taskSnapshot.getDownloadUrl();
+                                    size = taskSnapshot.getMetadata().getSizeBytes();
+                                    lang = taskSnapshot.getMetadata().getContentLanguage();
+                                    encoding = taskSnapshot.getMetadata().getContentEncoding();
+                                    bucket = taskSnapshot.getMetadata().getBucket();
+                                    downloadUrl = taskSnapshot.getDownloadUrl();
 
 //                            progressDialog.dismiss();
-                                Toast.makeText(SelectPhotoActivity.this, "File Uploaded ", Toast.LENGTH_SHORT).show();
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception exception) {
+                                    Toast.makeText(SelectPhotoActivity.this, "File Uploaded ", Toast.LENGTH_SHORT).show();
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception exception) {
 //                                progressDialog.dismiss();
-                                Toast.makeText(SelectPhotoActivity.this, "Upload Failed. Please Try Again!", Toast.LENGTH_SHORT).show();
-                                Log.d(TAG, "onFailure: " + exception.getMessage());
+                                    Toast.makeText(SelectPhotoActivity.this, "Upload Failed. Please Try Again!", Toast.LENGTH_SHORT).show();
+                                    Log.d(TAG, "onFailure: " + exception.getMessage());
 
-                            }
-                        })
-                        .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                            @Override
-                            public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                                double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
-
-                                progressDialog.setMessage("Uploaded " + ((int) progress) + "%...");
-                            }
-                        });
-
-
-                Photo photo = new Photo("Rishabh Shukla", size,
-                       lang, encoding,
-                        bucket, mFirebaseUser.getEmail(),
-                        System.currentTimeMillis(), 0, 0, null, etCaption.getText().toString(),
-                        mFirebaseUser.getUid(), mSelectedItems, downloadUrl);
+                                }
+                            })
+                            .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                                @Override
+                                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+//                                double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+//
+//                                progressDialog.setMessage("Uploaded " + ((int) progress) + "%...");
+                                }
+                            });
 
 
-                for (String subInt : mSelectedItems) {
-                    mDatabaseReferenceTag.child(subInt).child("photo").child(postID).setValue(photo);
+                    Photo photo = new Photo("Rishabh Shukla", size,
+                            lang, encoding,
+                            bucket, mFirebaseUser.getEmail(),
+                            System.currentTimeMillis(), 0, 0, null, etCaption.getText().toString(),
+                            mFirebaseUser.getUid(), mSelectedItems, downloadUrl);
+
+                    for (String subInt : mSelectedItems) {
+                        mDatabaseReferenceTag.child(subInt).child("photo").child(postID).setValue(photo);
+                    }
+
+                    mDatabaseReferenceUser = FirebaseDatabase.getInstance().getReference();
+                    mDatabaseReferenceUser.child("users").child(mFirebaseUser.getUid()).child("posts").child("photo").push().setValue(photo);
+
+                    Toast.makeText(this, "Post successful!", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(this, HomeActivity.class));
+                    finish();
+                }else{
+                    Toast.makeText(this, "Write a caption", Toast.LENGTH_SHORT).show();
                 }
-
-                mDatabaseReferenceUser = FirebaseDatabase.getInstance().getReference();
-                mDatabaseReferenceUser.child("users").child(mFirebaseUser.getUid()).child("posts").child("photo").push().setValue(photo);
-
-                Toast.makeText(this, "Post successful!", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(this, HomeActivity.class));
-                finish();
             } else {
                 Toast.makeText(this, "No file chosen", Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "uploadToFirebase: No file chosen!");

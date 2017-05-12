@@ -34,8 +34,11 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -46,6 +49,8 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 
 import butterknife.BindView;
@@ -76,16 +81,19 @@ public class HomeFragment extends BaseFragment {
     private FirebaseUser mFirebaseUser;
     private String uid;
     private HashMap<String, String> userStatus;
-    private DatabaseReference mDatabaseReference;
+    private DatabaseReference mDatabaseReference, mDatabaseReferencePosts;
     private StorageReference mStorageReference;
+    private ArrayList<String> mSelectedSubInterests;
 
-    private static  final String TAG = "ROBILLO", STATUS = "status";
+    private static final String TAG = "ROBILLO", STATUS = "status";
     private static final int PICK_IMAGE_REQUEST = 250;
     private Uri filePath;
+    Items items;
 
     private Animation slide_down;
     private Animation slide_up;
     private int CHECK = 1;
+    private HashMap<String, Boolean> isDone;
 
     private static final int SECOND_MILLIS = 1000;
     private static final int MINUTE_MILLIS = 60 * SECOND_MILLIS;
@@ -125,112 +133,133 @@ public class HomeFragment extends BaseFragment {
         mAdapter.register(Video.class, new VideoItemAdapter(getActivity()));
         mRvHome.setAdapter(mAdapter);
 
+        items = new Items();
+        HashMap<String, Status> statuses = new HashMap<>();
+        Status status;
+
         mPullToRefresh.setOnRefreshListener(new FireworkyPullToRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-
 
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
+                        fetchDataFromFirebase();
+
                         mPullToRefresh.setRefreshing(false);
                     }
                 }, 5000);
             }
         });
 
-        Items items = new Items();
-        HashMap<String, Status> statuses = new HashMap<>();
-        Status status;
-
-
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference();
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference("users");
         Log.e(TAG, uid);
         Log.e(TAG, mDatabaseReference.toString());
 
         Photo photo;
         Video video;
 
-        status = new Status();
-        status.setStatus("Watching bahubali 2 with Aditya Tyagi and 2 others at PVR.");
-        mDatabaseReference.child("users").child(uid).child("status").push().setValue(status);
-        statuses.put(mFirebaseUser.getEmail(), status);
-//        status = new Status(mFirebaseUser.getDisplayName(),"Watching bahubali 2 with Aditya Tyagi and 2 others at PVR.");
-//        userStatus.put(status.getUser(), status.getStatus());
-        items.add(status);
+        mSelectedSubInterests = new ArrayList<>();
 
-        photo = new Photo();
-        photo.setPhoto(R.drawable.astrology);
-        items.add(photo);
 
-        video = new Video("", "-2eiKIUyTKk", "");
-        items.add(video);
+        mDatabaseReference.child(mFirebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d(TAG, "onDataChange: SUBINTS " + dataSnapshot.child("selectedSubInterests"));
+                Log.d(TAG, "onDataChange: SUBINTS " + dataSnapshot.getChildrenCount());
+//                User user = dataSnapshot.getValue(User.class);
+                Log.d(TAG, "onDataChange: INTTTT "+dataSnapshot.child("selectedSubInterests").getValue());
+                mSelectedSubInterests.addAll((Collection<? extends String>) dataSnapshot.child("selectedSubInterests").getValue());
+                fetchDataFromFirebase();
+            }
 
-//        status = new Status(mFirebaseUser.getDisplayName(),"ROBILLO");
-//        userStatus.put(status.getUser(), status.getStatus());
-        status = new Status();
-        status.setStatus("ROBILLO");
-        statuses.put(mFirebaseUser.getEmail(), status);
-        items.add(status);
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
 
-        photo = new Photo();
-        photo.setPhoto(R.drawable.ayurveda);
-        items.add(photo);
+        fetchDataFromFirebase();
 
-        video = new Video("", "-2eiKIUyTKk", "");
-        items.add(video);
-
-        status = new Status();
-        status.setStatus("I got a laptop in my back pocket. :) Playing cricket with Jatin Verma and 10 others.");
-        mDatabaseReference.child("users").child(uid).child("status").push().setValue(status);
-        statuses.put(mFirebaseUser.getEmail(), status);
-//        status = new Status(mFirebaseUser.getDisplayName(),"I got a laptop in my back pocket. :)");
-//        userStatus.put(status.getUser(), status.getStatus());
-        items.add(status);
-
-        photo = new Photo();
-        photo.setPhoto(R.drawable.health);
-        items.add(photo);
-
-        video = new Video("", "R_HNRK9t3lI", "");
-        items.add(video);
-
-        status = new Status();
-        status.setStatus("ROBILLO is the username for ROBIN");
-        mDatabaseReference.child("users").child(uid).child("status").push().setValue(status);
-        statuses.put(mFirebaseUser.getEmail(), status);
-//        status = new Status(mFirebaseUser.getDisplayName(),"ROBILLO is the username for ROBIN");
-//        userStatus.put(status.getUser(), status.getStatus());
-        items.add(status);
-
-        photo = new Photo();
-        photo.setPhoto(R.drawable.yoga);
-        items.add(photo);
-
-        video = new Video("", "R_HNRK9t3lI", "");
-        items.add(video);
+//        status = new Status();
+//        status.setStatus("Watching bahubali 2 with Aditya Tyagi and 2 others at PVR.");
+//        mDatabaseReference.child("users").child(uid).child("status").push().setValue(status);
+//        statuses.put(mFirebaseUser.getEmail(), status);
+////        status = new Status(mFirebaseUser.getDisplayName(),"Watching bahubali 2 with Aditya Tyagi and 2 others at PVR.");
+////        userStatus.put(status.getUser(), status.getStatus());
+//        items.add(status);
+//
+//        photo = new Photo();
+//        photo.setPhoto(R.drawable.astrology);
+//        items.add(photo);
+//
+//        video = new Video("", "-2eiKIUyTKk", "");
+//        items.add(video);
+//
+////        status = new Status(mFirebaseUser.getDisplayName(),"ROBILLO");
+////        userStatus.put(status.getUser(), status.getStatus());
+//        status = new Status();
+//        status.setStatus("ROBILLO");
+//        statuses.put(mFirebaseUser.getEmail(), status);
+//        items.add(status);
+//
+//        photo = new Photo();
+//        photo.setPhoto(R.drawable.ayurveda);
+//        items.add(photo);
+//
+//        video = new Video("", "-2eiKIUyTKk", "");
+//        items.add(video);
+//
+//        status = new Status();
+//        status.setStatus("I got a laptop in my back pocket. :) Playing cricket with Jatin Verma and 10 others.");
+//        mDatabaseReference.child("users").child(uid).child("status").push().setValue(status);
+//        statuses.put(mFirebaseUser.getEmail(), status);
+////        status = new Status(mFirebaseUser.getDisplayName(),"I got a laptop in my back pocket. :)");
+////        userStatus.put(status.getUser(), status.getStatus());
+//        items.add(status);
+//
+//        photo = new Photo();
+//        photo.setPhoto(R.drawable.health);
+//        items.add(photo);
+//
+//        video = new Video("", "R_HNRK9t3lI", "");
+//        items.add(video);
+//
+//        status = new Status();
+//        status.setStatus("ROBILLO is the username for ROBIN");
+//        mDatabaseReference.child("users").child(uid).child("status").push().setValue(status);
+//        statuses.put(mFirebaseUser.getEmail(), status);
+////        status = new Status(mFirebaseUser.getDisplayName(),"ROBILLO is the username for ROBIN");
+////        userStatus.put(status.getUser(), status.getStatus());
+//        items.add(status);
+//
+//        photo = new Photo();
+//        photo.setPhoto(R.drawable.yoga);
+//        items.add(photo);
+//
+//        video = new Video("", "R_HNRK9t3lI", "");
+//        items.add(video);
 
 //        status = new Status(mFirebaseUser.getDisplayName(),"RISHZ is the username for Rishabh");
 //        userStatus.put(status.getUser(), status.getStatus());
 //        items.add(status);
-
-        photo = new Photo();
-        photo.setPhoto(R.drawable.motivation);
-        items.add(photo);
-
-        video = new Video("", "R_HNRK9t3lI", "");
-        items.add(video);
-
-        photo = new Photo();
-        photo.setPhoto(R.drawable.religion);
-        items.add(photo);
-
-        video = new Video("", "R_HNRK9t3lI", "");
-        items.add(video);
-
-        mAdapter.setItems(items);
-        mAdapter.notifyDataSetChanged();
+//
+//        photo = new Photo();
+//        photo.setPhoto(R.drawable.motivation);
+//        items.add(photo);
+//
+//        video = new Video("", "R_HNRK9t3lI", "");
+//        items.add(video);
+//
+//        photo = new Photo();
+//        photo.setPhoto(R.drawable.religion);
+//        items.add(photo);
+//
+//        video = new Video("", "R_HNRK9t3lI", "");
+//        items.add(video);
+//
+//        mAdapter.setItems(items);
+//        mAdapter.notifyDataSetChanged();
 
 //        mRvHome.addOnScrollListener(new RecyclerView.OnScrollListener() {
 //            @Override
@@ -258,8 +287,62 @@ public class HomeFragment extends BaseFragment {
 
     }
 
+    private void fetchDataFromFirebase() {
+
+        isDone= new HashMap<>();
+
+        items = new Items();
+        if (mSelectedSubInterests.size() > 0) {
+            Log.d(TAG, "fetchDataFromFirebase: SIZE " +mSelectedSubInterests.size());
+            Log.d(TAG, "fetchDataFromFirebase: "+mSelectedSubInterests);
+
+            mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("tags");
+            for (String subInt : mSelectedSubInterests) {
+                Log.d(TAG, "fetchDataFromFirebase: INSIDE FOR" );
+
+//                mDatabaseReferencePosts.child(subInt).child("status");
+
+                mDatabaseReferencePosts.child(subInt).child("status").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                        Log.i(TAG, "onDataChange2222: " + dataSnapshot.getValue());
+                        Log.i(TAG, "onDataChange2222: " + dataSnapshot.getChildrenCount());
+
+//                        Log.i(TAG, "onDataChange: "+mUserList.size()+" ");
+
+                        for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                            Status status = postSnapshot.getValue(Status.class);
+
+                            if(!isDone.containsKey(postSnapshot.getKey())) {
+                                items.add(status);
+                                isDone.put(postSnapshot.getKey(),true);
+                            }
+                            mAdapter.notifyDataSetChanged();
+//                            mUserList.add(user);
+//                            if(adapter!=null){
+//                                adapter.notifyDataSetChanged();
+//                            }
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.d(TAG, "onCancelled: " + databaseError.getMessage());
+                    }
+                });
+
+            }
+        }
+        Log.d(TAG, "fetchDataFromFirebase: " + items.size());
+        mAdapter.setItems(items);
+        mAdapter.notifyDataSetChanged();
+    }
+
     @OnClick(R.id.tv_status)
-    public void intent(){
+    public void intent() {
         startActivity(new Intent(getActivity(), SelectActivity.class));
     }
 
@@ -281,7 +364,7 @@ public class HomeFragment extends BaseFragment {
     }
 
     @OnClick(R.id.tv_photo)
-    public void uploadImage(){
+    public void uploadImage() {
         startActivity(new Intent(getActivity(), SelectPhotoActivity.class));
     }
 
@@ -307,7 +390,7 @@ public class HomeFragment extends BaseFragment {
         }
     }
 
-    private void uploadToFirebase(){
+    private void uploadToFirebase() {
         if (filePath != null) {
             final ProgressDialog progressDialog = new ProgressDialog(getActivity());
             progressDialog.setTitle("Uploading");
@@ -328,7 +411,7 @@ public class HomeFragment extends BaseFragment {
                         public void onFailure(@NonNull Exception exception) {
                             progressDialog.dismiss();
 
-                            Log.d(TAG, "onFailure: "+exception.getMessage());
+                            Log.d(TAG, "onFailure: " + exception.getMessage());
 
                         }
                     })
@@ -340,8 +423,7 @@ public class HomeFragment extends BaseFragment {
                             progressDialog.setMessage("Uploaded " + ((int) progress) + "%...");
                         }
                     });
-        }
-        else {
+        } else {
             Log.d(TAG, "uploadToFirebase: No file chosen!");
         }
     }

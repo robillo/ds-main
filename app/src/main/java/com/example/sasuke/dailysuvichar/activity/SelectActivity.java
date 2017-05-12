@@ -181,17 +181,18 @@ public class SelectActivity extends BaseActivity {
                 mDatabaseReferenceTag = FirebaseDatabase.getInstance().getReference("tags");
                 String postID = mDatabaseReferenceTag.push().getKey();
                 for(String subInt: mSelectedItems){
-                    mDatabaseReferenceTag.child(subInt).child("status").child(postID).setValue(status);
+                    mDatabaseReferenceTag.child(subInt.toLowerCase()).child("status").child(postID).setValue(status);
                 }
 
                 mDatabaseReferenceUser = FirebaseDatabase.getInstance().getReference();
                 mDatabaseReferenceUser.child("users").child(mFirebaseUser.getUid()).child("posts").child("status").push().setValue(status);
 
+                Toast.makeText(context,"Post successful!", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this,HomeActivity.class));
+                finish();
             }
         }
-        Toast.makeText(context,"Post successful!", Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(this,HomeActivity.class));
-        finish();
+
     }
 
 }
