@@ -312,7 +312,9 @@ public class SelectPhotoActivity extends BaseActivity{
 
     @Override
     protected void onDestroy() {
-        progressDialog.dismiss();
+        if(progressDialog!=null) {
+            progressDialog.dismiss();
+        }
         super.onDestroy();
     }
 }
