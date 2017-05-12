@@ -54,6 +54,49 @@
 
         </android.support.v7.widget.Toolbar>
 
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/colorAccent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Language:"
+                android:textColor="@color/white"
+                android:layout_gravity="start"
+                android:fontFamily="sans-serif-smallcaps"
+                android:textSize="15sp"
+                android:padding="5sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="English"
+                android:layout_marginStart="35sp"
+                android:textColor="@color/white"
+                android:fontFamily="sans-serif-smallcaps"
+                android:textSize="15sp"
+                android:padding="5sp"/>
+
+            <Switch
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hindi"
+                android:textColor="@color/white"
+                android:fontFamily="sans-serif-smallcaps"
+                android:textSize="15sp"
+                android:padding="5sp"/>
+
+        </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0sp"
