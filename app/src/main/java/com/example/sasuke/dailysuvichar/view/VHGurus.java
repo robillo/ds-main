@@ -49,6 +49,7 @@ public class VHGurus extends RecyclerView.ViewHolder{
         badge.show();
     }
 
+
     public void setImage(StorageReference storageReference, Context ctx) {
 //        Picasso.with(itemView.getContext()).load(photo).fit().into(mIvPhoto);
         if(storageReference!=null) {
