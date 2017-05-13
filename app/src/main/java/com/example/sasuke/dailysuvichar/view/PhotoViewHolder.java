@@ -115,8 +115,9 @@ public class PhotoViewHolder extends RecyclerView.ViewHolder {
         }
     }
 
-    public void fullScreenIntent(Bitmap bitmap){
+    public void fullScreenIntent(String path){
         Intent i = new Intent(context, FullScreenActivity.class);
+        i.putExtra("path", path);
         context.startActivity(i);
     }
 }

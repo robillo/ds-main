@@ -31,8 +31,9 @@ public class FullScreenActivity extends BaseActivity{
 //        drawable = new BitmapDrawable(getResources(), bitmap);
 //
 //        BigImageView bigImageView = (BigImageView) findViewById(R.id.mBigImage);
+        String path = getIntent().getStringExtra("path");
         Glide.with(getApplicationContext())
-                .load(bitmap)
+                .load(path)
                 .into((ImageView) findViewById(R.id.imageView));
     }
 }
