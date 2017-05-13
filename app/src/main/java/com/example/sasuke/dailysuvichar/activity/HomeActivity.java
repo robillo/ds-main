@@ -16,7 +16,6 @@ import android.widget.Toast;
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.fragment.MainFragment;
 import com.example.sasuke.dailysuvichar.fragment.NotificationFragment;
-import com.example.sasuke.dailysuvichar.fragment.ProfileFragment;
 import com.example.sasuke.dailysuvichar.fragment.SettingsFragment;
 import com.example.sasuke.dailysuvichar.fragment.YourFeedsFragment;
 import com.example.sasuke.dailysuvichar.utils.SharedPrefs;
@@ -99,7 +98,7 @@ public class HomeActivity extends BaseActivity {
     @OnClick(R.id.nav_profile)
     public void onProfileClick() {
         closeDrawer();
-        replaceFragment(ProfileFragment.newInstance(), ProfileFragment.class.getName());
+        startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
     }
 
     @OnClick(R.id.your_feeds)
