@@ -52,7 +52,12 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -91,7 +96,9 @@ public class HomeFragment extends BaseFragment {
     private Animation slide_down;
     private Animation slide_up;
     private int CHECK = 1;
-    private HashMap<String, Boolean> isDone;
+    private HashMap<String, Long> isDone;
+    private HashMap<String, Long> statusHashMap;
+    private HashMap<String, Status> statusHashMapTemp;
     private HashMap<String, Boolean> isPhotoDone;
 
     private static final int SECOND_MILLIS = 1000;
@@ -318,6 +325,7 @@ public class HomeFragment extends BaseFragment {
                                 items.add(photoSnap);
                                 isPhotoDone.put(postSnapshot.getKey(),true);
                             }
+
                             mAdapter.notifyDataSetChanged();
                         }
                     }
@@ -332,12 +340,17 @@ public class HomeFragment extends BaseFragment {
         }
         Log.d(TAG, "fetchStatusFromFirebase: " + items.size());
         mAdapter.setItems(items);
+        if(mAdapter.getItemCount()>0){
+            avi.hide();
+        }
         mAdapter.notifyDataSetChanged();
     }
 
     private void fetchStatusFromFirebase() {
 
         isDone= new HashMap<>();
+        statusHashMap = new HashMap<>();
+        statusHashMapTemp = new HashMap<>();
 
         items = new Items();
         if (mSelectedSubInterests.size() > 0) {
@@ -345,17 +358,18 @@ public class HomeFragment extends BaseFragment {
             Log.d(TAG, "fetchStatusFromFirebase: "+mSelectedSubInterests);
 
             mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("tags");
-            for (String subInt : mSelectedSubInterests) {
-                Log.d(TAG, "fetchStatusFromFirebase: INSIDE FOR" );
+            for (int i=0;i< mSelectedSubInterests.size();i++) {
 
+                String subInt= mSelectedSubInterests.get(i);
 //                mDatabaseReferencePosts.child(subInt).child("status");
 
+                final int finalI = i;
                 mDatabaseReferencePosts.child(subInt).child("status").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
-                        Log.i(TAG, "onDataChange2222: " + dataSnapshot.getValue());
-                        Log.i(TAG, "onDataChange2222: " + dataSnapshot.getChildrenCount());
+//                        Log.i(TAG, "onDataChange2222: " + dataSnapshot.getValue());
+//                        Log.i(TAG, "onDataChange2222: " + dataSnapshot.getChildrenCount());
 
 //                        Log.i(TAG, "onDataChange: "+mUserList.size()+" ");
 
@@ -363,20 +377,29 @@ public class HomeFragment extends BaseFragment {
                             Status status = postSnapshot.getValue(Status.class);
 
                             if(!isDone.containsKey(postSnapshot.getKey())) {
-                                items.add(status);
-                                isDone.put(postSnapshot.getKey(),true);
+//                                items.add(status);
+                                isDone.put(postSnapshot.getKey(),status.getTimestamp());
+                                statusHashMapTemp.put(postSnapshot.getKey(), status);
                             }
+//                            Log.d(TAG, "fetchStatusFromFirebase: ISDONE "+isDone.size());
+
                             if(mAdapter.getItemCount()>0){
                                 avi.hide();
                             }
                             mAdapter.notifyDataSetChanged();
-//                            mUserList.add(user);
-//                            if(adapter!=null){
-//                                adapter.notifyDataSetChanged();
-//                            }
                         }
-
-
+                        Log.d(TAG, "fetchStatusFromFirebase: ISDONE "+isDone.size());
+                        if(finalI ==mSelectedSubInterests.size()-1&&isDone.size()>0){
+                            statusHashMap = sortByComparator(isDone,false);
+                            Log.d(TAG, "fetchStatusFromFirebase: STATUS"+statusHashMap);
+                            Log.d(TAG, "fetchStatusFromFirebase: STATUS"+statusHashMapTemp);
+                            for(int i=0;i<statusHashMap.size();i++){
+                                if(!items.contains(statusHashMapTemp.get(statusHashMap.keySet().toArray()[i])))
+                                {
+                                    items.add(statusHashMapTemp.get(statusHashMap.keySet().toArray()[i]));
+                                }
+                            }
+                        }
                     }
 
                     @Override
@@ -384,9 +407,14 @@ public class HomeFragment extends BaseFragment {
                         Log.d(TAG, "onCancelled: " + databaseError.getMessage());
                     }
                 });
+//                Log.d(TAG, "fetchStatusFromFirebase: ISDONE "+isDone.size());
 
             }
+//            Log.d(TAG, "fetchStatusFromFirebase: ISDONE "+isDone.size());
+
         }
+
+
         Log.d(TAG, "fetchStatusFromFirebase: " + items.size());
         mAdapter.setItems(items);
         mAdapter.notifyDataSetChanged();
@@ -510,6 +538,38 @@ public class HomeFragment extends BaseFragment {
         } else {
             return diff / DAY_MILLIS + " days ago";
         }
+    }
+
+    private static HashMap<String, Long> sortByComparator(HashMap<String, Long> unsortMap, final boolean order)
+    {
+
+        List<HashMap.Entry<String, Long>> list = new LinkedList<>(unsortMap.entrySet());
+
+        // Sorting the list based on values
+        Collections.sort(list, new Comparator<HashMap.Entry<String, Long>>()
+        {
+            public int compare(HashMap.Entry<String, Long> o1,
+                               HashMap.Entry<String, Long> o2)
+            {
+                if (order)
+                {
+                    return o1.getValue().compareTo(o2.getValue());
+                }
+                else
+                {
+                    return o2.getValue().compareTo(o1.getValue());
+
+                }
+            }
+        });
+
+        HashMap<String, Long> sortedMap = new LinkedHashMap<>();
+        for (HashMap.Entry<String, Long> entry : list)
+        {
+            sortedMap.put(entry.getKey(), entry.getValue());
+        }
+
+        return sortedMap;
     }
 
 }
