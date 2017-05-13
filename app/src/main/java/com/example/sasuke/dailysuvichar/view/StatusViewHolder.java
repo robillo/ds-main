@@ -3,15 +3,11 @@ package com.example.sasuke.dailysuvichar.view;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-
 import com.example.sasuke.dailysuvichar.R;
 import com.like.LikeButton;
-import com.like.OnLikeListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,9 +25,9 @@ public class StatusViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.status)
     TextView mTvStatus;
     @BindView(R.id.button_like)
-    LikeButton mBtnLike;
-    @BindView(R.id.tv_like)
-    TextView tv_like;
+    public LikeButton mBtnLike;
+//    @BindView(R.id.tv_like)
+//    TextView tv_like;
     @BindView(R.id.comment)
     public LinearLayout comment;
 //    @BindView(R.id.invisible)
@@ -44,28 +40,28 @@ public class StatusViewHolder extends RecyclerView.ViewHolder {
     public StatusViewHolder(@NonNull View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
-        mBtnLike.setOnLikeListener(new OnLikeListener() {
-            @Override
-            public void liked(LikeButton likeButton) {
-                likeButton.setLiked(true);
-            }
+//        mBtnLike.setOnLikeListener(new OnLikeListener() {
+//            @Override
+//            public void liked(LikeButton likeButton) {
+//                likeButton.setLiked(true);
+//            }
+//
+//            @Override
+//            public void unLiked(LikeButton likeButton) {
+//                likeButton.setLiked(false);
+//            }
+//        });
 
-            @Override
-            public void unLiked(LikeButton likeButton) {
-                likeButton.setLiked(false);
-            }
-        });
-
-        tv_like.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(mBtnLike.isLiked()){
-                    mBtnLike.setLiked(false);
-                }else{
-                    mBtnLike.setLiked(true);
-                }
-            }
-        });
+//        tv_like.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if(mBtnLike.isLiked()){
+//                    mBtnLike.setLiked(false);
+//                }else{
+//                    mBtnLike.setLiked(true);
+//                }
+//            }
+//        });
     }
     public void setName(String name){
         if(name!=null && name.length()>0){
@@ -86,7 +82,7 @@ public class StatusViewHolder extends RecyclerView.ViewHolder {
         tvLikes.setText(String.valueOf(likes)+" likes");
     }
     public void setComments(int comments){
-        tvComments.setText(String.valueOf(comments));
+        tvComments.setText(String.valueOf(comments)+" comments");
     }
 }
 

@@ -11,8 +11,11 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.sasuke.dailysuvichar.R;
+import com.example.sasuke.dailysuvichar.fragment.HomeFragment;
 import com.example.sasuke.dailysuvichar.models.Photo;
 import com.example.sasuke.dailysuvichar.view.PhotoViewHolder;
+import com.like.LikeButton;
+import com.like.OnLikeListener;
 
 import me.drakeet.multitype.ItemViewBinder;
 
@@ -49,6 +52,8 @@ public class PhotoItemAdapter extends ItemViewBinder<Photo, PhotoViewHolder> {
                 }
                 if(item.getComments()!=null) {
                     holder.setComments(item.getComments().size());
+                }else{
+                    holder.setComments(0);
                 }
                 if(item.getCaption()!=null){
                     holder.setCaption(item.getCaption());
@@ -63,15 +68,29 @@ public class PhotoItemAdapter extends ItemViewBinder<Photo, PhotoViewHolder> {
             public void onClick(View view) {
                 new MaterialDialog.Builder(pContext)
                         .title("Post Comment")
-                        .content("Enter The Comment here:")
+                        .content(item.getCaption())
                         .inputType(InputType.TYPE_CLASS_TEXT)
-                        .input("Robillo Is A Great Guy.", "", new MaterialDialog.InputCallback() {
+                        .input("Enter the comment...", "", new MaterialDialog.InputCallback() {
                             @Override
                             public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
                                 // Do something
                                 Toast.makeText(pContext, input, Toast.LENGTH_SHORT).show();
                             }
                         }).show();
+            }
+        });
+
+        holder.mBtnLike.setOnLikeListener(new OnLikeListener() {
+            @Override
+            public void liked(LikeButton likeButton) {
+                likeButton.setLiked(true);
+                HomeFragment.onLikeClicked("photo", true);
+            }
+
+            @Override
+            public void unLiked(LikeButton likeButton) {
+                likeButton.setLiked(false);
+                HomeFragment.onLikeClicked("photo",false);
             }
         });
     }

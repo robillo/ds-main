@@ -38,6 +38,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
@@ -80,11 +82,12 @@ public class HomeFragment extends BaseFragment {
     FireworkyPullToRefreshLayout mPullToRefresh;
 
     private LinearLayoutManager mLayoutManager;
-    private FirebaseUser mFirebaseUser;
+    private static FirebaseUser mFirebaseUser;
     private String uid;
     private AVLoadingIndicatorView avi;
     private HashMap<String, String> userStatus;
-    private DatabaseReference mDatabaseReference, mDatabaseReferencePosts;
+    private static DatabaseReference mDatabaseReference;
+    private DatabaseReference mDatabaseReferencePosts;
     private StorageReference mStorageReference;
     private ArrayList<String> mSelectedSubInterests;
 
@@ -570,6 +573,42 @@ public class HomeFragment extends BaseFragment {
         }
 
         return sortedMap;
+    }
+
+    public static void onLikeClicked(String item, final boolean isLiked){
+
+        Log.d(TAG, "onLikeClicked: ");
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference("users").child(mFirebaseUser.getUid()).child("posts").child(item).child("Kk0gD76Af7InSLtYl84");
+        mDatabaseReference.runTransaction(new Transaction.Handler() {
+            @Override
+            public Transaction.Result doTransaction(MutableData mutableData) {
+                Photo ph = mutableData.getValue(Photo.class);
+                if (ph == null) {
+                    return Transaction.success(mutableData);
+                }
+
+                if (!isLiked) {
+                    // Unstar the post and remove self from stars
+                    ph.setLikes(ph.getLikes()-1);
+//                    ph.stars.remove(getUid());
+                } else {
+                    // Star the post and add self to stars
+                    ph.setLikes(ph.getLikes()+1);
+//                    ph.stars.put(getUid(), true);
+                }
+
+                // Set value and report transaction success
+                mutableData.setValue(ph);
+                return Transaction.success(mutableData);
+            }
+
+            @Override
+            public void onComplete(DatabaseError databaseError, boolean b,
+                                   DataSnapshot dataSnapshot) {
+                // Transaction completed
+                Log.d(TAG, "postTransaction:onComplete:" + databaseError);
+            }
+        });
     }
 
 }

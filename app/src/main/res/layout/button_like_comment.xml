@@ -10,12 +10,13 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_weight="1"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:weightSum="1">
 
         <com.like.LikeButton
             android:id="@+id/button_like"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             app:anim_scale_factor="2"
             app:circle_end_color="@color/red"
             app:circle_start_color="@color/red"
@@ -26,17 +27,9 @@
             app:is_enabled="true"
             app:like_drawable="@drawable/heart_on"
             app:liked="false"
-            app:unlike_drawable="@drawable/heart_off" />
+            app:unlike_drawable="@drawable/heart_off"
+            android:layout_weight="2.43" />
 
-        <TextView
-            android:id="@+id/tv_like"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="6dp"
-            android:text="Like"
-            android:textColor="@color/gray_dark"
-            android:textSize="@dimen/font_normal" />
     </LinearLayout>
 
     <LinearLayout

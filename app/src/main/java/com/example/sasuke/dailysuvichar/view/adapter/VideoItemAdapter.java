@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.models.Video;
 import com.example.sasuke.dailysuvichar.view.VideoViewHolder;
+import com.like.LikeButton;
+import com.like.OnLikeListener;
 
 import me.drakeet.multitype.ItemViewBinder;
 
@@ -38,6 +40,17 @@ public class VideoItemAdapter extends ItemViewBinder<Video, VideoViewHolder> {
             @Override
             public void run() {
                 holder.mVideoView.loadYoutubeVideo(activity, item.getVideoUrl());
+                holder.mBtnLike.setOnLikeListener(new OnLikeListener() {
+                    @Override
+                    public void liked(LikeButton likeButton) {
+                        likeButton.setLiked(true);
+                    }
+
+                    @Override
+                    public void unLiked(LikeButton likeButton) {
+                        likeButton.setLiked(false);
+                    }
+                });
             }
         });
     }

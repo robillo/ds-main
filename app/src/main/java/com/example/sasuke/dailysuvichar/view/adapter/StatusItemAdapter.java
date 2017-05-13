@@ -13,6 +13,8 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.models.Status;
 import com.example.sasuke.dailysuvichar.view.StatusViewHolder;
+import com.like.LikeButton;
+import com.like.OnLikeListener;
 
 import me.drakeet.multitype.ItemViewBinder;
 
@@ -48,6 +50,8 @@ public class StatusItemAdapter extends ItemViewBinder<Status, StatusViewHolder> 
                 }
                 if(item.getComments()!=null) {
                     holder.setComments(item.getComments().size());
+                }else{
+                    holder.setComments(0);
                 }
             }
         });
@@ -65,6 +69,18 @@ public class StatusItemAdapter extends ItemViewBinder<Status, StatusViewHolder> 
                                 Toast.makeText(pContext, input, Toast.LENGTH_SHORT).show();
                             }
                         }).show();
+            }
+        });
+        holder.mBtnLike.setOnLikeListener(new OnLikeListener() {
+            @Override
+            public void liked(LikeButton likeButton) {
+                likeButton.setLiked(true);
+
+            }
+
+            @Override
+            public void unLiked(LikeButton likeButton) {
+                likeButton.setLiked(false);
             }
         });
     }
