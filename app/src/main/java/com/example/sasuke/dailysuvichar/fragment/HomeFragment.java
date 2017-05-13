@@ -43,6 +43,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -76,6 +77,7 @@ public class HomeFragment extends BaseFragment {
     private LinearLayoutManager mLayoutManager;
     private FirebaseUser mFirebaseUser;
     private String uid;
+    private AVLoadingIndicatorView avi;
     private HashMap<String, String> userStatus;
     private DatabaseReference mDatabaseReference, mDatabaseReferencePosts;
     private StorageReference mStorageReference;
@@ -112,6 +114,8 @@ public class HomeFragment extends BaseFragment {
 
         mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         mStorageReference = FirebaseStorage.getInstance().getReference();
+
+        avi = (AVLoadingIndicatorView) view.findViewById(R.id.avi);
 
         uid = mFirebaseUser.getUid();
 
@@ -362,6 +366,9 @@ public class HomeFragment extends BaseFragment {
                                 items.add(status);
                                 isDone.put(postSnapshot.getKey(),true);
                             }
+                            if(mAdapter.getItemCount()>0){
+                                avi.hide();
+                            }
                             mAdapter.notifyDataSetChanged();
 //                            mUserList.add(user);
 //                            if(adapter!=null){
@@ -383,6 +390,9 @@ public class HomeFragment extends BaseFragment {
         Log.d(TAG, "fetchStatusFromFirebase: " + items.size());
         mAdapter.setItems(items);
         mAdapter.notifyDataSetChanged();
+        if(mAdapter.getItemCount()>0){
+            avi.hide();
+        }
     }
 
     @OnClick(R.id.tv_status)
