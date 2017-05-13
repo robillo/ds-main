@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -35,10 +36,8 @@ public class HomeActivity extends BaseActivity {
 
     @BindView(R.id.drawer_layout)
     DrawerLayout drawer;
-    @BindView(R.id.iv_choose_language)
-    ImageView mIvChooseLanguage;
-    @BindView(R.id.iv_messages)
-    ImageView mIvMessages;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     private static final int DELAY_TIME = 2000;
     private static long back_pressed;
@@ -55,9 +54,8 @@ public class HomeActivity extends BaseActivity {
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
 
-        CountBadge.Factory circleFactory = new CountBadge.Factory(BadgeShape.circle(.5f, Gravity.END | Gravity.TOP), 0xffff0000, 0xffffffff);
-        Badger.sett(mIvMessages, circleFactory).setCount(8);
-
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         replaceFragment(MainFragment.newInstance(), MainFragment.class.getName());
     }
 
@@ -161,9 +159,9 @@ public class HomeActivity extends BaseActivity {
         transaction.commit();
     }
 
-    @OnClick(R.id.iv_notification)
-    public void openDrawer() {
-        drawer.openDrawer(GravityCompat.START);
-    }
+//    @OnClick(R.id.iv_notification)
+//    public void openDrawer() {
+//        drawer.openDrawer(GravityCompat.START);
+//    }
 
 }

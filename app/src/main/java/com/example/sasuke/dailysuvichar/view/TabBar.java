@@ -14,10 +14,6 @@ import android.widget.LinearLayout;
 
 import com.example.sasuke.dailysuvichar.R;
 
-/**
- * Created by Sasuke on 4/24/2017.
- */
-
 public class TabBar extends LinearLayout implements View.OnClickListener {
 
     private int mBackgroundColor;

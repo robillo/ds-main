@@ -1,11 +1,17 @@
 package com.example.sasuke.dailysuvichar.fragment;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -42,6 +48,8 @@ public class GurusFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = super.onCreateView(inflater, container, savedInstanceState);
 
+        setHasOptionsMenu(true);
+
         staggeredGridLayoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
         gridLayoutManager = new GridLayoutManager(getActivity(), 3);
         rv.setLayoutManager(gridLayoutManager);
@@ -63,5 +71,41 @@ public class GurusFragment extends BaseFragment {
         guruList.add(new Guru("Guru Narayan",121));
 
         return v;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        inflater.inflate(R.menu.main, menu);
+
+        super.onCreateOptionsMenu(menu,inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        switch (id){
+            case R.id.action_search:{
+
+                break;
+            }
+            case R.id.action_sort:{
+
+                break;
+            }
+            case R.id.action_settings:{
+
+                break;
+            }
+            case R.id.move_to_first:{
+
+            }
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

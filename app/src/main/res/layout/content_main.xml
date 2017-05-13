@@ -37,19 +37,9 @@
             android:layout_width="50dp"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
-            android:layout_marginRight="5dp"
-            android:layout_toLeftOf="@+id/iv_messages"
+            android:layout_alignParentRight="true"
             android:padding="10dp"
             android:src="@drawable/ic_language" />
-
-        <ImageView
-            android:id="@+id/iv_messages"
-            android:layout_width="40dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:padding="8dp"
-            android:src="@drawable/ic_message" />
 
     </RelativeLayout>
 
