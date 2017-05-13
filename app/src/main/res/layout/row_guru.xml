@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -8,7 +9,9 @@
     android:clickable="false"
     android:orientation="vertical"
     app:cardBackgroundColor="@color/white"
-    app:cardElevation="4sp">
+    app:cardElevation="4sp"
+    app:cardUseCompatPadding="true"
+    app:cardCornerRadius="5dp">
 
     <LinearLayout
         android:id="@+id/ll"
@@ -20,7 +23,7 @@
             android:id="@+id/guru_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fontFamily="sans-serif-smallcaps"
+            android:fontFamily="sans-serif"
             android:padding="4sp"
             android:text="Baba Ramdev"
             android:textAlignment="center"
@@ -31,19 +34,21 @@
             android:layout_height="60sp"
             android:layout_margin="2sp">
 
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clickable="false"
-                android:padding="10sp"/>
+            <!--<ImageView-->
+                <!--android:id="@+id/imageViewMain"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:clickable="false"-->
+                <!--android:scaleType="fitCenter" />-->
 
-            <ImageView
-                android:id="@+id/imageView2"
+            <de.hdodenhof.circleimageview.CircleImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/imageViewMain"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:clickable="false"
-                android:padding="10sp"/>
+                android:src="@drawable/ayurveda"
+                app:civ_border_width="2dp"
+                app:civ_border_color="#FF000000"/>
 
         </FrameLayout>
 
@@ -52,6 +57,8 @@
             android:layout_height="wrap_content"
             android:text="Follow"
             android:textStyle="bold"
+            app:cardElevation="5sp"
+            app:cardCornerRadius="15dp"
             android:id="@+id/follow"
             android:textColor="@color/white"
             android:layout_gravity="center_horizontal"
