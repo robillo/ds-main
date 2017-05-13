@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.sasuke.dailysuvichar">
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:name=".DailySuvicharApp"
         android:allowBackup="true"
@@ -37,6 +39,8 @@
             android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".activity.SelectPhotoActivity" android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".activity.FullScreenActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".activity.ProfileActivity" android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

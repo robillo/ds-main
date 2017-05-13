@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.text.InputType;
@@ -95,10 +96,7 @@ public class PhotoItemAdapter extends ItemViewBinder<Photo, PhotoViewHolder> {
         holder.mIvPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                imagePopup.initiatePopup(holder.mIvPhoto.getDrawable());
-                holder.mIvPhoto.buildDrawingCache();
-                Bitmap bitmap = holder.mIvPhoto.getDrawingCache();
-                holder.fullScreenIntent(bitmap);
+                holder.fullScreenIntent();
             }
         });
 
