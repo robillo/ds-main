@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="4sp"
+    android:clickable="false"
+    android:orientation="vertical"
+    app:cardBackgroundColor="@color/white"
+    app:cardElevation="4sp">
+
+    <LinearLayout
+        android:id="@+id/ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/guru_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="sans-serif-smallcaps"
+            android:padding="4sp"
+            android:text="Baba Ramdev"
+            android:textAlignment="center"
+            android:textColor="#000000" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="60sp"
+            android:layout_margin="2sp">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clickable="false"
+                android:padding="10sp"/>
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clickable="false"
+                android:padding="10sp"/>
+
+        </FrameLayout>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Follow"
+            android:textStyle="bold"
+            android:id="@+id/follow"
+            android:textColor="@color/white"
+            android:layout_gravity="center_horizontal"
+            android:backgroundTint="@color/colorAccent" />
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>
