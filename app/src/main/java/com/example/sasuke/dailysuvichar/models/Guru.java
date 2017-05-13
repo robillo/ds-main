@@ -2,24 +2,66 @@ package com.example.sasuke.dailysuvichar.models;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
-/**
- * Created by rishabhshukla on 24/04/17.
- */
+import java.util.List;
 
 public class Guru {
     private String name;
     private String email;
     private String bio;
+    private ArrayList<String> followers;
     private String preferredLang;
     private String photoUrl;
     private String coverUrl;
     private HashMap<String, Boolean> motivation, religion, astrology, yoga, ayurveda, health, diet;
-    private HashMap<String, HashMap<String, Boolean>> allInterests;
+    private HashMap<String, ArrayList<String>> allInterests;
     private String DOB;
     private String gender;
+    private ArrayList<String> selectedSubInterests;
     private String phone;
     private int age;
+
+    public Guru() {
+    }
+
+    public Guru(String name, String email, String bio, ArrayList<String> followers, String preferredLang, String photoUrl, String coverUrl, String DOB, String gender, String phone, int age, ArrayList<Post> posts, ArrayList<Blog> blogs, ArrayList<Product> shop, ArrayList<Video> videos, HashMap<String, ArrayList<String>> allInterests, ArrayList<String> selectedSubInterests) {
+        this.name = name;
+        this.email = email;
+        this.bio = bio;
+        this.followers = followers;
+        this.allInterests = allInterests;
+        this.preferredLang = preferredLang;
+        this.photoUrl = photoUrl;
+        this.coverUrl = coverUrl;
+        this.DOB = DOB;
+        this.gender = gender;
+        this.phone = phone;
+        this.age = age;
+        this.selectedSubInterests = selectedSubInterests;
+    }
+
+    public HashMap<String, ArrayList<String>> getAllInterests() {
+        return allInterests;
+    }
+
+    public void setAllInterests(HashMap<String, ArrayList<String>> allInterests) {
+        this.allInterests = allInterests;
+    }
+
+    public ArrayList<String> getSelectedSubInterests() {
+        return selectedSubInterests;
+    }
+
+    public void setSelectedSubInterests(ArrayList<String> selectedSubInterests) {
+        this.selectedSubInterests = selectedSubInterests;
+    }
+
+    public ArrayList<String> getFollowers() {
+        return followers;
+    }
+
+    public void setFollowers(ArrayList<String> followers) {
+        this.followers = followers;
+    }
 
     public String getName() {
         return name;
@@ -125,14 +167,6 @@ public class Guru {
         this.diet = diet;
     }
 
-    public HashMap<String, HashMap<String, Boolean>> getAllInterests() {
-        return allInterests;
-    }
-
-    public void setAllInterests(HashMap<String, HashMap<String, Boolean>> allInterests) {
-        this.allInterests = allInterests;
-    }
-
     public String getDOB() {
         return DOB;
     }
@@ -165,71 +199,5 @@ public class Guru {
         this.age = age;
     }
 
-    public ArrayList<Post> getPosts() {
-        return posts;
-    }
 
-    public void setPosts(ArrayList<Post> posts) {
-        this.posts = posts;
-    }
-
-    public ArrayList<Blog> getBlogs() {
-        return blogs;
-    }
-
-    public void setBlogs(ArrayList<Blog> blogs) {
-        this.blogs = blogs;
-    }
-
-    public ArrayList<Product> getShop() {
-        return shop;
-    }
-
-    public void setShop(ArrayList<Product> shop) {
-        this.shop = shop;
-    }
-
-    public ArrayList<Video> getVideos() {
-        return videos;
-    }
-
-    public void setVideos(ArrayList<Video> videos) {
-        this.videos = videos;
-    }
-
-    ArrayList<Post> posts;
-    ArrayList<Blog> blogs;
-    ArrayList<Product> shop;
-    ArrayList<Video> videos;
-
-    public Guru(String name, String email, String bio, String preferredLang, String photoUrl,
-                String coverUrl, HashMap<String, Boolean> motivation, HashMap<String, Boolean> religion,
-                HashMap<String, Boolean> astrology, HashMap<String, Boolean> yoga, HashMap<String, Boolean> ayurveda,
-                HashMap<String, Boolean> health, HashMap<String, Boolean> diet,
-                HashMap<String, HashMap<String, Boolean>> allInterests, String DOB, String gender, String phone,
-                int age, ArrayList<Post> posts, ArrayList<Blog> blogs, ArrayList<Product> shop,
-                ArrayList<Video> videos) {
-        this.name = name;
-        this.email = email;
-        this.bio = bio;
-        this.preferredLang = preferredLang;
-        this.photoUrl = photoUrl;
-        this.coverUrl = coverUrl;
-        this.motivation = motivation;
-        this.religion = religion;
-        this.astrology = astrology;
-        this.yoga = yoga;
-        this.ayurveda = ayurveda;
-        this.health = health;
-        this.diet = diet;
-        this.allInterests = allInterests;
-        this.DOB = DOB;
-        this.gender = gender;
-        this.phone = phone;
-        this.age = age;
-        this.posts = posts;
-        this.blogs = blogs;
-        this.shop = shop;
-        this.videos = videos;
-    }
 }
