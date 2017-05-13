@@ -1,6 +1,8 @@
 package com.example.sasuke.dailysuvichar.view.adapter;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.text.InputType;
@@ -10,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.ceylonlabs.imageviewpopup.ImagePopup;
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.fragment.HomeFragment;
 import com.example.sasuke.dailysuvichar.models.Photo;
@@ -77,6 +80,20 @@ public class PhotoItemAdapter extends ItemViewBinder<Photo, PhotoViewHolder> {
                                 Toast.makeText(pContext, input, Toast.LENGTH_SHORT).show();
                             }
                         }).show();
+            }
+        });
+
+        final ImagePopup imagePopup = new ImagePopup(context);
+        imagePopup.setBackgroundColor(Color.BLACK);
+        imagePopup.setWindowWidth(Resources.getSystem().getDisplayMetrics().widthPixels);
+        imagePopup.setWindowHeight(Resources.getSystem().getDisplayMetrics().heightPixels);
+        imagePopup.setHideCloseIcon(true);
+        imagePopup.setImageOnClickClose(true);
+
+        holder.mIvPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imagePopup.initiatePopup(holder.mIvPhoto.getDrawable());
             }
         });
 
