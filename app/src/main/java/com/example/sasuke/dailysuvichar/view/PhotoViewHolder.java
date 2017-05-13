@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -115,9 +116,10 @@ public class PhotoViewHolder extends RecyclerView.ViewHolder {
         }
     }
 
-    public void fullScreenIntent(String path){
+    public void fullScreenIntent(){
         Intent i = new Intent(context, FullScreenActivity.class);
-        i.putExtra("path", path);
+        i.putExtra("path", storageReference.toString());
+        Log.e("Storage Reference", storageReference.toString());
         context.startActivity(i);
     }
 }

@@ -96,9 +96,7 @@ public class PhotoItemAdapter extends ItemViewBinder<Photo, PhotoViewHolder> {
         holder.mIvPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Uri path = Uri.parse("android.resource://com.example.sasuke.dailysuvichar/" + holder.mIvPhoto.getDrawable());
-                String imgPath = path.toString();
-                holder.fullScreenIntent(imgPath);
+                holder.fullScreenIntent();
             }
         });
 
