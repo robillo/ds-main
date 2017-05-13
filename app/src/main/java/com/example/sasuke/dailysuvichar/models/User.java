@@ -2,10 +2,7 @@ package com.example.sasuke.dailysuvichar.models;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
-/**
- * Created by rishabhshukla on 22/04/17.
- */
+import java.util.List;
 
 public class User {
     private String name;
@@ -22,6 +19,7 @@ public class User {
     private String phone;
     private int age;
     private ArrayList<String> selectedSubInterests;
+    private ArrayList<String> following;
 
     public User(String name, String email, String bio, String preferredLang, String photoUrl, String coverUrl, HashMap<String, ArrayList<String>> allInterests, String DOB, String gender, String phone, int age, ArrayList<String> selectedSubInterests) {
         this.name = name;
@@ -36,6 +34,14 @@ public class User {
         this.phone = phone;
         this.age = age;
         this.selectedSubInterests = selectedSubInterests;
+    }
+
+    public ArrayList<String> getFollowing() {
+        return following;
+    }
+
+    public void setFollowing(ArrayList<String> following) {
+        this.following = following;
     }
 
     public ArrayList<String> getSelectedSubInterests() {
