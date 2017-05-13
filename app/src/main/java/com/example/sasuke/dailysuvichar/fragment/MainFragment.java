@@ -28,8 +28,6 @@ public class MainFragment extends BaseFragment implements TabBar.OnItemSelect {
 
     @BindView(R.id.tab_bar)
     TabBar tabBar;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
 
     @Override
     protected int getLayoutResId() {
