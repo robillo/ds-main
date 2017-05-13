@@ -1,6 +1,8 @@
 package com.example.sasuke.dailysuvichar.view;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -10,6 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.sasuke.dailysuvichar.R;
+import com.example.sasuke.dailysuvichar.activity.FullScreenActivity;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.firebase.storage.StorageReference;
 import com.like.LikeButton;
@@ -45,9 +48,12 @@ public class PhotoViewHolder extends RecyclerView.ViewHolder {
 //    @BindView(R.id.post_comment)
 //    public Button postComment;
 
+    private Context context;
+
     public PhotoViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
+        context = itemView.getContext();
 //        mBtnLike.setOnLikeListener(new OnLikeListener() {
 //            @Override
 //            public void liked(LikeButton likeButton) {
@@ -104,5 +110,11 @@ public class PhotoViewHolder extends RecyclerView.ViewHolder {
         if(caption!=null && caption.length()>0) {
             tvCaption.setText(caption);
         }
+    }
+
+    public void fullScreenIntent(Bitmap bitmap){
+        Intent i = new Intent(context, FullScreenActivity.class);
+        i.putExtra("imageviewBitmap", bitmap);
+        context.startActivity(i);
     }
 }

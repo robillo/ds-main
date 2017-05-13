@@ -1,7 +1,9 @@
 package com.example.sasuke.dailysuvichar.view.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -83,17 +85,20 @@ public class PhotoItemAdapter extends ItemViewBinder<Photo, PhotoViewHolder> {
             }
         });
 
-        final ImagePopup imagePopup = new ImagePopup(context);
-        imagePopup.setBackgroundColor(Color.BLACK);
-        imagePopup.setWindowWidth(Resources.getSystem().getDisplayMetrics().widthPixels);
-        imagePopup.setWindowHeight(Resources.getSystem().getDisplayMetrics().heightPixels);
-        imagePopup.setHideCloseIcon(true);
-        imagePopup.setImageOnClickClose(true);
+//        final ImagePopup imagePopup = new ImagePopup(context);
+//        imagePopup.setBackgroundColor(Color.BLACK);
+//        imagePopup.setWindowWidth(Resources.getSystem().getDisplayMetrics().widthPixels);
+//        imagePopup.setWindowHeight(Resources.getSystem().getDisplayMetrics().heightPixels);
+//        imagePopup.setHideCloseIcon(true);
+//        imagePopup.setImageOnClickClose(true);
 
         holder.mIvPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                imagePopup.initiatePopup(holder.mIvPhoto.getDrawable());
+//                imagePopup.initiatePopup(holder.mIvPhoto.getDrawable());
+                holder.mIvPhoto.buildDrawingCache();
+                Bitmap bitmap = holder.mIvPhoto.getDrawingCache();
+                holder.fullScreenIntent(bitmap);
             }
         });
 
