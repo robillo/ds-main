@@ -1,11 +1,15 @@
 package com.example.sasuke.dailysuvichar.view.adapter;
 
+import android.content.Context;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.models.Status;
 import com.example.sasuke.dailysuvichar.view.StatusViewHolder;
@@ -14,6 +18,7 @@ import me.drakeet.multitype.ItemViewBinder;
 
 public class StatusItemAdapter extends ItemViewBinder<Status, StatusViewHolder> {
 
+    private Context pContext;
 
     private static final int SECOND_MILLIS = 1000;
     private static final int MINUTE_MILLIS = 60 * SECOND_MILLIS;
@@ -24,6 +29,7 @@ public class StatusItemAdapter extends ItemViewBinder<Status, StatusViewHolder> 
     @Override
     protected StatusViewHolder onCreateViewHolder(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
         View view = inflater.inflate(R.layout.cell_status, parent, false);
+        pContext = parent.getContext();
         return new StatusViewHolder(view);
     }
 
@@ -45,12 +51,22 @@ public class StatusItemAdapter extends ItemViewBinder<Status, StatusViewHolder> 
                 }
             }
         });
-//        holder.comment.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                holder.invisible.setVisibility(View.VISIBLE);
-//            }
-//        });
+        holder.comment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new MaterialDialog.Builder(pContext)
+                        .title("Post Comment")
+                        .content("Enter The Comment here:")
+                        .inputType(InputType.TYPE_CLASS_TEXT)
+                        .input("Robillo Is A Great Guy.", "", new MaterialDialog.InputCallback() {
+                            @Override
+                            public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
+                                // Do something
+                                Toast.makeText(pContext, input, Toast.LENGTH_SHORT).show();
+                            }
+                        }).show();
+            }
+        });
     }
 
     public static String getTimeAgo(long time) {
