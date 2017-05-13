@@ -54,12 +54,12 @@ public class PhotoItemAdapter extends ItemViewBinder<Photo, PhotoViewHolder> {
                 }
             }
         });
-        holder.comment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                holder.invisible.setVisibility(View.VISIBLE);
-            }
-        });
+//        holder.comment.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                holder.invisible.setVisibility(View.VISIBLE);
+//            }
+//        });
     }
 
     public static String getTimeAgo(long time) {

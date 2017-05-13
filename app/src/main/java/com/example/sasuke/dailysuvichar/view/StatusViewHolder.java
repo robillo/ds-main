@@ -34,12 +34,12 @@ public class StatusViewHolder extends RecyclerView.ViewHolder {
     TextView tv_like;
     @BindView(R.id.comment)
     public LinearLayout comment;
-    @BindView(R.id.invisible)
-    public LinearLayout invisible;
-    @BindView(R.id.edittext)
-    public EditText editText;
-    @BindView(R.id.post_comment)
-    public Button postComment;
+//    @BindView(R.id.invisible)
+//    public LinearLayout invisible;
+//    @BindView(R.id.edittext)
+//    public EditText editText;
+//    @BindView(R.id.post_comment)
+//    public Button postComment;
 
     public StatusViewHolder(@NonNull View itemView) {
         super(itemView);
