@@ -19,8 +19,6 @@ public class FeedsFragment extends BaseFragment {
     RecyclerView recyclerView;
     @BindView(R.id.edittext)
     EditText editText;
-    @BindView(R.id.sort)
-    Button send;
 
     @Override
     protected int getLayoutResId() {

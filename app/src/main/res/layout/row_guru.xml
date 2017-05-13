@@ -5,12 +5,11 @@
     android:id="@+id/cardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="4sp"
+    android:layout_margin="2sp"
     android:clickable="false"
     android:orientation="vertical"
     app:cardBackgroundColor="@color/white"
     app:cardElevation="4sp"
-    app:cardUseCompatPadding="true"
     app:cardCornerRadius="5dp">
 
     <LinearLayout
