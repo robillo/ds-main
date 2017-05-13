@@ -3,6 +3,7 @@ package com.example.sasuke.dailysuvichar.view;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -49,6 +50,7 @@ public class PhotoViewHolder extends RecyclerView.ViewHolder {
 //    public Button postComment;
 
     private Context context;
+    private StorageReference storageReference;
 
     public PhotoViewHolder(View itemView) {
         super(itemView);
@@ -80,6 +82,7 @@ public class PhotoViewHolder extends RecyclerView.ViewHolder {
     public void setImage(StorageReference storageReference, Context ctx) {
 //        Picasso.with(itemView.getContext()).load(photo).fit().into(mIvPhoto);
         if(storageReference!=null) {
+            this.storageReference = storageReference;
             Glide.with(ctx).
                     using(new FirebaseImageLoader())
                     .load(storageReference)
@@ -114,7 +117,6 @@ public class PhotoViewHolder extends RecyclerView.ViewHolder {
 
     public void fullScreenIntent(Bitmap bitmap){
         Intent i = new Intent(context, FullScreenActivity.class);
-        i.putExtra("imageviewBitmap", bitmap);
         context.startActivity(i);
     }
 }
