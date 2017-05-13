@@ -12,10 +12,6 @@ import com.example.sasuke.dailysuvichar.view.StatusViewHolder;
 
 import me.drakeet.multitype.ItemViewBinder;
 
-/**
- * Created by Sasuke on 5/7/2017.
- */
-
 public class StatusItemAdapter extends ItemViewBinder<Status, StatusViewHolder> {
 
 

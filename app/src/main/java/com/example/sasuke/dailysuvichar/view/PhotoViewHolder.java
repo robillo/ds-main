@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.sasuke.dailysuvichar.R;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.firebase.storage.StorageReference;
@@ -79,6 +80,8 @@ public class PhotoViewHolder extends RecyclerView.ViewHolder {
             Glide.with(ctx).
                     using(new FirebaseImageLoader())
                     .load(storageReference)
+                    .centerCrop()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(mIvPhoto);
         }
     }
