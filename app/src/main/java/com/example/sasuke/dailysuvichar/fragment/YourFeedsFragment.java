@@ -43,6 +43,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -76,6 +77,7 @@ public class YourFeedsFragment extends BaseFragment {
     private LinearLayoutManager mLayoutManager;
     private FirebaseUser mFirebaseUser;
     private String uid;
+    private AVLoadingIndicatorView avi;
     private HashMap<String, String> userStatus;
     private DatabaseReference mDatabaseReference, mDatabaseReferencePosts;
     private StorageReference mStorageReference;
@@ -115,6 +117,7 @@ public class YourFeedsFragment extends BaseFragment {
 
         uid = mFirebaseUser.getUid();
 
+        avi = (AVLoadingIndicatorView) view.findViewById(R.id.avi);
         Log.e(TAG, uid);
 
         slide_down = AnimationUtils.loadAnimation(getContext(), R.anim.slide_down);
@@ -309,6 +312,9 @@ public class YourFeedsFragment extends BaseFragment {
                         isPhotoDone.put(postSnapshot.getKey(), true);
                     }
                     mAdapter.notifyDataSetChanged();
+                    if(mAdapter.getItemCount()>0){
+                        avi.hide();
+                    }
                 }
             }
 
@@ -322,6 +328,9 @@ public class YourFeedsFragment extends BaseFragment {
         Log.d(TAG, "fetchStatusFromFirebase: " + items.size());
         mAdapter.setItems(items);
         mAdapter.notifyDataSetChanged();
+        if(mAdapter.getItemCount()>0){
+            avi.hide();
+        }
     }
 
     private void fetchStatusFromFirebase() {

@@ -129,17 +129,35 @@
         </RelativeLayout>
     </RelativeLayout>
 
-    <com.cleveroad.pulltorefresh.firework.FireworkyPullToRefreshLayout
-        android:id="@+id/pullToRefresh"
+
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:ptr_background="@drawable/gradient">
+        android:background="@color/white">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_home"
+        <com.wang.avi.AVLoadingIndicatorView
+            android:id="@+id/avi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            style="@style/AVLoadingIndicatorView.Large"
+            android:visibility="visible"
+            app:indicatorName="BallRotateIndicator"
+            app:indicatorColor="@color/colorAccent"/>
+
+        <com.cleveroad.pulltorefresh.firework.FireworkyPullToRefreshLayout
+            android:id="@+id/pullToRefresh"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            app:ptr_background="@drawable/gradient">
 
-    </com.cleveroad.pulltorefresh.firework.FireworkyPullToRefreshLayout>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_home"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </com.cleveroad.pulltorefresh.firework.FireworkyPullToRefreshLayout>
+
+    </FrameLayout>
 
 </LinearLayout>
