@@ -2,7 +2,6 @@ package com.example.sasuke.dailysuvichar.models;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class Guru {
     private String name;
@@ -19,24 +18,47 @@ public class Guru {
     private ArrayList<String> selectedSubInterests;
     private String phone;
     private int age;
+    private int followersCount;
 
-    public Guru() {
+    public int getFollowersCount() {
+        return followersCount;
     }
 
-    public Guru(String name, String email, String bio, ArrayList<String> followers, String preferredLang, String photoUrl, String coverUrl, String DOB, String gender, String phone, int age, ArrayList<Post> posts, ArrayList<Blog> blogs, ArrayList<Product> shop, ArrayList<Video> videos, HashMap<String, ArrayList<String>> allInterests, ArrayList<String> selectedSubInterests) {
+    public void setFollowersCount(int followersCount) {
+        this.followersCount = followersCount;
+    }
+
+    public Guru(String name, String email, String bio, ArrayList<String> followers, String preferredLang, String photoUrl, String coverUrl, HashMap<String, Boolean> motivation, HashMap<String, Boolean> religion, HashMap<String, Boolean> astrology, HashMap<String, Boolean> yoga, HashMap<String, Boolean> ayurveda, HashMap<String, Boolean> health, HashMap<String, Boolean> diet, HashMap<String, ArrayList<String>> allInterests, String DOB, String gender, ArrayList<String> selectedSubInterests, String phone, int age, int followersCount) {
         this.name = name;
         this.email = email;
         this.bio = bio;
         this.followers = followers;
-        this.allInterests = allInterests;
         this.preferredLang = preferredLang;
         this.photoUrl = photoUrl;
         this.coverUrl = coverUrl;
+        this.motivation = motivation;
+        this.religion = religion;
+        this.astrology = astrology;
+        this.yoga = yoga;
+        this.ayurveda = ayurveda;
+        this.health = health;
+        this.diet = diet;
+        this.allInterests = allInterests;
         this.DOB = DOB;
         this.gender = gender;
+        this.selectedSubInterests = selectedSubInterests;
         this.phone = phone;
         this.age = age;
-        this.selectedSubInterests = selectedSubInterests;
+        this.followersCount = followersCount;
+    }
+
+    public Guru(String name, Integer followersCount) {
+
+        this.name = name;
+        this.followersCount = followersCount;
+    }
+
+    public Guru() {
     }
 
     public HashMap<String, ArrayList<String>> getAllInterests() {

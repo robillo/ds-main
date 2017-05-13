@@ -19,7 +19,7 @@ public class FeedsFragment extends BaseFragment {
     RecyclerView recyclerView;
     @BindView(R.id.edittext)
     EditText editText;
-    @BindView(R.id.send)
+    @BindView(R.id.sort)
     Button send;
 
     @Override
