@@ -17,6 +17,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -49,6 +50,8 @@ public class GuruDetailActivity extends BaseActivity{
     TextView bio;
     @BindView(R.id.specialization)
     TextView spec;
+    @BindView(R.id.follow)
+    Button follow;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -174,5 +177,17 @@ public class GuruDetailActivity extends BaseActivity{
                         spec.setText("Specialization:" + input);
                     }
                 }).show();
+    }
+
+    @OnClick(R.id.follow)
+    public void setFollowing(){
+        if(follow.getText().equals("FOLLOW")){
+            follow.setText("FOLLOWING");
+            follow.setBackgroundColor(getResources().getColor(R.color.green));
+        }
+        else {
+            follow.setText("FOLLOW");
+            follow.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+        }
     }
 }

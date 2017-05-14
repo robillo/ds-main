@@ -56,10 +56,12 @@
                 android:layout_width="100sp"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
-                android:text="Follow"
-                android:backgroundTint="@color/colorAccent"
+                android:text="FOLLOW"
+                android:background="@color/colorAccent"
                 android:fontFamily="sans-serif-smallcaps"
+                android:layout_margin="5sp"
                 android:layout_gravity="center_horizontal"
+                android:id="@+id/follow"
                 android:tag="parallax=-0.1"/>
 
             <LinearLayout
