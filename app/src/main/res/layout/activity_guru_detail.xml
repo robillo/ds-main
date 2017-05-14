@@ -78,7 +78,8 @@
                     android:clickable="true"
                     android:elevation="4dp"
                     android:padding="20dp"
-                    android:text="Bio: Short Description Should Be Input Here." />
+                    android:text="Bio: Short Description Should Be Input Here."
+                    android:id="@+id/bio"/>
 
                 <TextView
                     android:layout_width="fill_parent"
@@ -91,7 +92,8 @@
                     android:clickable="true"
                     android:elevation="4dp"
                     android:padding="20dp"
-                    android:text="Specialization: Yoga, Power Yoga." />
+                    android:text="Specialization: Yoga, Power Yoga."
+                    android:id="@+id/specialization"/>
 
             </LinearLayout>
 

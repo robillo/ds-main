@@ -10,20 +10,25 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.example.sasuke.dailysuvichar.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import jp.wasabeef.glide.transformations.gpu.BrightnessFilterTransformation;
 import jp.wasabeef.glide.transformations.gpu.VignetteFilterTransformation;
 
@@ -40,6 +45,10 @@ public class GuruDetailActivity extends BaseActivity{
     ImageView dp;
     @BindView(R.id.cover)
     ImageView cover;
+    @BindView(R.id.bio)
+    TextView bio;
+    @BindView(R.id.specialization)
+    TextView spec;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -123,6 +132,47 @@ public class GuruDetailActivity extends BaseActivity{
             Bitmap bmImg = BitmapFactory.decodeFile(picturePath);
             cover.setImageBitmap(bmImg);
         }
+    }
 
+    @OnClick(R.id.name)
+    public void setName(){
+        new MaterialDialog.Builder(this)
+                .title("Set Your Username")
+                .content("First Name + Last Name")
+                .inputType(InputType.TYPE_CLASS_TEXT)
+                .input("Enter the name...", "", new MaterialDialog.InputCallback() {
+                    @Override
+                    public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
+                        name.setText(input);
+                    }
+                }).show();
+    }
+
+    @OnClick(R.id.bio)
+    public void setBio(){
+        new MaterialDialog.Builder(this)
+                .title("Set Your Bio")
+                .content("A Short Descripton About Yourself.")
+                .inputType(InputType.TYPE_CLASS_TEXT)
+                .input("Enter bio here...", "", new MaterialDialog.InputCallback() {
+                    @Override
+                    public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
+                        bio.setText("Bio:" + input);
+                    }
+                }).show();
+    }
+
+    @OnClick(R.id.specialization)
+    public void setSpec(){
+        new MaterialDialog.Builder(this)
+                .title("Set Your Specialization")
+                .content("Spiritual Skills You Specialize In.")
+                .inputType(InputType.TYPE_CLASS_TEXT)
+                .input("Enter specialization here...", "", new MaterialDialog.InputCallback() {
+                    @Override
+                    public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
+                        spec.setText("Specialization:" + input);
+                    }
+                }).show();
     }
 }
