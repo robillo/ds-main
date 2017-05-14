@@ -26,27 +26,6 @@ public class VideoViewHolder extends RecyclerView.ViewHolder {
     public VideoViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
-//        mBtnLike.setOnLikeListener(new OnLikeListener() {
-//            @Override
-//            public void liked(LikeButton likeButton) {
-//                likeButton.setLiked(true);
-//            }
-//
-//            @Override
-//            public void unLiked(LikeButton likeButton) {
-//                likeButton.setLiked(false);
-//            }
-//        });
-//        tv_like.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if(mBtnLike.isLiked()){
-//                    mBtnLike.setLiked(false);
-//                }else{
-//                    mBtnLike.setLiked(true);
-//                }
-//            }
-//        });
     }
 
 }

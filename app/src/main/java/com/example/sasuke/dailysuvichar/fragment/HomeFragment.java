@@ -1,7 +1,6 @@
 package com.example.sasuke.dailysuvichar.fragment;
 
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -10,10 +9,8 @@ import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -30,9 +27,11 @@ import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.activity.SelectActivity;
 import com.example.sasuke.dailysuvichar.activity.SelectPhotoActivity;
 import com.example.sasuke.dailysuvichar.event.DoubleTabEvent;
+import com.example.sasuke.dailysuvichar.models.CustomVideo;
 import com.example.sasuke.dailysuvichar.models.Photo;
 import com.example.sasuke.dailysuvichar.models.Status;
 import com.example.sasuke.dailysuvichar.models.Video;
+import com.example.sasuke.dailysuvichar.view.adapter.CustomVideoAdapter;
 import com.example.sasuke.dailysuvichar.view.adapter.PhotoItemAdapter;
 import com.example.sasuke.dailysuvichar.view.adapter.StatusItemAdapter;
 import com.example.sasuke.dailysuvichar.view.adapter.VideoItemAdapter;
@@ -101,7 +100,7 @@ public class HomeFragment extends BaseFragment {
     private static final int PICK_IMAGE_REQUEST = 250;
     private Uri filePath;
     Items items;
-
+    CustomVideoAdapter customVideoAdapter;
     private Animation slide_down;
     private Animation slide_up;
     private int CHECK = 1;
@@ -141,6 +140,7 @@ public class HomeFragment extends BaseFragment {
 
         slide_down = AnimationUtils.loadAnimation(getContext(), R.anim.slide_down);
         slide_up = AnimationUtils.loadAnimation(getContext(), R.anim.slide_up);
+        customVideoAdapter = new CustomVideoAdapter();
 
         mLayoutManager = new LinearLayoutManager(getContext());
         mLayoutManager.setItemPrefetchEnabled(true);
@@ -149,8 +149,18 @@ public class HomeFragment extends BaseFragment {
         mAdapter = new MultiTypeAdapter();
         mAdapter.register(Status.class, new StatusItemAdapter());
         mAdapter.register(Photo.class, new PhotoItemAdapter());
+        mAdapter.register(CustomVideo.class, new CustomVideoAdapter());
         mAdapter.register(Video.class, new VideoItemAdapter(getActivity()));
         mRvHome.setAdapter(mAdapter);
+
+
+        mRvHome.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                customVideoAdapter.releaseVideo();
+            }
+        });
 
         items = new Items();
         HashMap<String, Status> statuses = new HashMap<>();
@@ -204,6 +214,17 @@ public class HomeFragment extends BaseFragment {
         fetchStatusFromFirebase();
 
         fetchPhotosFromFirebase();
+
+
+//        items = new Items();
+//        CustomVideo vid = new CustomVideo("rishabh shukla","https://video.twimg.com/ext_tw_video/703677246528221184/pu/vid/180x320/xnI48eAV8iPFW9aA.mp4",23,"video caption!!");
+//        items.add(vid);
+//
+//
+//        CustomVideo vid2 = new CustomVideo("rishabhh","https://video.twimg.com/ext_tw_video/703677246528221184/pu/vid/180x320/xnI48eAV8iPFW9aA.mp4",25,"video caption2!!");
+//        items.add(vid);
+//
+//        mAdapter.setItems(items);
 
 //        status = new Status();
 //        status.setStatus("Watching bahubali 2 with Aditya Tyagi and 2 others at PVR.");
@@ -309,6 +330,16 @@ public class HomeFragment extends BaseFragment {
 //            }
 //        });
 
+    }
+
+    @Override
+    public void onPause() {
+
+        if (customVideoAdapter != null) {
+            customVideoAdapter.releaseVideo();
+        }
+
+        super.onPause();
     }
 
     private void fetchPhotosFromFirebase() {
