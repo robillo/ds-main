@@ -23,9 +23,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/background"
-
-                    android:tag="parallax=0.5" />
+                    android:tag="parallax=0.5"
+                    android:id="@+id/cover"/>
 
                 <TextView
                     android:fontFamily="sans-serif-smallcaps"
@@ -35,16 +34,16 @@
                     android:textSize="30sp"
                     android:textColor="@color/white"
                     android:text="Robillo Ruins"
-
-                    android:tag="parallax=0.7" />
+                    android:tag="parallax=0.7"
+                    android:id="@+id/name"/>
 
                 <ImageView
                     android:layout_width="100sp"
                     android:layout_height="100sp"
                     android:layout_marginTop="160sp"
                     android:layout_gravity="center_horizontal"
-                    android:src="@drawable/profile"
-                    android:tag="parallax=-0.2"/>
+                    android:tag="parallax=-0.2"
+                    android:id="@+id/dp"/>
 
             </FrameLayout>
 
@@ -62,7 +61,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_margin="20sp"
+                android:layout_margin="5sp"
                 android:background="#00000000">
 
                 <TextView

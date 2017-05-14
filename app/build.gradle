@@ -85,5 +85,8 @@ dependencies {
     compile 'com.github.jd-alexander:LikeButton:0.2.1'
     compile 'com.github.stfalcon:frescoimageviewer:0.5.0'
     compile 'com.cleveroad:fireworkypulltorefresh:1.0.3'
+    compile 'jp.wasabeef:glide-transformations:2.0.2'
+    // If you want to use the GPU Filters
+    compile 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'
 }
 apply plugin: 'com.google.gms.google-services'
