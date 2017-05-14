@@ -11,6 +11,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -38,6 +39,8 @@ public class HomeActivity extends BaseActivity {
     DrawerLayout drawer;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.drawer_button)
+    ImageButton drawerButton;
 
     private static final int DELAY_TIME = 2000;
     private static long back_pressed;
@@ -57,6 +60,16 @@ public class HomeActivity extends BaseActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         replaceFragment(MainFragment.newInstance(), MainFragment.class.getName());
+    }
+
+    @OnClick(R.id.drawer_button)
+    public void controlDrawer(){
+        if(drawer.isDrawerOpen(GravityCompat.START)){
+            drawer.closeDrawer(GravityCompat.START);
+        }
+        else {
+            drawer.openDrawer(GravityCompat.START);
+        }
     }
 
     @Override
