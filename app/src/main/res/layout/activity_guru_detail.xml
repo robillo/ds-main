@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.github.florent37.parallax.ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:parallaxVertical="1.1">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:scaleType="centerCrop"
+                    android:tag="parallax=0.5"
+                    android:background="@drawable/background"
+                    android:id="@+id/cover"/>
+
+                <TextView
+                    android:fontFamily="sans-serif-smallcaps"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:padding="5sp"
+                    android:alpha="0.7"
+                    android:background="@color/colorAccent"
+                    android:textSize="30sp"
+                    android:textColor="@color/white"
+                    android:text="Robillo Ruins"
+                    android:tag="parallax=0.7"
+                    android:id="@+id/name"/>
+
+                <ImageView
+                    android:layout_width="100sp"
+                    android:layout_height="100sp"
+                    android:layout_marginTop="160sp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/profile"
+                    android:tag="parallax=-0.2"
+                    android:id="@+id/dp"/>
+
+            </FrameLayout>
+
+            <Button
+                android:layout_width="100sp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:text="FOLLOW"
+                android:background="@color/colorAccent"
+                android:fontFamily="sans-serif-smallcaps"
+                android:layout_margin="5sp"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/follow"
+                android:tag="parallax=-0.1"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_margin="5sp"
+                android:background="#00000000">
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:textColor="@color/black"
+                    android:background="#fff"
+                    android:clickable="true"
+                    android:elevation="4dp"
+                    android:padding="20dp"
+                    android:text="Bio: Short Description Should Be Input Here."
+                    android:id="@+id/bio"/>
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_marginBottom="3dp"
+                    android:layout_marginTop="3dp"
+                    android:background="#fff"
+                    android:textColor="@color/black"
+                    android:clickable="true"
+                    android:elevation="4dp"
+                    android:padding="20dp"
+                    android:text="Specialization: Yoga, Power Yoga."
+                    android:id="@+id/specialization"/>
+
+            </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/recyclerview">
+
+            </android.support.v7.widget.RecyclerView>
+
+        </LinearLayout>
+
+    </com.github.florent37.parallax.ScrollView>
+
+</android.support.design.widget.CoordinatorLayout>

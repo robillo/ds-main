@@ -1,6 +1,7 @@
 package com.example.sasuke.dailysuvichar.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.sasuke.dailysuvichar.R;
+import com.example.sasuke.dailysuvichar.activity.GuruDetailActivity;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.firebase.storage.StorageReference;
 import com.readystatesoftware.viewbadger.BadgeView;
@@ -68,4 +70,7 @@ public class VHGurus extends RecyclerView.ViewHolder{
         }
     }
 
+    public void intent(){
+        context.startActivity(new Intent(context, GuruDetailActivity.class));
+    }
 }
