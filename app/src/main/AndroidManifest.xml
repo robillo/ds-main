@@ -41,6 +41,7 @@
             android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".activity.FullScreenActivity" android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".activity.ProfileActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".activity.GuruDetailActivity"/>
     </application>
 
 </manifest>
