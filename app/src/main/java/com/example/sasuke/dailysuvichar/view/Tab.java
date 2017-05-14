@@ -10,10 +10,6 @@ import android.widget.TextView;
 
 import com.example.sasuke.dailysuvichar.R;
 
-/**
- * Created by Sasuke on 4/24/2017.
- */
-
 public class Tab extends LinearLayout {
 
     public ImageView mImageView;
