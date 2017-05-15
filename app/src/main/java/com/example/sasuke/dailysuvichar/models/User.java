@@ -37,6 +37,11 @@ public class User {
         this.allInterests = allInterests;
     }
 
+    public User(HashMap<String, ArrayList<String>> mAllInterests, ArrayList<String> mSelectedSubInterests) {
+        this.allInterests = mAllInterests;
+        this.selectedSubInterests = mSelectedSubInterests;
+    }
+
     public String getUsername() {
         return username;
     }

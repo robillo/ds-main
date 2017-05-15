@@ -197,9 +197,7 @@ public class SubInterestFragment extends BaseFragment {
             }
         }
 
-        User user = new User("Rishabh", "abcd@gmail.com",
-                "Bio....", "EN", "DP.JPG", "COVER.PNG", mAllInterests,
-                "02.01.95", "MALE", "9999999999", 22, mSelectedSubInterests);
+        User user = new User(mAllInterests, mSelectedSubInterests);
         mDatabase.child(mFirebaseUser.getUid()).setValue(user);
 
         startActivity(HomeActivity.newIntent(getActivity()));

@@ -133,13 +133,27 @@ public class ProfileActivity extends BaseActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
-                name.setText(user.getName());
-                userName.setText(user.getUsername());
-                bio.setText("Bio: "+user.getBio());
-                DOB.setText("Date Of Birth: "+user.getDOB());
-                gender.setText("Gender: "+user.getGender());
-                age.setText("Age: "+user.getAge());
-                language.setText("Language: "+user.getPreferredLang());
+                if(user.getName()!=null) {
+                    name.setText(user.getName());
+                }
+                if(user.getUsername()!=null) {
+                    userName.setText(user.getUsername());
+                }
+                if(user.getBio()!=null) {
+                    bio.setText(user.getBio());
+                }
+                if(user.getDOB()!=null){
+                    DOB.setText(user.getDOB());
+                }
+                if(user.getGender()!=null){
+                    gender.setText(user.getGender());
+                }
+                if(user.getAge()==0){
+                    age.setText(user.getAge());
+                }
+                if(user.getPreferredLang()!=null) {
+                    language.setText(user.getPreferredLang());
+                }
                 if(user.getPhotoUrl()!=null){
                     String[] filePathColumn = { MediaStore.Images.Media.DATA };
 
