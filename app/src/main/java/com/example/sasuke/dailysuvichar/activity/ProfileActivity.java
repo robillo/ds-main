@@ -148,9 +148,10 @@ public class ProfileActivity extends BaseActivity {
                 if(user.getGender()!=null){
                     gender.setText(user.getGender());
                 }
-                if(user.getAge()==0){
-                    age.setText(user.getAge());
+                if(user.getAge()!=0) {
+                    age.setText(String.valueOf(user.getAge()));
                 }
+
                 if(user.getPreferredLang()!=null) {
                     language.setText(user.getPreferredLang());
                 }
@@ -434,15 +435,17 @@ public class ProfileActivity extends BaseActivity {
 
     @OnClick(R.id.btnSave)
     public void save(){
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle("Saving Changes...");
-        progressDialog.show();
+//        progressDialog = new ProgressDialog(this);
+//        progressDialog.setTitle("Saving Changes...");
+//        progressDialog.show();
 
         writetoFirebase();
 
-        progressDialog.dismiss();
+//        progressDialog.dismiss();
         Toast.makeText(this, "Changes Saved Successfully", Toast.LENGTH_SHORT).show();
 
+        startActivity(new Intent(this, HomeActivity.class));
+        finish();
     }
     @Override
     protected void onStop() {
