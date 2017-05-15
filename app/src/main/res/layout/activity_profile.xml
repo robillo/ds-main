@@ -152,5 +152,18 @@
                 android:text="Age: 20"
                 android:id="@+id/age"/>
         </LinearLayout>
+
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:background="@color/transparentBlue"
+            android:fontFamily="sans-serif-condensed"
+            android:textStyle="bold"
+            android:text="SAVE"
+            android:textColor="#17ffb9"
+            android:textSize="20dp" />
     </RelativeLayout>
 </ScrollView>

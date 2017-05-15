@@ -1,8 +1,10 @@
 package com.example.sasuke.dailysuvichar.models;
 
+import com.google.firebase.database.Exclude;
+
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Map;
 
 public class User {
     private String name;
@@ -17,6 +19,28 @@ public class User {
     private String DOB;
     private String gender;
     private String phone;
+
+    public User(String name, String bio, String preferredLang,String DOB, String photoUrl, String coverUrl, String gender, String username, int age) {
+        this.name = name;
+        this.bio = bio;
+        this.preferredLang = preferredLang;
+        this.photoUrl = photoUrl;
+        this.coverUrl = coverUrl;
+        this.gender = gender;
+        this.username = username;
+        this.age = age;
+        this.DOB = DOB;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    private String username;
     private int age;
     private ArrayList<String> selectedSubInterests;
     private ArrayList<String> following;
@@ -245,5 +269,20 @@ public class User {
 
     public int getAge() {
         return age;
+    }
+
+    @Exclude
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("name", name);
+        result.put("dob", DOB);
+        result.put("age", age);
+        result.put("bio", bio);
+        result.put("username", username);
+        result.put("preferredLang", preferredLang);
+        result.put("photoUrl", photoUrl);
+        result.put("coverUrl", coverUrl);
+
+        return result;
     }
 }

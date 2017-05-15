@@ -4,7 +4,7 @@
     <color name="colorPrimaryDark">#0098f0</color>
     <color name="colorAccent">#0098f0</color>
     <color name="colorHighlight">#FF1744</color>
-
+<color name="transparentBlue">#741751ff</color>
     <!-- basic colors -->
     <color name="green">#27D34D</color>
     <color name="green_very_dark">#4caf50</color>
