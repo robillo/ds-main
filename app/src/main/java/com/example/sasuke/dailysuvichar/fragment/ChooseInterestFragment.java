@@ -1,6 +1,5 @@
 package com.example.sasuke.dailysuvichar.fragment;
 
-import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -158,9 +157,7 @@ public class ChooseInterestFragment extends BaseFragment implements BubblePicker
         if (mSelectedInterests.size() < 3) {
             Toast.makeText(getContext(), getResources().getString(R.string.please_choose_at_least_three_interests), Toast.LENGTH_SHORT).show();
         } else {
-            User user = new User("Rishabh", "abcd@gmail.com",
-                    "Bio....", "EN", mSelectedSubInterests, mSelectedInterests, mAllInterests, "DP.JPG", "COVER.PNG",
-                    "02.01.95", "MALE", "9999999999", 22);
+            User user = new User(mSelectedSubInterests, mAllInterests);
             mDatabase.child(mFirebaseUser.getUid()).setValue(user);
             startActivity(SubInterestActivity.newIntent(getActivity()));
         }

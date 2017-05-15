@@ -32,6 +32,11 @@ public class User {
         this.DOB = DOB;
     }
 
+    public User(ArrayList<String> mSelectedSubInterests, HashMap<String, ArrayList<String>> allInterests) {
+        this.allSubInterests = mSelectedSubInterests;
+        this.allInterests = allInterests;
+    }
+
     public String getUsername() {
         return username;
     }
