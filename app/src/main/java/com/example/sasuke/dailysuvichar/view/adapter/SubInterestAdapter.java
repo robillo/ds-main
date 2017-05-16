@@ -15,10 +15,6 @@ import com.willowtreeapps.spruce.sort.LinearSort;
 
 import java.util.ArrayList;
 
-/**
- * Created by Sasuke on 4/26/2017.
- */
-
 public class SubInterestAdapter extends RecyclerView.Adapter<SubInterestViewHolder> {
 
     private ArrayList<String> mSubInterestList;

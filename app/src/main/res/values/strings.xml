@@ -6,6 +6,7 @@
     <string name="registration_unsuccessfully">Registration Unsuccessfully</string>
     <string name="divider">Divider</string>
     <string name="logo">Logo</string>
+    <string name="tab">टैब</string>
     <string name="seperator">Seperator</string>
 
     <!-- Login Activity -->

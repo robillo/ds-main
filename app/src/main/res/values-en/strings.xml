@@ -1,47 +1,48 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Daily Suvichar</string>
     <string name="click_back_again_to_exit">Click back again to exit</string>
-
     <string name="validation_successful">Validation Successful</string>
     <string name="registered_successfully">Registered Successfully</string>
     <string name="registration_unsuccessfully">Registration Unsuccessfully</string>
     <string name="divider">Divider</string>
     <string name="logo">Logo</string>
-
+    <string name="seperator">Seperator</string>
+    <string name="tab">टैब</string>
 
     <!-- Login Activity -->
     <string name="login_activity_title">Login</string>
     <string name="email_number">Email ID / Phone</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
+    <string name="redirect_to_register">Don\'t have an Account? Register Here</string>
     <string name="logout">Logout</string>
     <string name="forgot_password">Forgot your Password?</string>
-    <string name="redirect_to_register">Don\'t have an Account? Register Here</string>
     <string name="please_wait">Please wait...</string>
 
     <!--Register Activity -->
     <string name="password_again">Re-Enter Password</string>
     <string name="register">Register</string>
-    <string name="redirect_to_login">Already have an Account? Login</string>
+    <string name="redirect_to_login">Already have an Account?</string>
     <string name="invalid_email">Invalid Email</string>
     <string name="invalid_password">Password Length should be > 6</string>
     <string name="invalid_password_again">Password Doesn\'t Match</string>
+    <string name="sign_up_failed">Sign Up Failed! Retry</string>
+    <string name="sign_up_successful">Sign Up Successful!</string>
+
 
     <!-- Main Activity -->
     <string name="choose_language">Choose Language-</string>
     <string name="english">English</string>
     <string name="hindi">Hindi\t\t</string>
     <string name="next">Next</string>
-    <string name="sign_up_failed">Sign Up Failed! Retry</string>
-    <string name="sign_up_successful">Sign Up Successful!</string>
 
     <!-- Navigation Drawer -->
     <string name="Feeds">Feeds</string>
     <string name="home">Home</string>
     <string name="settings">Settings</string>
     <string name="profile">Profile</string>
-    <string name="tab">Tab</string>
+    <string name="updates">Updates</string>
+    <string name="notification">Notification</string>
 
     <!-- Home Activity -->
     <string name="trending">Trending</string>
@@ -49,6 +50,12 @@
     <string name="search_for_gurus">Search for Gurus</string>
     <string name="suggested">Suggested</string>
     <string name="menu">Menu</string>
+
+    <!-- Home Menu -->
+    <string name="share_your_suvichar">Share your suvichar</string>
+    <string name="status">Status</string>
+    <string name="photo">Photo</string>
+    <string name="video">Video</string>
 
     <!--LoginFragment-->
     <string name="facebook_app_id">298302307256927</string>
@@ -72,9 +79,18 @@
     <string name="motivation">MOTIVATION</string>
     <string name="health">HEALTH</string>
 
+    <array name="allInterests">
+        <item>diet</item>
+        <item>yoga</item>
+        <item>health</item>
+        <item>religion</item>
+        <item>motivation</item>
+        <item>ayurveda</item>
+        <item>astrology</item>
+    </array>
+
     <!--Motivation Array-->
     <string-array name="motivation_array">
-
         <item>Inspiration</item>
         <item>Stories</item>
         <item>Life</item>
@@ -91,7 +107,6 @@
         <item>Psychology</item>
         <item>Fight Deperssion</item>
         <item>Career motivation</item>
-
     </string-array>
 
     <!--Religion Array-->
@@ -192,16 +207,6 @@
         <item>Piesces</item>
     </string-array>
 
-    <array name="allInterests">
-        <item>diet</item>
-        <item>yoga</item>
-        <item>health</item>
-        <item>religion</item>
-        <item>motivation</item>
-        <item>ayurveda</item>
-        <item>astrology</item>
-    </array>
-
     <!--Yoga Array-->
     <string-array name="yoga_array">
         <item>Aasana</item>
@@ -225,4 +230,6 @@
 
     <string name="hindi_text">English Text Accessed</string>
     <string name="select_tags">SELECT TAGS</string>
+    <string name="write_something">Write something here...</string>
+    <string name="your_feeds">Your Feeds</string>
 </resources>

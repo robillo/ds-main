@@ -8,6 +8,7 @@
     <string name="registration_unsuccessfully">पंजीकरण असफल</string>
     <string name="divider">Divider</string>
     <string name="logo">Logo</string>
+    <string name="seperator">Seperator</string>
 
     <!-- Login Activity -->
     <string name="login_activity_title">लॉग इन करें</string>
@@ -41,6 +42,14 @@
     <string name="settings">सेटिंग्स</string>
     <string name="profile">प्रोफाइल</string>
     <string name="tab">टैब</string>
+    <string name="updates">Updates</string>
+    <string name="notification">Notification</string>
+
+    <!-- Home Menu -->
+    <string name="share_your_suvichar">Share your suvichar</string>
+    <string name="status">Status</string>
+    <string name="photo">Photo</string>
+    <string name="video">Video</string>
 
     <!-- Home Activity -->
     <string name="trending">रुझान</string>
@@ -223,6 +232,9 @@
         <item>Meditation</item>
     </string-array>
 
-    <string name="hindi_text">Hindi Text Accessed</string>
+    <string name="hindi_text">English Text Accessed</string>
+    <string name="select_tags">SELECT TAGS</string>
+    <string name="write_something">Write something here...</string>
+    <string name="your_feeds">Your Feeds</string>
 
 </resources>

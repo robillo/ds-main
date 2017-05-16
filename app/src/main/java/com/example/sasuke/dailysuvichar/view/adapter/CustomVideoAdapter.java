@@ -14,10 +14,6 @@ import com.klinker.android.simple_videoview.SimpleVideoView;
 
 import me.drakeet.multitype.ItemViewBinder;
 
-/**
- * Created by rishabhshukla on 15/05/17.
- */
-
 public class CustomVideoAdapter  extends ItemViewBinder<CustomVideo, CustomVideoVH> {
 
     private Context context, pContext;
