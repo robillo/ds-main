@@ -22,10 +22,22 @@ public class RVGuruAdapter extends RecyclerView.Adapter<VHGurus> {
 
     ArrayList<Guru> list;
     private Context context;
+    private int filterCategory = 100; // followers0 astrology1 yoga2 pandits3 motivation4 ayurveda5 noFilter100
+    private String MOTIVATION_GURU = "Motivation Guru";
+    private String AYURVEDA_GURU = "Ayurveda Guru";
+    private String YOGA_GURU = "Yoga Guru";
+    private String PANDIT = "Pandit";
+    private String ASTROLOGY_GURU = "Astrology Guru";
 
-    public RVGuruAdapter(Context context, ArrayList<Guru> list ) {
+    public RVGuruAdapter(Context context, ArrayList<Guru> list) {
         this.context = context;
         this.list = list;
+    }
+
+    public RVGuruAdapter(ArrayList<Guru> list, Context context, int filterCategory) {
+        this.list = list;
+        this.context = context;
+        this.filterCategory = filterCategory;
     }
 
     @Override

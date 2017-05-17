@@ -61,7 +61,6 @@ public class GurusFragment extends BaseFragment {
         guruList = new ArrayList<>();
 
         mRvGuruAdapter = new RVGuruAdapter(getActivity(), guruList);
-        rv.setAdapter(mRvGuruAdapter);
 
         guruList.add(new Guru("Guru Robin", 721, ASTROLOGY_GURU));
         guruList.add(new Guru("Shankar Ji", 210, ASTROLOGY_GURU));
@@ -73,6 +72,8 @@ public class GurusFragment extends BaseFragment {
         guruList.add(new Guru("Guru shiv", 9, MOTIVATION_GURU));
         guruList.add(new Guru("Guru Kant", 72, AYURVEDA_GURU));
         guruList.add(new Guru("Guru Narayan", 121, PANDIT));
+
+        rv.setAdapter(mRvGuruAdapter);
 
         return v;
     }
