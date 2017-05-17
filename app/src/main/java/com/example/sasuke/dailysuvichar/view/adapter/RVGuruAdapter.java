@@ -34,7 +34,7 @@ public class RVGuruAdapter extends RecyclerView.Adapter<VHGurus> {
         this.list = list;
     }
 
-    public RVGuruAdapter(ArrayList<Guru> list, Context context, int filterCategory) {
+    public RVGuruAdapter(Context context, ArrayList<Guru> list, int filterCategory) {
         this.list = list;
         this.context = context;
         this.filterCategory = filterCategory;

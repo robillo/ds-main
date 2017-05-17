@@ -124,32 +124,32 @@ public class GurusFragment extends BaseFragment {
                         switch (which) {
                             case 0: {
                                 //Filter By Followers
-
+                                mRvGuruAdapter = new RVGuruAdapter(getActivity(), guruList);
                                 break;
                             }
                             case 1: {
-                                //Astrology Gurus
-
+                                //Astrology Gurus1
+                                mRvGuruAdapter = new RVGuruAdapter(getActivity(), guruList, 1);
                                 break;
                             }
                             case 2: {
-                                //Yoga Gurus
-
+                                //Yoga Gurus2
+                                mRvGuruAdapter = new RVGuruAdapter(getActivity(), guruList, 2);
                                 break;
                             }
                             case 3: {
-                                //Pandits Gurus
-
+                                //Pandits Gurus3
+                                mRvGuruAdapter = new RVGuruAdapter(getActivity(), guruList, 3);
                                 break;
                             }
                             case 4: {
-                                //Motivation Gurus
-
+                                //Motivation Gurus4
+                                mRvGuruAdapter = new RVGuruAdapter(getActivity(), guruList, 4);
                                 break;
                             }
                             case 5: {
-                                //Ayurveda Gurus
-
+                                //Ayurveda Gurus5
+                                mRvGuruAdapter = new RVGuruAdapter(getActivity(), guruList, 5);
                                 break;
                             }
                         }
