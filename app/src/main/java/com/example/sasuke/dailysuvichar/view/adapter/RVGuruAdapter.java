@@ -21,15 +21,12 @@ import java.util.ArrayList;
 public class RVGuruAdapter extends RecyclerView.Adapter<VHGurus> {
 
     ArrayList<Guru> list;
-
+    private Context context;
 
     public RVGuruAdapter(Context context, ArrayList<Guru> list ) {
         this.context = context;
         this.list = list;
     }
-
-    private Context context;
-
 
     @Override
     public VHGurus onCreateViewHolder(ViewGroup parent, int viewType) {

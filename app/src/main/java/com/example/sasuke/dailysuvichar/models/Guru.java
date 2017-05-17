@@ -19,6 +19,7 @@ public class Guru {
     private String phone;
     private int age;
     private int followersCount;
+    private String specialization;
 
     public int getFollowersCount() {
         return followersCount;
@@ -28,7 +29,7 @@ public class Guru {
         this.followersCount = followersCount;
     }
 
-    public Guru(String name, String email, String bio, ArrayList<String> followers, String preferredLang, String photoUrl, String coverUrl, HashMap<String, Boolean> motivation, HashMap<String, Boolean> religion, HashMap<String, Boolean> astrology, HashMap<String, Boolean> yoga, HashMap<String, Boolean> ayurveda, HashMap<String, Boolean> health, HashMap<String, Boolean> diet, HashMap<String, ArrayList<String>> allInterests, String DOB, String gender, ArrayList<String> selectedSubInterests, String phone, int age, int followersCount) {
+    public Guru(String name, String email, String bio, ArrayList<String> followers, String preferredLang, String photoUrl, String coverUrl, HashMap<String, Boolean> motivation, HashMap<String, Boolean> religion, HashMap<String, Boolean> astrology, HashMap<String, Boolean> yoga, HashMap<String, Boolean> ayurveda, HashMap<String, Boolean> health, HashMap<String, Boolean> diet, HashMap<String, ArrayList<String>> allInterests, String DOB, String gender, ArrayList<String> selectedSubInterests, String phone, int age, int followersCount, String specialization) {
         this.name = name;
         this.email = email;
         this.bio = bio;
@@ -50,12 +51,27 @@ public class Guru {
         this.phone = phone;
         this.age = age;
         this.followersCount = followersCount;
+        this.specialization = specialization;
+    }
+
+    public String getSpecialization() {
+        return specialization;
+    }
+
+    public void setSpecialization(String specialization) {
+        this.specialization = specialization;
     }
 
     public Guru(String name, Integer followersCount) {
 
         this.name = name;
         this.followersCount = followersCount;
+    }
+
+    public Guru(String name, Integer followersCount, String specialization) {
+        this.name = name;
+        this.followersCount = followersCount;
+        this.specialization = specialization;
     }
 
     public Guru() {

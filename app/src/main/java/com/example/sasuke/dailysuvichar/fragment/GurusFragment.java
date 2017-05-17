@@ -28,8 +28,12 @@ public class GurusFragment extends BaseFragment {
     private RVGuruAdapter mRvGuruAdapter;
     private StaggeredGridLayoutManager staggeredGridLayoutManager;
     private GridLayoutManager gridLayoutManager;
-
     private ArrayList<Guru> guruList;
+    private String MOTIVATION_GURU = "Motivation Guru";
+    private String AYURVEDA_GURU = "Ayurveda Guru";
+    private String YOGA_GURU = "Yoga Guru";
+    private String PANDIT = "Pandit";
+    private String ASTROLOGY_GURU = "Astrology Guru";
 
     @BindView(R.id.recyclerview)
     public RecyclerView rv;
@@ -59,16 +63,16 @@ public class GurusFragment extends BaseFragment {
         mRvGuruAdapter = new RVGuruAdapter(getActivity(), guruList);
         rv.setAdapter(mRvGuruAdapter);
 
-        guruList.add(new Guru("Guru Robin", 721));
-        guruList.add(new Guru("Shankar Ji", 210));
-        guruList.add(new Guru("Baba Ramdev", 4324));
-        guruList.add(new Guru("Baba Afsal", 251));
-        guruList.add(new Guru("Baba ABC", 321));
-        guruList.add(new Guru("Guru Tagore", 11));
-        guruList.add(new Guru("Nafsar Guru", 110));
-        guruList.add(new Guru("Guru shiv", 9));
-        guruList.add(new Guru("Guru Kant", 72));
-        guruList.add(new Guru("Guru Narayan", 121));
+        guruList.add(new Guru("Guru Robin", 721, ASTROLOGY_GURU));
+        guruList.add(new Guru("Shankar Ji", 210, ASTROLOGY_GURU));
+        guruList.add(new Guru("Baba Ramdev", 4324, YOGA_GURU));
+        guruList.add(new Guru("Baba Afsal", 251, MOTIVATION_GURU));
+        guruList.add(new Guru("Baba ABC", 321, YOGA_GURU));
+        guruList.add(new Guru("Guru Tagore", 11, AYURVEDA_GURU));
+        guruList.add(new Guru("Nafsar Guru", 110, PANDIT));
+        guruList.add(new Guru("Guru shiv", 9, MOTIVATION_GURU));
+        guruList.add(new Guru("Guru Kant", 72, AYURVEDA_GURU));
+        guruList.add(new Guru("Guru Narayan", 121, PANDIT));
 
         return v;
     }
