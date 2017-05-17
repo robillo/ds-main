@@ -171,7 +171,7 @@ public class GuruDetailActivity extends BaseActivity{
         new MaterialDialog.Builder(this)
                 .title("Set Your Specialization:")
                 .content("Spiritual Skill You Majorly Specialize In.")
-                .items(new String[]{"Astrology Gurus", "Yoga Gurus", "Pandits", "Motivation Gurus", "Ayurveda Gurus"})
+                .items(new String[]{"Astrology Guru", "Yoga Guru", "Pandit", "Motivation Guru", "Ayurveda Guru"})
                 .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
                     @Override
                     public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {

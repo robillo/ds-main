@@ -118,30 +118,32 @@ public class GurusFragment extends BaseFragment {
                     public void onClick(DialogInterface dialogInterface, int which) {
                         switch (which) {
                             case 0: {
+                                //Filter By Followers
 
                                 break;
                             }
                             case 1: {
+                                //Astrology Gurus
 
                                 break;
                             }
                             case 2: {
+                                //Yoga Gurus
 
                                 break;
                             }
                             case 3: {
+                                //Pandits Gurus
 
                                 break;
                             }
                             case 4: {
+                                //Motivation Gurus
 
                                 break;
                             }
                             case 5: {
-
-                                break;
-                            }
-                            case 6: {
+                                //Ayurveda Gurus
 
                                 break;
                             }
