@@ -91,8 +91,9 @@ public class RVGuruAdapter extends RecyclerView.Adapter<VHGurus> {
                 this.list = temp;
                 break;
             }
-            default:{
+            case 6:{
                 this.list = list;
+                break;
             }
         }
         this.context = context;

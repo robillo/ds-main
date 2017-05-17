@@ -119,7 +119,7 @@ public class GurusFragment extends BaseFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Choose Sorting Option:")
                 .setItems(new CharSequence[]{"Followers", "Astrology Gurus", "Yoga Gurus", "Pandits",
-                "Motivation Gurus", "Ayurveda Gurus"}, new DialogInterface.OnClickListener() {
+                "Motivation Gurus", "Ayurveda Gurus", "Show All"}, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int which) {
                         switch (which) {
@@ -157,6 +157,11 @@ public class GurusFragment extends BaseFragment {
                                 mRvGuruAdapter = new RVGuruAdapter(getActivity(), guruList, 5);
                                 rv.setAdapter(mRvGuruAdapter);
                                 break;
+                            }
+                            case 6: {
+                                //SHOW ALL
+                                mRvGuruAdapter = new RVGuruAdapter(getActivity(), guruList, 100);
+                                rv.setAdapter(mRvGuruAdapter);
                             }
                         }
                     }
