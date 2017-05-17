@@ -181,23 +181,23 @@ public class GuruDetailActivity extends BaseActivity{
                          **/
                         switch (which){
                             case 0:{
-                                spec.setText("Astrology Gurus");
+                                spec.setText("Astrology Guru");
                                 break;
                             }
                             case 1:{
-                                spec.setText("Yoga Gurus");
+                                spec.setText("Yoga Guru");
                                 break;
                             }
                             case 2:{
-                                spec.setText("Pandits");
+                                spec.setText("Pandit");
                                 break;
                             }
                             case 3:{
-                                spec.setText("Motivation Gurus");
+                                spec.setText("Motivation Guru");
                                 break;
                             }
                             case 4:{
-                                spec.setText("Ayurveda Gurus");
+                                spec.setText("Ayurveda Guru");
                                 break;
                             }
                         }
