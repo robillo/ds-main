@@ -132,35 +132,36 @@ public class ProfileActivity extends BaseActivity {
         mDatabase.child(mFirebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-                if(dataSnapshot.child("selectedSubInterests").getValue()!=null) {
+//                User user = dataSnapshot.getValue(User.class);
+                if(dataSnapshot.child("name").getValue()!=null) {
+                    name.setText(dataSnapshot.child("name").getValue().toString());
                 }
-                if(user.getName()!=null) {
-                    name.setText(user.getName());
-                }
-                if(user.getUsername()!=null) {
-                    userName.setText(user.getUsername());
-                }
-                if(user.getBio()!=null) {
-                    bio.setText(user.getBio());
-                }
-                if(user.getDOB()!=null){
-                    DOB.setText(user.getDOB());
-                }
-                if(user.getGender()!=null){
-                    gender.setText(user.getGender());
-                }
-//                if(user.getAge()!=0) {
-//                    age.setText(String.valueOf(user.getAge()));
+//                if(user.getName()!=null) {
+//                    name.setText(user.getName());
 //                }
-
-                if(user.getPreferredLang()!=null) {
-                    language.setText(user.getPreferredLang());
+                if(dataSnapshot.child("username").getValue()!=null) {
+                    userName.setText(dataSnapshot.child("userName").getValue().toString());
                 }
-                if(user.getPhotoUrl()!=null){
+                if(dataSnapshot.child("bio").getValue()!=null) {
+                    bio.setText(dataSnapshot.child("bio").getValue().toString());
+                }
+                if(dataSnapshot.child("dob").getValue()!=null) {
+                    DOB.setText(dataSnapshot.child("dob").getValue().toString());
+                }
+                if(dataSnapshot.child("gender").getValue()!=null) {
+                    gender.setText(dataSnapshot.child("gender").getValue().toString());
+                }
+                if(dataSnapshot.child("age").getValue()!=null) {
+                    age.setText(String.valueOf(dataSnapshot.child("age").getValue()));
+                }
+
+                if(dataSnapshot.child("preferredLang").getValue()!=null) {
+                    language.setText(dataSnapshot.child("preferredLang").getValue().toString());
+                }
+                if(dataSnapshot.child("photoUrl").getValue()!=null) {
                     String[] filePathColumn = { MediaStore.Images.Media.DATA };
 
-                    Cursor cursor = getContentResolver().query(Uri.parse(user.getPhotoUrl()),
+                    Cursor cursor = getContentResolver().query(Uri.parse(dataSnapshot.child("photoUrl").getValue().toString()),
                             filePathColumn, null, null, null);
                     cursor.moveToFirst();
 
@@ -174,10 +175,10 @@ public class ProfileActivity extends BaseActivity {
                             .centerCrop()
                             .into(userProfilePic);
                 }
-                if(user.getCoverUrl()!=null){
+                if(dataSnapshot.child("coverUrl").getValue()!=null) {
                     String[] filePathColumn = { MediaStore.Images.Media.DATA };
 
-                    Cursor cursor = getContentResolver().query(Uri.parse(user.getCoverUrl()),
+                    Cursor cursor = getContentResolver().query(Uri.parse(dataSnapshot.child("coverUrl").getValue().toString()),
                             filePathColumn, null, null, null);
                     cursor.moveToFirst();
 
@@ -446,7 +447,7 @@ public class ProfileActivity extends BaseActivity {
 //        progressDialog.dismiss();
         Toast.makeText(this, "Changes Saved Successfully", Toast.LENGTH_SHORT).show();
 
-        startActivity(new Intent(this, HomeActivity.class));
+//        startActivity(new Intent(this, HomeActivity.class));
         finish();
     }
     @Override
@@ -518,13 +519,12 @@ public class ProfileActivity extends BaseActivity {
         }
         if(coverPath!=null){
             coverPathDB = String.valueOf(coverPath);
-            dpPathDB = String.valueOf(dpPath);
 //            progressDialog = new ProgressDialog(this);
 //            progressDialog.setTitle("Saving Changes...");
 //            progressDialog.show();
 
             StorageReference riversRef = mStorageReferenceCover.child(mFirebaseUser.getUid());
-            riversRef.putFile(dpPath)
+            riversRef.putFile(coverPath)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
