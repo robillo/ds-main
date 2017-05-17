@@ -39,6 +39,18 @@ public class CustomVideo {
         this.caption = caption;
     }
 
+    public CustomVideo(@NonNull String name, @NonNull String user, @NonNull Long timestamp, @NonNull Integer likes, @NonNull Integer shares, @NonNull ArrayList<Comment> comments, @NonNull String caption, @NonNull String uid, @NonNull ArrayList<String> tags) {
+        this.name = name;
+        this.user = user;
+        this.timestamp = timestamp;
+        this.likes = likes;
+        this.shares = shares;
+        this.comments = comments;
+        this.caption = caption;
+        this.uid = uid;
+        this.tags = tags;
+    }
+
     @NonNull
     public String getVideoURI() {
         return videoURI;

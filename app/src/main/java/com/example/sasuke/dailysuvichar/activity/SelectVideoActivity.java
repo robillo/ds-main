@@ -20,7 +20,7 @@ import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.example.sasuke.dailysuvichar.R;
-import com.example.sasuke.dailysuvichar.models.Photo;
+import com.example.sasuke.dailysuvichar.models.CustomVideo;
 import com.example.sasuke.dailysuvichar.view.RVTags;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -286,18 +286,16 @@ public class SelectVideoActivity extends BaseActivity{
                             });
 
 
-                    Photo photo = new Photo("Rishabh Shukla", size,
-                            lang, encoding,
-                            bucket, mFirebaseUser.getEmail(),
+                    CustomVideo video = new CustomVideo("Rishabh Shukla", mFirebaseUser.getEmail(),
                             System.currentTimeMillis(), 0, 0, null, etCaption.getText().toString(),
-                            mFirebaseUser.getUid(), mSelectedItems, downloadUrl);
+                            mFirebaseUser.getUid(), mSelectedItems);
 
                     for (String subInt : mSelectedItems) {
-                        mDatabaseReferenceTag.child(subInt.toLowerCase()).child("video").child(postID).setValue(photo);
+                        mDatabaseReferenceTag.child(subInt.toLowerCase()).child("video").child(postID).setValue(video);
                     }
 
                     mDatabaseReferenceUser = FirebaseDatabase.getInstance().getReference();
-                    mDatabaseReferenceUser.child("users").child(mFirebaseUser.getUid()).child("posts").child("photo").push().setValue(photo);
+                    mDatabaseReferenceUser.child("users").child(mFirebaseUser.getUid()).child("posts").child("video").push().setValue(video);
 
                     Toast.makeText(this, "Post successful!", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(this, HomeActivity.class));
