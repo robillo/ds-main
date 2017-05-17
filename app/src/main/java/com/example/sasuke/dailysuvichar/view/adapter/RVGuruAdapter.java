@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 public class RVGuruAdapter extends RecyclerView.Adapter<VHGurus> {
 
-    ArrayList<Guru> list;
+    ArrayList<Guru> list, temp;
     private Context context;
     private int filterCategory = 100; //noFilter100 followers0 astrology1 yoga2 pandits3 motivation4 ayurveda5
     private String MOTIVATION_GURU = "Motivation Guru";
@@ -35,9 +35,67 @@ public class RVGuruAdapter extends RecyclerView.Adapter<VHGurus> {
     }
 
     public RVGuruAdapter(Context context, ArrayList<Guru> list, int filterCategory) {
-        this.list = list;
-        this.context = context;
         this.filterCategory = filterCategory;
+        temp = new ArrayList<>();
+        switch (filterCategory){
+            case 100:{
+                this.list = list;
+                break;
+            }
+            case 0:{
+
+                break;
+            }
+            case 1:{
+                for(int i=0; i<list.size(); i++){
+                    if(list.get(i).getSpecialization().equals(ASTROLOGY_GURU)){
+                        temp.add(list.get(i));
+                    }
+                }
+                this.list = temp;
+                break;
+            }
+            case 2:{
+                for(int i=0; i<list.size(); i++){
+                    if(list.get(i).getSpecialization().equals(YOGA_GURU)){
+                        temp.add(list.get(i));
+                    }
+                }
+                this.list = temp;
+                break;
+            }
+            case 3:{
+                for(int i=0; i<list.size(); i++){
+                    if(list.get(i).getSpecialization().equals(PANDIT)){
+                        temp.add(list.get(i));
+                    }
+                }
+                this.list = temp;
+                break;
+            }
+            case 4:{
+                for(int i=0; i<list.size(); i++){
+                    if(list.get(i).getSpecialization().equals(MOTIVATION_GURU)){
+                        temp.add(list.get(i));
+                    }
+                }
+                this.list = temp;
+                break;
+            }
+            case 5:{
+                for(int i=0; i<list.size(); i++){
+                    if(list.get(i).getSpecialization().equals(AYURVEDA_GURU)){
+                        temp.add(list.get(i));
+                    }
+                }
+                this.list = temp;
+                break;
+            }
+            default:{
+                this.list = list;
+            }
+        }
+        this.context = context;
     }
 
     @Override
@@ -50,99 +108,111 @@ public class RVGuruAdapter extends RecyclerView.Adapter<VHGurus> {
     public void onBindViewHolder(final VHGurus holder, int position) {
 
         final Guru item = list.get(position);
-
-        switch (filterCategory){
-            case 100:{
-                new Handler().post(new Runnable() {
-                    @Override
-                    public void run() {
-                        if(item.getName()!=null) {
-                            holder.setName(item.getName());
-                        }
-                        holder.setFollowersCount(item.getFollowersCount());
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                if(item.getName()!=null) {
+                    holder.setName(item.getName());
+                }
+                holder.setFollowersCount(item.getFollowersCount());
 
 //                if(item.getStorageReference()!=null && context!=null) {
 //                    holder.setImage(item.getStorageReference(), context);
 //                }
-                    }
-                });
-                break;
             }
-            case 0:{
-
-                break;
-            }
-            case 1:{
-                if(item.getSpecialization().equals(ASTROLOGY_GURU)){
-                    new Handler().post(new Runnable() {
-                        @Override
-                        public void run() {
-                            if(item.getName()!=null) {
-                                holder.setName(item.getName());
-                            }
-                            holder.setFollowersCount(item.getFollowersCount());
-                        }
-                    });
-                }
-                break;
-            }
-            case 2:{
-                if(item.getSpecialization().equals(YOGA_GURU)){
-                    new Handler().post(new Runnable() {
-                        @Override
-                        public void run() {
-                            if(item.getName()!=null) {
-                                holder.setName(item.getName());
-                            }
-                            holder.setFollowersCount(item.getFollowersCount());
-                        }
-                    });
-                }
-                break;
-            }
-            case 3:{
-                if(item.getSpecialization().equals(PANDIT)){
-                    new Handler().post(new Runnable() {
-                        @Override
-                        public void run() {
-                            if(item.getName()!=null) {
-                                holder.setName(item.getName());
-                            }
-                            holder.setFollowersCount(item.getFollowersCount());
-                        }
-                    });
-                }
-                break;
-            }
-            case 4:{
-                if(item.getSpecialization().equals(MOTIVATION_GURU)){
-                    new Handler().post(new Runnable() {
-                        @Override
-                        public void run() {
-                            if(item.getName()!=null) {
-                                holder.setName(item.getName());
-                            }
-                            holder.setFollowersCount(item.getFollowersCount());
-                        }
-                    });
-                }
-                break;
-            }
-            case 5:{
-                if(item.getSpecialization().equals(AYURVEDA_GURU)){
-                    new Handler().post(new Runnable() {
-                        @Override
-                        public void run() {
-                            if(item.getName()!=null) {
-                                holder.setName(item.getName());
-                            }
-                            holder.setFollowersCount(item.getFollowersCount());
-                        }
-                    });
-                }
-                break;
-            }
-        }
+        });
+//        switch (filterCategory){
+//            case 100:{
+//                new Handler().post(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        if(item.getName()!=null) {
+//                            holder.setName(item.getName());
+//                        }
+//                        holder.setFollowersCount(item.getFollowersCount());
+//
+////                if(item.getStorageReference()!=null && context!=null) {
+////                    holder.setImage(item.getStorageReference(), context);
+////                }
+//                    }
+//                });
+//                break;
+//            }
+//            case 0:{
+//
+//                break;
+//            }
+//            case 1:{
+//                if(item.getSpecialization().equals(ASTROLOGY_GURU)){
+//                    new Handler().post(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            if(item.getName()!=null) {
+//                                holder.setName(item.getName());
+//                            }
+//                            holder.setFollowersCount(item.getFollowersCount());
+//                        }
+//                    });
+//                }
+//                break;
+//            }
+//            case 2:{
+//                if(item.getSpecialization().equals(YOGA_GURU)){
+//                    new Handler().post(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            if(item.getName()!=null) {
+//                                holder.setName(item.getName());
+//                            }
+//                            holder.setFollowersCount(item.getFollowersCount());
+//                        }
+//                    });
+//                }
+//                break;
+//            }
+//            case 3:{
+//                if(item.getSpecialization().equals(PANDIT)){
+//                    new Handler().post(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            if(item.getName()!=null) {
+//                                holder.setName(item.getName());
+//                            }
+//                            holder.setFollowersCount(item.getFollowersCount());
+//                        }
+//                    });
+//                }
+//                break;
+//            }
+//            case 4:{
+//                if(item.getSpecialization().equals(MOTIVATION_GURU)){
+//                    new Handler().post(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            if(item.getName()!=null) {
+//                                holder.setName(item.getName());
+//                            }
+//                            holder.setFollowersCount(item.getFollowersCount());
+//                        }
+//                    });
+//                }
+//                break;
+//            }
+//            case 5:{
+//                if(item.getSpecialization().equals(AYURVEDA_GURU)){
+//                    new Handler().post(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            if(item.getName()!=null) {
+//                                holder.setName(item.getName());
+//                            }
+//                            holder.setFollowersCount(item.getFollowersCount());
+//                        }
+//                    });
+//                }
+//                break;
+//            }
+//        }
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override

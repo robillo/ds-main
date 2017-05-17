@@ -115,6 +115,7 @@ public class GurusFragment extends BaseFragment {
     }
 
     private void showPopup() {
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Choose Sorting Option:")
                 .setItems(new CharSequence[]{"Followers", "Astrology Gurus", "Yoga Gurus", "Pandits",
