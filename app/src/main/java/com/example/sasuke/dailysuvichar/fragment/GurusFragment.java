@@ -36,7 +36,7 @@ public class GurusFragment extends BaseFragment {
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.fragment_feeds;
+        return R.layout.fragment_gurus;
     }
 
     public static GurusFragment newInstance() {
@@ -59,16 +59,16 @@ public class GurusFragment extends BaseFragment {
         mRvGuruAdapter = new RVGuruAdapter(getActivity(), guruList);
         rv.setAdapter(mRvGuruAdapter);
 
-        guruList.add(new Guru("Guru Robin",721));
-        guruList.add(new Guru("Shankar Ji",210));
-        guruList.add(new Guru("Baba Ramdev",4324));
-        guruList.add(new Guru("Baba Afsal",251));
-        guruList.add(new Guru("Baba ABC",321));
-        guruList.add(new Guru("Guru Tagore",11));
-        guruList.add(new Guru("Nafsar Guru",110));
-        guruList.add(new Guru("Guru shiv",9));
-        guruList.add(new Guru("Guru Kant",72));
-        guruList.add(new Guru("Guru Narayan",121));
+        guruList.add(new Guru("Guru Robin", 721));
+        guruList.add(new Guru("Shankar Ji", 210));
+        guruList.add(new Guru("Baba Ramdev", 4324));
+        guruList.add(new Guru("Baba Afsal", 251));
+        guruList.add(new Guru("Baba ABC", 321));
+        guruList.add(new Guru("Guru Tagore", 11));
+        guruList.add(new Guru("Nafsar Guru", 110));
+        guruList.add(new Guru("Guru shiv", 9));
+        guruList.add(new Guru("Guru Kant", 72));
+        guruList.add(new Guru("Guru Narayan", 121));
 
         return v;
     }
@@ -78,7 +78,7 @@ public class GurusFragment extends BaseFragment {
         // Inflate the menu; this adds items to the action bar if it is present.
         inflater.inflate(R.menu.main, menu);
 
-        super.onCreateOptionsMenu(menu,inflater);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
@@ -88,24 +88,66 @@ public class GurusFragment extends BaseFragment {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        switch (id){
-            case R.id.action_search:{
+        switch (id) {
+            case R.id.action_search: {
 
                 break;
             }
-            case R.id.action_sort:{
+            case R.id.action_sort: {
+                showPopup();
+                break;
+            }
+            case R.id.action_settings: {
 
                 break;
             }
-            case R.id.action_settings:{
-
-                break;
-            }
-            case R.id.move_to_first:{
+            case R.id.move_to_first: {
 
             }
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showPopup() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Choose Sorting Option:")
+                .setItems(new CharSequence[]{"Followers", "Astrology Gurus", "Yoga Gurus", "Pandits",
+                "Motivation Gurus", "Ayurveda Gurus"}, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int which) {
+                        switch (which) {
+                            case 0: {
+
+                                break;
+                            }
+                            case 1: {
+
+                                break;
+                            }
+                            case 2: {
+
+                                break;
+                            }
+                            case 3: {
+
+                                break;
+                            }
+                            case 4: {
+
+                                break;
+                            }
+                            case 5: {
+
+                                break;
+                            }
+                            case 6: {
+
+                                break;
+                            }
+                        }
+                    }
+                });
+        builder.show();
     }
 }

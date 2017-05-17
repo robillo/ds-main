@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.sasuke.dailysuvichar.R;
@@ -22,7 +21,7 @@ public class FeedsFragment extends BaseFragment {
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.fragment_feeds;
+        return R.layout.fragment_gurus;
     }
 
     @Override

@@ -10,7 +10,7 @@ public class NotificationFragment extends BaseFragment {
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.fragment_feeds;
+        return R.layout.fragment_gurus;
     }
 
     public static NotificationFragment newInstance() {

@@ -167,16 +167,45 @@ public class GuruDetailActivity extends BaseActivity{
 
     @OnClick(R.id.specialization)
     public void setSpec(){
+        String specialization;
         new MaterialDialog.Builder(this)
-                .title("Set Your Specialization")
-                .content("Spiritual Skills You Specialize In.")
-                .inputType(InputType.TYPE_CLASS_TEXT)
-                .input("Enter specialization here...", "", new MaterialDialog.InputCallback() {
+                .title("Set Your Specialization:")
+                .content("Spiritual Skill You Majorly Specialize In.")
+                .items(new String[]{"Astrology Gurus", "Yoga Gurus", "Pandits", "Motivation Gurus", "Ayurveda Gurus"})
+                .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
                     @Override
-                    public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
-                        spec.setText("Specialization:" + input);
+                    public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                        /**
+                         * If you use alwaysCallSingleChoiceCallback(), which is discussed below,
+                         * returning false here won't allow the newly selected radio button to actually be selected.
+                         **/
+                        switch (which){
+                            case 0:{
+                                spec.setText("Astrology Gurus");
+                                break;
+                            }
+                            case 1:{
+                                spec.setText("Yoga Gurus");
+                                break;
+                            }
+                            case 2:{
+                                spec.setText("Pandits");
+                                break;
+                            }
+                            case 3:{
+                                spec.setText("Motivation Gurus");
+                                break;
+                            }
+                            case 4:{
+                                spec.setText("Ayurveda Gurus");
+                                break;
+                            }
+                        }
+                        return true;
                     }
-                }).show();
+                })
+                .positiveText("Choose This")
+                .show();
     }
 
     @OnClick(R.id.follow)

@@ -10,7 +10,7 @@ public class SettingsFragment extends BaseFragment {
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.fragment_feeds;
+        return R.layout.fragment_gurus;
     }
 
     public static SettingsFragment newInstance() {
