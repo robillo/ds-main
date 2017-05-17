@@ -133,6 +133,8 @@ public class ProfileActivity extends BaseActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
+                if(dataSnapshot.child("selectedSubInterests").getValue()!=null) {
+                }
                 if(user.getName()!=null) {
                     name.setText(user.getName());
                 }
@@ -148,9 +150,9 @@ public class ProfileActivity extends BaseActivity {
                 if(user.getGender()!=null){
                     gender.setText(user.getGender());
                 }
-                if(user.getAge()!=0) {
-                    age.setText(String.valueOf(user.getAge()));
-                }
+//                if(user.getAge()!=0) {
+//                    age.setText(String.valueOf(user.getAge()));
+//                }
 
                 if(user.getPreferredLang()!=null) {
                     language.setText(user.getPreferredLang());

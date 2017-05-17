@@ -10,9 +10,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.sasuke.dailysuvichar.R;
@@ -26,9 +24,6 @@ import com.facebook.login.LoginManager;
 
 import java.util.List;
 
-import berlin.volders.badger.BadgeShape;
-import berlin.volders.badger.Badger;
-import berlin.volders.badger.CountBadge;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -110,6 +105,7 @@ public class HomeActivity extends BaseActivity {
     public void onProfileClick() {
         closeDrawer();
         startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+//        finish();
     }
 
     @OnClick(R.id.your_feeds)

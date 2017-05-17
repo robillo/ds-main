@@ -26,6 +26,7 @@ import com.cleveroad.pulltorefresh.firework.FireworkyPullToRefreshLayout;
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.activity.SelectActivity;
 import com.example.sasuke.dailysuvichar.activity.SelectPhotoActivity;
+import com.example.sasuke.dailysuvichar.activity.SelectVideoActivity;
 import com.example.sasuke.dailysuvichar.event.DoubleTabEvent;
 import com.example.sasuke.dailysuvichar.models.CustomVideo;
 import com.example.sasuke.dailysuvichar.models.Photo;
@@ -469,6 +470,12 @@ public class HomeFragment extends BaseFragment {
     @OnClick(R.id.tv_status)
     public void intent() {
         startActivity(new Intent(getActivity(), SelectActivity.class));
+    }
+
+    @OnClick(R.id.tv_video)
+    public void openVid() {
+        startActivity(new Intent(getActivity(), SelectVideoActivity.class));
+        getActivity().finish();
     }
 
     @Override

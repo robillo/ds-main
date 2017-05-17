@@ -97,11 +97,9 @@ public class SelectVideoActivity extends BaseActivity{
 
         showFileChooser();
 
-
         mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        mStorageReference = FirebaseStorage.getInstance().getReference("posts").child("images");
+        mStorageReference = FirebaseStorage.getInstance().getReference("posts").child("videos");
 //        mDatabaseReferenceUser = FirebaseDatabase.getInstance().getReference();
-
 
         context = getApplicationContext();
         interests = new ArrayList<>();
@@ -295,7 +293,7 @@ public class SelectVideoActivity extends BaseActivity{
                             mFirebaseUser.getUid(), mSelectedItems, downloadUrl);
 
                     for (String subInt : mSelectedItems) {
-                        mDatabaseReferenceTag.child(subInt.toLowerCase()).child("photo").child(postID).setValue(photo);
+                        mDatabaseReferenceTag.child(subInt.toLowerCase()).child("video").child(postID).setValue(photo);
                     }
 
                     mDatabaseReferenceUser = FirebaseDatabase.getInstance().getReference();
