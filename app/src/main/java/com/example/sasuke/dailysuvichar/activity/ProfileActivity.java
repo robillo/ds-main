@@ -563,10 +563,34 @@ public class ProfileActivity extends BaseActivity {
                         }
                     });
         }
-        if(govID!=null){
+        if(govPath!=null){
+            govDB = String.valueOf(govPath);
 
             StorageReference riversRef = mStorageReferenceCover.child(mFirebaseUser.getUid());
-            riversRef.putFile(coverPath)
+            riversRef.putFile(govPath)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            Toast.makeText(ProfileActivity.this, "Changes Saved! ", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            Toast.makeText(ProfileActivity.this, "Upload Failed. Please Try Again!", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                        }
+                    });
+        }
+        if(specPath!=null){
+            govDB = String.valueOf(specPath);
+
+            StorageReference riversRef = mStorageReferenceCover.child(mFirebaseUser.getUid());
+            riversRef.putFile(specPath)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {

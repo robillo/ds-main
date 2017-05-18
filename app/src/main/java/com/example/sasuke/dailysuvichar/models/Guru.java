@@ -65,6 +65,8 @@ public class Guru {
         this.DOB = DOB;
         this.gender = gender;
         this.age = age;
+        this.govDB = govDB;
+        this.specDB = specDB;
     }
 
     public String getSpecialization() {
