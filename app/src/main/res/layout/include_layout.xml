@@ -181,9 +181,8 @@
             android:layout_columnSpan="2"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            app:cardCornerRadius="5sp"
             android:layout_margin="5sp"
-            app:cardBackgroundColor="@color/colorPrimary">
+            app:cardBackgroundColor="@color/black">
 
             <Button
                 android:gravity="center"
