@@ -20,31 +20,24 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import butterknife.ButterKnife;
+import me.zhanghai.android.materialprogressbar.IndeterminateCircularProgressDrawable;
 
 public class FullScreenActivity extends BaseActivity{
-
-    private Bitmap bitmap;
-    private BitmapDrawable drawable;
-    private String path;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_full_screen);
         ButterKnife.bind(this);
-//
-//        BigImageViewer.initialize(GlideImageLoader.with(getApplicationContext()));
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
         String path = getIntent().getStringExtra("path");
         StorageReference gsReference = storage.getReferenceFromUrl(path);
-//
-//        BigImageView bigImageView = (BigImageView) findViewById(R.id.mBigImage);
-//        bigImageView.showImage(Uri.parse(path));
 
         Glide.with(getApplicationContext())
                 .using(new FirebaseImageLoader())
                 .load(gsReference)
+                .placeholder(new IndeterminateCircularProgressDrawable(getApplicationContext()))
                 .into((ImageView) findViewById(R.id.imageView));
     }
 
