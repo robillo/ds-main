@@ -1,6 +1,7 @@
 package com.example.sasuke.dailysuvichar.view.adapter;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
@@ -76,7 +77,11 @@ public class CustomVideoAdapter  extends ItemViewBinder<CustomVideo, CustomVideo
                     releaseVideo();
 
                     holder.videoView.setVisibility(View.VISIBLE);
-                    holder.videoView.start(holder.videoUrl);
+//                    if(holder.videoUrl!=null) {
+//                        holder.videoView.start(Uri.parse(holder.videoUrl.toString() + ".mp4"));
+//                    }
+                    holder.videoView.start(Uri.parse(item.getVideoURI()));
+
                     currentlyPlaying = holder.videoView;
                 }
             }

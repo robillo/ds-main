@@ -200,32 +200,32 @@ public class HomeFragment extends BaseFragment {
                 if(dataSnapshot.child("selectedSubInterests").getValue()!=null) {
                     mSelectedSubInterests.addAll((Collection<? extends String>) dataSnapshot.child("selectedSubInterests").getValue());
                 }
-                fetchVideosFromFirebase();
-                fetchStatusFromFirebase();
-                fetchPhotosFromFirebase();
+//                fetchVideosFromFirebase();
+//                fetchStatusFromFirebase();
+//                fetchPhotosFromFirebase();
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
         });
-
-        fetchVideosFromFirebase();
-
-        fetchStatusFromFirebase();
-
-        fetchPhotosFromFirebase();
-
-
-//        items = new Items();
-//        CustomVideo vid = new CustomVideo("rishabh shukla","https://video.twimg.com/ext_tw_video/703677246528221184/pu/vid/180x320/xnI48eAV8iPFW9aA.mp4",23,"video caption!!");
-//        items.add(vid);
 //
+//        fetchVideosFromFirebase();
 //
-//        CustomVideo vid2 = new CustomVideo("rishabhh","https://video.twimg.com/ext_tw_video/703677246528221184/pu/vid/180x320/xnI48eAV8iPFW9aA.mp4",25,"video caption2!!");
-//        items.add(vid);
+//        fetchStatusFromFirebase();
 //
-//        mAdapter.setItems(items);
+//        fetchPhotosFromFirebase();
+
+
+        items = new Items();
+        CustomVideo vid = new CustomVideo("rishabh shukla","https://firebasestorage.googleapis.com/v0/b/dailysuvichar-708d4.appspot.com/o/posts%2Fvideos%2F-KkM_JU-RlzvykGl9HUc?alt=media&token=95994318-8a65-402a-a8cb-f8c91c0dba6a.mp4",23,"video caption!!");
+        items.add(vid);
+
+
+        CustomVideo vid2 = new CustomVideo("rishabhh","https://firebasestorage.googleapis.com/v0/b/dailysuvichar-708d4.appspot.com/o/posts%2Fvideos%2F-KkM_JU-RlzvykGl9HUc?alt=media&token=95994318-8a65-402a-a8cb-f8c91c0dba6a.mp4",25,"video caption2!!");
+        items.add(vid2);
+
+        mAdapter.setItems(items);
 
 //        status = new Status();
 //        status.setStatus("Watching bahubali 2 with Aditya Tyagi and 2 others at PVR.");

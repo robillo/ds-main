@@ -29,7 +29,7 @@
 
         <LinearLayout
             android:orientation="horizontal"
-            android:background="@color/transparent"
+            android:background="@color/very_light_transparent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="bottom">

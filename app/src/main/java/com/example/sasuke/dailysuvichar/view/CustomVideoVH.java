@@ -28,7 +28,7 @@ import static com.facebook.login.widget.ProfilePictureView.TAG;
 public class CustomVideoVH extends RecyclerView.ViewHolder{
 
     private static final String SAMPLE_VIDEO =
-            "https://video.twimg.com/ext_tw_video/703677246528221184/pu/vid/180x320/xnI48eAV8iPFW9aA.mp4";
+            "https://firebasestorage.googleapis.com/v0/b/dailysuvichar-708d4.appspot.com/o/posts%2Fvideos%2F-KkM_JU-RlzvykGl9HUc?alt=media&token=95994318-8a65-402a-a8cb-f8c91c0dba6a.mp4";
 
     @BindView(R.id.play_button)
     public TextView play;
@@ -106,7 +106,8 @@ public class CustomVideoVH extends RecyclerView.ViewHolder{
             }
         });
         if(videoUrl!=null) {
-            videoView.start(videoUrl);
+//            videoView.start(Uri.parse(videoUrl.toString()+".mp4"));
+            videoView.start(SAMPLE_VIDEO);
             videoView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
