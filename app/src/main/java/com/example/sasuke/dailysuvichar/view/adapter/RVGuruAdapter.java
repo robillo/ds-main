@@ -122,98 +122,20 @@ public class RVGuruAdapter extends RecyclerView.Adapter<VHGurus> {
 //                }
             }
         });
-//        switch (filterCategory){
-//            case 100:{
-//                new Handler().post(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        if(item.getName()!=null) {
-//                            holder.setName(item.getName());
-//                        }
-//                        holder.setFollowersCount(item.getFollowersCount());
-//
-////                if(item.getStorageReference()!=null && context!=null) {
-////                    holder.setImage(item.getStorageReference(), context);
-////                }
-//                    }
-//                });
-//                break;
-//            }
-//            case 0:{
-//
-//                break;
-//            }
-//            case 1:{
-//                if(item.getSpecialization().equals(ASTROLOGY_GURU)){
-//                    new Handler().post(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            if(item.getName()!=null) {
-//                                holder.setName(item.getName());
-//                            }
-//                            holder.setFollowersCount(item.getFollowersCount());
-//                        }
-//                    });
-//                }
-//                break;
-//            }
-//            case 2:{
-//                if(item.getSpecialization().equals(YOGA_GURU)){
-//                    new Handler().post(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            if(item.getName()!=null) {
-//                                holder.setName(item.getName());
-//                            }
-//                            holder.setFollowersCount(item.getFollowersCount());
-//                        }
-//                    });
-//                }
-//                break;
-//            }
-//            case 3:{
-//                if(item.getSpecialization().equals(PANDIT)){
-//                    new Handler().post(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            if(item.getName()!=null) {
-//                                holder.setName(item.getName());
-//                            }
-//                            holder.setFollowersCount(item.getFollowersCount());
-//                        }
-//                    });
-//                }
-//                break;
-//            }
-//            case 4:{
-//                if(item.getSpecialization().equals(MOTIVATION_GURU)){
-//                    new Handler().post(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            if(item.getName()!=null) {
-//                                holder.setName(item.getName());
-//                            }
-//                            holder.setFollowersCount(item.getFollowersCount());
-//                        }
-//                    });
-//                }
-//                break;
-//            }
-//            case 5:{
-//                if(item.getSpecialization().equals(AYURVEDA_GURU)){
-//                    new Handler().post(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            if(item.getName()!=null) {
-//                                holder.setName(item.getName());
-//                            }
-//                            holder.setFollowersCount(item.getFollowersCount());
-//                        }
-//                    });
-//                }
-//                break;
-//            }
-//        }
+
+        holder.follow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(holder.follow.getText().equals("FOLLOW")){
+                    holder.follow.setText("FOLLOWING");
+                    holder.follow.setBackgroundColor(context.getResources().getColor(R.color.green));
+                }
+                else {
+                    holder.follow.setText("FOLLOW");
+                    holder.follow.setBackgroundColor(context.getResources().getColor(R.color.colorAccent));
+                }
+            }
+        });
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override

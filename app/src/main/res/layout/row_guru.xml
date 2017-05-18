@@ -56,12 +56,10 @@
             android:layout_height="wrap_content"
             android:text="Follow"
             android:textStyle="bold"
-            app:cardElevation="5sp"
-            app:cardCornerRadius="15dp"
             android:id="@+id/follow"
             android:textColor="@color/white"
             android:layout_gravity="center_horizontal"
-            android:backgroundTint="@color/colorAccent" />
+            android:background="@color/colorAccent" />
 
     </LinearLayout>
 
