@@ -19,7 +19,7 @@ public class Guru {
     private String phone;
     private int age;
     private int followersCount;
-    private String specialization;
+    private String specialization, govDB, specDB;
 
     public int getFollowersCount() {
         return followersCount;
@@ -52,6 +52,19 @@ public class Guru {
         this.age = age;
         this.followersCount = followersCount;
         this.specialization = specialization;
+    }
+
+    public Guru(String name, String email, String bio, ArrayList<String> followers, String preferredLang, String photoUrl, String coverUrl, String DOB, String gender, int age, String govDB, String specDB) {
+        this.name = name;
+        this.email = email;
+        this.bio = bio;
+        this.followers = followers;
+        this.preferredLang = preferredLang;
+        this.photoUrl = photoUrl;
+        this.coverUrl = coverUrl;
+        this.DOB = DOB;
+        this.gender = gender;
+        this.age = age;
     }
 
     public String getSpecialization() {

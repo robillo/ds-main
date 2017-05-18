@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.example.sasuke.dailysuvichar.R;
+import com.example.sasuke.dailysuvichar.models.Guru;
 import com.example.sasuke.dailysuvichar.models.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -42,13 +43,15 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.ArrayList;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class ProfileActivity extends BaseActivity {
 
-    private DatabaseReference mDatabase;
+    private DatabaseReference mUsersDatabase, mGurusDatabase, mTempDatabase;
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
     private StorageReference mStorageReferenceDP,mStorageReferenceCover;
@@ -92,9 +95,14 @@ public class ProfileActivity extends BaseActivity {
 
         code = getIntent().getIntExtra("fromLogin", 0);
 
-        mDatabase = FirebaseDatabase.getInstance().getReference("users");
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
+
+        mUsersDatabase = FirebaseDatabase.getInstance().getReference("users");
+        mTempDatabase = FirebaseDatabase.getInstance().getReference();
+        mTempDatabase.child("gurus").child(mFirebaseUser.getUid()).push();
+        mGurusDatabase = FirebaseDatabase.getInstance().getReference("gurus");
+
         mStorageReferenceDP = FirebaseStorage.getInstance().getReference("profile").child("user").child("dp");
         mStorageReferenceCover = FirebaseStorage.getInstance().getReference("profile").child("user").child("cover");
 
@@ -137,7 +145,7 @@ public class ProfileActivity extends BaseActivity {
 
     private void fetchData() {
 
-        mDatabase.child(mFirebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
+        mUsersDatabase.child(mFirebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 //                User user = dataSnapshot.getValue(User.class);
@@ -426,6 +434,22 @@ public class ProfileActivity extends BaseActivity {
                 }).show();
     }
 
+    @OnClick(R.id.govID)
+    public void setGovID(){
+        Intent i = new Intent(
+                Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(i, RESULT_LOAD_GOV_ID);
+    }
+
+    @OnClick(R.id.specID)
+    public void setSpecID(){
+        Intent i = new Intent(
+                Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(i, RESULT_LOAD_SPEC_ID);
+    }
+
     @Override
     protected Dialog onCreateDialog(int id) {
         // TODO Auto-generated method stub
@@ -467,7 +491,7 @@ public class ProfileActivity extends BaseActivity {
     private void writetoFirebase() {
 //        progressDialog = new ProgressDialog(this);
         String nameDB = null, langDB= null, usertypeDB= null, dobDB= null, genderDB= null, userNameDB= null, bioDB= null;
-        String dpPathDB = null, coverPathDB = null;
+        String dpPathDB = null, coverPathDB = null, govDB = null, specDB = null;
         int ageDB = -1;
         if(name!=null && name.getText().length()>0){
             nameDB = name.getText().toString();
@@ -539,34 +563,55 @@ public class ProfileActivity extends BaseActivity {
                         }
                     });
         }
+        if(govID!=null){
 
-        User user = new User(nameDB,bioDB,langDB,dobDB,dpPathDB,coverPathDB,genderDB,userNameDB,ageDB);
-        mDatabase.child(mFirebaseUser.getUid()).child("name").setValue(nameDB);
-        mDatabase.child(mFirebaseUser.getUid()).child("age").setValue(ageDB);
-        mDatabase.child(mFirebaseUser.getUid()).child("photoUrl").setValue(dpPathDB);
-        mDatabase.child(mFirebaseUser.getUid()).child("coverUrl").setValue(coverPathDB);
-        mDatabase.child(mFirebaseUser.getUid()).child("dob").setValue(dobDB);
-        mDatabase.child(mFirebaseUser.getUid()).child("gender").setValue(genderDB);
-        mDatabase.child(mFirebaseUser.getUid()).child("userName").setValue(userNameDB);
-        mDatabase.child(mFirebaseUser.getUid()).child("bio").setValue(bioDB);
-        mDatabase.child(mFirebaseUser.getUid()).child("prefferedLang").setValue(langDB);
-        mDatabase.child(mFirebaseUser.getUid()).child("govID").setValue(String.valueOf(govPath));
-        mDatabase.child(mFirebaseUser.getUid()).child("specID").setValue(String.valueOf(specPath));
-    }
+            StorageReference riversRef = mStorageReferenceCover.child(mFirebaseUser.getUid());
+            riversRef.putFile(coverPath)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            Toast.makeText(ProfileActivity.this, "Changes Saved! ", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            Toast.makeText(ProfileActivity.this, "Upload Failed. Please Try Again!", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                        }
+                    });
+        }
 
-    @OnClick(R.id.govID)
-    public void setGovID(){
-        Intent i = new Intent(
-                Intent.ACTION_PICK,
-                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(i, RESULT_LOAD_GOV_ID);
-    }
-
-    @OnClick(R.id.specID)
-    public void setSpecID(){
-        Intent i = new Intent(
-                Intent.ACTION_PICK,
-                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(i, RESULT_LOAD_SPEC_ID);
+        if(userType!=null && userType.equals("STANDARD")){
+            User user = new User(nameDB,bioDB,langDB,dobDB,dpPathDB,coverPathDB,genderDB,userNameDB,ageDB);
+            mUsersDatabase.child(mFirebaseUser.getUid()).child("name").setValue(nameDB);
+            mUsersDatabase.child(mFirebaseUser.getUid()).child("email").setValue(mFirebaseUser.getEmail());
+            mUsersDatabase.child(mFirebaseUser.getUid()).child("age").setValue(ageDB);
+            mUsersDatabase.child(mFirebaseUser.getUid()).child("photoUrl").setValue(dpPathDB);
+            mUsersDatabase.child(mFirebaseUser.getUid()).child("coverUrl").setValue(coverPathDB);
+            mUsersDatabase.child(mFirebaseUser.getUid()).child("dob").setValue(dobDB);
+            mUsersDatabase.child(mFirebaseUser.getUid()).child("gender").setValue(genderDB);
+            mUsersDatabase.child(mFirebaseUser.getUid()).child("userName").setValue(userNameDB);
+            mUsersDatabase.child(mFirebaseUser.getUid()).child("bio").setValue(bioDB);
+            mUsersDatabase.child(mFirebaseUser.getUid()).child("prefferedLang").setValue(langDB);
+        }
+        else {
+            Guru user = new Guru(nameDB, mFirebaseUser.getEmail(), bioDB, new ArrayList<String>(), langDB, dpPathDB, coverPathDB, dobDB, genderDB, ageDB, govDB, specDB);
+            mGurusDatabase.child(mFirebaseUser.getUid()).child("name").setValue(nameDB);
+            mGurusDatabase.child(mFirebaseUser.getUid()).child("email").setValue(mFirebaseUser.getEmail());
+            mGurusDatabase.child(mFirebaseUser.getUid()).child("bio").setValue(bioDB);
+            mGurusDatabase.child(mFirebaseUser.getUid()).child("prefferedLang").setValue(langDB);
+            mGurusDatabase.child(mFirebaseUser.getUid()).child("photoUrl").setValue(dpPathDB);
+            mGurusDatabase.child(mFirebaseUser.getUid()).child("coverUrl").setValue(coverPathDB);
+            mGurusDatabase.child(mFirebaseUser.getUid()).child("dob").setValue(dobDB);
+            mGurusDatabase.child(mFirebaseUser.getUid()).child("gender").setValue(genderDB);
+            mGurusDatabase.child(mFirebaseUser.getUid()).child("age").setValue(ageDB);
+            mGurusDatabase.child(mFirebaseUser.getUid()).child("govID").setValue(govDB);
+            mGurusDatabase.child(mFirebaseUser.getUid()).child("specID").setValue(specDB);
+        }
     }
 }
