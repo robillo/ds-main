@@ -19,6 +19,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,8 +56,9 @@ public class ProfileActivity extends BaseActivity {
     private int year, month, day;
     private ImageButton userProfilePic, userCoverPic;
     private Calendar calendar;
-    private static final int RESULT_LOAD_IMAGE = 8008, RESULT_LOAD_COVER = 8009;
-    Uri dpPath, coverPath;
+    private static final int RESULT_LOAD_IMAGE = 8008, RESULT_LOAD_COVER = 8009, RESULT_LOAD_GOV_ID = 8010,
+    RESULT_LOAD_SPEC_ID = 8011;
+    Uri dpPath, coverPath, govPath, specPath;
 
 
     @BindView(R.id.bio)
@@ -74,8 +77,12 @@ public class ProfileActivity extends BaseActivity {
     TextView gender;
     @BindView(R.id.age)
     TextView age;
-    ProgressDialog progressDialog;
-
+    @BindView(R.id.invisible)
+    LinearLayout mLinearLayout;
+    @BindView(R.id.govID)
+    ImageView govID;
+    @BindView(R.id.specID)
+    ImageView specID;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -242,6 +249,42 @@ public class ProfileActivity extends BaseActivity {
                     .centerCrop()
                     .into(userCoverPic);
         }
+        else if(requestCode == RESULT_LOAD_GOV_ID && resultCode == RESULT_OK && null != data){
+            govPath = data.getData();
+            String[] filePathColumn = { MediaStore.Images.Media.DATA };
+
+            Cursor cursor = getContentResolver().query(govPath,
+                    filePathColumn, null, null, null);
+            cursor.moveToFirst();
+
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String picturePath = cursor.getString(columnIndex);
+            cursor.close();
+
+            Glide.with(this)
+                    .load(picturePath)
+                    .crossFade()
+                    .centerCrop()
+                    .into(govID);
+        }
+        else if(requestCode == RESULT_LOAD_SPEC_ID && resultCode == RESULT_OK && null != data){
+            specPath = data.getData();
+            String[] filePathColumn = { MediaStore.Images.Media.DATA };
+
+            Cursor cursor = getContentResolver().query(specPath,
+                    filePathColumn, null, null, null);
+            cursor.moveToFirst();
+
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String picturePath = cursor.getString(columnIndex);
+            cursor.close();
+
+            Glide.with(this)
+                    .load(picturePath)
+                    .crossFade()
+                    .centerCrop()
+                    .into(specID);
+        }
     }
 
     @OnClick(R.id.name)
@@ -288,16 +331,6 @@ public class ProfileActivity extends BaseActivity {
 
     @OnClick(R.id.lang)
     public void setLanguage(){
-//        new MaterialDialog.Builder(this)
-//                .title("Set Your Language Preference")
-//                .content("Select Language Type.")
-//                .inputType(InputType.TYPE_CLASS_TEXT)
-//                .input("English/Hindi", "", new MaterialDialog.InputCallback() {
-//                    @Override
-//                    public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
-//                        language.setText(input);
-//                    }
-//                }).show();
 
         new MaterialDialog.Builder(this)
                 .title("Set Your Language Preference")
@@ -336,19 +369,19 @@ public class ProfileActivity extends BaseActivity {
                 .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
                     @Override
                     public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                        /**
-                         * If you use alwaysCallSingleChoiceCallback(), which is discussed below,
-                         * returning false here won't allow the newly selected radio button to actually be selected.
-                         **/
                         switch (which){
                             case 0:{
                                 userType.setText("STANDARD");
-                                Toast.makeText(ProfileActivity.this, "Standard User chosen", Toast.LENGTH_SHORT).show();
+                                if(mLinearLayout.getVisibility()== View.VISIBLE){
+                                    mLinearLayout.setVisibility(View.GONE);
+                                }
                                 break;
                             }
                             case 1:{
                                 userType.setText("GURU");
-                                Toast.makeText(ProfileActivity.this, "Spiritual Leader chosen", Toast.LENGTH_SHORT).show();
+                                if(mLinearLayout.getVisibility()== View.GONE){
+                                    mLinearLayout.setVisibility(View.VISIBLE);
+                                }
                                 break;
                             }
                         }
@@ -569,5 +602,21 @@ public class ProfileActivity extends BaseActivity {
         mDatabase.child(mFirebaseUser.getUid()).child("userName").setValue(userNameDB);
         mDatabase.child(mFirebaseUser.getUid()).child("bio").setValue(bioDB);
         mDatabase.child(mFirebaseUser.getUid()).child("prefferedLang").setValue(langDB);
+    }
+
+    @OnClick(R.id.govID)
+    public void setGovID(){
+        Intent i = new Intent(
+                Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(i, RESULT_LOAD_GOV_ID);
+    }
+
+    @OnClick(R.id.specID)
+    public void setSpecID(){
+        Intent i = new Intent(
+                Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(i, RESULT_LOAD_SPEC_ID);
     }
 }
