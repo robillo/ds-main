@@ -114,6 +114,62 @@
                 android:text="User Type: Standard"
                 android:id="@+id/user_type"/>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="150sp"
+                android:orientation="horizontal"
+                android:id="@+id/invisible">
+
+                <FrameLayout
+                    android:layout_width="0sp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="2sp"
+                        android:background="@color/black"
+                        android:id="@+id/govID"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Upload A Govt. ID"
+                        android:background="@color/black"
+                        android:textColor="@color/white"
+                        android:gravity="center"
+                        android:layout_margin="2sp"
+                        android:padding="3sp"/>
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="0sp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="2sp"
+                        android:background="@color/black"
+                        android:id="@+id/specID"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Upload Your Specialization Proof"
+                        android:background="@color/black"
+                        android:textColor="@color/white"
+                        android:gravity="center"
+                        android:layout_margin="2sp"
+                        android:padding="3sp"/>
+
+                </FrameLayout>
+
+            </LinearLayout>
+
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"

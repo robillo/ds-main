@@ -40,6 +40,4 @@ public class FullScreenActivity extends BaseActivity{
                 .placeholder(new IndeterminateCircularProgressDrawable(getApplicationContext()))
                 .into((ImageView) findViewById(R.id.imageView));
     }
-
-
 }
