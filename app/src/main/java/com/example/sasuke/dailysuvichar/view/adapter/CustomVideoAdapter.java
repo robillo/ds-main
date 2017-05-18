@@ -78,12 +78,21 @@ public class CustomVideoAdapter  extends ItemViewBinder<CustomVideo, CustomVideo
 
                     holder.videoView.setVisibility(View.VISIBLE);
 //                    if(holder.videoUrl!=null) {
-//                        holder.videoView.start(Uri.parse(holder.videoUrl.toString() + ".mp4"));
+//                        holder.videoView.start(holder.videoUrl.toString() + ".mp4");
 //                    }
                     holder.videoView.start(Uri.parse(item.getVideoURI()));
 
                     currentlyPlaying = holder.videoView;
                 }
+            }
+        });
+        holder.videoView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (holder.videoView.isPlaying())
+                    holder.videoView.pause();
+                else
+                    holder.videoView.play();
             }
         });
 
