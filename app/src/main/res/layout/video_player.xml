@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="250dp"
-    android:padding="12dp">
+    android:layout_height="250dp">
 
     <ImageView
         android:id="@+id/image"
@@ -27,41 +26,36 @@
         android:layout_height="match_parent"
         android:gravity="bottom">
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:background="@color/very_light_transparent"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/play_button"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:gravity="bottom">
+            android:text="Play"
+            android:background="@color/colorAccent"
+            android:textAllCaps="true"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:paddingBottom="12dp"
+            android:paddingTop="12dp"/>
 
-            <TextView
-                android:id="@+id/play_button"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="PLAY"
-                android:textAllCaps="true"
-                android:gravity="center"
-                android:textColor="@android:color/black"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:paddingBottom="12dp"
-                android:paddingTop="12dp"/>
+        <TextView
+            android:id="@+id/select_button"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Download"
+            android:fontFamily="sans-serif-smallcaps"
+            android:background="@color/white"
+            android:textAllCaps="true"
+            android:gravity="center"
+            android:textColor="@color/colorAccent"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:paddingBottom="12dp"
+            android:paddingTop="12dp"/>
 
-            <TextView
-                android:id="@+id/select_button"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="DOWNLOAD"
-                android:textAllCaps="true"
-                android:gravity="center"
-                android:textColor="@android:color/black"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:paddingBottom="12dp"
-                android:paddingTop="12dp"/>
-
-        </LinearLayout>
     </LinearLayout>
 </FrameLayout>

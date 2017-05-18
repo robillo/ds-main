@@ -21,12 +21,13 @@
         android:background="@color/black" />
 
     <LinearLayout
-        android:padding="12dp"
         android:layout_width="match_parent"
         android:layout_height="250dp">
 
         <include layout="@layout/video_player" />
-        </LinearLayout>
+
+    </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
