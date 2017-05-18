@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.models.Guru;
@@ -17,6 +18,7 @@ import com.willowtreeapps.spruce.animation.DefaultAnimations;
 import com.willowtreeapps.spruce.sort.LinearSort;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class RVGuruAdapter extends RecyclerView.Adapter<VHGurus> {
 
@@ -28,6 +30,7 @@ public class RVGuruAdapter extends RecyclerView.Adapter<VHGurus> {
     private String YOGA_GURU = "Yoga Guru";
     private String PANDIT = "Pandit";
     private String ASTROLOGY_GURU = "Astrology Guru";
+    private List<Boolean> isFollowing;
 
     public RVGuruAdapter(Context context, ArrayList<Guru> list) {
         this.context = context;
@@ -102,11 +105,15 @@ public class RVGuruAdapter extends RecyclerView.Adapter<VHGurus> {
     @Override
     public VHGurus onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.row_guru, parent, false);
+        isFollowing =new ArrayList<>();
+        for(int i = 0; i<=list.size(); i++){
+            isFollowing.add(false);
+        }
         return new VHGurus(view);
     }
 
     @Override
-    public void onBindViewHolder(final VHGurus holder, int position) {
+    public void onBindViewHolder(final VHGurus holder, final int position) {
 
         final Guru item = list.get(position);
         new Handler().post(new Runnable() {
@@ -122,15 +129,28 @@ public class RVGuruAdapter extends RecyclerView.Adapter<VHGurus> {
 //                }
             }
         });
+        if(!isFollowing.get(position) && holder.follow.getText().equals("FOLLOWING")){
+            holder.follow.setText("FOLLOW");
+            holder.follow.setBackgroundColor(context.getResources().getColor(R.color.colorAccent));
+        }
+        else if(isFollowing.get(position) && holder.follow.getText().equals("FOLLOW")){
+            holder.follow.setText("FOLLOWING");
+            holder.follow.setBackgroundColor(context.getResources().getColor(R.color.green));
+        }
 
         holder.follow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(holder.follow.getText().equals("FOLLOW")){
+                Toast.makeText(context, "CLICKED", Toast.LENGTH_SHORT).show();
+                if(!isFollowing.get(position) && holder.follow.getText().equals("FOLLOW")){
+                    Toast.makeText(context, "LOL", Toast.LENGTH_SHORT).show();
+                    isFollowing.set(position, true);
                     holder.follow.setText("FOLLOWING");
                     holder.follow.setBackgroundColor(context.getResources().getColor(R.color.green));
                 }
-                else {
+                else if(isFollowing.get(position) && holder.follow.getText().equals("FOLLOWING")){
+                    isFollowing.set(position, false);
+                    Toast.makeText(context, "LOL", Toast.LENGTH_SHORT).show();
                     holder.follow.setText("FOLLOW");
                     holder.follow.setBackgroundColor(context.getResources().getColor(R.color.colorAccent));
                 }
