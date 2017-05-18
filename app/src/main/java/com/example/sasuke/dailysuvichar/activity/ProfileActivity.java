@@ -29,6 +29,7 @@ import com.bumptech.glide.Glide;
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.models.Guru;
 import com.example.sasuke.dailysuvichar.models.User;
+import com.example.sasuke.dailysuvichar.utils.SharedPrefs;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -480,6 +481,7 @@ public class ProfileActivity extends BaseActivity {
         if(code == 1){
             startActivity(new Intent(this, ChooseInterestActivity.class));
         }
+        SharedPrefs.setUser(userType.getText());
 //        startActivity(new Intent(this, HomeActivity.class));
         finish();
     }

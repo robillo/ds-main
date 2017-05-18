@@ -8,6 +8,7 @@ import com.example.sasuke.dailysuvichar.DailySuvicharApp;
 public class SharedPrefs {
 
     private static final String LOGIN_TOKEN = "login_token";
+    private static final String USER_TYPE = "STANDARD";
 
     private SharedPrefs() {
     }
@@ -19,6 +20,16 @@ public class SharedPrefs {
 
     public static String getLoginToken() {
         return getPrefrences().getString(LOGIN_TOKEN, null);
+    }
+
+    public static String getUserType() {
+        return getPrefrences().getString(USER_TYPE, null);
+    }
+
+    public static void setUserType(String userType){
+        SharedPreferences.Editor editor = getPrefrences().edit();
+        editor.putString(USER_TYPE, userType);
+        editor.apply();
     }
 
     public static void setLoginToken(String token) {
