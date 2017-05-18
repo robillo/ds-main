@@ -602,6 +602,8 @@ public class ProfileActivity extends BaseActivity {
         mDatabase.child(mFirebaseUser.getUid()).child("userName").setValue(userNameDB);
         mDatabase.child(mFirebaseUser.getUid()).child("bio").setValue(bioDB);
         mDatabase.child(mFirebaseUser.getUid()).child("prefferedLang").setValue(langDB);
+        mDatabase.child(mFirebaseUser.getUid()).child("govID").setValue(String.valueOf(govPath));
+        mDatabase.child(mFirebaseUser.getUid()).child("specID").setValue(String.valueOf(specPath));
     }
 
     @OnClick(R.id.govID)
