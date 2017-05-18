@@ -200,9 +200,9 @@ public class HomeFragment extends BaseFragment {
                 if(dataSnapshot.child("selectedSubInterests").getValue()!=null) {
                     mSelectedSubInterests.addAll((Collection<? extends String>) dataSnapshot.child("selectedSubInterests").getValue());
                 }
-//                fetchVideosFromFirebase();
-//                fetchStatusFromFirebase();
-//                fetchPhotosFromFirebase();
+                fetchVideosFromFirebase();
+                fetchStatusFromFirebase();
+                fetchPhotosFromFirebase();
             }
 
             @Override
@@ -210,22 +210,22 @@ public class HomeFragment extends BaseFragment {
             }
         });
 //
-//        fetchVideosFromFirebase();
+        fetchVideosFromFirebase();
+
+        fetchStatusFromFirebase();
+
+        fetchPhotosFromFirebase();
+
+
+//        items = new Items();
+//        CustomVideo vid = new CustomVideo("rishabh shukla","https://firebasestorage.googleapis.com/v0/b/dailysuvichar-708d4.appspot.com/o/posts%2Fvideos%2F-KkM_JU-RlzvykGl9HUc?alt=media&token=95994318-8a65-402a-a8cb-f8c91c0dba6a.mp4",23,"video caption!!");
+//        items.add(vid);
 //
-//        fetchStatusFromFirebase();
 //
-//        fetchPhotosFromFirebase();
-
-
-        items = new Items();
-        CustomVideo vid = new CustomVideo("rishabh shukla","https://firebasestorage.googleapis.com/v0/b/dailysuvichar-708d4.appspot.com/o/posts%2Fvideos%2F-KkM_JU-RlzvykGl9HUc?alt=media&token=95994318-8a65-402a-a8cb-f8c91c0dba6a.mp4",23,"video caption!!");
-        items.add(vid);
-
-
-        CustomVideo vid2 = new CustomVideo("rishabhh","https://firebasestorage.googleapis.com/v0/b/dailysuvichar-708d4.appspot.com/o/posts%2Fvideos%2F-KkM_JU-RlzvykGl9HUc?alt=media&token=95994318-8a65-402a-a8cb-f8c91c0dba6a.mp4",25,"video caption2!!");
-        items.add(vid2);
-
-        mAdapter.setItems(items);
+//        CustomVideo vid2 = new CustomVideo("rishabhh","https://firebasestorage.googleapis.com/v0/b/dailysuvichar-708d4.appspot.com/o/posts%2Fvideos%2F-KkM_JU-RlzvykGl9HUc?alt=media&token=95994318-8a65-402a-a8cb-f8c91c0dba6a.mp4",25,"video caption2!!");
+//        items.add(vid2);
+//
+//        mAdapter.setItems(items);
 
 //        status = new Status();
 //        status.setStatus("Watching bahubali 2 with Aditya Tyagi and 2 others at PVR.");
@@ -352,8 +352,14 @@ public class HomeFragment extends BaseFragment {
 
                         for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                             Log.d(TAG, "onDataChange: HOMEFRAGVIDEO 2 "+mStorageReferenceVideo);
-                            CustomVideo videoSnap = postSnapshot.getValue(CustomVideo.class);
+                            final CustomVideo videoSnap = postSnapshot.getValue(CustomVideo.class);
                             videoSnap.setStorageReference(mStorageReferenceVideo.child(postSnapshot.getKey()));
+                            mStorageReferenceVideo.child(postSnapshot.getKey()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    videoSnap.setVideoURI(uri.toString());
+                                }
+                            });
                             if(!isVideoDone.containsKey(postSnapshot.getKey())) {
                                 Log.d(TAG, "onDataChange: KEY "+postSnapshot.getKey());
 

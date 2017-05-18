@@ -2,7 +2,6 @@ package com.example.sasuke.dailysuvichar.view;
 
 import android.content.Context;
 import android.net.Uri;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -102,12 +101,12 @@ public class CustomVideoVH extends RecyclerView.ViewHolder{
             @Override
             public void onPlaybackError(Exception e) {
                 e.printStackTrace();
-                Snackbar.make(videoView, "Uh oh, error playing!", Snackbar.LENGTH_INDEFINITE).show();
+//                Snackbar.make(videoView, "Uh oh, error playing!", Snackbar.LENGTH_INDEFINITE).show();
             }
         });
         if(videoUrl!=null) {
-//            videoView.start(Uri.parse(videoUrl.toString()+".mp4"));
-            videoView.start(SAMPLE_VIDEO);
+            videoView.start(videoUrl.toString()+".mp4");
+//            videoView.start(SAMPLE_VIDEO);
             videoView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
