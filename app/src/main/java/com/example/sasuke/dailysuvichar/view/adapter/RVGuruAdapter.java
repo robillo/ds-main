@@ -141,16 +141,13 @@ public class RVGuruAdapter extends RecyclerView.Adapter<VHGurus> {
         holder.follow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "CLICKED", Toast.LENGTH_SHORT).show();
                 if(!isFollowing.get(position) && holder.follow.getText().equals("FOLLOW")){
-                    Toast.makeText(context, "LOL", Toast.LENGTH_SHORT).show();
                     isFollowing.set(position, true);
                     holder.follow.setText("FOLLOWING");
                     holder.follow.setBackgroundColor(context.getResources().getColor(R.color.green));
                 }
                 else if(isFollowing.get(position) && holder.follow.getText().equals("FOLLOWING")){
                     isFollowing.set(position, false);
-                    Toast.makeText(context, "LOL", Toast.LENGTH_SHORT).show();
                     holder.follow.setText("FOLLOW");
                     holder.follow.setBackgroundColor(context.getResources().getColor(R.color.colorAccent));
                 }
