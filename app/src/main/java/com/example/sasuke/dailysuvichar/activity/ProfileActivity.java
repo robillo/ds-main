@@ -481,7 +481,7 @@ public class ProfileActivity extends BaseActivity {
         if(code == 1){
             startActivity(new Intent(this, ChooseInterestActivity.class));
         }
-        SharedPrefs.setUser(userType.getText());
+        SharedPrefs.setUserType(userType.getText().toString());
 //        startActivity(new Intent(this, HomeActivity.class));
         finish();
     }
