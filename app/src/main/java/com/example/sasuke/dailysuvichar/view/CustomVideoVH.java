@@ -4,17 +4,21 @@ import android.content.Context;
 import android.net.Uri;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.sasuke.dailysuvichar.R;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.StorageReference;
 import com.klinker.android.simple_videoview.SimpleVideoView;
 import com.like.LikeButton;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.facebook.login.widget.ProfilePictureView.TAG;
 
 /**
  * Created by rishabhshukla on 15/05/17.
@@ -42,6 +46,7 @@ public class CustomVideoVH extends RecyclerView.ViewHolder{
     TextView tvComments;
     @BindView(R.id.button_like)
     public LikeButton mBtnLike;
+    public Uri videoUrl;
 
     @BindView(R.id.comment)
     public LinearLayout comment;
@@ -78,7 +83,21 @@ public class CustomVideoVH extends RecyclerView.ViewHolder{
         }
     }
 
-    public void setVideo(Uri videoURI){
+    public void setVideo(StorageReference storageReference){
+//        final Uri videoUrl;
+
+        Log.d(TAG, "setVideo: STORAGEREF "+storageReference);
+
+        storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                videoUrl = uri;
+                Log.d(TAG, "onSuccess: VIDEOURL"+videoUrl);
+            }
+        });
+
+        Log.d(TAG, "onSuccess: VIDEOURL"+videoUrl);
+
         videoView.setErrorTracker(new SimpleVideoView.VideoPlaybackErrorTracker() {
             @Override
             public void onPlaybackError(Exception e) {
@@ -86,15 +105,17 @@ public class CustomVideoVH extends RecyclerView.ViewHolder{
                 Snackbar.make(videoView, "Uh oh, error playing!", Snackbar.LENGTH_INDEFINITE).show();
             }
         });
-        videoView.start(SAMPLE_VIDEO);
-        videoView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (videoView.isPlaying())
-                    videoView.pause();
-                else
-                    videoView.play();
-            }
-        });
+        if(videoUrl!=null) {
+            videoView.start(videoUrl);
+            videoView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (videoView.isPlaying())
+                        videoView.pause();
+                    else
+                        videoView.play();
+                }
+            });
+        }
     }
 }

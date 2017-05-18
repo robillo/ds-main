@@ -18,6 +18,10 @@ public class CustomVideo {
     @NonNull
     private String user;
 
+    public CustomVideo(){
+
+    }
+
     public CustomVideo(@NonNull String name, @NonNull StorageReference storageReference, @NonNull String user, @NonNull String videoURI, @NonNull Long timestamp, @NonNull Integer likes, @NonNull Integer shares, @NonNull ArrayList<Comment> comments, @NonNull String caption, @NonNull String uid, @NonNull ArrayList<String> tags) {
         this.name = name;
         this.storageReference = storageReference;

@@ -108,7 +108,7 @@ public class HomeFragment extends BaseFragment {
     private HashMap<String, Long> isDone;
     private HashMap<String, Long> statusHashMap;
     private HashMap<String, Status> statusHashMapTemp;
-    private HashMap<String, Boolean> isPhotoDone;
+    private HashMap<String, Boolean> isPhotoDone, isVideoDone;
 
     private static final int SECOND_MILLIS = 1000;
     private static final int MINUTE_MILLIS = 60 * SECOND_MILLIS;
@@ -154,6 +154,7 @@ public class HomeFragment extends BaseFragment {
         mAdapter.register(Video.class, new VideoItemAdapter(getActivity()));
         mRvHome.setAdapter(mAdapter);
 
+        items = new Items();
 
         mRvHome.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -163,10 +164,6 @@ public class HomeFragment extends BaseFragment {
             }
         });
 
-        items = new Items();
-        HashMap<String, Status> statuses = new HashMap<>();
-        Status status;
-
         mPullToRefresh.setOnRefreshListener(new FireworkyPullToRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -175,6 +172,7 @@ public class HomeFragment extends BaseFragment {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
+                        fetchVideosFromFirebase();
                         fetchStatusFromFirebase();
                         fetchPhotosFromFirebase();
 
@@ -189,9 +187,6 @@ public class HomeFragment extends BaseFragment {
         Log.e(TAG, uid);
         Log.e(TAG, mDatabaseReference.toString());
 
-        Photo photo;
-        Video video;
-
         mSelectedSubInterests = new ArrayList<>();
 
 
@@ -204,7 +199,9 @@ public class HomeFragment extends BaseFragment {
 //                Log.d(TAG, "onDataChange: INTTTT "+dataSnapshot.child("selectedSubInterests").getValue());
                 if(dataSnapshot.child("selectedSubInterests").getValue()!=null) {
                     mSelectedSubInterests.addAll((Collection<? extends String>) dataSnapshot.child("selectedSubInterests").getValue());
-                }fetchStatusFromFirebase();
+                }
+                fetchVideosFromFirebase();
+                fetchStatusFromFirebase();
                 fetchPhotosFromFirebase();
             }
 
@@ -212,6 +209,8 @@ public class HomeFragment extends BaseFragment {
             public void onCancelled(DatabaseError databaseError) {
             }
         });
+
+        fetchVideosFromFirebase();
 
         fetchStatusFromFirebase();
 
@@ -334,6 +333,56 @@ public class HomeFragment extends BaseFragment {
 
     }
 
+    private void fetchVideosFromFirebase() {
+        isVideoDone= new HashMap<>();
+
+//        items = new Items();
+        if (mSelectedSubInterests.size() > 0) {
+
+            mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("tags");
+            final StorageReference mStorageReferenceVideo = FirebaseStorage.getInstance().getReference("posts").child("videos");
+
+            for (String subInt : mSelectedSubInterests) {
+
+                mDatabaseReferencePosts.child(subInt).child("video").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+//                        Log.d(TAG, "onDataChange: HOMEFRAG SUBINT "+dataSnapshot.getRef());
+
+                        for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                            Log.d(TAG, "onDataChange: HOMEFRAGVIDEO 2 "+mStorageReferenceVideo);
+                            CustomVideo videoSnap = postSnapshot.getValue(CustomVideo.class);
+                            videoSnap.setStorageReference(mStorageReferenceVideo.child(postSnapshot.getKey()));
+                            if(!isVideoDone.containsKey(postSnapshot.getKey())) {
+                                Log.d(TAG, "onDataChange: KEY "+postSnapshot.getKey());
+
+                                items.add(videoSnap);
+                                isVideoDone.put(postSnapshot.getKey(),true);
+                            }
+                            mAdapter.notifyDataSetChanged();
+                            if(mAdapter.getItemCount()>0){
+                                avi.hide();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.d(TAG, "onCancelled: " + databaseError.getMessage());
+                    }
+                });
+
+            }
+        }
+        Log.d(TAG, "fetchStatusFromFirebase: " + items.size());
+        mAdapter.setItems(items);
+        mAdapter.notifyDataSetChanged();
+        if(mAdapter.getItemCount()>0){
+            avi.hide();
+        }
+    }
+
     @Override
     public void onPause() {
 
@@ -399,7 +448,6 @@ public class HomeFragment extends BaseFragment {
         statusHashMap = new HashMap<>();
         statusHashMapTemp = new HashMap<>();
 
-        items = new Items();
         if (mSelectedSubInterests.size() > 0) {
             Log.d(TAG, "fetchStatusFromFirebase: SIZE " + mSelectedSubInterests.size());
             Log.d(TAG, "fetchStatusFromFirebase: " + mSelectedSubInterests);

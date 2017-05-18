@@ -25,8 +25,6 @@ public class CustomVideoAdapter  extends ItemViewBinder<CustomVideo, CustomVideo
 
     protected SimpleVideoView currentlyPlaying;
 
-
-
     public void releaseVideo() {
         if (currentlyPlaying != null) {
             currentlyPlaying.release();
@@ -49,6 +47,7 @@ public class CustomVideoAdapter  extends ItemViewBinder<CustomVideo, CustomVideo
         new Handler().post(new Runnable() {
             @Override
             public void run() {
+
                 if(item.getTimestamp()!=null) {
                     holder.setPostTime(getTimeAgo(item.getTimestamp()));
                 }
@@ -61,11 +60,11 @@ public class CustomVideoAdapter  extends ItemViewBinder<CustomVideo, CustomVideo
                 }else{
                     holder.setComments(0);
                 }
-//                if(item.getCaption()!=null){
-//                    holder.setCaption(item.getCaption());
-//                }
-                if(item.getVideoURI()!=null){
-//                    holder.videoView.
+                if(item.getCaption()!=null){
+                    holder.setCaption(item.getCaption());
+                }
+                if(item.getStorageReference()!=null && context!=null) {
+                    holder.setVideo(item.getStorageReference());
                 }
             }
         });
@@ -77,7 +76,7 @@ public class CustomVideoAdapter  extends ItemViewBinder<CustomVideo, CustomVideo
                     releaseVideo();
 
                     holder.videoView.setVisibility(View.VISIBLE);
-                    holder.videoView.start(item.getVideoURI());
+                    holder.videoView.start(holder.videoUrl);
                     currentlyPlaying = holder.videoView;
                 }
             }
