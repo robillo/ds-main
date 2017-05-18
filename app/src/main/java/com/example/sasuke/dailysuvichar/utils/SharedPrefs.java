@@ -5,10 +5,6 @@ import android.content.SharedPreferences;
 
 import com.example.sasuke.dailysuvichar.DailySuvicharApp;
 
-/**
- * Created by Sasuke on 4/27/2017.
- */
-
 public class SharedPrefs {
 
     private static final String LOGIN_TOKEN = "login_token";
@@ -28,14 +24,13 @@ public class SharedPrefs {
     public static void setLoginToken(String token) {
         SharedPreferences.Editor editor = getPrefrences().edit();
         editor.putString(LOGIN_TOKEN, token);
-        editor.commit();
+        editor.apply();
     }
 
     public static void clearLoggedInUser() {
         SharedPreferences.Editor editor = getPrefrences().edit();
         editor.remove(LOGIN_TOKEN);
-        editor.commit();
+        editor.apply();
     }
-
 }
 

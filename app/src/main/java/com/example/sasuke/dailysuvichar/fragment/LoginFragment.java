@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.activity.ChooseInterestActivity;
+import com.example.sasuke.dailysuvichar.activity.ProfileActivity;
 import com.example.sasuke.dailysuvichar.models.UserAuth;
 import com.example.sasuke.dailysuvichar.utils.SharedPrefs;
 import com.example.sasuke.dailysuvichar.utils.ValidationListener;
@@ -161,7 +162,10 @@ public class LoginFragment extends BaseFragment implements GoogleApiClient.OnCon
         String username = usernameFromEmail(user.getEmail());
         // Write new user
         writeNewUser(user.getUid(), username, user.getEmail());
-        startActivity(ChooseInterestActivity.newIntent(getContext()));
+        Intent i = new Intent(getContext(), ProfileActivity.class);
+        i.putExtra("fromLogin", 1);
+        startActivity(i);
+//        startActivity(ChooseInterestActivity.newIntent(getContext()));
         dismissDialog();
     }
 
@@ -244,7 +248,10 @@ public class LoginFragment extends BaseFragment implements GoogleApiClient.OnCon
                         } else {
                             Log.d(TAG, "onComplete: passed");
                             SharedPrefs.setLoginToken(acct.getIdToken());
-                            startActivity(ChooseInterestActivity.newIntent(getContext()));
+                            Intent i = new Intent(getContext(), ProfileActivity.class);
+                            i.putExtra("fromLogin", 1);
+                            startActivity(i);
+//                            startActivity(ChooseInterestActivity.newIntent(getContext()));
                             getActivity().finish();
                         }
                     }
@@ -261,7 +268,10 @@ public class LoginFragment extends BaseFragment implements GoogleApiClient.OnCon
                             dismissDialog();
                             Toast.makeText(getActivity(), getResources().getString(R.string.authentication_failed), Toast.LENGTH_SHORT).show();
                         } else {
-                            startActivity(ChooseInterestActivity.newIntent(getContext()));
+                            Intent i = new Intent(getContext(), ProfileActivity.class);
+                            i.putExtra("fromLogin", 1);
+                            startActivity(i);
+//                            startActivity(ChooseInterestActivity.newIntent(getContext()));
                             dismissDialog();
                         }
                     }

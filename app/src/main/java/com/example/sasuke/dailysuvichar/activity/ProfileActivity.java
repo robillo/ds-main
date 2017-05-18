@@ -53,7 +53,7 @@ public class ProfileActivity extends BaseActivity {
     private FirebaseUser mFirebaseUser;
     private StorageReference mStorageReferenceDP,mStorageReferenceCover;
 
-    private int year, month, day;
+    private int year, month, day, code;
     private ImageButton userProfilePic, userCoverPic;
     private Calendar calendar;
     private static final int RESULT_LOAD_IMAGE = 8008, RESULT_LOAD_COVER = 8009, RESULT_LOAD_GOV_ID = 8010,
@@ -90,12 +90,13 @@ public class ProfileActivity extends BaseActivity {
         setContentView(R.layout.activity_profile);
         ButterKnife.bind(this);
 
+        code = getIntent().getIntExtra("fromLogin", 0);
+
         mDatabase = FirebaseDatabase.getInstance().getReference("users");
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
         mStorageReferenceDP = FirebaseStorage.getInstance().getReference("profile").child("user").child("dp");
         mStorageReferenceCover = FirebaseStorage.getInstance().getReference("profile").child("user").child("cover");
-
 
         calendar = Calendar.getInstance();
         year = calendar.get(Calendar.YEAR);
@@ -143,9 +144,6 @@ public class ProfileActivity extends BaseActivity {
                 if(dataSnapshot.child("name").getValue()!=null) {
                     name.setText(dataSnapshot.child("name").getValue().toString());
                 }
-//                if(user.getName()!=null) {
-//                    name.setText(user.getName());
-//                }
                 if(dataSnapshot.child("username").getValue()!=null) {
                     userName.setText(dataSnapshot.child("userName").getValue().toString());
                 }
@@ -200,7 +198,6 @@ public class ProfileActivity extends BaseActivity {
                             .into(userCoverPic);
                 }
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
@@ -338,19 +335,13 @@ public class ProfileActivity extends BaseActivity {
                 .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
                     @Override
                     public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                        /**
-                         * If you use alwaysCallSingleChoiceCallback(), which is discussed below,
-                         * returning false here won't allow the newly selected radio button to actually be selected.
-                         **/
                         switch (which){
                             case 0:{
                                 language.setText("ENGLISH");
-//                                Toast.makeText(ProfileActivity.this, "English Chosen", Toast.LENGTH_SHORT).show();
                                 break;
                             }
                             case 1:{
                                 language.setText("HINDI");
-//                                Toast.makeText(ProfileActivity.this, "Hindi Chosen", Toast.LENGTH_SHORT).show();
                                 break;
                             }
                         }
@@ -405,19 +396,13 @@ public class ProfileActivity extends BaseActivity {
                 .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
                     @Override
                     public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                        /**
-                         * If you use alwaysCallSingleChoiceCallback(), which is discussed below,
-                         * returning false here won't allow the newly selected radio button to actually be selected.
-                         **/
                         switch (which){
                             case 0:{
                                 gender.setText("MALE");
-//                                Toast.makeText(ProfileActivity.this, "Male", Toast.LENGTH_SHORT).show();
                                 break;
                             }
                             case 1:{
                                 gender.setText("FEMALE");
-//                                Toast.makeText(ProfileActivity.this, "Female", Toast.LENGTH_SHORT).show();
                                 break;
                             }
                         }
@@ -455,15 +440,9 @@ public class ProfileActivity extends BaseActivity {
                 @Override
                 public void onDateSet(DatePicker arg0,
                                       int arg1, int arg2, int arg3) {
-                    // TODO Auto-generated method stub
-                    // arg1 = year
-                    // arg2 = month
-                    // arg3 = day
                     year = arg1;
                     month = arg2+1;
                     day = arg3;
-                    //Here Are The Picked Dates
-//                    Toast.makeText(ProfileActivity.this, "DOB updated to: "+day + "/" + month + "/" + year, Toast.LENGTH_SHORT).show();
                     DOB.setText(day + "/" + month + "/" + year);
                 }
             };
@@ -471,15 +450,12 @@ public class ProfileActivity extends BaseActivity {
 
     @OnClick(R.id.btnSave)
     public void save(){
-//        progressDialog = new ProgressDialog(this);
-//        progressDialog.setTitle("Saving Changes...");
-//        progressDialog.show();
-
         writetoFirebase();
-
-//        progressDialog.dismiss();
         Toast.makeText(this, "Changes Saved Successfully", Toast.LENGTH_SHORT).show();
 
+        if(code == 1){
+            startActivity(new Intent(this, ChooseInterestActivity.class));
+        }
 //        startActivity(new Intent(this, HomeActivity.class));
         finish();
     }
@@ -518,24 +494,17 @@ public class ProfileActivity extends BaseActivity {
 
         if(dpPath!=null){
             dpPathDB = String.valueOf(dpPath);
-//            progressDialog = new ProgressDialog(this);
-//            progressDialog.setTitle("Saving Changes...");
-//            progressDialog.show();
-
             StorageReference riversRef = mStorageReferenceDP.child(mFirebaseUser.getUid());
             riversRef.putFile(dpPath)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
-//                            progressDialog.dismiss();
                             Toast.makeText(ProfileActivity.this, "Changes Saved! ", Toast.LENGTH_SHORT).show();
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception exception) {
-//                                progressDialog.dismiss();
                             Toast.makeText(ProfileActivity.this, "Upload Failed. Please Try Again!", Toast.LENGTH_SHORT).show();
 
                         }
@@ -543,56 +512,35 @@ public class ProfileActivity extends BaseActivity {
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-//                                double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
-//
-//                                progressDialog.setMessage("Uploaded " + ((int) progress) + "%...");
                         }
                     });
 
         }
         if(coverPath!=null){
             coverPathDB = String.valueOf(coverPath);
-//            progressDialog = new ProgressDialog(this);
-//            progressDialog.setTitle("Saving Changes...");
-//            progressDialog.show();
 
             StorageReference riversRef = mStorageReferenceCover.child(mFirebaseUser.getUid());
             riversRef.putFile(coverPath)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
-//                            progressDialog.dismiss();
                             Toast.makeText(ProfileActivity.this, "Changes Saved! ", Toast.LENGTH_SHORT).show();
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception exception) {
-//                            progressDialog.dismiss();
                             Toast.makeText(ProfileActivity.this, "Upload Failed. Please Try Again!", Toast.LENGTH_SHORT).show();
-
                         }
                     })
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-//                                double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
-//
-//                                progressDialog.setMessage("Uploaded " + ((int) progress) + "%...");
                         }
                     });
         }
 
         User user = new User(nameDB,bioDB,langDB,dobDB,dpPathDB,coverPathDB,genderDB,userNameDB,ageDB);
-
-//        Map<String, Object> userMap = user.toMap();
-//
-//        Map<String, Object> childUpdates = new HashMap<>();
-//        childUpdates.put(mFirebaseUser.getUid(), userMap);
-//
-//        mDatabase.updateChildren(childUpdates);
-
         mDatabase.child(mFirebaseUser.getUid()).child("name").setValue(nameDB);
         mDatabase.child(mFirebaseUser.getUid()).child("age").setValue(ageDB);
         mDatabase.child(mFirebaseUser.getUid()).child("photoUrl").setValue(dpPathDB);
