@@ -101,7 +101,7 @@ public class ProfileActivity extends BaseActivity {
         mUsersDatabase = FirebaseDatabase.getInstance().getReference("users");
         mTempDatabase = FirebaseDatabase.getInstance().getReference();
         mTempDatabase.child("gurus").child(mFirebaseUser.getUid()).push();
-        mGurusDatabase = FirebaseDatabase.getInstance().getReference("gurus");
+        mGurusDatabase = FirebaseDatabase.getInstance().getReference("gurus").child("pending");
 
         mStorageReferenceDP = FirebaseStorage.getInstance().getReference("profile").child("user").child("dp");
         mStorageReferenceCover = FirebaseStorage.getInstance().getReference("profile").child("user").child("cover");
@@ -669,18 +669,22 @@ public class ProfileActivity extends BaseActivity {
 //            mUsersDatabase.child(mFirebaseUser.getUid()).child("preferredLang").setValue(langDB);
         }
         else {
-            Guru user = new Guru(nameDB, mFirebaseUser.getEmail(), bioDB, new ArrayList<String>(), langDB, dpPathDB, coverPathDB, dobDB, genderDB, ageDB, govDB, specDB);
-            mGurusDatabase.child(mFirebaseUser.getUid()).child("name").setValue(nameDB);
-            mGurusDatabase.child(mFirebaseUser.getUid()).child("email").setValue(mFirebaseUser.getEmail());
-            mGurusDatabase.child(mFirebaseUser.getUid()).child("bio").setValue(bioDB);
-            mGurusDatabase.child(mFirebaseUser.getUid()).child("preferredLang").setValue(langDB);
-            mGurusDatabase.child(mFirebaseUser.getUid()).child("photoUrl").setValue(dpPathDB);
-            mGurusDatabase.child(mFirebaseUser.getUid()).child("coverUrl").setValue(coverPathDB);
-            mGurusDatabase.child(mFirebaseUser.getUid()).child("dob").setValue(dobDB);
-            mGurusDatabase.child(mFirebaseUser.getUid()).child("gender").setValue(genderDB);
-            mGurusDatabase.child(mFirebaseUser.getUid()).child("age").setValue(ageDB);
-            mGurusDatabase.child(mFirebaseUser.getUid()).child("govID").setValue(govDB);
-            mGurusDatabase.child(mFirebaseUser.getUid()).child("specID").setValue(specDB);
+            if(govDB==null || specDB==null){
+                Toast.makeText(this, "Please upload documents to get verified as a Guru", Toast.LENGTH_SHORT).show();
+            }else {
+                Guru user = new Guru(nameDB, mFirebaseUser.getEmail(), bioDB, new ArrayList<String>(), langDB, dpPathDB, coverPathDB, dobDB, genderDB, ageDB, govDB, specDB);
+//                mGurusDatabase.child(mFirebaseUser.getUid()).child("name").setValue(nameDB);
+//                mGurusDatabase.child(mFirebaseUser.getUid()).child("email").setValue(mFirebaseUser.getEmail());
+//                mGurusDatabase.child(mFirebaseUser.getUid()).child("bio").setValue(bioDB);
+//                mGurusDatabase.child(mFirebaseUser.getUid()).child("preferredLang").setValue(langDB);
+//                mGurusDatabase.child(mFirebaseUser.getUid()).child("photoUrl").setValue(dpPathDB);
+//                mGurusDatabase.child(mFirebaseUser.getUid()).child("coverUrl").setValue(coverPathDB);
+//                mGurusDatabase.child(mFirebaseUser.getUid()).child("dob").setValue(dobDB);
+//                mGurusDatabase.child(mFirebaseUser.getUid()).child("gender").setValue(genderDB);
+//                mGurusDatabase.child(mFirebaseUser.getUid()).child("age").setValue(ageDB);
+                mGurusDatabase.child(mFirebaseUser.getUid()).child("govID").setValue(govDB);
+                mGurusDatabase.child(mFirebaseUser.getUid()).child("specID").setValue(specDB);
+            }
         }
     }
 }
