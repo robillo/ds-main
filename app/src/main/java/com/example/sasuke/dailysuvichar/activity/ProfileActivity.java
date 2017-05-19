@@ -105,8 +105,8 @@ public class ProfileActivity extends BaseActivity {
 
         mStorageReferenceDP = FirebaseStorage.getInstance().getReference("profile").child("user").child("dp");
         mStorageReferenceCover = FirebaseStorage.getInstance().getReference("profile").child("user").child("cover");
-        mStorageReferenceGovID = FirebaseStorage.getInstance().getReference("profile").child("user").child("govid");
-        mStorageReferenceSpecID = FirebaseStorage.getInstance().getReference("profile").child("user").child("specid");
+        mStorageReferenceGovID = FirebaseStorage.getInstance().getReference("gurus").child("pending").child("govid");
+        mStorageReferenceSpecID = FirebaseStorage.getInstance().getReference("gurus").child("pending").child("specid");
 
         calendar = Calendar.getInstance();
         year = calendar.get(Calendar.YEAR);
@@ -336,6 +336,32 @@ public class ProfileActivity extends BaseActivity {
                     .crossFade()
                     .centerCrop()
                     .into(govID);
+
+
+            if(govPath!=null){
+
+                StorageReference riversRef = mStorageReferenceGovID.child(mFirebaseUser.getUid());
+                riversRef.putFile(govPath)
+                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                Toast.makeText(ProfileActivity.this, "Changes Saved! ", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception exception) {
+                                Toast.makeText(ProfileActivity.this, "Upload Failed. Please Try Again!", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                            }
+                        });
+                mGurusDatabase.child(mFirebaseUser.getUid()).child("govID").setValue(govPath.toString());
+
+            }
         }
         else if(requestCode == RESULT_LOAD_SPEC_ID && resultCode == RESULT_OK && null != data){
             specPath = data.getData();
@@ -354,6 +380,31 @@ public class ProfileActivity extends BaseActivity {
                     .crossFade()
                     .centerCrop()
                     .into(specID);
+
+            if(specPath!=null){
+
+                StorageReference riversRef = mStorageReferenceSpecID.child(mFirebaseUser.getUid());
+                riversRef.putFile(specPath)
+                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                Toast.makeText(ProfileActivity.this, "Changes Saved! ", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception exception) {
+                                Toast.makeText(ProfileActivity.this, "Upload Failed. Please Try Again!", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                            }
+                        });
+                mGurusDatabase.child(mFirebaseUser.getUid()).child("specID").setValue(specPath.toString());
+
+            }
         }
     }
 
@@ -605,52 +656,6 @@ public class ProfileActivity extends BaseActivity {
             bioDB = bio.getText().toString();
         }
 
-        if(govPath!=null){
-            govDB = String.valueOf(govPath);
-
-            StorageReference riversRef = mStorageReferenceGovID.child(mFirebaseUser.getUid());
-            riversRef.putFile(govPath)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            Toast.makeText(ProfileActivity.this, "Changes Saved! ", Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception exception) {
-                            Toast.makeText(ProfileActivity.this, "Upload Failed. Please Try Again!", Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                        }
-                    });
-        }
-        if(specPath!=null){
-            specDB = String.valueOf(specPath);
-
-            StorageReference riversRef = mStorageReferenceSpecID.child(mFirebaseUser.getUid());
-            riversRef.putFile(specPath)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            Toast.makeText(ProfileActivity.this, "Changes Saved! ", Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception exception) {
-                            Toast.makeText(ProfileActivity.this, "Upload Failed. Please Try Again!", Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                        }
-                    });
-        }
         Log.d(TAG, "writetoFirebase: "+mFirebaseUser.getUid());
         Log.d(TAG, "writetoFirebase: "+userType);
         Log.d(TAG, "writetoFirebase: "+userType.getText());
@@ -673,17 +678,17 @@ public class ProfileActivity extends BaseActivity {
                 Toast.makeText(this, "Please upload documents to get verified as a Guru", Toast.LENGTH_SHORT).show();
             }else {
                 Guru user = new Guru(nameDB, mFirebaseUser.getEmail(), bioDB, new ArrayList<String>(), langDB, dpPathDB, coverPathDB, dobDB, genderDB, ageDB, govDB, specDB);
-//                mGurusDatabase.child(mFirebaseUser.getUid()).child("name").setValue(nameDB);
-//                mGurusDatabase.child(mFirebaseUser.getUid()).child("email").setValue(mFirebaseUser.getEmail());
+                mGurusDatabase.child(mFirebaseUser.getUid()).child("name").setValue(nameDB);
+                mGurusDatabase.child(mFirebaseUser.getUid()).child("email").setValue(mFirebaseUser.getEmail());
 //                mGurusDatabase.child(mFirebaseUser.getUid()).child("bio").setValue(bioDB);
 //                mGurusDatabase.child(mFirebaseUser.getUid()).child("preferredLang").setValue(langDB);
 //                mGurusDatabase.child(mFirebaseUser.getUid()).child("photoUrl").setValue(dpPathDB);
 //                mGurusDatabase.child(mFirebaseUser.getUid()).child("coverUrl").setValue(coverPathDB);
-//                mGurusDatabase.child(mFirebaseUser.getUid()).child("dob").setValue(dobDB);
+                mGurusDatabase.child(mFirebaseUser.getUid()).child("dob").setValue(dobDB);
 //                mGurusDatabase.child(mFirebaseUser.getUid()).child("gender").setValue(genderDB);
-//                mGurusDatabase.child(mFirebaseUser.getUid()).child("age").setValue(ageDB);
-                mGurusDatabase.child(mFirebaseUser.getUid()).child("govID").setValue(govDB);
-                mGurusDatabase.child(mFirebaseUser.getUid()).child("specID").setValue(specDB);
+                mGurusDatabase.child(mFirebaseUser.getUid()).child("age").setValue(ageDB);
+                mGurusDatabase.child(mFirebaseUser.getUid()).child("uid").setValue(mFirebaseUser.getUid());
+//                mGurusDatabase.child(mFirebaseUser.getUid()).child("govID").setValue(govDB);
             }
         }
     }
