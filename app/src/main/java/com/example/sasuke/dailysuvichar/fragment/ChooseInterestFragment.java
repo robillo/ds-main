@@ -26,10 +26,6 @@ import java.util.HashMap;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-/**
- * Created by Sasuke on 4/19/2017.
- */
-
 public class ChooseInterestFragment extends BaseFragment implements BubblePickerListener {
 
     @BindView(R.id.picker)
@@ -48,8 +44,6 @@ public class ChooseInterestFragment extends BaseFragment implements BubblePicker
     private static final boolean ICON_ON_TOP = true;
 
     private ArrayList<String> diet, yoga, health, religion, motivation, ayurveda, astrology;
-
-//        private static final BubbleGradient BUBBLE_GRADIENT = new BubbleGradient(colors.getColor((1 * 1), 0), colors.getColor((1 * 1), 0), BubbleGradient.VERTICAL);
 
     private ArrayList<String> mSelectedInterests;
     private ArrayList<String> mSelectedSubInterests;
