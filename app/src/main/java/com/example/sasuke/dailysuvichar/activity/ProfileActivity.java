@@ -674,7 +674,7 @@ public class ProfileActivity extends BaseActivity {
 //            mUsersDatabase.child(mFirebaseUser.getUid()).child("preferredLang").setValue(langDB);
         }
         else {
-            if(govDB==null || specDB==null){
+            if(govPath==null || specPath==null){
                 Toast.makeText(this, "Please upload documents to get verified as a Guru", Toast.LENGTH_SHORT).show();
             }else {
                 Guru user = new Guru(nameDB, mFirebaseUser.getEmail(), bioDB, new ArrayList<String>(), langDB, dpPathDB, coverPathDB, dobDB, genderDB, ageDB, govDB, specDB);
