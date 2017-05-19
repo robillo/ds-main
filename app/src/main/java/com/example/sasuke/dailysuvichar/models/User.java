@@ -20,14 +20,14 @@ public class User {
     private String gender;
     private String phone;
 
-    public User(String name, String bio, String preferredLang,String DOB, String photoUrl, String coverUrl, String gender, String username, int age) {
+    public User(String name, String bio, String preferredLang, String DOB, String photoUrl, String coverUrl, String gender, String userName, int age) {
         this.name = name;
         this.bio = bio;
         this.preferredLang = preferredLang;
         this.photoUrl = photoUrl;
         this.coverUrl = coverUrl;
         this.gender = gender;
-        this.username = username;
+        this.userName = userName;
         this.age = age;
         this.DOB = DOB;
     }
@@ -42,15 +42,15 @@ public class User {
         this.selectedSubInterests = mSelectedSubInterests;
     }
 
-    public String getUsername() {
-        return username;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    private String username;
+    private String userName;
     private int age;
     private ArrayList<String> selectedSubInterests;
     private ArrayList<String> following;
@@ -288,7 +288,7 @@ public class User {
         result.put("dob", DOB);
         result.put("age", age);
         result.put("bio", bio);
-        result.put("username", username);
+        result.put("userName", userName);
         result.put("preferredLang", preferredLang);
         result.put("photoUrl", photoUrl);
         result.put("coverUrl", coverUrl);

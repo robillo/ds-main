@@ -3,7 +3,6 @@ package com.example.sasuke.dailysuvichar.activity;
 import android.Manifest;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -52,10 +51,11 @@ import butterknife.OnClick;
 
 public class ProfileActivity extends BaseActivity {
 
+    private static final String TAG = "PROFILE";
     private DatabaseReference mUsersDatabase, mGurusDatabase, mTempDatabase;
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
-    private StorageReference mStorageReferenceDP,mStorageReferenceCover;
+    private StorageReference mStorageReferenceDP,mStorageReferenceCover, mStorageReferenceGovID, mStorageReferenceSpecID;
 
     private int year, month, day, code;
     private ImageButton userProfilePic, userCoverPic;
@@ -98,9 +98,6 @@ public class ProfileActivity extends BaseActivity {
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
-
-
-
         mUsersDatabase = FirebaseDatabase.getInstance().getReference("users");
         mTempDatabase = FirebaseDatabase.getInstance().getReference();
         mTempDatabase.child("gurus").child(mFirebaseUser.getUid()).push();
@@ -108,6 +105,8 @@ public class ProfileActivity extends BaseActivity {
 
         mStorageReferenceDP = FirebaseStorage.getInstance().getReference("profile").child("user").child("dp");
         mStorageReferenceCover = FirebaseStorage.getInstance().getReference("profile").child("user").child("cover");
+        mStorageReferenceGovID = FirebaseStorage.getInstance().getReference("profile").child("user").child("govid");
+        mStorageReferenceSpecID = FirebaseStorage.getInstance().getReference("profile").child("user").child("specid");
 
         calendar = Calendar.getInstance();
         year = calendar.get(Calendar.YEAR);
@@ -159,7 +158,7 @@ public class ProfileActivity extends BaseActivity {
                 if(dataSnapshot.child("name").getValue()!=null) {
                     name.setText(dataSnapshot.child("name").getValue().toString());
                 }
-                if(dataSnapshot.child("username").getValue()!=null) {
+                if(dataSnapshot.child("userName").getValue()!=null) {
                     userName.setText(dataSnapshot.child("userName").getValue().toString());
                 }
                 if(dataSnapshot.child("bio").getValue()!=null) {
@@ -198,19 +197,19 @@ public class ProfileActivity extends BaseActivity {
                 if(dataSnapshot.child("coverUrl").getValue()!=null) {
                     String[] filePathColumn = { MediaStore.Images.Media.DATA };
 
-//                    Cursor cursor = getContentResolver().query(Uri.parse(dataSnapshot.child("coverUrl").getValue().toString()),
-//                            filePathColumn, null, null, null);
-//                    cursor.moveToFirst();
-//
-//                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-//                    String picturePath = cursor.getString(columnIndex);
-//                    cursor.close();
-//
-//                    Glide.with(ProfileActivity.this)
-//                            .load(picturePath)
-//                            .crossFade()
-//                            .centerCrop()
-//                            .into(userCoverPic);
+                    Cursor cursor = getContentResolver().query(Uri.parse(dataSnapshot.child("coverUrl").getValue().toString()),
+                            filePathColumn, null, null, null);
+                    cursor.moveToFirst();
+
+                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                    String picturePath = cursor.getString(columnIndex);
+                    cursor.close();
+
+                    Glide.with(ProfileActivity.this)
+                            .load(picturePath)
+                            .crossFade()
+                            .centerCrop()
+                            .into(userCoverPic);
                 }
             }
             @Override
@@ -242,6 +241,36 @@ public class ProfileActivity extends BaseActivity {
                     .into(userProfilePic);
 
             Log.e("REQUEST AFTER", picturePath);
+
+            String dpPathDB = null;
+            if(dpPath!=null){
+                dpPathDB = String.valueOf(dpPath);
+                StorageReference riversRef = mStorageReferenceDP.child(mFirebaseUser.getUid());
+                riversRef.putFile(dpPath)
+                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                Toast.makeText(ProfileActivity.this, "Changes Saved! ", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception exception) {
+                                Toast.makeText(ProfileActivity.this, "Upload Failed. Please Try Again!", Toast.LENGTH_SHORT).show();
+
+                            }
+                        })
+                        .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                            }
+                        });
+
+            }
+            if(dpPathDB!=null) {
+                mUsersDatabase.child(mFirebaseUser.getUid()).child("photoUrl").setValue(dpPathDB);
+            }
+
         }
         else if(requestCode == RESULT_LOAD_COVER && resultCode == RESULT_OK && null != data){
             coverPath = data.getData();
@@ -260,6 +289,35 @@ public class ProfileActivity extends BaseActivity {
                     .crossFade()
                     .centerCrop()
                     .into(userCoverPic);
+
+            String coverPathDB=null;
+            if(coverPath!=null){
+                coverPathDB = String.valueOf(coverPath);
+
+                StorageReference riversRef = mStorageReferenceCover.child(mFirebaseUser.getUid());
+                riversRef.putFile(coverPath)
+                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                Toast.makeText(ProfileActivity.this, "Changes Saved! ", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception exception) {
+                                Toast.makeText(ProfileActivity.this, "Upload Failed. Please Try Again!", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                            }
+                        });
+            }
+            if(coverPathDB!=null){
+                mUsersDatabase.child(mFirebaseUser.getUid()).child("coverUrl").setValue(coverPathDB);
+            }
+
         }
         else if(requestCode == RESULT_LOAD_GOV_ID && resultCode == RESULT_OK && null != data){
             govPath = data.getData();
@@ -311,6 +369,9 @@ public class ProfileActivity extends BaseActivity {
                         name.setText(input);
                     }
                 }).show();
+        if(name.getText()!=null){
+            mUsersDatabase.child(mFirebaseUser.getUid()).child("name").setValue(name.getText());
+        }
     }
 
     @OnClick(R.id.bio)
@@ -325,6 +386,9 @@ public class ProfileActivity extends BaseActivity {
                         bio.setText("Bio: " + input);
                     }
                 }).show();
+        if(bio.getText()!=null){
+            mUsersDatabase.child(mFirebaseUser.getUid()).child("bio").setValue(bio.getText());
+        }
     }
 
     @OnClick(R.id.user_name)
@@ -339,6 +403,9 @@ public class ProfileActivity extends BaseActivity {
                         userName.setText(input);
                     }
                 }).show();
+        if(userName.getText()!=null){
+            mUsersDatabase.child(mFirebaseUser.getUid()).child("userName").setValue(userName.getText());
+        }
     }
 
     @OnClick(R.id.lang)
@@ -365,6 +432,9 @@ public class ProfileActivity extends BaseActivity {
                 })
                 .positiveText("Choose This")
                 .show();
+        if(language.getText()!=null){
+            mUsersDatabase.child(mFirebaseUser.getUid()).child("preferredLang").setValue(language.getText());
+        }
     }
 
     @OnClick(R.id.user_type)
@@ -426,6 +496,9 @@ public class ProfileActivity extends BaseActivity {
                 })
                 .positiveText("Choose This")
                 .show();
+        if(gender.getText()!=null){
+            mUsersDatabase.child(mFirebaseUser.getUid()).child("gender").setValue(gender.getText());
+        }
     }
 
     @OnClick(R.id.age)
@@ -439,6 +512,11 @@ public class ProfileActivity extends BaseActivity {
                         age.setText(input);
                     }
                 }).show();
+
+        if(Integer.valueOf(age.getText().toString())!=0) {
+            mUsersDatabase.child(mFirebaseUser.getUid()).child("age").setValue(age.getText());
+        }
+
     }
 
     @OnClick(R.id.govID)
@@ -475,6 +553,9 @@ public class ProfileActivity extends BaseActivity {
                     month = arg2+1;
                     day = arg3;
                     DOB.setText(day + "/" + month + "/" + year);
+
+                    mUsersDatabase.child(mFirebaseUser.getUid()).child("dob").setValue(DOB.getText());
+
                 }
             };
 
@@ -524,57 +605,10 @@ public class ProfileActivity extends BaseActivity {
             bioDB = bio.getText().toString();
         }
 
-        if(dpPath!=null){
-            dpPathDB = String.valueOf(dpPath);
-            StorageReference riversRef = mStorageReferenceDP.child(mFirebaseUser.getUid());
-            riversRef.putFile(dpPath)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            Toast.makeText(ProfileActivity.this, "Changes Saved! ", Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception exception) {
-                            Toast.makeText(ProfileActivity.this, "Upload Failed. Please Try Again!", Toast.LENGTH_SHORT).show();
-
-                        }
-                    })
-                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                        }
-                    });
-
-        }
-        if(coverPath!=null){
-            coverPathDB = String.valueOf(coverPath);
-
-            StorageReference riversRef = mStorageReferenceCover.child(mFirebaseUser.getUid());
-            riversRef.putFile(coverPath)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            Toast.makeText(ProfileActivity.this, "Changes Saved! ", Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception exception) {
-                            Toast.makeText(ProfileActivity.this, "Upload Failed. Please Try Again!", Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                        }
-                    });
-        }
         if(govPath!=null){
             govDB = String.valueOf(govPath);
 
-            StorageReference riversRef = mStorageReferenceCover.child(mFirebaseUser.getUid());
+            StorageReference riversRef = mStorageReferenceGovID.child(mFirebaseUser.getUid());
             riversRef.putFile(govPath)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
@@ -595,9 +629,9 @@ public class ProfileActivity extends BaseActivity {
                     });
         }
         if(specPath!=null){
-            govDB = String.valueOf(specPath);
+            specDB = String.valueOf(specPath);
 
-            StorageReference riversRef = mStorageReferenceCover.child(mFirebaseUser.getUid());
+            StorageReference riversRef = mStorageReferenceSpecID.child(mFirebaseUser.getUid());
             riversRef.putFile(specPath)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
@@ -617,26 +651,29 @@ public class ProfileActivity extends BaseActivity {
                         }
                     });
         }
-
-        if(userType!=null && userType.equals("STANDARD")){
+        Log.d(TAG, "writetoFirebase: "+mFirebaseUser.getUid());
+        Log.d(TAG, "writetoFirebase: "+userType);
+        Log.d(TAG, "writetoFirebase: "+userType.getText());
+        if(userType!=null && (userType.getText().equals("STANDARD")||userType.getText().equals("User Type: Standard"))){
+            Log.d(TAG, "writetoFirebase: "+mFirebaseUser.getUid());
             User user = new User(nameDB,bioDB,langDB,dobDB,dpPathDB,coverPathDB,genderDB,userNameDB,ageDB);
-            mUsersDatabase.child(mFirebaseUser.getUid()).child("name").setValue(nameDB);
+//            mUsersDatabase.child(mFirebaseUser.getUid()).child("name").setValue(nameDB);
             mUsersDatabase.child(mFirebaseUser.getUid()).child("email").setValue(mFirebaseUser.getEmail());
-            mUsersDatabase.child(mFirebaseUser.getUid()).child("age").setValue(ageDB);
-            mUsersDatabase.child(mFirebaseUser.getUid()).child("photoUrl").setValue(dpPathDB);
-            mUsersDatabase.child(mFirebaseUser.getUid()).child("coverUrl").setValue(coverPathDB);
-            mUsersDatabase.child(mFirebaseUser.getUid()).child("dob").setValue(dobDB);
-            mUsersDatabase.child(mFirebaseUser.getUid()).child("gender").setValue(genderDB);
-            mUsersDatabase.child(mFirebaseUser.getUid()).child("userName").setValue(userNameDB);
-            mUsersDatabase.child(mFirebaseUser.getUid()).child("bio").setValue(bioDB);
-            mUsersDatabase.child(mFirebaseUser.getUid()).child("prefferedLang").setValue(langDB);
+//            mUsersDatabase.child(mFirebaseUser.getUid()).child("age").setValue(ageDB);
+//            mUsersDatabase.child(mFirebaseUser.getUid()).child("photoUrl").setValue(dpPathDB);
+//            mUsersDatabase.child(mFirebaseUser.getUid()).child("coverUrl").setValue(coverPathDB);
+//            mUsersDatabase.child(mFirebaseUser.getUid()).child("dob").setValue(dobDB);
+//            mUsersDatabase.child(mFirebaseUser.getUid()).child("gender").setValue(genderDB);
+//            mUsersDatabase.child(mFirebaseUser.getUid()).child("userName").setValue(userNameDB);
+//            mUsersDatabase.child(mFirebaseUser.getUid()).child("bio").setValue(bioDB);
+//            mUsersDatabase.child(mFirebaseUser.getUid()).child("preferredLang").setValue(langDB);
         }
         else {
             Guru user = new Guru(nameDB, mFirebaseUser.getEmail(), bioDB, new ArrayList<String>(), langDB, dpPathDB, coverPathDB, dobDB, genderDB, ageDB, govDB, specDB);
             mGurusDatabase.child(mFirebaseUser.getUid()).child("name").setValue(nameDB);
             mGurusDatabase.child(mFirebaseUser.getUid()).child("email").setValue(mFirebaseUser.getEmail());
             mGurusDatabase.child(mFirebaseUser.getUid()).child("bio").setValue(bioDB);
-            mGurusDatabase.child(mFirebaseUser.getUid()).child("prefferedLang").setValue(langDB);
+            mGurusDatabase.child(mFirebaseUser.getUid()).child("preferredLang").setValue(langDB);
             mGurusDatabase.child(mFirebaseUser.getUid()).child("photoUrl").setValue(dpPathDB);
             mGurusDatabase.child(mFirebaseUser.getUid()).child("coverUrl").setValue(coverPathDB);
             mGurusDatabase.child(mFirebaseUser.getUid()).child("dob").setValue(dobDB);
