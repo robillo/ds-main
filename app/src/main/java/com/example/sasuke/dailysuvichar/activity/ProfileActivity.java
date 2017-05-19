@@ -99,6 +99,8 @@ public class ProfileActivity extends BaseActivity {
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
 
+
+
         mUsersDatabase = FirebaseDatabase.getInstance().getReference("users");
         mTempDatabase = FirebaseDatabase.getInstance().getReference();
         mTempDatabase.child("gurus").child(mFirebaseUser.getUid()).push();
@@ -115,6 +117,10 @@ public class ProfileActivity extends BaseActivity {
 
         if(ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 5);
+        }
+
+        if(ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 6);
         }
 
         userProfilePic = (ImageButton) findViewById(R.id.user_profile_photo);
@@ -192,19 +198,19 @@ public class ProfileActivity extends BaseActivity {
                 if(dataSnapshot.child("coverUrl").getValue()!=null) {
                     String[] filePathColumn = { MediaStore.Images.Media.DATA };
 
-                    Cursor cursor = getContentResolver().query(Uri.parse(dataSnapshot.child("coverUrl").getValue().toString()),
-                            filePathColumn, null, null, null);
-                    cursor.moveToFirst();
-
-                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                    String picturePath = cursor.getString(columnIndex);
-                    cursor.close();
-
-                    Glide.with(ProfileActivity.this)
-                            .load(picturePath)
-                            .crossFade()
-                            .centerCrop()
-                            .into(userCoverPic);
+//                    Cursor cursor = getContentResolver().query(Uri.parse(dataSnapshot.child("coverUrl").getValue().toString()),
+//                            filePathColumn, null, null, null);
+//                    cursor.moveToFirst();
+//
+//                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+//                    String picturePath = cursor.getString(columnIndex);
+//                    cursor.close();
+//
+//                    Glide.with(ProfileActivity.this)
+//                            .load(picturePath)
+//                            .crossFade()
+//                            .centerCrop()
+//                            .into(userCoverPic);
                 }
             }
             @Override
