@@ -209,134 +209,17 @@ public class HomeFragment extends BaseFragment {
             public void onCancelled(DatabaseError databaseError) {
             }
         });
-//
+
         fetchVideosFromFirebase();
 
         fetchStatusFromFirebase();
 
         fetchPhotosFromFirebase();
-
-
-//        items = new Items();
-//        CustomVideo vid = new CustomVideo("rishabh shukla","https://firebasestorage.googleapis.com/v0/b/dailysuvichar-708d4.appspot.com/o/posts%2Fvideos%2F-KkM_JU-RlzvykGl9HUc?alt=media&token=95994318-8a65-402a-a8cb-f8c91c0dba6a.mp4",23,"video caption!!");
-//        items.add(vid);
-//
-//
-//        CustomVideo vid2 = new CustomVideo("rishabhh","https://firebasestorage.googleapis.com/v0/b/dailysuvichar-708d4.appspot.com/o/posts%2Fvideos%2F-KkM_JU-RlzvykGl9HUc?alt=media&token=95994318-8a65-402a-a8cb-f8c91c0dba6a.mp4",25,"video caption2!!");
-//        items.add(vid2);
-//
-//        mAdapter.setItems(items);
-
-//        status = new Status();
-//        status.setStatus("Watching bahubali 2 with Aditya Tyagi and 2 others at PVR.");
-//        mDatabaseReference.child("users").child(uid).child("status").push().setValue(status);
-//        statuses.put(mFirebaseUser.getEmail(), status);
-////        status = new Status(mFirebaseUser.getDisplayName(),"Watching bahubali 2 with Aditya Tyagi and 2 others at PVR.");
-////        userStatus.put(status.getUser(), status.getStatus());
-//        items.add(status);
-//
-//        photo = new Photo();
-//        photo.setPhoto(R.drawable.astrology);
-//        items.add(photo);
-//
-//        video = new Video("", "-2eiKIUyTKk", "");
-//        items.add(video);
-//
-////        status = new Status(mFirebaseUser.getDisplayName(),"ROBILLO");
-////        userStatus.put(status.getUser(), status.getStatus());
-//        status = new Status();
-//        status.setStatus("ROBILLO");
-//        statuses.put(mFirebaseUser.getEmail(), status);
-//        items.add(status);
-//
-//        photo = new Photo();
-//        photo.setPhoto(R.drawable.ayurveda);
-//        items.add(photo);
-//
-//        video = new Video("", "-2eiKIUyTKk", "");
-//        items.add(video);
-//
-//        status = new Status();
-//        status.setStatus("I got a laptop in my back pocket. :) Playing cricket with Jatin Verma and 10 others.");
-//        mDatabaseReference.child("users").child(uid).child("status").push().setValue(status);
-//        statuses.put(mFirebaseUser.getEmail(), status);
-////        status = new Status(mFirebaseUser.getDisplayName(),"I got a laptop in my back pocket. :)");
-////        userStatus.put(status.getUser(), status.getStatus());
-//        items.add(status);
-//
-//        photo = new Photo();
-//        photo.setPhoto(R.drawable.health);
-//        items.add(photo);
-//
-//        video = new Video("", "R_HNRK9t3lI", "");
-//        items.add(video);
-//
-//        status = new Status();
-//        status.setStatus("ROBILLO is the username for ROBIN");
-//        mDatabaseReference.child("users").child(uid).child("status").push().setValue(status);
-//        statuses.put(mFirebaseUser.getEmail(), status);
-////        status = new Status(mFirebaseUser.getDisplayName(),"ROBILLO is the username for ROBIN");
-////        userStatus.put(status.getUser(), status.getStatus());
-//        items.add(status);
-//
-//        photo = new Photo();
-//        photo.setPhoto(R.drawable.yoga);
-//        items.add(photo);
-//
-//        video = new Video("", "R_HNRK9t3lI", "");
-//        items.add(video);
-
-//        status = new Status(mFirebaseUser.getDisplayName(),"RISHZ is the username for Rishabh");
-//        userStatus.put(status.getUser(), status.getStatus());
-//        items.add(status);
-//
-//        photo = new Photo();
-//        photo.setPhoto(R.drawable.motivation);
-//        items.add(photo);
-//
-//        video = new Video("", "R_HNRK9t3lI", "");
-//        items.add(video);
-//
-//        photo = new Photo();
-//        photo.setPhoto(R.drawable.religion);
-//        items.add(photo);
-//
-//        video = new Video("", "R_HNRK9t3lI", "");
-//        items.add(video);
-//
-//        mAdapter.setItems(items);
-//        mAdapter.notifyDataSetChanged();
-
-//        mRvHome.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//            @Override
-//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-//                if (dy > 0 || dy < 0) {
-//                    if (CHECK == 1) {
-//                        CHECK++;
-//                    } else {
-////                        mRlMenu.startAnimation(slide_up);
-//                        mRlMenu.setVisibility(View.GONE);
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-//
-//                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-//                    mRlMenu.startAnimation(slide_down);
-//                    mRlMenu.setVisibility(View.VISIBLE);
-//                }
-//                super.onScrollStateChanged(recyclerView, newState);
-//            }
-//        });
-
     }
 
     private void fetchVideosFromFirebase() {
         isVideoDone= new HashMap<>();
 
-//        items = new Items();
         if (mSelectedSubInterests.size() > 0) {
 
             mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("tags");
