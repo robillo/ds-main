@@ -44,7 +44,7 @@ public class GurusFragment extends BaseFragment {
     private String ASTROLOGY_GURU = "Astrology Guru";
     private DatabaseReference mDatabaseReference;
     private StorageReference mStorageReference;
-    private static FirebaseUser mFirebaseUser;
+    private FirebaseUser mFirebaseUser;
 
 
     @BindView(R.id.recyclerview)
@@ -177,31 +177,31 @@ public class GurusFragment extends BaseFragment {
                             }
                             case 1: {
                                 //Astrology Gurus1
-                                mRvGuruAdapter = new RVGuruAdapter(getActivity(), guruList, 1);
+//                                mRvGuruAdapter = new RVGuruAdapter(getActivity(), guruList, 1);
                                 rv.setAdapter(mRvGuruAdapter);
                                 break;
                             }
                             case 2: {
                                 //Yoga Gurus2
-                                mRvGuruAdapter = new RVGuruAdapter(getActivity(), guruList, 2);
+//                                mRvGuruAdapter = new RVGuruAdapter(getActivity(), guruList, 2);
                                 rv.setAdapter(mRvGuruAdapter);
                                 break;
                             }
                             case 3: {
                                 //Pandits Gurus3
-                                mRvGuruAdapter = new RVGuruAdapter(getActivity(), guruList, 3);
+//                                mRvGuruAdapter = new RVGuruAdapter(getActivity(), guruList, 3);
                                 rv.setAdapter(mRvGuruAdapter);
                                 break;
                             }
                             case 4: {
                                 //Motivation Gurus4
-                                mRvGuruAdapter = new RVGuruAdapter(getActivity(), guruList, 4);
+//                                mRvGuruAdapter = new RVGuruAdapter(getActivity(), guruList, 4);
                                 rv.setAdapter(mRvGuruAdapter);
                                 break;
                             }
                             case 5: {
                                 //Ayurveda Gurus5
-                                mRvGuruAdapter = new RVGuruAdapter(getActivity(), guruList, 5);
+//                                mRvGuruAdapter = new RVGuruAdapter(getActivity(), guruList, 5);
                                 rv.setAdapter(mRvGuruAdapter);
                                 break;
                             }

@@ -156,7 +156,7 @@ public class RVGuruAdapter extends RecyclerView.Adapter<VHGurus> {
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                holder.intent();
+                holder.intent(item.getUid(), isFollowing.get(position));
             }
         });
     }

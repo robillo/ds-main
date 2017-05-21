@@ -15,24 +15,27 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.bumptech.glide.Glide;
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.utils.SharedPrefs;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import jp.wasabeef.glide.transformations.gpu.BrightnessFilterTransformation;
-import jp.wasabeef.glide.transformations.gpu.VignetteFilterTransformation;
 
 public class GuruDetailActivity extends BaseActivity{
 
@@ -53,6 +56,12 @@ public class GuruDetailActivity extends BaseActivity{
     TextView spec;
     @BindView(R.id.follow)
     Button follow;
+    private boolean isFollowing = false;
+    private String uid;
+    private DatabaseReference mDatabaseReference;
+    private StorageReference mStorageReference;
+    private FirebaseUser mFirebaseUser;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,9 +70,41 @@ public class GuruDetailActivity extends BaseActivity{
         ButterKnife.bind(this);
 
         context = getApplicationContext();
+//        ViewTarget.setTagId(R.id.glide_tag);
+
+
+        mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        mStorageReference = FirebaseStorage.getInstance().getReference("profile").child("user");
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference("users");
+
+        Intent i = getIntent();
+        isFollowing = i.getBooleanExtra("isfollowing",false);
+        uid = i.getStringExtra("uid");
+
+        setFollowing(isFollowing);
 
         if(ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 5);
+        }
+
+        if(uid!=null) {
+            mDatabaseReference.child(uid).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+//                User user = dataSnapshot.getValue(User.class);
+                    if (dataSnapshot.child("name").getValue() != null) {
+                        name.setText(dataSnapshot.child("name").getValue().toString());
+                    }
+                    if (dataSnapshot.child("bio").getValue() != null) {
+                        bio.setText(dataSnapshot.child("bio").getValue().toString());
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                }
+            });
         }
 
         cover.setOnClickListener(new View.OnClickListener() {
@@ -202,8 +243,19 @@ public class GuruDetailActivity extends BaseActivity{
         }
     }
 
+    public void setFollowing(boolean isFollowing){
+        if(isFollowing){
+            follow.setText("FOLLOWING");
+            follow.setBackgroundColor(getResources().getColor(R.color.green));
+        }
+        else {
+            follow.setText("FOLLOW");
+            follow.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+        }
+    }
+
     @OnClick(R.id.follow)
-    public void setFollowing(){
+    public void onClickFOllow(){
         if(follow.getText().equals("FOLLOW")){
             follow.setText("FOLLOWING");
             follow.setBackgroundColor(getResources().getColor(R.color.green));

@@ -70,7 +70,12 @@ public class VHGurus extends RecyclerView.ViewHolder{
         }
     }
 
-    public void intent(){
-        context.startActivity(new Intent(context, GuruDetailActivity.class));
+    public void intent(String uid, boolean isFollowing){
+        Intent i = new Intent(context, GuruDetailActivity.class);
+        if(uid!=null) {
+            i.putExtra("uid", uid);
+            i.putExtra("isfollowing", isFollowing);
+        }
+        context.startActivity(i);
     }
 }
