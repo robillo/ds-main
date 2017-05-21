@@ -84,6 +84,7 @@ public class GurusFragment extends BaseFragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Guru guru = postSnapshot.getValue(Guru.class);
+                    guruList.add(guru);
 //                    videoSnap.setStorageReference(mStorageReferenceVideo.child(postSnapshot.getKey()));
                     mRvGuruAdapter.notifyDataSetChanged();
 
@@ -96,27 +97,27 @@ public class GurusFragment extends BaseFragment {
         });
 
 
-        guruList.add(new Guru("Guru Robin", 721, ASTROLOGY_GURU));
-        guruList.add(new Guru("Shankar Ji", 210, ASTROLOGY_GURU));
-        guruList.add(new Guru("Baba Ramdev", 4324, YOGA_GURU));
-        guruList.add(new Guru("Baba Afsal", 251, MOTIVATION_GURU));
-        guruList.add(new Guru("Baba ABC", 321, YOGA_GURU));
-        guruList.add(new Guru("Guru Tagore", 11, AYURVEDA_GURU));
-        guruList.add(new Guru("Nafsar Guru", 110, PANDIT));
-        guruList.add(new Guru("Guru shiv", 9, MOTIVATION_GURU));
-        guruList.add(new Guru("Guru Kant", 72, AYURVEDA_GURU));
-        guruList.add(new Guru("Guru Narayan", 121, PANDIT));
-
-        guruList.add(new Guru("Guru Robillo", 721, ASTROLOGY_GURU));
-        guruList.add(new Guru("Shanku Chandler", 210, ASTROLOGY_GURU));
-        guruList.add(new Guru("Baba Devram", 4324, YOGA_GURU));
-        guruList.add(new Guru("Baba Afsos", 251, MOTIVATION_GURU));
-        guruList.add(new Guru("Baba DEF", 321, YOGA_GURU));
-        guruList.add(new Guru("Guru Treeger", 11, AYURVEDA_GURU));
-        guruList.add(new Guru("Rachel Mata", 110, PANDIT));
-        guruList.add(new Guru("Guru Ross", 9, MOTIVATION_GURU));
-        guruList.add(new Guru("Guru Joey", 72, AYURVEDA_GURU));
-        guruList.add(new Guru("Guru Monica", 121, PANDIT));
+//        guruList.add(new Guru("Guru Robin", 721, ASTROLOGY_GURU));
+//        guruList.add(new Guru("Shankar Ji", 210, ASTROLOGY_GURU));
+//        guruList.add(new Guru("Baba Ramdev", 4324, YOGA_GURU));
+//        guruList.add(new Guru("Baba Afsal", 251, MOTIVATION_GURU));
+//        guruList.add(new Guru("Baba ABC", 321, YOGA_GURU));
+//        guruList.add(new Guru("Guru Tagore", 11, AYURVEDA_GURU));
+//        guruList.add(new Guru("Nafsar Guru", 110, PANDIT));
+//        guruList.add(new Guru("Guru shiv", 9, MOTIVATION_GURU));
+//        guruList.add(new Guru("Guru Kant", 72, AYURVEDA_GURU));
+//        guruList.add(new Guru("Guru Narayan", 121, PANDIT));
+//
+//        guruList.add(new Guru("Guru Robillo", 721, ASTROLOGY_GURU));
+//        guruList.add(new Guru("Shanku Chandler", 210, ASTROLOGY_GURU));
+//        guruList.add(new Guru("Baba Devram", 4324, YOGA_GURU));
+//        guruList.add(new Guru("Baba Afsos", 251, MOTIVATION_GURU));
+//        guruList.add(new Guru("Baba DEF", 321, YOGA_GURU));
+//        guruList.add(new Guru("Guru Treeger", 11, AYURVEDA_GURU));
+//        guruList.add(new Guru("Rachel Mata", 110, PANDIT));
+//        guruList.add(new Guru("Guru Ross", 9, MOTIVATION_GURU));
+//        guruList.add(new Guru("Guru Joey", 72, AYURVEDA_GURU));
+//        guruList.add(new Guru("Guru Monica", 121, PANDIT));
 
         rv.setAdapter(mRvGuruAdapter);
 
