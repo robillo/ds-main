@@ -1,5 +1,8 @@
 package com.example.sasuke.dailysuvichar.models;
 
+import com.google.firebase.database.Exclude;
+import com.google.firebase.storage.StorageReference;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -18,6 +21,27 @@ public class Guru {
     private ArrayList<String> selectedSubInterests;
     private String phone;
     private int age;
+    private String uid;
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    @Exclude
+    private StorageReference storageReference;
+@Exclude
+    public StorageReference getStorageReference() {
+        return storageReference;
+    }
+@Exclude
+    public void setStorageReference(StorageReference storageReference) {
+        this.storageReference = storageReference;
+    }
+
     private int followersCount;
     private String specialization, govDB, specDB;
 

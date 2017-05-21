@@ -8,7 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.models.Guru;
@@ -124,9 +123,9 @@ public class RVGuruAdapter extends RecyclerView.Adapter<VHGurus> {
                 }
                 holder.setFollowersCount(item.getFollowersCount());
 
-//                if(item.getStorageReference()!=null && context!=null) {
-//                    holder.setImage(item.getStorageReference(), context);
-//                }
+                if(item.getStorageReference()!=null && context!=null) {
+                    holder.setImage(item.getStorageReference(), context);
+                }
             }
         });
         if(!isFollowing.get(position) && holder.follow.getText().equals("FOLLOWING")){

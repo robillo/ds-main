@@ -7,7 +7,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,6 +17,15 @@ import android.view.ViewGroup;
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.models.Guru;
 import com.example.sasuke.dailysuvichar.view.adapter.RVGuruAdapter;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
@@ -34,6 +42,10 @@ public class GurusFragment extends BaseFragment {
     private String YOGA_GURU = "Yoga Guru";
     private String PANDIT = "Pandit";
     private String ASTROLOGY_GURU = "Astrology Guru";
+    private DatabaseReference mDatabaseReference;
+    private StorageReference mStorageReference;
+    private static FirebaseUser mFirebaseUser;
+
 
     @BindView(R.id.recyclerview)
     public RecyclerView rv;
@@ -54,6 +66,11 @@ public class GurusFragment extends BaseFragment {
 
         setHasOptionsMenu(true);
 
+        mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        mStorageReference = FirebaseStorage.getInstance().getReference("profile").child("user").child("dp");
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference("gurus").child("official");
+
+
         staggeredGridLayoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
         gridLayoutManager = new GridLayoutManager(getActivity(), 3);
         rv.setLayoutManager(gridLayoutManager);
@@ -62,27 +79,46 @@ public class GurusFragment extends BaseFragment {
 
         mRvGuruAdapter = new RVGuruAdapter(getActivity(), guruList);
 
-        guruList.add(new Guru("Guru Robin", 721, ASTROLOGY_GURU));
-        guruList.add(new Guru("Shankar Ji", 210, ASTROLOGY_GURU));
-        guruList.add(new Guru("Baba Ramdev", 4324, YOGA_GURU));
-        guruList.add(new Guru("Baba Afsal", 251, MOTIVATION_GURU));
-        guruList.add(new Guru("Baba ABC", 321, YOGA_GURU));
-        guruList.add(new Guru("Guru Tagore", 11, AYURVEDA_GURU));
-        guruList.add(new Guru("Nafsar Guru", 110, PANDIT));
-        guruList.add(new Guru("Guru shiv", 9, MOTIVATION_GURU));
-        guruList.add(new Guru("Guru Kant", 72, AYURVEDA_GURU));
-        guruList.add(new Guru("Guru Narayan", 121, PANDIT));
+        mDatabaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    Guru guru = postSnapshot.getValue(Guru.class);
+                    guru.setStorageReference(mStorageReference.child(guru.getUid()));
+                    guruList.add(guru);
+//                    videoSnap.setStorageReference(mStorageReferenceVideo.child(postSnapshot.getKey()));
+                    mRvGuruAdapter.notifyDataSetChanged();
 
-        guruList.add(new Guru("Guru Robillo", 721, ASTROLOGY_GURU));
-        guruList.add(new Guru("Shanku Chandler", 210, ASTROLOGY_GURU));
-        guruList.add(new Guru("Baba Devram", 4324, YOGA_GURU));
-        guruList.add(new Guru("Baba Afsos", 251, MOTIVATION_GURU));
-        guruList.add(new Guru("Baba DEF", 321, YOGA_GURU));
-        guruList.add(new Guru("Guru Treeger", 11, AYURVEDA_GURU));
-        guruList.add(new Guru("Rachel Mata", 110, PANDIT));
-        guruList.add(new Guru("Guru Ross", 9, MOTIVATION_GURU));
-        guruList.add(new Guru("Guru Joey", 72, AYURVEDA_GURU));
-        guruList.add(new Guru("Guru Monica", 121, PANDIT));
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
+
+//        guruList.add(new Guru("Guru Robin", 721, ASTROLOGY_GURU));
+//        guruList.add(new Guru("Shankar Ji", 210, ASTROLOGY_GURU));
+//        guruList.add(new Guru("Baba Ramdev", 4324, YOGA_GURU));
+//        guruList.add(new Guru("Baba Afsal", 251, MOTIVATION_GURU));
+//        guruList.add(new Guru("Baba ABC", 321, YOGA_GURU));
+//        guruList.add(new Guru("Guru Tagore", 11, AYURVEDA_GURU));
+//        guruList.add(new Guru("Nafsar Guru", 110, PANDIT));
+//        guruList.add(new Guru("Guru shiv", 9, MOTIVATION_GURU));
+//        guruList.add(new Guru("Guru Kant", 72, AYURVEDA_GURU));
+//        guruList.add(new Guru("Guru Narayan", 121, PANDIT));
+//
+//        guruList.add(new Guru("Guru Robillo", 721, ASTROLOGY_GURU));
+//        guruList.add(new Guru("Shanku Chandler", 210, ASTROLOGY_GURU));
+//        guruList.add(new Guru("Baba Devram", 4324, YOGA_GURU));
+//        guruList.add(new Guru("Baba Afsos", 251, MOTIVATION_GURU));
+//        guruList.add(new Guru("Baba DEF", 321, YOGA_GURU));
+//        guruList.add(new Guru("Guru Treeger", 11, AYURVEDA_GURU));
+//        guruList.add(new Guru("Rachel Mata", 110, PANDIT));
+//        guruList.add(new Guru("Guru Ross", 9, MOTIVATION_GURU));
+//        guruList.add(new Guru("Guru Joey", 72, AYURVEDA_GURU));
+//        guruList.add(new Guru("Guru Monica", 121, PANDIT));
 
         rv.setAdapter(mRvGuruAdapter);
 
