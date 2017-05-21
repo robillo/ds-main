@@ -21,8 +21,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.utils.SharedPrefs;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -70,7 +73,6 @@ public class GuruDetailActivity extends BaseActivity{
         ButterKnife.bind(this);
 
         context = getApplicationContext();
-//        ViewTarget.setTagId(R.id.glide_tag);
 
 
         mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -82,7 +84,26 @@ public class GuruDetailActivity extends BaseActivity{
         uid = i.getStringExtra("uid");
 
         setFollowing(isFollowing);
+        if(dp!=null) {
+//            ViewTarget.setTagId(R.id.glide_tag);
 
+            Glide.with(GuruDetailActivity.this).
+                                using(new FirebaseImageLoader())
+                                .load(mStorageReference.child("dp").child(uid))
+                                .centerCrop()
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .into(dp);
+                    }
+        if(cover!=null) {
+//            ViewTarget.setTagId(R.id.glide_tag);
+
+                        Glide.with(GuruDetailActivity.this).
+                                using(new FirebaseImageLoader())
+                                .load(mStorageReference.child("cover").child(uid))
+                                .centerCrop()
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .into(cover);
+        }
         if(ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 5);
         }

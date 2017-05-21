@@ -23,7 +23,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:scaleType="centerCrop"
-                    android:tag="parallax=0.5"
                     android:background="@drawable/background"
                     android:id="@+id/cover"/>
 
@@ -47,7 +46,6 @@
                     android:layout_marginTop="160sp"
                     android:layout_gravity="center_horizontal"
                     android:background="@drawable/profile"
-                    android:tag="parallax=-0.2"
                     android:id="@+id/dp"/>
 
             </FrameLayout>
