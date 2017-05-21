@@ -7,7 +7,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,6 +17,15 @@ import android.view.ViewGroup;
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.models.Guru;
 import com.example.sasuke.dailysuvichar.view.adapter.RVGuruAdapter;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
@@ -34,6 +42,10 @@ public class GurusFragment extends BaseFragment {
     private String YOGA_GURU = "Yoga Guru";
     private String PANDIT = "Pandit";
     private String ASTROLOGY_GURU = "Astrology Guru";
+    private DatabaseReference mDatabaseReference;
+    private StorageReference mStorageReference;
+    private static FirebaseUser mFirebaseUser;
+
 
     @BindView(R.id.recyclerview)
     public RecyclerView rv;
@@ -54,6 +66,11 @@ public class GurusFragment extends BaseFragment {
 
         setHasOptionsMenu(true);
 
+        mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        mStorageReference = FirebaseStorage.getInstance().getReference();
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference("gurus").child("official");
+
+
         staggeredGridLayoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
         gridLayoutManager = new GridLayoutManager(getActivity(), 3);
         rv.setLayoutManager(gridLayoutManager);
@@ -61,6 +78,23 @@ public class GurusFragment extends BaseFragment {
         guruList = new ArrayList<>();
 
         mRvGuruAdapter = new RVGuruAdapter(getActivity(), guruList);
+
+        mDatabaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    Guru guru = postSnapshot.getValue(Guru.class);
+//                    videoSnap.setStorageReference(mStorageReferenceVideo.child(postSnapshot.getKey()));
+                    mRvGuruAdapter.notifyDataSetChanged();
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
 
         guruList.add(new Guru("Guru Robin", 721, ASTROLOGY_GURU));
         guruList.add(new Guru("Shankar Ji", 210, ASTROLOGY_GURU));
