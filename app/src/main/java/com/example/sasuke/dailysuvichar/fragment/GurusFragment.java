@@ -67,7 +67,7 @@ public class GurusFragment extends BaseFragment {
         setHasOptionsMenu(true);
 
         mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        mStorageReference = FirebaseStorage.getInstance().getReference();
+        mStorageReference = FirebaseStorage.getInstance().getReference("profile").child("user").child("dp");
         mDatabaseReference = FirebaseDatabase.getInstance().getReference("gurus").child("official");
 
 
@@ -84,6 +84,7 @@ public class GurusFragment extends BaseFragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Guru guru = postSnapshot.getValue(Guru.class);
+                    guru.setStorageReference(mStorageReference.child(guru.getUid()));
                     guruList.add(guru);
 //                    videoSnap.setStorageReference(mStorageReferenceVideo.child(postSnapshot.getKey()));
                     mRvGuruAdapter.notifyDataSetChanged();
