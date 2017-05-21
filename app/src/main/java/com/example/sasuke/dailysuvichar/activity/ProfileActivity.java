@@ -64,9 +64,11 @@ public class ProfileActivity extends BaseActivity {
     RESULT_LOAD_SPEC_ID = 8011;
     Uri dpPath, coverPath, govPath, specPath;
     private boolean[] check;
+    private String special = null;
     private String userTypeInput = null;
 
-
+    @BindView(R.id.specialization)
+    TextView specialization;
     @BindView(R.id.bio)
     TextView bio;
     @BindView(R.id.name)
@@ -618,6 +620,64 @@ public class ProfileActivity extends BaseActivity {
         return null;
     }
 
+    @OnClick(R.id.specialization)
+    public void setSpecialization(){
+        final String[] temp = new String[1];
+        new MaterialDialog.Builder(this)
+                .title("Set Your Specialization:")
+                .content("Spiritual Skill You Majorly Specialize In.")
+                .items(new String[]{"Astrology Guru", "Yoga Guru", "Pandit", "Motivation Guru", "Ayurveda Guru"})
+                .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
+                    @Override
+                    public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                        /**
+                         * If you use alwaysCallSingleChoiceCallback(), which is discussed below,
+                         * returning false here won't allow the newly selected radio button to actually be selected.
+                         **/
+                        switch (which){
+                            case 0:{
+                                temp[0] = "Astrology Guru";
+                                specialization.setText(temp[0]);
+                                special = temp[0];
+                                check[10] = true;
+                                break;
+                            }
+                            case 1:{
+                                temp[0] = "Yoga Guru";
+                                specialization.setText(temp[0]);
+                                special = temp[0];
+                                check[10] = true;
+                                break;
+                            }
+                            case 2:{
+                                temp[0] = "Pandit";
+                                specialization.setText(temp[0]);
+                                special = temp[0];
+                                check[10] = true;
+                                break;
+                            }
+                            case 3:{
+                                temp[0] = "Motivation Guru";
+                                specialization.setText(temp[0]);
+                                special = temp[0];
+                                check[10] = true;
+                                break;
+                            }
+                            case 4:{
+                                temp[0] = "Ayurveda Guru";
+                                specialization.setText(temp[0]);
+                                special = temp[0];
+                                check[10] = true;
+                                break;
+                            }
+                        }
+                        return true;
+                    }
+                })
+                .positiveText("Choose This")
+                .show();
+    }
+
     private DatePickerDialog.OnDateSetListener myDateListener = new
             DatePickerDialog.OnDateSetListener() {
                 @Override
@@ -633,7 +693,6 @@ public class ProfileActivity extends BaseActivity {
 
                 }
             };
-
 
     @OnClick(R.id.btnSave)
     public void save(){
@@ -737,6 +796,9 @@ public class ProfileActivity extends BaseActivity {
 //                mGurusDatabase.child(mFirebaseUser.getUid()).child("gender").setValue(genderDB);
                 mGurusDatabase.child(mFirebaseUser.getUid()).child("age").setValue(ageDB);
                 mGurusDatabase.child(mFirebaseUser.getUid()).child("uid").setValue(mFirebaseUser.getUid());
+                if(special!=null){
+                    mGurusDatabase.child(mFirebaseUser.getUid()).child("specialization").setValue(special);
+                }
 //                mGurusDatabase.child(mFirebaseUser.getUid()).child("govID").setValue(govDB);
             }
         }
