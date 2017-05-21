@@ -60,7 +60,7 @@
                 android:layout_margin="5sp"
                 android:layout_gravity="center_horizontal"
                 android:id="@+id/follow"
-                android:tag="parallax=-0.1"/>
+                android:tag="parallax=-0.5"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
