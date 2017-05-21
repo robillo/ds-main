@@ -93,6 +93,22 @@ public class Guru {
         this.specDB = specDB;
     }
 
+    public Guru(String name, String email, String bio, ArrayList<String> followers, String preferredLang, String photoUrl, String coverUrl, String DOB, String gender, int age, String govDB, String specDB, String specialization) {
+        this.name = name;
+        this.email = email;
+        this.bio = bio;
+        this.followers = followers;
+        this.preferredLang = preferredLang;
+        this.photoUrl = photoUrl;
+        this.coverUrl = coverUrl;
+        this.DOB = DOB;
+        this.gender = gender;
+        this.age = age;
+        this.govDB = govDB;
+        this.specDB = specDB;
+        this.specialization = specialization;
+    }
+
     public String getSpecialization() {
         return specialization;
     }
