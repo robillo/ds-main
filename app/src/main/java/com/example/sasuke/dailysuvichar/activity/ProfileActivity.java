@@ -554,17 +554,18 @@ public class ProfileActivity extends BaseActivity {
 
     @OnClick(R.id.age)
     public void setAge(){
+        final String[] temp = {null};
         new MaterialDialog.Builder(this)
                 .title("Set Your Age")
-                .inputType(InputType.TYPE_CLASS_NUMBER)
+                .inputType(InputType.TYPE_CLASS_TEXT)
                 .input("Enter your age here", "", new MaterialDialog.InputCallback() {
                     @Override
                     public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
                         age.setText(input);
+                        temp[0] = input.toString();
                     }
                 }).show();
-
-        if(Integer.valueOf(age.getText().toString())!=0) {
+        if(temp[0] !=null) {
             mUsersDatabase.child(mFirebaseUser.getUid()).child("age").setValue(age.getText());
         }
 

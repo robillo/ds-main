@@ -13,10 +13,6 @@ import com.facebook.FacebookSdk;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-/**
- * Created by Sasuke on 4/17/2017.
- */
-
 public class DailySuvicharApp extends Application {
 
     private static Context sContext;
