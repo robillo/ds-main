@@ -208,6 +208,19 @@
                 android:padding="20dp"
                 android:text="Age: 20"
                 android:id="@+id/age"/>
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="#fff"
+                android:clickable="true"
+                android:elevation="4dp"
+                android:textColor="@color/black"
+                android:padding="20dp"
+                android:text="Specialization"
+                android:id="@+id/specialization"/>
+
         </LinearLayout>
 
         <Button

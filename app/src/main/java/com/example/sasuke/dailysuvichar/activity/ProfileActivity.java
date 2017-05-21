@@ -63,6 +63,7 @@ public class ProfileActivity extends BaseActivity {
     private static final int RESULT_LOAD_IMAGE = 8008, RESULT_LOAD_COVER = 8009, RESULT_LOAD_GOV_ID = 8010,
     RESULT_LOAD_SPEC_ID = 8011;
     Uri dpPath, coverPath, govPath, specPath;
+    private boolean[] check;
 
 
     @BindView(R.id.bio)
@@ -95,6 +96,10 @@ public class ProfileActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         code = getIntent().getIntExtra("fromLogin", 0);
+
+        check = new boolean[]{
+                false, false, false, false, false, false, false, false, false, false, false
+        };
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
