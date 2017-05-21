@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
@@ -30,6 +31,8 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 
 import butterknife.BindView;
+import me.drakeet.multitype.Items;
+import me.drakeet.multitype.MultiTypeAdapter;
 
 public class GurusFragment extends BaseFragment {
 
@@ -45,6 +48,9 @@ public class GurusFragment extends BaseFragment {
     private DatabaseReference mDatabaseReference;
     private StorageReference mStorageReference;
     private FirebaseUser mFirebaseUser;
+    private LinearLayoutManager mLayoutManager;
+    Items items;
+    private MultiTypeAdapter mAdapter;
 
 
     @BindView(R.id.recyclerview)

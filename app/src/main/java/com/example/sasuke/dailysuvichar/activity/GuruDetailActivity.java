@@ -13,8 +13,10 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -24,8 +26,17 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.sasuke.dailysuvichar.R;
+import com.example.sasuke.dailysuvichar.models.CustomVideo;
+import com.example.sasuke.dailysuvichar.models.Photo;
+import com.example.sasuke.dailysuvichar.models.Status;
+import com.example.sasuke.dailysuvichar.models.Video;
 import com.example.sasuke.dailysuvichar.utils.SharedPrefs;
+import com.example.sasuke.dailysuvichar.view.adapter.CustomVideoAdapter;
+import com.example.sasuke.dailysuvichar.view.adapter.PhotoItemAdapter;
+import com.example.sasuke.dailysuvichar.view.adapter.StatusItemAdapter;
+import com.example.sasuke.dailysuvichar.view.adapter.VideoItemAdapter;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -39,14 +50,17 @@ import com.google.firebase.storage.StorageReference;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import me.drakeet.multitype.Items;
+import me.drakeet.multitype.MultiTypeAdapter;
 
 public class GuruDetailActivity extends BaseActivity{
 
     private static final int RESULT_LOAD_IMAGE = 8008, RESULT_LOAD_COVER = 8009;
+    private static final String TAG = "GURUDETAIL";
     private Context context;
 
     @BindView(R.id.recyclerview)
-    RecyclerView recyclerView;
+    RecyclerView mRvHome;
     @BindView(R.id.name)
     TextView name;
     @BindView(R.id.dp)
@@ -61,9 +75,13 @@ public class GuruDetailActivity extends BaseActivity{
     Button follow;
     private boolean isFollowing = false;
     private String uid;
-    private DatabaseReference mDatabaseReference;
+    private DatabaseReference mDatabaseReference, mDatabaseReferencePosts;
     private StorageReference mStorageReference;
     private FirebaseUser mFirebaseUser;
+    private LinearLayoutManager mLayoutManager;
+    Items items;
+    private MultiTypeAdapter mAdapter;
+    CustomVideoAdapter customVideoAdapter;
 
 
     @Override
@@ -104,6 +122,33 @@ public class GuruDetailActivity extends BaseActivity{
                                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                                 .into(cover);
         }
+
+        mLayoutManager = new LinearLayoutManager(this);
+        mLayoutManager.setItemPrefetchEnabled(true);
+        mLayoutManager.setInitialPrefetchItemCount(10);
+        mRvHome.setLayoutManager(mLayoutManager);
+        mAdapter = new MultiTypeAdapter();
+        mAdapter.register(Status.class, new StatusItemAdapter());
+        mAdapter.register(Photo.class, new PhotoItemAdapter());
+        mAdapter.register(Video.class, new VideoItemAdapter(this));
+        mAdapter.register(CustomVideo.class, new CustomVideoAdapter());
+        mRvHome.setAdapter(mAdapter);
+
+        customVideoAdapter = new CustomVideoAdapter();
+        mRvHome.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                customVideoAdapter.releaseVideo();
+            }
+        });
+
+        items = new Items();
+
+        fetchStatusFromFirebase();
+        fetchPhotosFromFirebase();
+        fetchVideosFromFirebase();
+
         if(ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 5);
         }
@@ -286,4 +331,113 @@ public class GuruDetailActivity extends BaseActivity{
             follow.setBackgroundColor(getResources().getColor(R.color.colorAccent));
         }
     }
+
+    private void fetchPhotosFromFirebase() {
+
+        if (uid != null) {
+            mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("users").child(uid).child("posts");
+            mStorageReference = FirebaseStorage.getInstance().getReference("posts").child("images");
+
+            mDatabaseReferencePosts.child("photo").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        Photo photoSnap = postSnapshot.getValue(Photo.class);
+                        photoSnap.setStorageReference(mStorageReference.child(postSnapshot.getKey()));
+
+                        items.add(photoSnap);
+                        mAdapter.notifyDataSetChanged();
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.d(TAG, "onCancelled: " + databaseError.getMessage());
+                }
+            });
+
+
+            Log.d(TAG, "fetchStatusFromFirebase: " + items.size());
+            mAdapter.setItems(items);
+            mAdapter.notifyDataSetChanged();
+        }
+    }
+
+    private void fetchStatusFromFirebase() {
+
+        if (uid != null) {
+
+            mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("users").child(uid).child("posts");
+            mDatabaseReferencePosts.child("status").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        Status status = postSnapshot.getValue(Status.class);
+                        items.add(status);
+                        mAdapter.notifyDataSetChanged();
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.d(TAG, "onCancelled: " + databaseError.getMessage());
+                }
+            });
+
+
+            Log.d(TAG, "fetchStatusFromFirebase: " + items.size());
+            mAdapter.setItems(items);
+            mAdapter.notifyDataSetChanged();
+        }
+    }
+
+    private void fetchVideosFromFirebase() {
+
+
+        mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("users").child(uid).child("posts");
+            final StorageReference mStorageReferenceVideo = FirebaseStorage.getInstance().getReference("posts").child("videos");
+
+                mDatabaseReferencePosts.child("video").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                        for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                            Log.d(TAG, "onDataChange: HOMEFRAGVIDEO 2 "+mStorageReferenceVideo);
+                            final CustomVideo videoSnap = postSnapshot.getValue(CustomVideo.class);
+                            videoSnap.setStorageReference(mStorageReferenceVideo.child(postSnapshot.getKey()));
+                            mStorageReferenceVideo.child(postSnapshot.getKey()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    videoSnap.setVideoURI(uri.toString());
+                                }
+                            });
+                            items.add(videoSnap);
+                            }
+                            mAdapter.notifyDataSetChanged();
+                        }
+
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.d(TAG, "onCancelled: " + databaseError.getMessage());
+                    }
+                });
+        mAdapter.setItems(items);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onPause() {
+
+        if (customVideoAdapter != null) {
+            customVideoAdapter.releaseVideo();
+        }
+
+        super.onPause();
+    }
+
+
 }
