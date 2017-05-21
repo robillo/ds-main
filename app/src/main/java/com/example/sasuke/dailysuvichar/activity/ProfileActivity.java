@@ -64,6 +64,7 @@ public class ProfileActivity extends BaseActivity {
     RESULT_LOAD_SPEC_ID = 8011;
     Uri dpPath, coverPath, govPath, specPath;
     private boolean[] check;
+    private String userTypeInput = null;
 
 
     @BindView(R.id.bio)
@@ -98,7 +99,7 @@ public class ProfileActivity extends BaseActivity {
         code = getIntent().getIntExtra("fromLogin", 0);
 
         check = new boolean[]{
-                false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false
         };
 
         mFirebaseAuth = FirebaseAuth.getInstance();
@@ -255,6 +256,7 @@ public class ProfileActivity extends BaseActivity {
                         .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                check[0] = true;
                                 Toast.makeText(ProfileActivity.this, "Changes Saved! ", Toast.LENGTH_SHORT).show();
                             }
                         })
@@ -304,6 +306,7 @@ public class ProfileActivity extends BaseActivity {
                         .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                check[1] = true;
                                 Toast.makeText(ProfileActivity.this, "Changes Saved! ", Toast.LENGTH_SHORT).show();
                             }
                         })
@@ -350,6 +353,7 @@ public class ProfileActivity extends BaseActivity {
                         .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                check[11] = true;
                                 Toast.makeText(ProfileActivity.this, "Changes Saved! ", Toast.LENGTH_SHORT).show();
                             }
                         })
@@ -393,6 +397,7 @@ public class ProfileActivity extends BaseActivity {
                         .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                check[12] = true;
                                 Toast.makeText(ProfileActivity.this, "Changes Saved! ", Toast.LENGTH_SHORT).show();
                             }
                         })
@@ -427,6 +432,7 @@ public class ProfileActivity extends BaseActivity {
                 }).show();
         if(name.getText()!=null){
             mUsersDatabase.child(mFirebaseUser.getUid()).child("name").setValue(name.getText());
+            check[3] = true;
         }
     }
 
@@ -444,6 +450,7 @@ public class ProfileActivity extends BaseActivity {
                 }).show();
         if(bio.getText()!=null){
             mUsersDatabase.child(mFirebaseUser.getUid()).child("bio").setValue(bio.getText());
+            check[4] = true;
         }
     }
 
@@ -461,6 +468,7 @@ public class ProfileActivity extends BaseActivity {
                 }).show();
         if(userName.getText()!=null){
             mUsersDatabase.child(mFirebaseUser.getUid()).child("userName").setValue(userName.getText());
+            check[2] = true;
         }
     }
 
@@ -490,6 +498,7 @@ public class ProfileActivity extends BaseActivity {
                 .show();
         if(language.getText()!=null){
             mUsersDatabase.child(mFirebaseUser.getUid()).child("preferredLang").setValue(language.getText());
+            check[5] = true;
         }
     }
 
@@ -506,6 +515,7 @@ public class ProfileActivity extends BaseActivity {
                                 userType.setText("STANDARD");
                                 if(mLinearLayout.getVisibility()== View.VISIBLE){
                                     mLinearLayout.setVisibility(View.GONE);
+                                    userTypeInput = "STANDARD";
                                 }
                                 break;
                             }
@@ -513,6 +523,7 @@ public class ProfileActivity extends BaseActivity {
                                 userType.setText("GURU");
                                 if(mLinearLayout.getVisibility()== View.GONE){
                                     mLinearLayout.setVisibility(View.VISIBLE);
+                                    userTypeInput = "GURU";
                                 }
                                 break;
                             }
@@ -522,6 +533,10 @@ public class ProfileActivity extends BaseActivity {
                 })
                 .positiveText("Choose This")
                 .show();
+        if(userType.getText()!=null){
+            check[6] = true;
+            mUsersDatabase.child(mFirebaseUser.getUid()).child("preferredLang").setValue(language.getText());
+        }
     }
 
     @OnClick(R.id.dob)
@@ -554,6 +569,7 @@ public class ProfileActivity extends BaseActivity {
                 .show();
         if(gender.getText()!=null){
             mUsersDatabase.child(mFirebaseUser.getUid()).child("gender").setValue(gender.getText());
+            check[8] = true;
         }
     }
 
@@ -572,6 +588,7 @@ public class ProfileActivity extends BaseActivity {
                 }).show();
         if(temp[0] !=null) {
             mUsersDatabase.child(mFirebaseUser.getUid()).child("age").setValue(age.getText());
+            check[9] = true;
         }
 
     }
@@ -612,6 +629,7 @@ public class ProfileActivity extends BaseActivity {
                     DOB.setText(day + "/" + month + "/" + year);
 
                     mUsersDatabase.child(mFirebaseUser.getUid()).child("dob").setValue(DOB.getText());
+                    check[7] = true;
 
                 }
             };
@@ -622,11 +640,36 @@ public class ProfileActivity extends BaseActivity {
         writetoFirebase();
         Toast.makeText(this, "Changes Saved Successfully", Toast.LENGTH_SHORT).show();
 
+        if(userTypeInput!=null){
+            if(userType.getText().toString().equals("STANDARD")){
+                int flag = 1;
+                for(int i=0;i<=10; i++){
+                    if(!check[i]){
+                        flag = 0;
+                    }
+                }
+                if(flag == 0){
+                    Toast.makeText(getApplicationContext(), "Please Enter Full Details", Toast.LENGTH_SHORT).show();
+                }
+            }
+            else if(userType.getText().toString().equals("GURU")){
+                int flag = 1;
+                for(int i=0;i<=12; i++){
+                    if(!check[i]){
+                        flag = 0;
+                    }
+                }
+                if(flag == 0){
+                    Toast.makeText(getApplicationContext(), "Please Enter Full Details", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+
         if(code == 1){
             startActivity(new Intent(this, ChooseInterestActivity.class));
         }
         SharedPrefs.setUserType(userType.getText().toString());
-//        startActivity(new Intent(this, HomeActivity.class));
+
         finish();
     }
     @Override
