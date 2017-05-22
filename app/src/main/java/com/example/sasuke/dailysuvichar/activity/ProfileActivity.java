@@ -133,7 +133,9 @@ public class ProfileActivity extends BaseActivity {
         userProfilePic = (ImageButton) findViewById(R.id.user_profile_photo);
         userCoverPic = (ImageButton) findViewById(R.id.header_cover_image);
 
-        fetchData();
+        if(code==0) {
+            fetchData();
+        }
 
         userCoverPic.setOnClickListener(new View.OnClickListener() {
             @Override
