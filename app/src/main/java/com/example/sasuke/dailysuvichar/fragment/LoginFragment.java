@@ -15,7 +15,6 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.sasuke.dailysuvichar.R;
-import com.example.sasuke.dailysuvichar.activity.ChooseInterestActivity;
 import com.example.sasuke.dailysuvichar.activity.ProfileActivity;
 import com.example.sasuke.dailysuvichar.models.UserAuth;
 import com.example.sasuke.dailysuvichar.utils.SharedPrefs;
