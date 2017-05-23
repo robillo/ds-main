@@ -66,7 +66,7 @@
 
     <!--Choose Interest Activity -->
     <string name="choose_interest">रुचि चुनें</string>
-    <string name="please_choose_at_least_three_interests">कृपया कम से कम 3 रुचियां चुनें:</string>
+    <string name="please_choose_at_least_two_interests">कृपया कम से कम 2 रुचियां चुनें:</string>
 
     <!-- Sub Interest Activity -->
     <string name="choose_more_interest">Choose more interest</string>
