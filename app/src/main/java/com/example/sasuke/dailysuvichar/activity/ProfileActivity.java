@@ -478,6 +478,7 @@ public class ProfileActivity extends BaseActivity {
 
     @OnClick(R.id.name)
     public void setName(){
+        final Boolean[] b = {false};
         new MaterialDialog.Builder(this)
                 .title("Set Your Name")
                 .content("First Name + Last Name")
@@ -486,9 +487,10 @@ public class ProfileActivity extends BaseActivity {
                     @Override
                     public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
                         name.setText(input);
+                        b[0] =true;
                     }
                 }).show();
-        if(name.getText()!=null){
+        if(name.getText()!=null&&b[0]){
             mUsersDatabase.child(mFirebaseUser.getUid()).child("name").setValue(name.getText());
             check[3] = true;
         }
@@ -496,6 +498,7 @@ public class ProfileActivity extends BaseActivity {
 
     @OnClick(R.id.bio)
     public void setBio(){
+        final Boolean[] b = {false};
         new MaterialDialog.Builder(this)
                 .title("Set Your Bio")
                 .content("A Short Descripton About Yourself.")
@@ -504,9 +507,10 @@ public class ProfileActivity extends BaseActivity {
                     @Override
                     public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
                         bio.setText("Bio: " + input);
+                        b[0] =true;
                     }
                 }).show();
-        if(bio.getText()!=null){
+        if(bio.getText()!=null&&b[0]){
             mUsersDatabase.child(mFirebaseUser.getUid()).child("bio").setValue(bio.getText());
             check[4] = true;
         }
