@@ -64,7 +64,7 @@
                 android:layout_marginTop="20dp"
                 android:background="?attr/selectableItemBackground"
                 android:text="@string/register"
-                android:textColor="@color/white" />
+                android:textColor="@color/blue_dark" />
 
 
             <TextView
@@ -85,7 +85,7 @@
                 android:layout_centerHorizontal="true"
                 android:background="?attr/selectableItemBackground"
                 android:text="@string/login"
-                android:textColor="@color/white" />
+                android:textColor="@color/blue_dark" />
 
         </RelativeLayout>
     </ScrollView>

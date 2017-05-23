@@ -63,7 +63,7 @@
                     android:layout_weight="1"
                     android:background="?attr/selectableItemBackground"
                     android:text="@string/login"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/blue_dark" />
 
                 <Button
                     android:id="@+id/btn_register"
@@ -74,7 +74,7 @@
                     android:layout_weight="1"
                     android:background="?attr/selectableItemBackground"
                     android:text="@string/register"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/blue_dark" />
 
             </LinearLayout>
 
