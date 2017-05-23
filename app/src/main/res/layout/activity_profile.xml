@@ -11,8 +11,7 @@
             android:id="@+id/header_cover_image"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:src="@drawable/logo_full_transparent"
-            android:scaleType="fitCenter"/>
+            android:background="@drawable/background" />
 
         <ImageButton
             android:id="@+id/user_profile_photo"
@@ -198,17 +197,7 @@
                 android:text="Gender: Not Selected"
                 android:id="@+id/gender"/>
 
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:background="#fff"
-                android:clickable="true"
-                android:elevation="4dp"
-                android:textColor="@color/black"
-                android:padding="20dp"
-                android:text="Age: Not Selected"
-                android:id="@+id/age"/>
+
 
             <TextView
                 android:layout_width="fill_parent"
@@ -219,7 +208,7 @@
                 android:elevation="4dp"
                 android:textColor="@color/black"
                 android:padding="20dp"
-                android:text="Specialization: Not Selected"
+                android:text="Specialization (Guru): Not Selected"
                 android:visibility="gone"
                 android:id="@+id/specialization"/>
 

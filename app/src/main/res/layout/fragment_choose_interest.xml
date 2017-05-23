@@ -55,7 +55,7 @@
         android:layout_marginTop="30dp"
         android:gravity="center"
         android:padding="8dp"
-        android:text="@string/please_choose_at_least_three_interests"
+        android:text="@string/please_choose_at_least_two_interests"
         android:textColor="@color/black"
         android:textSize="@dimen/font_large"
         android:textStyle="italic" />

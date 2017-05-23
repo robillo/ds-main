@@ -66,6 +66,7 @@ public class ProfileActivity extends BaseActivity {
     private boolean[] check;
     private String special = null;
     private String userTypeInput = null;
+    private int age;
 
     @BindView(R.id.specialization)
     TextView specialization;
@@ -83,8 +84,6 @@ public class ProfileActivity extends BaseActivity {
     TextView DOB;
     @BindView(R.id.gender)
     TextView gender;
-    @BindView(R.id.age)
-    TextView age;
     @BindView(R.id.invisible)
     LinearLayout mLinearLayout;
     @BindView(R.id.govID)
@@ -199,10 +198,6 @@ public class ProfileActivity extends BaseActivity {
                 if(dataSnapshot.child("gender").getValue()!=null) {
                     gender.setText(dataSnapshot.child("gender").getValue().toString());
                 }
-                if(dataSnapshot.child("age").getValue()!=null) {
-                    age.setText(String.valueOf(dataSnapshot.child("age").getValue()));
-                }
-
                 if(dataSnapshot.child("preferredLang").getValue()!=null) {
                     language.setText(dataSnapshot.child("preferredLang").getValue().toString());
                 }
@@ -598,24 +593,37 @@ public class ProfileActivity extends BaseActivity {
         }
     }
 
-    @OnClick(R.id.age)
-    public void setAge(){
-        final String[] temp = {null};
-        new MaterialDialog.Builder(this)
-                .title("Set Your Age")
-                .inputType(InputType.TYPE_CLASS_TEXT)
-                .input("Enter your age here", "", new MaterialDialog.InputCallback() {
-                    @Override
-                    public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
-                        age.setText(input);
-                        temp[0] = input.toString();
-                    }
-                }).show();
-        if(temp[0] !=null) {
-            mUsersDatabase.child(mFirebaseUser.getUid()).child("age").setValue(age.getText());
-            check[9] = true;
-        }
+    public int setAge(int day2, int month2, int year2){
+//        final String[] temp = {null};
+//        new MaterialDialog.Builder(this)
+//                .title("Set Your Age")
+//                .inputType(InputType.TYPE_CLASS_TEXT)
+//                .input("Enter your age here", "", new MaterialDialog.InputCallback() {
+//                    @Override
+//                    public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
+//                        age.setText(input);
+//                        temp[0] = input.toString();
+//                    }
+//                }).show();
+//        if(temp[0] !=null) {
+//            mUsersDatabase.child(mFirebaseUser.getUid()).child("age").setValue(age.getText());
+//            check[9] = true;
+//        }
+//
+        Calendar now = Calendar.getInstance();
 
+        int year1 = now.get(Calendar.YEAR);
+        int age = year1 - year2;
+        int month1 = now.get(Calendar.MONTH);
+        if (month2 > month1) {
+            age--;
+        } else if (month1 == month2) {
+            int day1 = now.get(Calendar.DAY_OF_MONTH);
+            if (day2 > day1) {
+                age--;
+            }
+        }
+        return age;
     }
 
     @OnClick(R.id.govID)
@@ -709,6 +717,7 @@ public class ProfileActivity extends BaseActivity {
                     year = arg1;
                     month = arg2+1;
                     day = arg3;
+                    age = setAge(day,month,year);
                     DOB.setText(day + "/" + month + "/" + year);
 
                     mUsersDatabase.child(mFirebaseUser.getUid()).child("dob").setValue(DOB.getText());
@@ -767,8 +776,8 @@ public class ProfileActivity extends BaseActivity {
         if(name!=null && name.getText().length()>0){
             nameDB = name.getText().toString();
         }
-        if(age!=null && age.getText().length()>0){
-            ageDB = Integer.valueOf(age.getText().toString());
+        if(age!=0){
+            ageDB = age;
         }
         if(language!=null && language.getText().length()>0){
             langDB = language.getText().toString();
