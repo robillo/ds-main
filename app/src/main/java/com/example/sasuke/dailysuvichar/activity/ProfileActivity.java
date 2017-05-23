@@ -162,7 +162,8 @@ public class ProfileActivity extends BaseActivity {
     }
 
     private void loadDP(String token){
-        String url = "https://graph.facebook.com/me?fields=cover&access_token=" + token;
+        String url = "https://graph.facebook.com/me/picture?type=large&method=GET&access_token=" + token;
+        Log.e("URL", url);
         Glide.with(this)
                 .load(url)
                 .fitCenter()
@@ -171,6 +172,7 @@ public class ProfileActivity extends BaseActivity {
 
     private void loadCOVER(String token){
         String url = "https://graph.facebook.com/me?fields=cover&access_token=" + token;
+        Log.e("URL", url);
         Glide.with(this)
                 .load(url)
                 .fitCenter()
