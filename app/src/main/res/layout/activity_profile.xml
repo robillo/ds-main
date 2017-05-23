@@ -11,7 +11,8 @@
             android:id="@+id/header_cover_image"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:background="@drawable/background" />
+            android:src="@drawable/logo_full_transparent"
+            android:scaleType="fitCenter"/>
 
         <ImageButton
             android:id="@+id/user_profile_photo"
@@ -22,8 +23,8 @@
             android:layout_marginTop="-60dp"
             android:background="@drawable/profile_circular"
             android:elevation="5dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/profile" />
+            android:scaleType="fitCenter"
+            android:src="@drawable/logo"/>
 
         <RelativeLayout
             android:id="@+id/profile_layout"
@@ -51,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="76dp"
-                android:text="Username"
+                android:text="Username: Not Selected"
                 android:textColor="#fff"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -61,7 +62,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:text="(Full Name)"
+                android:text="(Full Name: Not Selected)"
                 android:layout_margin="4sp"
                 android:textColor="#fff"
                 android:layout_below="@id/user_name"
@@ -75,7 +76,7 @@
                 android:layout_below="@+id/name"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="12dp"
-                android:text="Short Description/Bio."
+                android:text="Short Description/Bio. : Not Selected"
                 android:textColor="#fff"
                 android:textSize="14sp" />
         </RelativeLayout>
@@ -97,7 +98,7 @@
                 android:clickable="true"
                 android:elevation="4dp"
                 android:padding="20dp"
-                android:text="Language: English (En)"
+                android:text="Language: Not Selelcted"
                 android:id="@+id/lang"/>
 
             <TextView
@@ -111,7 +112,7 @@
                 android:clickable="true"
                 android:elevation="4dp"
                 android:padding="20dp"
-                android:text="User Type: Standard"
+                android:text="User Type: Not Selected"
                 android:id="@+id/user_type"/>
 
             <LinearLayout
@@ -180,7 +181,7 @@
                 android:elevation="4dp"
                 android:textColor="@color/black"
                 android:padding="20dp"
-                android:text="Date Of Birth: Fri, 25 0ct 1996"
+                android:text="Date Of Birth: Not Selected"
                 android:id="@+id/dob"/>
 
             <TextView
@@ -194,7 +195,7 @@
                 android:elevation="4dp"
                 android:textColor="@color/black"
                 android:padding="20dp"
-                android:text="Gender: Male"
+                android:text="Gender: Not Selected"
                 android:id="@+id/gender"/>
 
             <TextView
@@ -206,7 +207,7 @@
                 android:elevation="4dp"
                 android:textColor="@color/black"
                 android:padding="20dp"
-                android:text="Age: 20"
+                android:text="Age: Not Selected"
                 android:id="@+id/age"/>
 
             <TextView
@@ -218,7 +219,8 @@
                 android:elevation="4dp"
                 android:textColor="@color/black"
                 android:padding="20dp"
-                android:text="Specialization"
+                android:text="Specialization: Not Selected"
+                android:visibility="gone"
                 android:id="@+id/specialization"/>
 
         </LinearLayout>
@@ -229,11 +231,11 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
-            android:background="@color/transparentBlue"
+            android:background="@color/black"
             android:fontFamily="sans-serif-condensed"
             android:textStyle="bold"
             android:text="SAVE"
-            android:textColor="#17ffb9"
+            android:textColor="@color/white"
             android:textSize="20dp" />
     </RelativeLayout>
 </ScrollView>

@@ -519,6 +519,7 @@ public class ProfileActivity extends BaseActivity {
                                 userType.setText("STANDARD");
                                 if(mLinearLayout.getVisibility()== View.VISIBLE){
                                     mLinearLayout.setVisibility(View.GONE);
+                                    specialization.setVisibility(View.GONE);
                                     userTypeInput = "STANDARD";
                                 }
                                 break;
@@ -527,6 +528,7 @@ public class ProfileActivity extends BaseActivity {
                                 userType.setText("GURU");
                                 if(mLinearLayout.getVisibility()== View.GONE){
                                     mLinearLayout.setVisibility(View.VISIBLE);
+                                    specialization.setVisibility(View.VISIBLE);
                                     userTypeInput = "GURU";
                                 }
                                 break;
