@@ -232,6 +232,7 @@ public class LoginFragment extends BaseFragment implements GoogleApiClient.OnCon
 //            // Pass the activity result back to the Facebook SDK
 //            callbackManager.onActivityResult(requestCode, resultCode, data);
 //        }
+        callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
 //    private void firebaseAuthWithGoogle(final GoogleSignInAccount acct) {
