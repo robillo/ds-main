@@ -133,6 +133,9 @@ public class ProfileActivity extends BaseActivity {
         userProfilePic = (ImageButton) findViewById(R.id.user_profile_photo);
         userCoverPic = (ImageButton) findViewById(R.id.header_cover_image);
 
+        loadDP(SharedPrefs.getFacebookToken());
+        loadCOVER(SharedPrefs.getFacebookToken());
+
         if(code==0) {
             fetchData();
         }
@@ -157,6 +160,22 @@ public class ProfileActivity extends BaseActivity {
                 startActivityForResult(i, RESULT_LOAD_IMAGE);
             }
         });
+    }
+
+    private void loadDP(String token){
+        String url = "https://graph.facebook.com/me?fields=cover&access_token=" + token;
+        Glide.with(this)
+                .load(url)
+                .fitCenter()
+                .into(userProfilePic);
+    }
+
+    private void loadCOVER(String token){
+        String url = "https://graph.facebook.com/me?fields=cover&access_token=" + token;
+        Glide.with(this)
+                .load(url)
+                .fitCenter()
+                .into(userCoverPic);
     }
 
     private void fetchData() {

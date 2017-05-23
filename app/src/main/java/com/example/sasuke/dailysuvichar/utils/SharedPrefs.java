@@ -8,9 +8,20 @@ import com.example.sasuke.dailysuvichar.DailySuvicharApp;
 public class SharedPrefs {
 
     private static final String LOGIN_TOKEN = "login_token";
+    private static final String FACEBOOK_TOKEN = "facebook_token";
     private static final String USER_TYPE = "STANDARD";
 
     private SharedPrefs() {
+    }
+
+    public static String getFacebookToken() {
+        return FACEBOOK_TOKEN;
+    }
+
+    public static void setFacebookToken(String token){
+        SharedPreferences.Editor editor = getPrefrences().edit();
+        editor.putString(FACEBOOK_TOKEN, token);
+        editor.apply();
     }
 
     private static SharedPreferences getPrefrences() {

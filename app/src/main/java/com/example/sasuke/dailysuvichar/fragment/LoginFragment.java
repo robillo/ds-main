@@ -195,6 +195,8 @@ public class LoginFragment extends BaseFragment implements GoogleApiClient.OnCon
         facebookSignIn.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
+                Log.e("FID", loginResult.getAccessToken().getToken());
+                SharedPrefs.setFacebookToken(loginResult.getAccessToken().getToken());
                 showDialog("", getResources().getString(R.string.please_wait));
                 handleFacebookAccessToken(loginResult.getAccessToken());
             }
