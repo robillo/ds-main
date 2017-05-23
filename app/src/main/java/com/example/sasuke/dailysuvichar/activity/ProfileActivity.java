@@ -256,7 +256,7 @@ public class ProfileActivity extends BaseActivity {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                 check[0] = true;
-                                Toast.makeText(ProfileActivity.this, "Changes Saved! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ProfileActivity.this, "File Uploaded! ", Toast.LENGTH_SHORT).show();
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
@@ -306,7 +306,7 @@ public class ProfileActivity extends BaseActivity {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                 check[1] = true;
-                                Toast.makeText(ProfileActivity.this, "Changes Saved! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ProfileActivity.this, "File Uploaded! ", Toast.LENGTH_SHORT).show();
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
@@ -353,7 +353,7 @@ public class ProfileActivity extends BaseActivity {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                 check[11] = true;
-                                Toast.makeText(ProfileActivity.this, "Changes Saved! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ProfileActivity.this, "File Uploaded! ", Toast.LENGTH_SHORT).show();
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
@@ -397,7 +397,7 @@ public class ProfileActivity extends BaseActivity {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                 check[12] = true;
-                                Toast.makeText(ProfileActivity.this, "Changes Saved! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ProfileActivity.this, "File Uploaded! ", Toast.LENGTH_SHORT).show();
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
@@ -710,9 +710,8 @@ public class ProfileActivity extends BaseActivity {
     @OnClick(R.id.btnSave)
     public void save(){
         writetoFirebase();
-        Toast.makeText(this, "Changes Saved Successfully", Toast.LENGTH_SHORT).show();
 
-        if(userTypeInput!=null){
+        if(userTypeInput!=null &&code==0){
             if(userType.getText().toString().equals("STANDARD")){
                 int flag = 1;
                 for(int i=0;i<=10; i++){
@@ -722,6 +721,8 @@ public class ProfileActivity extends BaseActivity {
                 }
                 if(flag == 0){
                     Toast.makeText(getApplicationContext(), "Please Enter Full Details", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(this, "Changes Saved Successfully", Toast.LENGTH_SHORT).show();
                 }
             }
             else if(userType.getText().toString().equals("GURU")){
@@ -733,12 +734,47 @@ public class ProfileActivity extends BaseActivity {
                 }
                 if(flag == 0){
                     Toast.makeText(getApplicationContext(), "Please Enter Full Details", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(this, "Changes Saved Successfully", Toast.LENGTH_SHORT).show();
                 }
             }
         }
 
         if(code == 1){
-            startActivity(new Intent(this, ChooseInterestActivity.class));
+
+            if(userTypeInput!=null) {
+                if(userType.getText().toString().equals("STANDARD")){
+                    int flag = 1;
+                    for(int i=0;i<=10; i++){
+                        if(!check[i]){
+                            flag = 0;
+                        }
+                    }
+                    if(flag == 0){
+                        Toast.makeText(getApplicationContext(), "Please Enter Full Details", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    startActivity(new Intent(this, ChooseInterestActivity.class));
+                    Toast.makeText(this, "Profile updated", Toast.LENGTH_SHORT).show();
+                }
+                else if (userType.getText().toString().equals("GURU")) {
+                    int flag = 1;
+                    for (int i = 0; i <= 12; i++) {
+                        if (!check[i]) {
+                            flag = 0;
+                        }
+                    }
+                    if (flag == 0) {
+                        Toast.makeText(getApplicationContext(), "Please Enter Full Details", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    startActivity(new Intent(this, ChooseInterestActivity.class));
+                    Toast.makeText(this, "Profile updated", Toast.LENGTH_SHORT).show();
+                }
+            }else{
+                Toast.makeText(getApplicationContext(), "Please Enter Full Details", Toast.LENGTH_SHORT).show();
+                return;
+            }
         }
         SharedPrefs.setUserType(userType.getText().toString());
 
@@ -796,7 +832,7 @@ public class ProfileActivity extends BaseActivity {
         }
         else {
             if(govPath==null || specPath==null){
-                Toast.makeText(this, "Please upload documents to get verified as a Guru", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "Please upload documents to get verified as a Guru", Toast.LENGTH_SHORT).show();
             }else {
                 Guru user = new Guru(nameDB, mFirebaseUser.getEmail(), bioDB, new ArrayList<String>(), langDB, dpPathDB, coverPathDB, dobDB, genderDB, ageDB, govDB, specDB, special);
                 mGurusDatabase.child(mFirebaseUser.getUid()).child("name").setValue(nameDB);
