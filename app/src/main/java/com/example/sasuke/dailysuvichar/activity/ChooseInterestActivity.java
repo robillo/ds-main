@@ -31,4 +31,9 @@ public class ChooseInterestActivity extends SingleFragmentActivity {
     public static Intent newIntent(Context context) {
         return new Intent(context, ChooseInterestActivity.class);
     }
+
+    @Override
+    public void onBackPressed() {
+
+    }
 }

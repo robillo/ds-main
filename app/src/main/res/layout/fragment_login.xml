@@ -97,20 +97,11 @@
                 android:text="OR"
                 android:textSize="15sp" />
 
-            <com.google.android.gms.common.SignInButton
-                android:id="@+id/google_sign_in"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/or"
-                android:layout_centerHorizontal="true">
-
-            </com.google.android.gms.common.SignInButton>
-
             <com.facebook.login.widget.LoginButton
                 android:id="@+id/fb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/google_sign_in"
+                android:layout_below="@+id/or"
                 android:layout_centerHorizontal="true"
                 android:layout_margin="10sp" />
 
