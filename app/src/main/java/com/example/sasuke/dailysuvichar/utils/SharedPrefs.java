@@ -15,7 +15,7 @@ public class SharedPrefs {
     }
 
     public static String getFacebookToken() {
-        return FACEBOOK_TOKEN;
+        return getPrefrences().getString(FACEBOOK_TOKEN, null);
     }
 
     public static void setFacebookToken(String token){
