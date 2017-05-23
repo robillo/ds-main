@@ -474,6 +474,7 @@ public class ProfileActivity extends BaseActivity {
 
     @OnClick(R.id.user_name)
     public void setUserName(){
+        final Boolean[] b = {false};
         new MaterialDialog.Builder(this)
                 .title("Set Your Username")
                 .content("A Short Name YouRepresent.")
@@ -482,9 +483,10 @@ public class ProfileActivity extends BaseActivity {
                     @Override
                     public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
                         userName.setText(input);
+                        b[0] =true;
                     }
                 }).show();
-        if(userName.getText()!=null){
+        if(userName.getText()!=null &&b[0]){
             mUsersDatabase.child(mFirebaseUser.getUid()).child("userName").setValue(userName.getText());
             check[2] = true;
         }
