@@ -653,7 +653,7 @@ public class ProfileActivity extends BaseActivity {
 //                }).show();
 //        if(temp[0] !=null) {
 //            mUsersDatabase.child(mFirebaseUser.getUid()).child("age").setValue(age.getText());
-//            check[9] = true;
+            check[9] = true;
 //        }
 //
         Calendar now = Calendar.getInstance();
@@ -776,10 +776,10 @@ public class ProfileActivity extends BaseActivity {
     public void save(){
         writetoFirebase();
 
-        if(userTypeInput!=null &&code==0){
+        if(userType.getText().equals("GURU")||userType.getText().equals("STANDARD")&&code==0){
             if(userType.getText().toString().equals("STANDARD")){
                 int flag = 1;
-                for(int i=0;i<=10; i++){
+                for(int i=0;i<10; i++){
                     if(!check[i]){
                         flag = 0;
                     }
@@ -807,10 +807,10 @@ public class ProfileActivity extends BaseActivity {
 
         if(code == 1){
 
-            if(userTypeInput!=null) {
+            if(userType.getText().equals("GURU")||userType.getText().equals("STANDARD")) {
                 if(userType.getText().toString().equals("STANDARD")){
                     int flag = 1;
-                    for(int i=0;i<=10; i++){
+                    for(int i=0;i<10; i++){
                         if(!check[i]){
                             flag = 0;
                         }
