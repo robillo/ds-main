@@ -29,6 +29,10 @@ import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.models.Guru;
 import com.example.sasuke.dailysuvichar.models.User;
 import com.example.sasuke.dailysuvichar.utils.SharedPrefs;
+import com.facebook.AccessToken;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -42,6 +46,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -171,12 +178,43 @@ public class ProfileActivity extends BaseActivity {
     }
 
     private void loadCOVER(String token){
-        String url = "https://graph.facebook.com/me?fields=cover&access_token=" + token;
-        Log.e("URL", url);
-        Glide.with(this)
-                .load(url)
-                .fitCenter()
-                .into(userCoverPic);
+        String url = "https://graph.facebook.com/me/picture?fields=cover&access_token=" + token;
+
+        final String[] coverPhoto = {null};
+        new GraphRequest(
+                AccessToken.getCurrentAccessToken(),
+                "/+me+?fields=cover",
+                null,
+                HttpMethod.GET,
+                new GraphRequest.Callback()
+                {
+                    public void onCompleted(GraphResponse response)
+                    {
+                        try
+                        {
+                            JSONObject jsonObject = response.getJSONObject();
+                            if(jsonObject==null)
+                                return;
+                            JSONObject JOSource = jsonObject.getJSONObject("cover");
+                            coverPhoto[0] = JOSource.getString("source");
+
+                            Log.e("COVER", " " + coverPhoto[0]);
+
+                            if(coverPhoto[0]!=null){
+                                Glide.with(getApplicationContext())
+                                        .load(coverPhoto[0])
+                                        .fitCenter()
+                                        .into(userCoverPic);
+                            }
+
+                        }
+                        catch (JSONException e)
+                        {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+        ).executeAsync();
     }
 
     private void fetchData() {
