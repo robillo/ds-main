@@ -55,11 +55,11 @@ public class LoginFragment extends BaseFragment implements GoogleApiClient.OnCon
 
     @NotEmpty
     @Email
-    @BindView(R.id.et_email)
-    EditText mEtEmail;
-    @NotEmpty
-    @BindView(R.id.et_password)
-    EditText mEtPassword;
+//    @BindView(R.id.et_email)
+//    EditText mEtEmail;
+//    @NotEmpty
+//    @BindView(R.id.et_password)
+//    EditText mEtPassword;
 //    @BindView(R.id.google_sign_in)
 //    SignInButton googleSignIn;
     @BindView(R.id.fb)
@@ -115,7 +115,7 @@ public class LoginFragment extends BaseFragment implements GoogleApiClient.OnCon
 
             @Override
             public void onValidationSucceeded() {
-                FirebaseSignIn();
+//                FirebaseSignIn();
             }
         });
 
@@ -125,62 +125,62 @@ public class LoginFragment extends BaseFragment implements GoogleApiClient.OnCon
         return new LoginFragment();
     }
 
-    @OnClick(R.id.btn_register)
-    public void register() {
-        RegisterFragment registerFragment = new RegisterFragment();
-        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container, registerFragment);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
-    }
+//    @OnClick(R.id.btn_register)
+//    public void register() {
+//        RegisterFragment registerFragment = new RegisterFragment();
+//        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+//        fragmentTransaction.replace(R.id.fragment_container, registerFragment);
+//        fragmentTransaction.addToBackStack(null);
+//        fragmentTransaction.commit();
+//    }
 
-    @OnClick(R.id.btn_login)
-    public void login() {
-        validator.validate();
-    }
+//    @OnClick(R.id.btn_login)
+//    public void login() {
+//        validator.validate();
+//    }
+//
+//    private void FirebaseSignIn() {
+//        showDialog("", getResources().getString(R.string.please_wait));
+//        String email = getStringFromEditText(mEtEmail);
+//        String password = getStringFromEditText(mEtPassword);
+//        mFirebaseAuth.signInWithEmailAndPassword(email, password)
+//                .addOnCompleteListener((Activity) getContext(), new OnCompleteListener<AuthResult>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<AuthResult> task) {
+//                        if (task.isSuccessful()) {
+//                            onAuthSuccess(task.getResult().getUser());
+//                            SharedPrefs.setLoginToken(task.getResult().getUser().getToken(true).toString());
+//                        } else {
+//                            dismissDialog();
+//                            Toast.makeText(getContext(), getResources().getString(R.string.sign_in_failed), Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
+//                });
+//    }
 
-    private void FirebaseSignIn() {
-        showDialog("", getResources().getString(R.string.please_wait));
-        String email = getStringFromEditText(mEtEmail);
-        String password = getStringFromEditText(mEtPassword);
-        mFirebaseAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener((Activity) getContext(), new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            onAuthSuccess(task.getResult().getUser());
-                            SharedPrefs.setLoginToken(task.getResult().getUser().getToken(true).toString());
-                        } else {
-                            dismissDialog();
-                            Toast.makeText(getContext(), getResources().getString(R.string.sign_in_failed), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-    }
+//    private void onAuthSuccess(FirebaseUser user) {
+//        String username = usernameFromEmail(user.getEmail());
+//        // Write new user
+//        writeNewUser(user.getUid(), username, user.getEmail());
+//        Intent i = new Intent(getContext(), ProfileActivity.class);
+//        i.putExtra("fromLogin", 1);
+//        startActivity(i);
+////        startActivity(ChooseInterestActivity.newIntent(getContext()));
+//        dismissDialog();
+//    }
 
-    private void onAuthSuccess(FirebaseUser user) {
-        String username = usernameFromEmail(user.getEmail());
-        // Write new user
-        writeNewUser(user.getUid(), username, user.getEmail());
-        Intent i = new Intent(getContext(), ProfileActivity.class);
-        i.putExtra("fromLogin", 1);
-        startActivity(i);
-//        startActivity(ChooseInterestActivity.newIntent(getContext()));
-        dismissDialog();
-    }
+//    private String usernameFromEmail(String email) {
+//        if (email.contains("@")) {
+//            return email.split("@")[0];
+//        } else {
+//            return email;
+//        }
+//    }
 
-    private String usernameFromEmail(String email) {
-        if (email.contains("@")) {
-            return email.split("@")[0];
-        } else {
-            return email;
-        }
-    }
-
-    private void writeNewUser(String userId, String name, String email) {
-        UserAuth user = new UserAuth(email, name);
-        databaseReference.child("users").child(userId).setValue(user);
-    }
+//    private void writeNewUser(String userId, String name, String email) {
+//        UserAuth user = new UserAuth(email, name);
+//        databaseReference.child("users").child(userId).setValue(user);
+//    }
 
 //    @OnClick(R.id.google_sign_in)
 //    public void signIn() {
