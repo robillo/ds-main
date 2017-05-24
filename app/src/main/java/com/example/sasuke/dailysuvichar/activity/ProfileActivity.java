@@ -70,10 +70,10 @@ public class ProfileActivity extends BaseActivity {
     private static final int RESULT_LOAD_IMAGE = 8008, RESULT_LOAD_COVER = 8009, RESULT_LOAD_GOV_ID = 8010,
     RESULT_LOAD_SPEC_ID = 8011;
     Uri dpPath, coverPath, govPath, specPath;
-    private boolean[] check;
+    private int ageInt = 0;
     private String special = null;
     private String userTypeInput = null;
-    private int age;
+    private enum checks{NAME, USERNAME, DP, COVER, BIO, LANG, USERTYPE, DOB, GENDER, AGE, GOVID, SPECID, SPECIALIZATION};
 
     @BindView(R.id.specialization)
     TextView specialization;
@@ -91,6 +91,8 @@ public class ProfileActivity extends BaseActivity {
     TextView DOB;
     @BindView(R.id.gender)
     TextView gender;
+    @BindView(R.id.age)
+    TextView age;
     @BindView(R.id.invisible)
     LinearLayout mLinearLayout;
     @BindView(R.id.govID)
@@ -106,9 +108,19 @@ public class ProfileActivity extends BaseActivity {
 
         code = getIntent().getIntExtra("fromLogin", 0);
 
-        check = new boolean[]{
-                false, false, false, false, false, false, false, false, false, false, false, false, false
-        };
+        Log.e("ENUM", " " + checks.NAME);
+        Log.e("ENUM", " " + checks.USERNAME);
+        Log.e("ENUM", " " + checks.DP);
+        Log.e("ENUM", " " + checks.COVER);
+        Log.e("ENUM", " " + checks.BIO);
+        Log.e("ENUM", " " + checks.LANG);
+        Log.e("ENUM", " " + checks.USERTYPE);
+        Log.e("ENUM", " " + checks.DOB);
+        Log.e("ENUM", " " + checks.GENDER);
+        Log.e("ENUM", " " + checks.AGE);
+        Log.e("ENUM", " " + checks.GOVID);
+        Log.e("ENUM", " " + checks.SPECID);
+        Log.e("ENUM", " " + checks.SPECIALIZATION);
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
@@ -314,7 +326,6 @@ public class ProfileActivity extends BaseActivity {
                         .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                check[0] = true;
                                 Toast.makeText(ProfileActivity.this, "File Uploaded! ", Toast.LENGTH_SHORT).show();
                             }
                         })
@@ -364,7 +375,6 @@ public class ProfileActivity extends BaseActivity {
                         .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                check[1] = true;
                                 Toast.makeText(ProfileActivity.this, "File Uploaded! ", Toast.LENGTH_SHORT).show();
                             }
                         })
@@ -411,7 +421,6 @@ public class ProfileActivity extends BaseActivity {
                         .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                check[11] = true;
                                 Toast.makeText(ProfileActivity.this, "File Uploaded! ", Toast.LENGTH_SHORT).show();
                             }
                         })
@@ -455,7 +464,6 @@ public class ProfileActivity extends BaseActivity {
                         .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                check[12] = true;
                                 Toast.makeText(ProfileActivity.this, "File Uploaded! ", Toast.LENGTH_SHORT).show();
                             }
                         })
@@ -490,7 +498,6 @@ public class ProfileActivity extends BaseActivity {
                 }).show();
         if(name.getText()!=null){
             mUsersDatabase.child(mFirebaseUser.getUid()).child("name").setValue(name.getText());
-            check[3] = true;
         }
     }
 
@@ -508,7 +515,6 @@ public class ProfileActivity extends BaseActivity {
                 }).show();
         if(bio.getText()!=null){
             mUsersDatabase.child(mFirebaseUser.getUid()).child("bio").setValue(bio.getText());
-            check[4] = true;
         }
     }
 
@@ -526,7 +532,6 @@ public class ProfileActivity extends BaseActivity {
                 }).show();
         if(userName.getText()!=null){
             mUsersDatabase.child(mFirebaseUser.getUid()).child("userName").setValue(userName.getText());
-            check[2] = true;
         }
     }
 
@@ -556,7 +561,6 @@ public class ProfileActivity extends BaseActivity {
                 .show();
         if(language.getText()!=null){
             mUsersDatabase.child(mFirebaseUser.getUid()).child("preferredLang").setValue(language.getText());
-            check[5] = true;
         }
     }
 
@@ -594,7 +598,6 @@ public class ProfileActivity extends BaseActivity {
                 .positiveText("Choose This")
                 .show();
         if(userType.getText()!=null){
-            check[6] = true;
             mUsersDatabase.child(mFirebaseUser.getUid()).child("preferredLang").setValue(language.getText());
         }
     }
@@ -629,7 +632,6 @@ public class ProfileActivity extends BaseActivity {
                 .show();
         if(gender.getText()!=null){
             mUsersDatabase.child(mFirebaseUser.getUid()).child("gender").setValue(gender.getText());
-            check[8] = true;
         }
     }
 
@@ -710,35 +712,30 @@ public class ProfileActivity extends BaseActivity {
                                 temp[0] = "Astrology Guru";
                                 specialization.setText(temp[0]);
                                 special = temp[0];
-                                check[10] = true;
                                 break;
                             }
                             case 1:{
                                 temp[0] = "Yoga Guru";
                                 specialization.setText(temp[0]);
                                 special = temp[0];
-                                check[10] = true;
                                 break;
                             }
                             case 2:{
                                 temp[0] = "Pandit";
                                 specialization.setText(temp[0]);
                                 special = temp[0];
-                                check[10] = true;
                                 break;
                             }
                             case 3:{
                                 temp[0] = "Motivation Guru";
                                 specialization.setText(temp[0]);
                                 special = temp[0];
-                                check[10] = true;
                                 break;
                             }
                             case 4:{
                                 temp[0] = "Ayurveda Guru";
                                 specialization.setText(temp[0]);
                                 special = temp[0];
-                                check[10] = true;
                                 break;
                             }
                         }
@@ -757,14 +754,24 @@ public class ProfileActivity extends BaseActivity {
                     year = arg1;
                     month = arg2+1;
                     day = arg3;
-                    age = setAge(day,month,year);
+                    ageInt = setAge(day,month,year);
                     DOB.setText(day + "/" + month + "/" + year);
 
                     mUsersDatabase.child(mFirebaseUser.getUid()).child("dob").setValue(DOB.getText());
-                    check[7] = true;
+                    mUsersDatabase.child(mFirebaseUser.getUid()).child("age").setValue(ageInt);
 
                 }
             };
+
+    @OnClick(R.id.age)
+    public void setAge(){
+        if(ageInt==0){
+            Toast.makeText(getApplicationContext(), "Please Enter Correct Date Of Birth", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            age.setText(ageInt);
+        }
+    }
 
     @OnClick(R.id.btnSave)
     public void save(){
@@ -772,61 +779,20 @@ public class ProfileActivity extends BaseActivity {
 
         if(userTypeInput!=null &&code==0){
             if(userType.getText().toString().equals("STANDARD")){
-                int flag = 1;
-                for(int i=0;i<=10; i++){
-                    if(!check[i]){
-                        flag = 0;
-                    }
-                }
-                if(flag == 0){
-                    Toast.makeText(getApplicationContext(), "Please Enter Full Details", Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(this, "Changes Saved Successfully", Toast.LENGTH_SHORT).show();
-                }
+
             }
             else if(userType.getText().toString().equals("GURU")){
-                int flag = 1;
-                for(int i=0;i<=12; i++){
-                    if(!check[i]){
-                        flag = 0;
-                    }
-                }
-                if(flag == 0){
-                    Toast.makeText(getApplicationContext(), "Please Enter Full Details", Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(this, "Changes Saved Successfully", Toast.LENGTH_SHORT).show();
-                }
+
             }
         }
 
         if(code == 1){
-
             if(userTypeInput!=null) {
                 if(userType.getText().toString().equals("STANDARD")){
-                    int flag = 1;
-                    for(int i=0;i<=10; i++){
-                        if(!check[i]){
-                            flag = 0;
-                        }
-                    }
-                    if(flag == 0){
-                        Toast.makeText(getApplicationContext(), "Please Enter Full Details", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
                     startActivity(new Intent(this, ChooseInterestActivity.class));
                     Toast.makeText(this, "Profile updated", Toast.LENGTH_SHORT).show();
                 }
                 else if (userType.getText().toString().equals("GURU")) {
-                    int flag = 1;
-                    for (int i = 0; i <= 12; i++) {
-                        if (!check[i]) {
-                            flag = 0;
-                        }
-                    }
-                    if (flag == 0) {
-                        Toast.makeText(getApplicationContext(), "Please Enter Full Details", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
                     startActivity(new Intent(this, ChooseInterestActivity.class));
                     Toast.makeText(this, "Profile updated", Toast.LENGTH_SHORT).show();
                 }
@@ -852,8 +818,8 @@ public class ProfileActivity extends BaseActivity {
         if(name!=null && name.getText().length()>0){
             nameDB = name.getText().toString();
         }
-        if(age!=0){
-            ageDB = age;
+        if(ageInt!=0){
+            ageDB = ageInt;
         }
         if(language!=null && language.getText().length()>0){
             langDB = language.getText().toString();
