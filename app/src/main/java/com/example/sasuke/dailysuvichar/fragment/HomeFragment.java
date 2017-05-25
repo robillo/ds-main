@@ -199,8 +199,8 @@ public class HomeFragment extends BaseFragment {
 //                Log.d(TAG, "onDataChange: SUBINTS " + dataSnapshot.getChildrenCount());
 //                User user = dataSnapshot.getValue(User.class);
 //                Log.d(TAG, "onDataChange: INTTTT "+dataSnapshot.child("selectedSubInterests").getValue());
-                if(dataSnapshot.child("selectedSubInterests").getValue()!=null) {
-                    mSelectedSubInterests.addAll((Collection<? extends String>) dataSnapshot.child("selectedSubInterests").getValue());
+                if(dataSnapshot.child("mSelectedSubInterests").getValue()!=null) {
+                    mSelectedSubInterests.addAll((Collection<? extends String>) dataSnapshot.child("mSelectedSubInterests").getValue());
                 }
                 fetchVideosFromFirebase();
                 fetchStatusFromFirebase();

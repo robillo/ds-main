@@ -24,8 +24,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -90,10 +92,20 @@ public class SubInterestFragment extends BaseFragment {
         mDatabase.child(mFirebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-                mSubInterests = user.getAllSubInterests();
 
-                mAllInterests = user.getAllInterests();
+                mSubInterests = new ArrayList<String>();
+                mAllInterests = new HashMap<>();
+                if(dataSnapshot.child("mSelectedSubInterests").getValue()!=null){
+                    mSubInterests.addAll((Collection<? extends String>) dataSnapshot.child("mSelectedSubInterests").getValue());
+                }
+                if(dataSnapshot.child("mAllInterests").getValue()!=null){
+                    mAllInterests.putAll((Map<? extends String, ? extends ArrayList<String>>) dataSnapshot.child("mAllInterests").getValue());
+                }
+
+                User user = dataSnapshot.getValue(User.class);
+//                mSubInterests = user.getAllSubInterests();
+
+//                mAllInterests = user.getAllInterests();
 
                 staggeredGridLayoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
                 gridLayoutManager = new GridLayoutManager(getActivity(), 3);
@@ -192,9 +204,11 @@ public class SubInterestFragment extends BaseFragment {
                 mSelectedSubInterests.add(d.getHeader().toLowerCase());
             }
         }
+        mDatabase.child(mFirebaseUser.getUid()).child("mAllInterests").setValue(mAllInterests);
+        mDatabase.child(mFirebaseUser.getUid()).child("mSelectedSubInterests").setValue(mSelectedSubInterests);
 
-        User user = new User(mAllInterests, mSelectedSubInterests);
-        mDatabase.child(mFirebaseUser.getUid()).setValue(user);
+//        User user = new User(mAllInterests, mSelectedSubInterests);
+//        mDatabase.child(mFirebaseUser.getUid()).setValue(user);
 
         if(mSelectedSubInterests!=null && mSelectedSubInterests.size()<5){
             Toast.makeText(getActivity().getApplicationContext(), "Please select at least 4 sub interests", Toast.LENGTH_SHORT).show();
