@@ -5,15 +5,6 @@
     android:layout_height="?attr/actionBarSize"
     android:background="@color/blue_text">
 
-    <ImageView
-        android:id="@+id/action_bar_home_icon"
-        android:layout_width="50dp"
-        android:layout_height="match_parent"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="15dp"
-        android:padding="10dp"
-        android:src="@drawable/logo_transparent" />
-
     <TextView
         android:id="@+id/action_bar_title"
         android:layout_width="match_parent"

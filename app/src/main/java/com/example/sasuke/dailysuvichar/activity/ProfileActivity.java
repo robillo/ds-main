@@ -500,7 +500,6 @@ public class ProfileActivity extends BaseActivity {
                 }).show();
         if(name.getText()!=null&&b[0]){
             mUsersDatabase.child(mFirebaseUser.getUid()).child("name").setValue(name.getText());
-            check[3] = true;
         }
     }
 
@@ -643,22 +642,6 @@ public class ProfileActivity extends BaseActivity {
     }
 
     public int setAge(int day2, int month2, int year2){
-//        final String[] temp = {null};
-//        new MaterialDialog.Builder(this)
-//                .title("Set Your Age")
-//                .inputType(InputType.TYPE_CLASS_TEXT)
-//                .input("Enter your age here", "", new MaterialDialog.InputCallback() {
-//                    @Override
-//                    public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
-//                        age.setText(input);
-//                        temp[0] = input.toString();
-//                    }
-//                }).show();
-//        if(temp[0] !=null) {
-//            mUsersDatabase.child(mFirebaseUser.getUid()).child("age").setValue(age.getText());
-            check[9] = true;
-//        }
-//
         Calendar now = Calendar.getInstance();
 
         int year1 = now.get(Calendar.YEAR);
@@ -851,16 +834,7 @@ public class ProfileActivity extends BaseActivity {
         if(userType!=null && (userType.getText().equals("STANDARD")||userType.getText().equals("User Type: Standard"))){
             Log.d(TAG, "writetoFirebase: "+mFirebaseUser.getUid());
             User user = new User(nameDB,bioDB,langDB,dobDB,dpPathDB,coverPathDB,genderDB,userNameDB,ageDB);
-//            mUsersDatabase.child(mFirebaseUser.getUid()).child("name").setValue(nameDB);
             mUsersDatabase.child(mFirebaseUser.getUid()).child("email").setValue(mFirebaseUser.getEmail());
-//            mUsersDatabase.child(mFirebaseUser.getUid()).child("age").setValue(ageDB);
-//            mUsersDatabase.child(mFirebaseUser.getUid()).child("photoUrl").setValue(dpPathDB);
-//            mUsersDatabase.child(mFirebaseUser.getUid()).child("coverUrl").setValue(coverPathDB);
-//            mUsersDatabase.child(mFirebaseUser.getUid()).child("dob").setValue(dobDB);
-//            mUsersDatabase.child(mFirebaseUser.getUid()).child("gender").setValue(genderDB);
-//            mUsersDatabase.child(mFirebaseUser.getUid()).child("userName").setValue(userNameDB);
-//            mUsersDatabase.child(mFirebaseUser.getUid()).child("bio").setValue(bioDB);
-//            mUsersDatabase.child(mFirebaseUser.getUid()).child("preferredLang").setValue(langDB);
         }
         else {
             if(govPath==null || specPath==null){
@@ -869,18 +843,12 @@ public class ProfileActivity extends BaseActivity {
                 Guru user = new Guru(nameDB, mFirebaseUser.getEmail(), bioDB, new ArrayList<String>(), langDB, dpPathDB, coverPathDB, dobDB, genderDB, ageDB, govDB, specDB, special);
                 mGurusDatabase.child(mFirebaseUser.getUid()).child("name").setValue(nameDB);
                 mGurusDatabase.child(mFirebaseUser.getUid()).child("email").setValue(mFirebaseUser.getEmail());
-//                mGurusDatabase.child(mFirebaseUser.getUid()).child("bio").setValue(bioDB);
-//                mGurusDatabase.child(mFirebaseUser.getUid()).child("preferredLang").setValue(langDB);
-//                mGurusDatabase.child(mFirebaseUser.getUid()).child("photoUrl").setValue(dpPathDB);
-//                mGurusDatabase.child(mFirebaseUser.getUid()).child("coverUrl").setValue(coverPathDB);
                 mGurusDatabase.child(mFirebaseUser.getUid()).child("dob").setValue(dobDB);
-//                mGurusDatabase.child(mFirebaseUser.getUid()).child("gender").setValue(genderDB);
                 mGurusDatabase.child(mFirebaseUser.getUid()).child("age").setValue(ageDB);
                 mGurusDatabase.child(mFirebaseUser.getUid()).child("uid").setValue(mFirebaseUser.getUid());
                 if(special!=null){
                     mGurusDatabase.child(mFirebaseUser.getUid()).child("specialization").setValue(special);
                 }
-//                mGurusDatabase.child(mFirebaseUser.getUid()).child("govID").setValue(govDB);
             }
         }
     }
