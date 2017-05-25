@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.activity.HomeActivity;
@@ -183,16 +184,11 @@ public class SubInterestFragment extends BaseFragment {
 
     }
 
-    @OnClick(R.id.action_bar_home_icon)
-    public void returnToPreviousActivity() {
-        getActivity().finish();
-    }
-
     @OnClick(R.id.tv_next)
     public void openHomeActivity() {
         mSelectedSubInterests= new ArrayList<>();
         for(Data d:data){
-            if(d.getSelected()==true){
+            if(d.getSelected()){
                 mSelectedSubInterests.add(d.getHeader().toLowerCase());
             }
         }
@@ -200,6 +196,11 @@ public class SubInterestFragment extends BaseFragment {
         User user = new User(mAllInterests, mSelectedSubInterests);
         mDatabase.child(mFirebaseUser.getUid()).setValue(user);
 
-        startActivity(HomeActivity.newIntent(getActivity()));
+        if(mSelectedSubInterests!=null && mSelectedSubInterests.size()<5){
+            Toast.makeText(getActivity().getApplicationContext(), "Please select at least 4 sub interests", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            startActivity(HomeActivity.newIntent(getActivity()));
+        }
     }
 }

@@ -776,7 +776,7 @@ public class ProfileActivity extends BaseActivity {
         }
         else if(userType.getText().equals("GURU")){
             //PUSH GURU USER DATA FIRST AS USER, THEN AS GURU
-            if(!checkValidate("GURU")){
+            if(checkValidate("GURU")){
 //                writetoFirebaseAsGuru();
                 writetoFirebase();
                 startActivity(new Intent(this, ChooseInterestActivity.class));
@@ -793,9 +793,9 @@ public class ProfileActivity extends BaseActivity {
     private boolean checkValidate(String type){
         boolean flag = true;
         boolean[] check;
-        check = new boolean[]{false, false, false, false, false, false, false, false, false, false};
         if(type.equals("STANDARD")){
             //VALIDATE FOR STANDARD USER
+            check = new boolean[]{false, false, false, false, false, false, false, false, false, false};
             if(!name.getText().equals("(Full Name: Not Selected)")){
                 check[0] = true;
                 Log.e("LOG", name.getText().toString());
@@ -844,11 +844,12 @@ public class ProfileActivity extends BaseActivity {
         }
         else if(type.equals("GURU")){
             //VALIDATE FOR GURU
-            if(name.getText()!="(Full Name: Not Selected)"){
+            check = new boolean[]{false, false, false, false, false, false, false, false, false, false, false, false, false};
+            if(!name.getText().equals("(Full Name: Not Selected)")){
                 check[0] = true;
                 Log.e("LOG", name.getText().toString());
             }
-            if(userName.getText()!="Username: Not Selected"){
+            if(!userName.getText().equals("Username: Not Selected")){
                 check[1] = true;
                 Log.e("LOG", userName.getText().toString());
             }
@@ -860,27 +861,27 @@ public class ProfileActivity extends BaseActivity {
                 check[3] = true;
                 Log.e("LOG", coverPath.toString());
             }
-            if(bio.getText()!="Short Description/Bio. : Not Selected"){
+            if(!bio.getText().equals("Short Description/Bio. : Not Selected")){
                 check[4] = true;
                 Log.e("LOG", bio.getText().toString());
             }
-            if(language.getText()!="Language: Not Selelcted"){
+            if(!language.getText().equals("Language: Not Selelcted")){
                 check[5] = true;
                 Log.e("LOG", language.getText().toString());
             }
-            if(userType.getText()!="User Type: Not Selected"){
+            if(!userType.getText().equals("User Type: Not Selected")){
                 check[6] = true;
                 Log.e("LOG", userType.getText().toString());
             }
-            if(DOB.getText()!="Date Of Birth: Not Selected"){
+            if(!DOB.getText().equals("Date Of Birth: Not Selected")){
                 check[7] = true;
                 Log.e("LOG", DOB.getText().toString());
             }
-            if(gender.getText()!="Gender: Not Selected"){
+            if(!gender.getText().equals("Gender: Not Selected")){
                 check[8] = true;
                 Log.e("LOG", gender.getText().toString());
             }
-            if(age.getText()!="Age: Select DOB to evaluate"){
+            if(!age.getText().equals("Age: Select DOB to evaluate")){
                 check[9] = true;
                 Log.e("LOG", age.getText().toString());
             }

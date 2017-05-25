@@ -189,9 +189,4 @@ public class ChooseInterestFragment extends BaseFragment implements BubblePicker
 
         return itemList;
     }
-
-    @OnClick(R.id.action_bar_home_icon)
-    public void returnToPreviousActivity() {
-        getActivity().finish();
-    }
 }
