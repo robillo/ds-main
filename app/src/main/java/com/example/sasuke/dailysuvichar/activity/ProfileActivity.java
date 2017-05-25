@@ -73,7 +73,8 @@ public class ProfileActivity extends BaseActivity {
     private int ageInt = 0;
     private String special = null;
     private String userTypeInput = null;
-    private enum checks{NAME, USERNAME, DP, COVER, BIO, LANG, USERTYPE, DOB, GENDER, AGE, GOVID, SPECID, SPECIALIZATION};
+    private enum std{NAME, USERNAME, DP, COVER, BIO, LANG, USERTYPE, DOB, GENDER, AGE};
+    private enum guru{NAME, USERNAME, DP, COVER, BIO, LANG, USERTYPE, DOB, GENDER, AGE, GOVID, SPECID, SPECIALIZATION};
 
     @BindView(R.id.specialization)
     TextView specialization;
@@ -108,19 +109,19 @@ public class ProfileActivity extends BaseActivity {
 
         code = getIntent().getIntExtra("fromLogin", 0);
 
-        Log.e("ENUM", " " + checks.NAME);
-        Log.e("ENUM", " " + checks.USERNAME);
-        Log.e("ENUM", " " + checks.DP);
-        Log.e("ENUM", " " + checks.COVER);
-        Log.e("ENUM", " " + checks.BIO);
-        Log.e("ENUM", " " + checks.LANG);
-        Log.e("ENUM", " " + checks.USERTYPE);
-        Log.e("ENUM", " " + checks.DOB);
-        Log.e("ENUM", " " + checks.GENDER);
-        Log.e("ENUM", " " + checks.AGE);
-        Log.e("ENUM", " " + checks.GOVID);
-        Log.e("ENUM", " " + checks.SPECID);
-        Log.e("ENUM", " " + checks.SPECIALIZATION);
+        Log.e("ENUM", " " + guru.NAME);
+        Log.e("ENUM", " " + guru.USERNAME);
+        Log.e("ENUM", " " + guru.DP);
+        Log.e("ENUM", " " + guru.COVER);
+        Log.e("ENUM", " " + guru.BIO);
+        Log.e("ENUM", " " + guru.LANG);
+        Log.e("ENUM", " " + guru.USERTYPE);
+        Log.e("ENUM", " " + guru.DOB);
+        Log.e("ENUM", " " + guru.GENDER);
+        Log.e("ENUM", " " + guru.AGE);
+        Log.e("ENUM", " " + guru.GOVID);
+        Log.e("ENUM", " " + guru.SPECID);
+        Log.e("ENUM", " " + guru.SPECIALIZATION);
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
@@ -746,7 +747,7 @@ public class ProfileActivity extends BaseActivity {
                     day = arg3;
                     ageInt = setAge(day,month,year);
                     DOB.setText(day + "/" + month + "/" + year);
-
+                    age.setText(" " + ageInt);
                     mUsersDatabase.child(mFirebaseUser.getUid()).child("dob").setValue(DOB.getText());
                     mUsersDatabase.child(mFirebaseUser.getUid()).child("age").setValue(ageInt);
 
@@ -758,50 +759,83 @@ public class ProfileActivity extends BaseActivity {
         if(ageInt==0){
             Toast.makeText(getApplicationContext(), "Please Enter Correct Date Of Birth", Toast.LENGTH_SHORT).show();
         }
-        else {
-            age.setText(ageInt);
-        }
     }
 
     @OnClick(R.id.btnSave)
     public void save(){
-        writetoFirebase();
 
-        if(userType.getText().equals("GURU")||userType.getText().equals("STANDARD")&&code==0){
-            if(userType.getText().toString().equals("STANDARD")){
-
-            }
-            else if(userType.getText().toString().equals("GURU")){
-
+        if(userType.getText()!=null && userType.getText().equals("STANDARD")){
+            //PUSH STANDARD USER DATA
+            if(checkValidate(userType.getText().toString())){
+                writetoFirebaseAsStandard();
+                startActivity(new Intent(this, ChooseInterestActivity.class));
             }
         }
-
-        if(code == 1){
-            if(userTypeInput!=null) {
-                if(userType.getText().toString().equals("STANDARD")){
-                    startActivity(new Intent(this, ChooseInterestActivity.class));
-                    Toast.makeText(this, "Profile updated", Toast.LENGTH_SHORT).show();
-                }
-                else if (userType.getText().toString().equals("GURU")) {
-                    startActivity(new Intent(this, ChooseInterestActivity.class));
-                    Toast.makeText(this, "Profile updated", Toast.LENGTH_SHORT).show();
-                }
-            }else{
-                Toast.makeText(getApplicationContext(), "Please Enter Full Details", Toast.LENGTH_SHORT).show();
-                return;
+        else if(userType.getText()!=null && userType.getText().equals("GURU")){
+            //PUSH GURU USER DATA FIRST AS USER, THEN AS GURU
+            if(!checkValidate(userType.getText().toString())){
+                writetoFirebaseAsGuru();
+                startActivity(new Intent(this, ChooseInterestActivity.class));
             }
         }
-        SharedPrefs.setUserType(userType.getText().toString());
-
-        finish();
+        else {
+            Toast.makeText(getApplicationContext(), "PLEASE SELECT USER TYPE", Toast.LENGTH_SHORT).show();
+        }
     }
-    @Override
-    protected void onStop() {
-        super.onStop();
+
+    private boolean checkValidate(String type){
+        if(type.equals("STANDARD")){
+            //VALIDATE FOR STANDARD USER
+            if(name.getText()!="(Full Name: Not Selected)"){
+
+            }
+            if(userName.getText()!="Username: Not Selected"){
+
+            }
+            if(dpPath!=null){
+
+            }
+            if(coverPath!=null){
+
+            }
+            if(bio.getText()!="Short Description/Bio. : Not Selected"){
+
+            }
+            if(language.getText()!="Language: Not Selelcted"){
+
+            }
+            if(userType.getText()!="User Type: Not Selected"){
+
+            }
+            if(DOB.getText()!="Date Of Birth: Not Selected"){
+
+            }
+            if(gender.getText()!="Gender: Not Selected"){
+
+            }
+            if(age.getText()!="Age: Select DOB to evaluate"){
+
+            }
+        }
+
+        if(type.equals("GURU")){
+            //VALIDATE FOR GURU
+
+        }
+
+        return true;
+    }
+
+    private void writetoFirebaseAsStandard(){
+
+    }
+
+    private void writetoFirebaseAsGuru(){
+
     }
 
     private void writetoFirebase() {
-//        progressDialog = new ProgressDialog(this);
+
         String nameDB = null, langDB= null, usertypeDB= null, dobDB= null, genderDB= null, userNameDB= null, bioDB= null;
         String dpPathDB = null, coverPathDB = null, govDB = null, specDB = null;
         int ageDB = -1;
@@ -838,7 +872,7 @@ public class ProfileActivity extends BaseActivity {
         }
         else {
             if(govPath==null || specPath==null){
-//                Toast.makeText(this, "Please upload documents to get verified as a Guru", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Please upload documents to get verified as a Guru", Toast.LENGTH_SHORT).show();
             }else {
                 Guru user = new Guru(nameDB, mFirebaseUser.getEmail(), bioDB, new ArrayList<String>(), langDB, dpPathDB, coverPathDB, dobDB, genderDB, ageDB, govDB, specDB, special);
                 mGurusDatabase.child(mFirebaseUser.getUid()).child("name").setValue(nameDB);
@@ -856,5 +890,10 @@ public class ProfileActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
 
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
     }
 }
