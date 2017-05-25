@@ -48,8 +48,8 @@ import butterknife.OnClick;
 
 public class SelectPhotoActivity extends BaseActivity{
 
-    @BindView(R.id.imgView)
-    ImageView mImageView;
+    @BindView(R.id.upload)
+    ImageView upload;
     @BindView(R.id.diet)
     TextView diet;
     @BindView(R.id.yoga)
@@ -108,6 +108,11 @@ public class SelectPhotoActivity extends BaseActivity{
         subInterests = new ArrayList<>();
         mSelectedItems = new ArrayList<>();
 
+    }
+
+    @OnClick(R.id.upload)
+    public void setUpload(){
+        showFileChooser();
     }
 
     @OnClick(R.id.diet)
@@ -224,7 +229,7 @@ public class SelectPhotoActivity extends BaseActivity{
             filePath = data.getData();
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), filePath);
-                mImageView.setImageBitmap(bitmap);
+                upload.setImageBitmap(bitmap);
 
             } catch (IOException e) {
                 e.printStackTrace();

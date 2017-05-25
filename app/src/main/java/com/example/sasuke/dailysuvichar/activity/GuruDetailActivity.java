@@ -93,7 +93,6 @@ public class GuruDetailActivity extends BaseActivity{
 
         context = getApplicationContext();
 
-
         mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         mStorageReference = FirebaseStorage.getInstance().getReference("profile").child("user");
         mDatabaseReference = FirebaseDatabase.getInstance().getReference("users");

@@ -227,7 +227,14 @@ public class SelectVideoActivity extends BaseActivity{
                 Log.e("selected video path", "null");
                 finish();
             } else {
-                Log.v("selectedVideoPath", filePath.toString());
+                Log.e("selectedVideoPath", filePath.toString());
+                mVideoView.setVideoPath(String.valueOf(filePath));
+                mVideoView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mVideoView.start();
+                    }
+                });
                 if (filePath != null) {
 //                    StorageReference videoGalleryRef = storageRefVideo.child(selectedVideoUri + "_video");
 //                    sendFileFirebaseVideo(videoGalleryRef, selectedVideoUri, metadata);
