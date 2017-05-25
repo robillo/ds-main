@@ -155,12 +155,9 @@ public class GurusFragment extends BaseFragment {
                 showPopup();
                 break;
             }
-            case R.id.action_settings: {
+            case R.id.about: {
 
                 break;
-            }
-            case R.id.move_to_first: {
-
             }
         }
 

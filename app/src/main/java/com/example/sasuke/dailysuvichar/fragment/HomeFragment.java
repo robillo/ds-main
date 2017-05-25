@@ -636,11 +636,7 @@ public class HomeFragment extends BaseFragment {
 
                 break;
             }
-            case R.id.action_settings:{
-
-                break;
-            }
-            case R.id.move_to_first:{
+            case R.id.about:{
 
                 break;
             }

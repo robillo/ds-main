@@ -5,26 +5,18 @@
     <item
         android:id="@+id/action_search"
         android:icon="@drawable/ic_search"
-        android:title="Search Movies"
+        android:title="Search"
         app:actionViewClass="android.support.v7.widget.SearchView"
         app:showAsAction="collapseActionView|ifRoom"/>
 
     <item
         android:id="@+id/action_sort"
         android:icon="@drawable/ic_sort"
-        android:title="Sort Movies"
+        android:title="Sort"
         app:showAsAction="ifRoom"/>
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/about"
         android:orderInCategory="100"
-        android:title="Settings"
+        android:title="About DS"
         app:showAsAction="never" />
-    <item
-        android:id="@+id/menu_refresh"
-        app:showAsAction="never"
-        android:title="Refresh"/>
-    <item
-        android:id="@+id/move_to_first"
-        app:showAsAction="never"
-        android:title="Move To First"/>
 </menu>

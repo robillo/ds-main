@@ -19,12 +19,11 @@
             <ImageView
                 android:id="@+id/imageView"
                 android:layout_width="match_parent"
-                android:layout_height="50sp"
+                android:layout_height="100sp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="15dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="8dp"
                 android:layout_marginTop="25dp"
+                android:background="@color/blue_dark"
                 android:src="@drawable/profile" />
 
             <ImageView
@@ -54,37 +53,6 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="15dp"
                     android:text="@string/home"
-                    android:textColor="@color/white" />
-            </LinearLayout>
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:background="@color/transparent_blue" />
-
-
-            <LinearLayout
-                android:id="@+id/nav_updates"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:gravity="center_vertical"
-                android:padding="10dp">
-
-                <ImageView
-                    android:layout_width="@dimen/drawer_icon_size"
-                    android:layout_height="@dimen/drawer_icon_size"
-                    android:padding="2dp"
-                    android:src="@drawable/ic_feeds"
-                    android:tint="@color/white" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="15dp"
-                    android:text="@string/updates"
                     android:textColor="@color/white" />
             </LinearLayout>
 
