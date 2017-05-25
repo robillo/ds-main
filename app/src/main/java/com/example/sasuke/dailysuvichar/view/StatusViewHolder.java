@@ -1,16 +1,26 @@
 package com.example.sasuke.dailysuvichar.view;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.sasuke.dailysuvichar.R;
+import com.example.sasuke.dailysuvichar.activity.HomeActivity;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.like.LikeButton;
+import com.mikhaellopez.circularimageview.CircularImageView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import me.zhanghai.android.materialprogressbar.IndeterminateCircularProgressDrawable;
 
 public class StatusViewHolder extends RecyclerView.ViewHolder {
 
@@ -26,10 +36,15 @@ public class StatusViewHolder extends RecyclerView.ViewHolder {
     TextView mTvStatus;
     @BindView(R.id.button_like)
     public LikeButton mBtnLike;
-//    @BindView(R.id.tv_like)
-//    TextView tv_like;
     @BindView(R.id.comment)
     public LinearLayout comment;
+    @BindView(R.id.iv_profile)
+    CircularImageView statusDP;
+
+    private Context context;
+
+//    @BindView(R.id.tv_like)
+//    TextView tv_like;
 //    @BindView(R.id.invisible)
 //    public LinearLayout invisible;
 //    @BindView(R.id.edittext)
@@ -40,6 +55,7 @@ public class StatusViewHolder extends RecyclerView.ViewHolder {
     public StatusViewHolder(@NonNull View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
+        context = itemView.getContext();
 //        mBtnLike.setOnLikeListener(new OnLikeListener() {
 //            @Override
 //            public void liked(LikeButton likeButton) {
@@ -72,6 +88,17 @@ public class StatusViewHolder extends RecyclerView.ViewHolder {
         if(mTvPostTime!=null && mTvPostTime.length()>0){
             mTvPostTime.setText(postTime);
         }
+    }
+
+    public void setStatusDP(String dbReference){
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference gsReference = storage.getReferenceFromUrl(dbReference);
+
+        Glide.with(context)
+                .using(new FirebaseImageLoader())
+                .load(gsReference)
+                .placeholder(R.drawable.profile)
+                .into(statusDP);
     }
 
     public void setStatus(String status) {

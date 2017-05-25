@@ -82,13 +82,6 @@ public class HomeActivity extends BaseActivity {
         mUsersDatabase = FirebaseDatabase.getInstance().getReference("users");
         mStorageReferenceDP = FirebaseStorage.getInstance().getReference("profile").child("user").child("dp");
 
-        Glide.with(HomeActivity.this).
-                using(new FirebaseImageLoader())
-                .load(mStorageReferenceDP)
-                .centerCrop()
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(drawerDP);
-
         fetchData();
     }
 

@@ -14,6 +14,9 @@ public class Status {
     private String uid;
 
     @NonNull
+    private String DP;
+
+    @NonNull
     public String getUid() {
         return uid;
     }
@@ -79,6 +82,28 @@ public class Status {
 
     @NonNull
     private ArrayList<String> tags;
+
+    @NonNull
+    public String getDP() {
+        return DP;
+    }
+
+    public void setDP(@NonNull String DP) {
+        this.DP = DP;
+    }
+
+    public Status(@NonNull String uid, @NonNull ArrayList<String> tags, @NonNull String name, @NonNull Long timestamp, @NonNull Integer likes, @NonNull Integer shares, @NonNull ArrayList<Comment> comments, @NonNull String status, @NonNull String user, @NonNull String DP) {
+        this.uid = uid;
+        this.DP = DP;
+        this.tags = tags;
+        this.name = name;
+        this.timestamp = timestamp;
+        this.likes = likes;
+        this.shares = shares;
+        this.comments = comments;
+        this.status = status;
+        this.user = user;
+    }
 
     public Status(@NonNull String uid, @NonNull ArrayList<String> tags, @NonNull String name, @NonNull Long timestamp, @NonNull Integer likes, @NonNull Integer shares, @NonNull ArrayList<Comment> comments, @NonNull String status, @NonNull String user) {
 

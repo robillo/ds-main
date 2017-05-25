@@ -25,7 +25,6 @@ public class View_Holder extends RecyclerView.ViewHolder implements View.OnClick
         header = (TextView) itemView.findViewById(R.id.textView);
         bg = (ImageView) itemView.findViewById(R.id.imageView2);
         ll = (LinearLayout) itemView.findViewById(R.id.ll);
-
         itemView.setOnClickListener(this);
     }
 

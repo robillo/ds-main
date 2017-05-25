@@ -98,7 +98,7 @@ public class GuruDetailActivity extends BaseActivity{
         mDatabaseReference = FirebaseDatabase.getInstance().getReference("users");
 
         Intent i = getIntent();
-        isFollowing = i.getBooleanExtra("isfollowing",false);
+        isFollowing = i.getBooleanExtra("isfollowing", false);
         uid = i.getStringExtra("uid");
 
         setFollowing(isFollowing);
