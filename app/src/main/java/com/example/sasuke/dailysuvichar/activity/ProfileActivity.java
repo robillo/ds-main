@@ -25,8 +25,10 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.models.Guru;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -253,37 +255,52 @@ public class ProfileActivity extends BaseActivity {
                     language.setText(dataSnapshot.child("preferredLang").getValue().toString());
                 }
                 if(dataSnapshot.child("photoUrl").getValue()!=null) {
-                    String[] filePathColumn = { MediaStore.Images.Media.DATA };
+//                    String[] filePathColumn = { MediaStore.Images.Media.DATA };
+//
+//                    Cursor cursor = getContentResolver().query(Uri.parse(dataSnapshot.child("photoUrl").getValue().toString()),
+//                            filePathColumn, null, null, null);
+//                    cursor.moveToFirst();
+//
+//                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+//                    String picturePath = cursor.getString(columnIndex);
+//                    cursor.close();
+//
+//                    Glide.with(ProfileActivity.this)
+//                            .load(picturePath)
+//                            .crossFade()
+//                            .centerCrop()
+//                            .into(userProfilePic);
 
-                    Cursor cursor = getContentResolver().query(Uri.parse(dataSnapshot.child("photoUrl").getValue().toString()),
-                            filePathColumn, null, null, null);
-                    cursor.moveToFirst();
 
-                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                    String picturePath = cursor.getString(columnIndex);
-                    cursor.close();
-
-                    Glide.with(ProfileActivity.this)
-                            .load(picturePath)
-                            .crossFade()
+                    Glide.with(ProfileActivity.this).
+                            using(new FirebaseImageLoader())
+                            .load(mStorageReferenceDP.child(dataSnapshot.getKey()))
                             .centerCrop()
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .into(userProfilePic);
                 }
                 if(dataSnapshot.child("coverUrl").getValue()!=null) {
-                    String[] filePathColumn = { MediaStore.Images.Media.DATA };
+//                    String[] filePathColumn = { MediaStore.Images.Media.DATA };
+//
+//                    Cursor cursor = getContentResolver().query(Uri.parse(dataSnapshot.child("coverUrl").getValue().toString()),
+//                            filePathColumn, null, null, null);
+//                    cursor.moveToFirst();
+//
+//                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+//                    String picturePath = cursor.getString(columnIndex);
+//                    cursor.close();
+//
+//                    Glide.with(ProfileActivity.this)
+//                            .load(picturePath)
+//                            .crossFade()
+//                            .centerCrop()
+//                            .into(userCoverPic);
 
-                    Cursor cursor = getContentResolver().query(Uri.parse(dataSnapshot.child("coverUrl").getValue().toString()),
-                            filePathColumn, null, null, null);
-                    cursor.moveToFirst();
-
-                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                    String picturePath = cursor.getString(columnIndex);
-                    cursor.close();
-
-                    Glide.with(ProfileActivity.this)
-                            .load(picturePath)
-                            .crossFade()
+                    Glide.with(ProfileActivity.this).
+                            using(new FirebaseImageLoader())
+                            .load(mStorageReferenceCover.child(dataSnapshot.getKey()))
                             .centerCrop()
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .into(userCoverPic);
                 }
             }
