@@ -198,6 +198,12 @@ public class SubInterestFragment extends BaseFragment {
 
     @OnClick(R.id.tv_next)
     public void openHomeActivity() {
+        if(mSelectedSubInterests!=null && mSelectedSubInterests.size()<3){
+            Toast.makeText(getActivity().getApplicationContext(), "Please select at least 3 sub interests", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            startActivity(HomeActivity.newIntent(getActivity()));
+        }
         mSelectedSubInterests= new ArrayList<>();
         for(Data d:data){
             if(d.getSelected()){
@@ -209,12 +215,5 @@ public class SubInterestFragment extends BaseFragment {
 
 //        User user = new User(mAllInterests, mSelectedSubInterests);
 //        mDatabase.child(mFirebaseUser.getUid()).setValue(user);
-
-        if(mSelectedSubInterests!=null && mSelectedSubInterests.size()<5){
-            Toast.makeText(getActivity().getApplicationContext(), "Please select at least 4 sub interests", Toast.LENGTH_SHORT).show();
-        }
-        else {
-            startActivity(HomeActivity.newIntent(getActivity()));
-        }
     }
 }
