@@ -764,14 +764,14 @@ public class ProfileActivity extends BaseActivity {
     @OnClick(R.id.btnSave)
     public void save(){
 
-        if(userType.getText()!=null && userType.getText().equals("STANDARD")){
+        if(userType.getText().equals("STANDARD")){
             //PUSH STANDARD USER DATA
             if(checkValidate(userType.getText().toString())){
                 writetoFirebaseAsStandard();
                 startActivity(new Intent(this, ChooseInterestActivity.class));
             }
         }
-        else if(userType.getText()!=null && userType.getText().equals("GURU")){
+        else if(userType.getText().equals("GURU")){
             //PUSH GURU USER DATA FIRST AS USER, THEN AS GURU
             if(!checkValidate(userType.getText().toString())){
                 writetoFirebaseAsGuru();
@@ -858,13 +858,13 @@ public class ProfileActivity extends BaseActivity {
             if(age.getText()!="Age: Select DOB to evaluate"){
                 check[9] = true;
             }
-            if(govID!=null){
+            if(govPath!=null){
                 check[10] = true;
             }
-            if(specID!=null){
+            if(specPath!=null){
                 check[11] = true;
             }
-            if(specialization!=null){
+            if(special!=null){
                 check[12] = true;
             }
             for(int i=0; i<13; i++){
@@ -944,13 +944,13 @@ public class ProfileActivity extends BaseActivity {
         if(age.getText()!="Age: Select DOB to evaluate"){
 
         }
-        if(govID!=null){
+        if(govPath!=null){
 
         }
-        if(specID!=null){
+        if(specPath!=null){
 
         }
-        if(specialization!=null){
+        if(special!=null){
 
         }
     }
