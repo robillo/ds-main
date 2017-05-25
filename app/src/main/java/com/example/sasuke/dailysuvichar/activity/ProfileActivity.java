@@ -765,7 +765,7 @@ public class ProfileActivity extends BaseActivity {
     public void save(){
         if(userType.getText().equals("STANDARD")){
             //PUSH STANDARD USER DATA
-            if(checkValidate(userType.getText().toString())){
+            if(checkValidate("STANDARD")){
 //                writetoFirebaseAsStandard();
                 writetoFirebase();
                 startActivity(new Intent(this, ChooseInterestActivity.class));
@@ -776,7 +776,7 @@ public class ProfileActivity extends BaseActivity {
         }
         else if(userType.getText().equals("GURU")){
             //PUSH GURU USER DATA FIRST AS USER, THEN AS GURU
-            if(!checkValidate(userType.getText().toString())){
+            if(!checkValidate("GURU")){
 //                writetoFirebaseAsGuru();
                 writetoFirebase();
                 startActivity(new Intent(this, ChooseInterestActivity.class));
@@ -842,8 +842,7 @@ public class ProfileActivity extends BaseActivity {
                 }
             }
         }
-
-        if(type.equals("GURU")){
+        else if(type.equals("GURU")){
             //VALIDATE FOR GURU
             if(name.getText()!="(Full Name: Not Selected)"){
                 check[0] = true;
@@ -907,6 +906,7 @@ public class ProfileActivity extends BaseActivity {
             flag = false;
         }
 
+        Log.e("FLAG IS", String.valueOf(flag));
         return flag;
     }
 
