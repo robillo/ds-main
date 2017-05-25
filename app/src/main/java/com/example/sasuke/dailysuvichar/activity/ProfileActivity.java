@@ -784,54 +784,175 @@ public class ProfileActivity extends BaseActivity {
     }
 
     private boolean checkValidate(String type){
+        boolean flag = true;
+        boolean[] check;
+        check = new boolean[]{false, false, false, false, false, false, false, false, false, false};
         if(type.equals("STANDARD")){
             //VALIDATE FOR STANDARD USER
             if(name.getText()!="(Full Name: Not Selected)"){
-
+                check[0] = true;
             }
             if(userName.getText()!="Username: Not Selected"){
-
+                check[1] = true;
             }
             if(dpPath!=null){
-
+                check[2] = true;
             }
             if(coverPath!=null){
-
+                check[3] = true;
             }
             if(bio.getText()!="Short Description/Bio. : Not Selected"){
-
+                check[4] = true;
             }
             if(language.getText()!="Language: Not Selelcted"){
-
+                check[5] = true;
             }
             if(userType.getText()!="User Type: Not Selected"){
-
+                check[6] = true;
             }
             if(DOB.getText()!="Date Of Birth: Not Selected"){
-
+                check[7] = true;
             }
             if(gender.getText()!="Gender: Not Selected"){
-
+                check[8] = true;
             }
             if(age.getText()!="Age: Select DOB to evaluate"){
-
+                check[9] = true;
+            }
+            for(int i=0; i<10; i++){
+                if(!check[i]){
+                    flag = false;
+                }
             }
         }
 
         if(type.equals("GURU")){
             //VALIDATE FOR GURU
-
+            if(name.getText()!="(Full Name: Not Selected)"){
+                check[0] = true;
+            }
+            if(userName.getText()!="Username: Not Selected"){
+                check[1] = true;
+            }
+            if(dpPath!=null){
+                check[2] = true;
+            }
+            if(coverPath!=null){
+                check[3] = true;
+            }
+            if(bio.getText()!="Short Description/Bio. : Not Selected"){
+                check[4] = true;
+            }
+            if(language.getText()!="Language: Not Selelcted"){
+                check[5] = true;
+            }
+            if(userType.getText()!="User Type: Not Selected"){
+                check[6] = true;
+            }
+            if(DOB.getText()!="Date Of Birth: Not Selected"){
+                check[7] = true;
+            }
+            if(gender.getText()!="Gender: Not Selected"){
+                check[8] = true;
+            }
+            if(age.getText()!="Age: Select DOB to evaluate"){
+                check[9] = true;
+            }
+            if(govID!=null){
+                check[10] = true;
+            }
+            if(specID!=null){
+                check[11] = true;
+            }
+            if(specialization!=null){
+                check[12] = true;
+            }
+            for(int i=0; i<13; i++){
+                if(!check[i]){
+                    flag = false;
+                }
+            }
+        }
+        else {
+            flag = false;
         }
 
-        return true;
+        return flag;
     }
 
     private void writetoFirebaseAsStandard(){
+        if(name.getText()!="(Full Name: Not Selected)"){
 
+        }
+        if(userName.getText()!="Username: Not Selected"){
+
+        }
+        if(dpPath!=null){
+
+        }
+        if(coverPath!=null){
+
+        }
+        if(bio.getText()!="Short Description/Bio. : Not Selected"){
+
+        }
+        if(language.getText()!="Language: Not Selelcted"){
+
+        }
+        if(userType.getText()!="User Type: Not Selected"){
+
+        }
+        if(DOB.getText()!="Date Of Birth: Not Selected"){
+
+        }
+        if(gender.getText()!="Gender: Not Selected"){
+
+        }
+        if(age.getText()!="Age: Select DOB to evaluate"){
+
+        }
     }
 
     private void writetoFirebaseAsGuru(){
+        if(name.getText()!="(Full Name: Not Selected)"){
 
+        }
+        if(userName.getText()!="Username: Not Selected"){
+
+        }
+        if(dpPath!=null){
+
+        }
+        if(coverPath!=null){
+
+        }
+        if(bio.getText()!="Short Description/Bio. : Not Selected"){
+
+        }
+        if(language.getText()!="Language: Not Selelcted"){
+
+        }
+        if(userType.getText()!="User Type: Not Selected"){
+
+        }
+        if(DOB.getText()!="Date Of Birth: Not Selected"){
+
+        }
+        if(gender.getText()!="Gender: Not Selected"){
+
+        }
+        if(age.getText()!="Age: Select DOB to evaluate"){
+
+        }
+        if(govID!=null){
+
+        }
+        if(specID!=null){
+
+        }
+        if(specialization!=null){
+
+        }
     }
 
     private void writetoFirebase() {
