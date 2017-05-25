@@ -43,13 +43,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/action_bar"
-        android:layout_marginTop="30dp"
         android:gravity="center"
-        android:padding="8dp"
+        android:padding="15dp"
         android:text="@string/please_choose_at_least_two_interests"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
+        android:fontFamily="sans-serif-smallcaps"
+        android:background="@color/blue_dark"
         android:textSize="@dimen/font_large"
-        android:textStyle="italic" />
+        android:textStyle="bold" />
 
     <com.igalata.bubblepicker.rendering.BubblePicker
         android:id="@+id/picker"
