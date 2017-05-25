@@ -28,11 +28,6 @@ import com.bumptech.glide.Glide;
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.models.Guru;
 import com.example.sasuke.dailysuvichar.models.User;
-import com.example.sasuke.dailysuvichar.utils.SharedPrefs;
-import com.facebook.AccessToken;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-import com.facebook.HttpMethod;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -46,9 +41,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -109,6 +101,10 @@ public class ProfileActivity extends BaseActivity {
 
         code = getIntent().getIntExtra("fromLogin", 0);
 
+        code = getIntent().getIntExtra("fromHome", 0);
+
+        Log.d(TAG, "onCreate: CODE "+code);
+
         Log.e("ENUM", " " + guru.NAME);
         Log.e("ENUM", " " + guru.USERNAME);
         Log.e("ENUM", " " + guru.DP);
@@ -155,7 +151,8 @@ public class ProfileActivity extends BaseActivity {
 //        loadDP(SharedPrefs.getFacebookToken());
 //        loadCOVER(SharedPrefs.getFacebookToken());
 
-        if(code==0) {
+        if(code==1) {
+            Log.d(TAG, "onCreate: yfydfkuggjcgkjjkgc");
             fetchData();
         }
 
@@ -1041,7 +1038,9 @@ public class ProfileActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-
+        if(code==1){
+            startActivity(new Intent(this,HomeActivity.class));
+        }
     }
 
     @Override

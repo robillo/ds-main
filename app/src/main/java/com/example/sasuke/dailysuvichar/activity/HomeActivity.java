@@ -104,7 +104,9 @@ public class HomeActivity extends BaseActivity {
     @OnClick(R.id.nav_profile)
     public void onProfileClick() {
         closeDrawer();
-        startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+        Intent i =new Intent(getApplicationContext(), ProfileActivity.class);
+        i.putExtra("fromHome",1);
+        startActivity(i);
 //        finish();
     }
 

@@ -106,8 +106,10 @@ public class HomeFragment extends BaseFragment {
     private Animation slide_up;
     private int CHECK = 1;
     private HashMap<String, Long> isDone;
-    private HashMap<String, Long> statusHashMap;
-    private HashMap<String, Status> statusHashMapTemp;
+    private HashMap<String, Long> allPostsHashMap, statusHashMap, photoHashMap, customVidHashMap;
+    private HashMap<String, Status> statusHashMapStore;
+    private HashMap<String, Photo>  photoHashMapStore;
+    private HashMap<String, CustomVideo> customVidHashMapStore;
     private HashMap<String, Boolean> isPhotoDone, isVideoDone;
 
     private static final int SECOND_MILLIS = 1000;
@@ -219,6 +221,9 @@ public class HomeFragment extends BaseFragment {
 
     private void fetchVideosFromFirebase() {
         isVideoDone= new HashMap<>();
+        customVidHashMap = new HashMap<>();
+        customVidHashMapStore = new HashMap<>();
+        allPostsHashMap = new HashMap<>();
 
         if (mSelectedSubInterests.size() > 0) {
 
@@ -248,6 +253,10 @@ public class HomeFragment extends BaseFragment {
 
                                 items.add(videoSnap);
                                 isVideoDone.put(postSnapshot.getKey(),true);
+                                customVidHashMap.put(postSnapshot.getKey(),videoSnap.getTimestamp());
+                                customVidHashMapStore.put(postSnapshot.getKey(),videoSnap);
+                                allPostsHashMap.put(postSnapshot.getKey(), videoSnap.getTimestamp());
+
                             }
                             mAdapter.notifyDataSetChanged();
                             if(mAdapter.getItemCount()>0){
@@ -285,6 +294,9 @@ public class HomeFragment extends BaseFragment {
     private void fetchPhotosFromFirebase() {
 
         isPhotoDone= new HashMap<>();
+        photoHashMap = new HashMap<>();
+        photoHashMapStore = new HashMap<>();
+        allPostsHashMap = new HashMap<>();
 
 //        items = new Items();
         if (mSelectedSubInterests.size() > 0) {
@@ -307,6 +319,9 @@ public class HomeFragment extends BaseFragment {
 
                                 items.add(photoSnap);
                                 isPhotoDone.put(postSnapshot.getKey(),true);
+                                photoHashMap.put(postSnapshot.getKey(),photoSnap.getTimestamp());
+                                photoHashMapStore.put(postSnapshot.getKey(),photoSnap);
+                                allPostsHashMap.put(postSnapshot.getKey(), photoSnap.getTimestamp());
                             }
                             mAdapter.notifyDataSetChanged();
                             if(mAdapter.getItemCount()>0){
@@ -335,7 +350,8 @@ public class HomeFragment extends BaseFragment {
 
         isDone= new HashMap<>();
         statusHashMap = new HashMap<>();
-        statusHashMapTemp = new HashMap<>();
+        statusHashMapStore = new HashMap<>();
+        allPostsHashMap = new HashMap<>();
 
         if (mSelectedSubInterests.size() > 0) {
             Log.d(TAG, "fetchStatusFromFirebase: SIZE " + mSelectedSubInterests.size());
@@ -363,7 +379,8 @@ public class HomeFragment extends BaseFragment {
                             if (!isDone.containsKey(postSnapshot.getKey())) {
 //                                items.add(status);
                                 isDone.put(postSnapshot.getKey(), status.getTimestamp());
-                                statusHashMapTemp.put(postSnapshot.getKey(), status);
+                                statusHashMapStore.put(postSnapshot.getKey(), status);
+                                allPostsHashMap.put(postSnapshot.getKey(), status.getTimestamp());
                             }
 //                            Log.d(TAG, "fetchStatusFromFirebase: ISDONE "+isDone.size());
 
@@ -376,10 +393,10 @@ public class HomeFragment extends BaseFragment {
                         if (finalI == mSelectedSubInterests.size() - 1 && isDone.size() > 0) {
                             statusHashMap = sortByComparator(isDone, false);
                             Log.d(TAG, "fetchStatusFromFirebase: STATUS" + statusHashMap);
-                            Log.d(TAG, "fetchStatusFromFirebase: STATUS" + statusHashMapTemp);
+                            Log.d(TAG, "fetchStatusFromFirebase: STATUS" + statusHashMapStore);
                             for (int i = 0; i < statusHashMap.size(); i++) {
-                                if (!items.contains(statusHashMapTemp.get(statusHashMap.keySet().toArray()[i]))) {
-                                    items.add(statusHashMapTemp.get(statusHashMap.keySet().toArray()[i]));
+                                if (!items.contains(statusHashMapStore.get(statusHashMap.keySet().toArray()[i]))) {
+                                    items.add(statusHashMapStore.get(statusHashMap.keySet().toArray()[i]));
                                 }
                             }
                         }
