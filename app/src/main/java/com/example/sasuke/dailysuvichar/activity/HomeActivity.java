@@ -160,11 +160,11 @@ public class HomeActivity extends BaseActivity {
 //        finish();
     }
 
-    @OnClick(R.id.your_feeds)
-    public void onYourFeedsClick() {
-        closeDrawer();
-        replaceFragment(YourFeedsFragment.newInstance(), YourFeedsFragment.class.getName());
-    }
+//    @OnClick(R.id.your_feeds)
+//    public void onYourFeedsClick() {
+//        closeDrawer();
+//        replaceFragment(YourFeedsFragment.newInstance(), YourFeedsFragment.class.getName());
+//    }
 
     @OnClick(R.id.nav_settings)
     public void onSettingsClick() {
@@ -225,4 +225,21 @@ public class HomeActivity extends BaseActivity {
 //        drawer.openDrawer(GravityCompat.START);
 //    }
 
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        finish();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        finish();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
 }

@@ -3,6 +3,7 @@ package com.example.sasuke.dailysuvichar.view;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -13,6 +14,13 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.activity.HomeActivity;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.like.LikeButton;
@@ -39,9 +47,11 @@ public class StatusViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.comment)
     public LinearLayout comment;
     @BindView(R.id.iv_profile)
-    CircularImageView statusDP;
+    ImageView statusDP;
 
     private Context context;
+    private StorageReference mStorageReferenceDP;
+    private DatabaseReference mUsersDatabase;
 
 //    @BindView(R.id.tv_like)
 //    TextView tv_like;
@@ -56,6 +66,8 @@ public class StatusViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
         ButterKnife.bind(this, itemView);
         context = itemView.getContext();
+        mUsersDatabase = FirebaseDatabase.getInstance().getReference("users");
+        mStorageReferenceDP = FirebaseStorage.getInstance().getReference("profile").child("user").child("dp");
 //        mBtnLike.setOnLikeListener(new OnLikeListener() {
 //            @Override
 //            public void liked(LikeButton likeButton) {
@@ -90,15 +102,27 @@ public class StatusViewHolder extends RecyclerView.ViewHolder {
         }
     }
 
-    public void setStatusDP(String dbReference){
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference gsReference = storage.getReferenceFromUrl(dbReference);
+    public void setStatusDP(String UID){
+        mUsersDatabase.child(UID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
 
-        Glide.with(context)
-                .using(new FirebaseImageLoader())
-                .load(gsReference)
-                .placeholder(R.drawable.profile)
-                .into(statusDP);
+                if(dataSnapshot.child("photoUrl").getValue()!=null) {
+                    Glide.with(context).
+                            using(new FirebaseImageLoader())
+                            .load(mStorageReferenceDP.child(dataSnapshot.getKey()))
+                            .fitCenter()
+                            .placeholder(R.drawable.profile)
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .into(statusDP);
+                    Log.e("GLIDINGGGGGG", "YES");
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e("GLIDINGGGGGG", "CANCELLED");
+            }
+        });
     }
 
     public void setStatus(String status) {

@@ -55,7 +55,7 @@ public class StatusItemAdapter extends ItemViewBinder<Status, StatusViewHolder> 
                 }
             }
         });
-        holder.setStatusDP(item.getDP());
+        holder.setStatusDP(item.getUid());
         holder.comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
