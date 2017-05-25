@@ -152,8 +152,8 @@ public class ProfileActivity extends BaseActivity {
         userProfilePic = (ImageButton) findViewById(R.id.user_profile_photo);
         userCoverPic = (ImageButton) findViewById(R.id.header_cover_image);
 
-        loadDP(SharedPrefs.getFacebookToken());
-        loadCOVER(SharedPrefs.getFacebookToken());
+//        loadDP(SharedPrefs.getFacebookToken());
+//        loadCOVER(SharedPrefs.getFacebookToken());
 
         if(code==0) {
             fetchData();
@@ -180,55 +180,55 @@ public class ProfileActivity extends BaseActivity {
             }
         });
     }
-
-    private void loadDP(String token){
-        String url = "https://graph.facebook.com/me/picture?type=large&method=GET&access_token=" + token;
-        Log.e("URL", url);
-        Glide.with(this)
-                .load(url)
-                .fitCenter()
-                .into(userProfilePic);
-    }
-
-    private void loadCOVER(String token){
-        String url = "https://graph.facebook.com/me/picture?fields=cover&access_token=" + token;
-
-        final String[] coverPhoto = {null};
-        new GraphRequest(
-                AccessToken.getCurrentAccessToken(),
-                "/+me+?fields=cover",
-                null,
-                HttpMethod.GET,
-                new GraphRequest.Callback()
-                {
-                    public void onCompleted(GraphResponse response)
-                    {
-                        try
-                        {
-                            JSONObject jsonObject = response.getJSONObject();
-                            if(jsonObject==null)
-                                return;
-                            JSONObject JOSource = jsonObject.getJSONObject("cover");
-                            coverPhoto[0] = JOSource.getString("source");
-
-                            Log.e("COVER", " " + coverPhoto[0]);
-
-                            if(coverPhoto[0]!=null){
-                                Glide.with(getApplicationContext())
-                                        .load(coverPhoto[0])
-                                        .fitCenter()
-                                        .into(userCoverPic);
-                            }
-
-                        }
-                        catch (JSONException e)
-                        {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-        ).executeAsync();
-    }
+//
+//    private void loadDP(String token){
+//        String url = "https://graph.facebook.com/me/picture?type=large&method=GET&access_token=" + token;
+//        Log.e("URL", url);
+//        Glide.with(this)
+//                .load(url)
+//                .fitCenter()
+//                .into(userProfilePic);
+//    }
+//
+//    private void loadCOVER(String token){
+//        String url = "https://graph.facebook.com/me/picture?fields=cover&access_token=" + token;
+//
+//        final String[] coverPhoto = {null};
+//        new GraphRequest(
+//                AccessToken.getCurrentAccessToken(),
+//                "/+me+?fields=cover",
+//                null,
+//                HttpMethod.GET,
+//                new GraphRequest.Callback()
+//                {
+//                    public void onCompleted(GraphResponse response)
+//                    {
+//                        try
+//                        {
+//                            JSONObject jsonObject = response.getJSONObject();
+//                            if(jsonObject==null)
+//                                return;
+//                            JSONObject JOSource = jsonObject.getJSONObject("cover");
+//                            coverPhoto[0] = JOSource.getString("source");
+//
+//                            Log.e("COVER", " " + coverPhoto[0]);
+//
+//                            if(coverPhoto[0]!=null){
+//                                Glide.with(getApplicationContext())
+//                                        .load(coverPhoto[0])
+//                                        .fitCenter()
+//                                        .into(userCoverPic);
+//                            }
+//
+//                        }
+//                        catch (JSONException e)
+//                        {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                }
+//        ).executeAsync();
+//    }
 
     private void fetchData() {
 
@@ -792,33 +792,43 @@ public class ProfileActivity extends BaseActivity {
             //VALIDATE FOR STANDARD USER
             if(name.getText()!="(Full Name: Not Selected)"){
                 check[0] = true;
+                Log.e("LOG", name.getText().toString());
             }
             if(userName.getText()!="Username: Not Selected"){
                 check[1] = true;
+                Log.e("LOG", userName.getText().toString());
             }
             if(dpPath!=null){
                 check[2] = true;
+                Log.e("LOG", dpPath.toString());
             }
             if(coverPath!=null){
                 check[3] = true;
+                Log.e("LOG", coverPath.toString());
             }
             if(bio.getText()!="Short Description/Bio. : Not Selected"){
                 check[4] = true;
+                Log.e("LOG", bio.getText().toString());
             }
             if(language.getText()!="Language: Not Selelcted"){
                 check[5] = true;
+                Log.e("LOG", language.getText().toString());
             }
             if(userType.getText()!="User Type: Not Selected"){
                 check[6] = true;
+                Log.e("LOG", userType.getText().toString());
             }
             if(DOB.getText()!="Date Of Birth: Not Selected"){
                 check[7] = true;
+                Log.e("LOG", DOB.getText().toString());
             }
             if(gender.getText()!="Gender: Not Selected"){
                 check[8] = true;
+                Log.e("LOG", gender.getText().toString());
             }
             if(age.getText()!="Age: Select DOB to evaluate"){
                 check[9] = true;
+                Log.e("LOG", age.getText().toString());
             }
             for(int i=0; i<10; i++){
                 if(!check[i]){
@@ -831,42 +841,55 @@ public class ProfileActivity extends BaseActivity {
             //VALIDATE FOR GURU
             if(name.getText()!="(Full Name: Not Selected)"){
                 check[0] = true;
+                Log.e("LOG", name.getText().toString());
             }
             if(userName.getText()!="Username: Not Selected"){
                 check[1] = true;
+                Log.e("LOG", userName.getText().toString());
             }
             if(dpPath!=null){
                 check[2] = true;
+                Log.e("LOG", dpPath.toString());
             }
             if(coverPath!=null){
                 check[3] = true;
+                Log.e("LOG", coverPath.toString());
             }
             if(bio.getText()!="Short Description/Bio. : Not Selected"){
                 check[4] = true;
+                Log.e("LOG", bio.getText().toString());
             }
             if(language.getText()!="Language: Not Selelcted"){
                 check[5] = true;
+                Log.e("LOG", language.getText().toString());
             }
             if(userType.getText()!="User Type: Not Selected"){
                 check[6] = true;
+                Log.e("LOG", userType.getText().toString());
             }
             if(DOB.getText()!="Date Of Birth: Not Selected"){
                 check[7] = true;
+                Log.e("LOG", DOB.getText().toString());
             }
             if(gender.getText()!="Gender: Not Selected"){
                 check[8] = true;
+                Log.e("LOG", gender.getText().toString());
             }
             if(age.getText()!="Age: Select DOB to evaluate"){
                 check[9] = true;
+                Log.e("LOG", age.getText().toString());
             }
             if(govPath!=null){
                 check[10] = true;
+                Log.e("LOG", govPath.toString());
             }
             if(specPath!=null){
                 check[11] = true;
+                Log.e("LOG", specPath.toString());
             }
             if(special!=null){
                 check[12] = true;
+                Log.e("LOG", special);
             }
             for(int i=0; i<13; i++){
                 if(!check[i]){
