@@ -148,9 +148,16 @@ public class ChooseInterestFragment extends BaseFragment implements BubblePicker
 
     @OnClick(R.id.tv_next)
     public void openSubInterestActivity() {
-        if (mSelectedInterests.size() < 2) {
-            Toast.makeText(getContext(), getResources().getString(R.string.please_choose_at_least_two_interests), Toast.LENGTH_SHORT).show();
-        } else {
+        if (mSelectedInterests.size() == 0) {
+            Toast.makeText(getContext(),"Please Choose at least 3 interests", Toast.LENGTH_SHORT).show();
+        }
+        else if(mSelectedInterests.size() == 1){
+            Toast.makeText(getContext(),"Please Choose at least 2 more interests", Toast.LENGTH_SHORT).show();
+        }
+        else if(mSelectedInterests.size() == 2){
+            Toast.makeText(getContext(),"Please Choose at least 1 more interests", Toast.LENGTH_SHORT).show();
+        }
+        else{
             User user = new User(mSelectedSubInterests, mAllInterests);
             mDatabase.child(mFirebaseUser.getUid()).setValue(user);
             startActivity(SubInterestActivity.newIntent(getActivity()));
