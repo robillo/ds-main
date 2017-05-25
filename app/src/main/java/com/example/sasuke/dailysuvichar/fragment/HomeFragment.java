@@ -262,7 +262,6 @@ public class HomeFragment extends BaseFragment {
                             using(new FirebaseImageLoader())
                             .load(mStorageReferenceDP.child(dataSnapshot.getKey()))
                             .fitCenter()
-                            .placeholder(R.drawable.profile)
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .into(homeDP);
                     Log.e("GILDED?", "YES");

@@ -18,7 +18,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.fragment.MainFragment;
-import com.example.sasuke.dailysuvichar.fragment.NotificationFragment;
 import com.example.sasuke.dailysuvichar.fragment.SettingsFragment;
 import com.example.sasuke.dailysuvichar.fragment.YourFeedsFragment;
 import com.example.sasuke.dailysuvichar.utils.SharedPrefs;
@@ -34,12 +33,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.mikhaellopez.circularimageview.CircularImageView;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class HomeActivity extends BaseActivity {
 
@@ -50,7 +51,7 @@ public class HomeActivity extends BaseActivity {
     @BindView(R.id.drawer_button)
     ImageButton drawerButton;
     @BindView(R.id.imageView)
-    ImageView drawerDP;
+    CircularImageView drawerDP;
 
     private static final int DELAY_TIME = 2000;
     private static long back_pressed;

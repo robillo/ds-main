@@ -49,15 +49,6 @@
             app:image_drawable="@drawable/ic_settings"
             app:name="@string/trending" />
 
-        <com.example.sasuke.dailysuvichar.view.Tab
-            android:id="@+id/tab_notification"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            app:image_drawable="@drawable/logo_transparent"
-            app:name="@string/notification" />
-
     </com.example.sasuke.dailysuvichar.view.TabBar>
 
 </RelativeLayout>
