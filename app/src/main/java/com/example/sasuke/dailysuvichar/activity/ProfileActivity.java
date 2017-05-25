@@ -486,6 +486,7 @@ public class ProfileActivity extends BaseActivity {
 
     @OnClick(R.id.name)
     public void setName(){
+        final Boolean[] b = {false};
         new MaterialDialog.Builder(this)
                 .title("Set Your Name")
                 .content("First Name + Last Name")
@@ -494,15 +495,18 @@ public class ProfileActivity extends BaseActivity {
                     @Override
                     public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
                         name.setText(input);
+                        b[0] =true;
                     }
                 }).show();
-        if(name.getText()!=null){
+        if(name.getText()!=null&&b[0]){
             mUsersDatabase.child(mFirebaseUser.getUid()).child("name").setValue(name.getText());
+            check[3] = true;
         }
     }
 
     @OnClick(R.id.bio)
     public void setBio(){
+        final Boolean[] b = {false};
         new MaterialDialog.Builder(this)
                 .title("Set Your Bio")
                 .content("A Short Descripton About Yourself.")
@@ -511,15 +515,17 @@ public class ProfileActivity extends BaseActivity {
                     @Override
                     public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
                         bio.setText("Bio: " + input);
+                        b[0] =true;
                     }
                 }).show();
-        if(bio.getText()!=null){
+        if(bio.getText()!=null&&b[0]){
             mUsersDatabase.child(mFirebaseUser.getUid()).child("bio").setValue(bio.getText());
         }
     }
 
     @OnClick(R.id.user_name)
     public void setUserName(){
+        final Boolean[] b = {false};
         new MaterialDialog.Builder(this)
                 .title("Set Your Username")
                 .content("A Short Name YouRepresent.")
@@ -528,9 +534,10 @@ public class ProfileActivity extends BaseActivity {
                     @Override
                     public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
                         userName.setText(input);
+                        b[0] =true;
                     }
                 }).show();
-        if(userName.getText()!=null){
+        if(userName.getText()!=null &&b[0]){
             mUsersDatabase.child(mFirebaseUser.getUid()).child("userName").setValue(userName.getText());
         }
     }
@@ -649,7 +656,7 @@ public class ProfileActivity extends BaseActivity {
 //                }).show();
 //        if(temp[0] !=null) {
 //            mUsersDatabase.child(mFirebaseUser.getUid()).child("age").setValue(age.getText());
-//            check[9] = true;
+            check[9] = true;
 //        }
 //
         Calendar now = Calendar.getInstance();
@@ -777,7 +784,7 @@ public class ProfileActivity extends BaseActivity {
     public void save(){
         writetoFirebase();
 
-        if(userTypeInput!=null &&code==0){
+        if(userType.getText().equals("GURU")||userType.getText().equals("STANDARD")&&code==0){
             if(userType.getText().toString().equals("STANDARD")){
 
             }
