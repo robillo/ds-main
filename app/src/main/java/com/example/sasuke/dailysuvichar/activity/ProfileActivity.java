@@ -763,18 +763,19 @@ public class ProfileActivity extends BaseActivity {
 
     @OnClick(R.id.btnSave)
     public void save(){
-
         if(userType.getText().equals("STANDARD")){
             //PUSH STANDARD USER DATA
             if(checkValidate(userType.getText().toString())){
-                writetoFirebaseAsStandard();
+//                writetoFirebaseAsStandard();
+                writetoFirebase();
                 startActivity(new Intent(this, ChooseInterestActivity.class));
             }
         }
         else if(userType.getText().equals("GURU")){
             //PUSH GURU USER DATA FIRST AS USER, THEN AS GURU
             if(!checkValidate(userType.getText().toString())){
-                writetoFirebaseAsGuru();
+//                writetoFirebaseAsGuru();
+                writetoFirebase();
                 startActivity(new Intent(this, ChooseInterestActivity.class));
             }
         }
@@ -880,80 +881,80 @@ public class ProfileActivity extends BaseActivity {
         return flag;
     }
 
-    private void writetoFirebaseAsStandard(){
-        if(name.getText()!="(Full Name: Not Selected)"){
-
-        }
-        if(userName.getText()!="Username: Not Selected"){
-
-        }
-        if(dpPath!=null){
-
-        }
-        if(coverPath!=null){
-
-        }
-        if(bio.getText()!="Short Description/Bio. : Not Selected"){
-
-        }
-        if(language.getText()!="Language: Not Selelcted"){
-
-        }
-        if(userType.getText()!="User Type: Not Selected"){
-
-        }
-        if(DOB.getText()!="Date Of Birth: Not Selected"){
-
-        }
-        if(gender.getText()!="Gender: Not Selected"){
-
-        }
-        if(age.getText()!="Age: Select DOB to evaluate"){
-
-        }
-    }
-
-    private void writetoFirebaseAsGuru(){
-        if(name.getText()!="(Full Name: Not Selected)"){
-
-        }
-        if(userName.getText()!="Username: Not Selected"){
-
-        }
-        if(dpPath!=null){
-
-        }
-        if(coverPath!=null){
-
-        }
-        if(bio.getText()!="Short Description/Bio. : Not Selected"){
-
-        }
-        if(language.getText()!="Language: Not Selelcted"){
-
-        }
-        if(userType.getText()!="User Type: Not Selected"){
-
-        }
-        if(DOB.getText()!="Date Of Birth: Not Selected"){
-
-        }
-        if(gender.getText()!="Gender: Not Selected"){
-
-        }
-        if(age.getText()!="Age: Select DOB to evaluate"){
-
-        }
-        if(govPath!=null){
-
-        }
-        if(specPath!=null){
-
-        }
-        if(special!=null){
-
-        }
-    }
+//    private void writetoFirebaseAsStandard(){
+//        if(name.getText()!="(Full Name: Not Selected)"){
+//
+//        }
+//        if(userName.getText()!="Username: Not Selected"){
+//
+//        }
+//        if(dpPath!=null){
+//
+//        }
+//        if(coverPath!=null){
+//
+//        }
+//        if(bio.getText()!="Short Description/Bio. : Not Selected"){
+//
+//        }
+//        if(language.getText()!="Language: Not Selelcted"){
+//
+//        }
+//        if(userType.getText()!="User Type: Not Selected"){
+//
+//        }
+//        if(DOB.getText()!="Date Of Birth: Not Selected"){
+//
+//        }
+//        if(gender.getText()!="Gender: Not Selected"){
+//
+//        }
+//        if(age.getText()!="Age: Select DOB to evaluate"){
+//
+//        }
+//    }
+//
+//    private void writetoFirebaseAsGuru(){
+//        if(name.getText()!="(Full Name: Not Selected)"){
+//
+//        }
+//        if(userName.getText()!="Username: Not Selected"){
+//
+//        }
+//        if(dpPath!=null){
+//
+//        }
+//        if(coverPath!=null){
+//
+//        }
+//        if(bio.getText()!="Short Description/Bio. : Not Selected"){
+//
+//        }
+//        if(language.getText()!="Language: Not Selelcted"){
+//
+//        }
+//        if(userType.getText()!="User Type: Not Selected"){
+//
+//        }
+//        if(DOB.getText()!="Date Of Birth: Not Selected"){
+//
+//        }
+//        if(gender.getText()!="Gender: Not Selected"){
+//
+//        }
+//        if(age.getText()!="Age: Select DOB to evaluate"){
+//
+//        }
+//        if(govPath!=null){
+//
+//        }
+//        if(specPath!=null){
+//
+//        }
+//        if(special!=null){
+//
+//        }
+//    }
 
     private void writetoFirebase() {
 
