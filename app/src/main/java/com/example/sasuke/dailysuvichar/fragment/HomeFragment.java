@@ -22,8 +22,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.cleveroad.pulltorefresh.firework.FireworkyPullToRefreshLayout;
 import com.example.sasuke.dailysuvichar.R;
+import com.example.sasuke.dailysuvichar.activity.FullScreenActivity;
+import com.example.sasuke.dailysuvichar.activity.HomeActivity;
 import com.example.sasuke.dailysuvichar.activity.SelectActivity;
 import com.example.sasuke.dailysuvichar.activity.SelectPhotoActivity;
 import com.example.sasuke.dailysuvichar.activity.SelectVideoActivity;
@@ -36,6 +40,7 @@ import com.example.sasuke.dailysuvichar.view.adapter.CustomVideoAdapter;
 import com.example.sasuke.dailysuvichar.view.adapter.PhotoItemAdapter;
 import com.example.sasuke.dailysuvichar.view.adapter.StatusItemAdapter;
 import com.example.sasuke.dailysuvichar.view.adapter.VideoItemAdapter;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -51,6 +56,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.mikhaellopez.circularimageview.CircularImageView;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -86,6 +92,8 @@ public class HomeFragment extends BaseFragment {
     TextView status;
     @BindView(R.id.pullToRefresh)
     FireworkyPullToRefreshLayout mPullToRefresh;
+    @BindView(R.id.iv_profile)
+    CircularImageView homeDP;
 
     private LinearLayoutManager mLayoutManager;
     private static FirebaseUser mFirebaseUser;
@@ -97,6 +105,10 @@ public class HomeFragment extends BaseFragment {
     private StorageReference mStorageReference;
     private ArrayList<String> mSelectedSubInterests;
 
+    private StorageReference mStorageReferenceDP;
+    private FirebaseAuth mFirebaseAuth;
+    private DatabaseReference mUsersDatabase;
+
     private static final String TAG = "ROBILLO", STATUS = "status";
     private static final int PICK_IMAGE_REQUEST = 250;
     private Uri filePath;
@@ -105,6 +117,7 @@ public class HomeFragment extends BaseFragment {
     private Animation slide_down;
     private Animation slide_up;
     private int CHECK = 1;
+    private String intentDBReference = null;
     private HashMap<String, Long> isDone;
     private HashMap<String, Long> allPostsHashMap, statusHashMap, photoHashMap, customVidHashMap;
     private HashMap<String, Status> statusHashMapStore;
@@ -134,6 +147,13 @@ public class HomeFragment extends BaseFragment {
 
         mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         mStorageReference = FirebaseStorage.getInstance().getReference();
+
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        mFirebaseUser = mFirebaseAuth.getCurrentUser();
+        mUsersDatabase = FirebaseDatabase.getInstance().getReference("users");
+        mStorageReferenceDP = FirebaseStorage.getInstance().getReference("profile").child("user").child("dp");
+
+        fetchDP();
 
         avi = (AVLoadingIndicatorView) view.findViewById(R.id.avi);
 
@@ -217,6 +237,41 @@ public class HomeFragment extends BaseFragment {
         fetchStatusFromFirebase();
 
         fetchPhotosFromFirebase();
+    }
+
+    @OnClick(R.id.iv_profile)
+    public void viewHomeDP(){
+        if(intentDBReference!=null){
+            Intent i = new Intent(getActivity(), FullScreenActivity.class);
+            i.putExtra("path", intentDBReference);
+            Log.e("Storage Reference", intentDBReference);
+            getActivity().startActivity(i);
+        }
+    }
+
+    private void fetchDP() {
+
+        mUsersDatabase.child(mFirebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                intentDBReference = mStorageReferenceDP.child(dataSnapshot.getKey()).toString();
+                Log.e("REFERENCE", intentDBReference);
+                if(dataSnapshot.child("photoUrl").getValue()!=null) {
+                    Glide.with(getActivity()).
+                            using(new FirebaseImageLoader())
+                            .load(mStorageReferenceDP.child(dataSnapshot.getKey()))
+                            .fitCenter()
+                            .placeholder(R.drawable.profile)
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .into(homeDP);
+                    Log.e("GILDED?", "YES");
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
     }
 
     private void fetchVideosFromFirebase() {
