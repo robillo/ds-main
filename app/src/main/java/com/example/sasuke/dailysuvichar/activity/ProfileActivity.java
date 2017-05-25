@@ -109,20 +109,6 @@ public class ProfileActivity extends BaseActivity {
 
         code = getIntent().getIntExtra("fromLogin", 0);
 
-        Log.e("ENUM", " " + guru.NAME);
-        Log.e("ENUM", " " + guru.USERNAME);
-        Log.e("ENUM", " " + guru.DP);
-        Log.e("ENUM", " " + guru.COVER);
-        Log.e("ENUM", " " + guru.BIO);
-        Log.e("ENUM", " " + guru.LANG);
-        Log.e("ENUM", " " + guru.USERTYPE);
-        Log.e("ENUM", " " + guru.DOB);
-        Log.e("ENUM", " " + guru.GENDER);
-        Log.e("ENUM", " " + guru.AGE);
-        Log.e("ENUM", " " + guru.GOVID);
-        Log.e("ENUM", " " + guru.SPECID);
-        Log.e("ENUM", " " + guru.SPECIALIZATION);
-
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
         mUsersDatabase = FirebaseDatabase.getInstance().getReference("users");
