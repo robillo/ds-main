@@ -27,7 +27,6 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.models.Guru;
-import com.example.sasuke.dailysuvichar.models.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -237,6 +236,7 @@ public class ProfileActivity extends BaseActivity {
                 if(dataSnapshot.child("name").getValue()!=null) {
                     name.setText(dataSnapshot.child("name").getValue().toString());
                 }
+                    age.setText(dataSnapshot.child("age").getValue().toString());
                 if(dataSnapshot.child("userName").getValue()!=null) {
                     userName.setText(dataSnapshot.child("userName").getValue().toString());
                 }
@@ -497,9 +497,9 @@ public class ProfileActivity extends BaseActivity {
                         b[0] =true;
                     }
                 }).show();
-        if(name.getText()!=null&&b[0]){
-            mUsersDatabase.child(mFirebaseUser.getUid()).child("name").setValue(name.getText());
-        }
+//        if(name.getText()!=null){
+//            mUsersDatabase.child(mFirebaseUser.getUid()).child("name").setValue(name.getText());
+//        }
     }
 
     @OnClick(R.id.bio)
@@ -516,9 +516,9 @@ public class ProfileActivity extends BaseActivity {
                         b[0] =true;
                     }
                 }).show();
-        if(bio.getText()!=null&&b[0]){
-            mUsersDatabase.child(mFirebaseUser.getUid()).child("bio").setValue(bio.getText());
-        }
+//        if(bio.getText()!=null){
+//            mUsersDatabase.child(mFirebaseUser.getUid()).child("bio").setValue(bio.getText());
+//        }
     }
 
     @OnClick(R.id.user_name)
@@ -535,9 +535,9 @@ public class ProfileActivity extends BaseActivity {
                         b[0] =true;
                     }
                 }).show();
-        if(userName.getText()!=null &&b[0]){
-            mUsersDatabase.child(mFirebaseUser.getUid()).child("userName").setValue(userName.getText());
-        }
+//        if(userName.getText()!=null){
+//            mUsersDatabase.child(mFirebaseUser.getUid()).child("userName").setValue(userName.getText());
+//        }
     }
 
     @OnClick(R.id.lang)
@@ -1017,7 +1017,10 @@ public class ProfileActivity extends BaseActivity {
         Log.d(TAG, "writetoFirebase: "+userType.getText());
         if(userType!=null && (userType.getText().equals("STANDARD")||userType.getText().equals("User Type: Standard"))){
             Log.d(TAG, "writetoFirebase: "+mFirebaseUser.getUid());
-            User user = new User(nameDB,bioDB,langDB,dobDB,dpPathDB,coverPathDB,genderDB,userNameDB,ageDB);
+            mUsersDatabase.child(mFirebaseUser.getUid()).child("userName").setValue(userNameDB);
+            mUsersDatabase.child(mFirebaseUser.getUid()).child("gender").setValue(genderDB);
+            mUsersDatabase.child(mFirebaseUser.getUid()).child("name").setValue(nameDB);
+            mUsersDatabase.child(mFirebaseUser.getUid()).child("bio").setValue(bioDB);
             mUsersDatabase.child(mFirebaseUser.getUid()).child("email").setValue(mFirebaseUser.getEmail());
         }
         else {

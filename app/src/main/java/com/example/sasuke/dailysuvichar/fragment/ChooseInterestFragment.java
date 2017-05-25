@@ -8,7 +8,6 @@ import android.widget.Toast;
 
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.activity.SubInterestActivity;
-import com.example.sasuke.dailysuvichar.models.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -158,8 +157,10 @@ public class ChooseInterestFragment extends BaseFragment implements BubblePicker
             Toast.makeText(getContext(),"Please Choose at least 1 more interests", Toast.LENGTH_SHORT).show();
         }
         else{
-            User user = new User(mSelectedSubInterests, mAllInterests);
-            mDatabase.child(mFirebaseUser.getUid()).setValue(user);
+//            User user = new User(mSelectedSubInterests, mAllInterests);
+            mDatabase.child(mFirebaseUser.getUid()).child("mAllInterests").setValue(mAllInterests);
+            mDatabase.child(mFirebaseUser.getUid()).child("mSelectedSubInterests").setValue(mSelectedSubInterests);
+//            mDatabase.child(mFirebaseUser.getUid()).setValue(user);
             startActivity(SubInterestActivity.newIntent(getActivity()));
         }
     }
