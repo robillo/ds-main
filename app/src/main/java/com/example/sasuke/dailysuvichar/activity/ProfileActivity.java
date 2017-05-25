@@ -227,6 +227,7 @@ public class ProfileActivity extends BaseActivity {
 //        ).executeAsync();
 //    }
 
+
     private void fetchData() {
 
         mUsersDatabase.child(mFirebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
