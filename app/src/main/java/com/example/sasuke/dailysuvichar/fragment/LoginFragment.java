@@ -29,6 +29,7 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.mobsandgeeks.saripaar.Validator;
@@ -184,6 +185,7 @@ public class LoginFragment extends BaseFragment implements GoogleApiClient.OnCon
             public void onSuccess(LoginResult loginResult) {
                 String w = loginResult.getAccessToken().getToken();
                 Log.e("FID", w);
+                Log.d("LOG", "facebook:onSuccess:" + loginResult + w);
                 SharedPrefs.setFacebookToken(w);
                 showDialog("", getResources().getString(R.string.please_wait));
                 handleFacebookAccessToken(loginResult.getAccessToken());
@@ -191,10 +193,12 @@ public class LoginFragment extends BaseFragment implements GoogleApiClient.OnCon
 
             @Override
             public void onCancel() {
+                Toast.makeText(getActivity().getApplicationContext(), "FACEBOOK ON CANCEL", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onError(FacebookException error) {
+                Toast.makeText(getActivity().getApplicationContext(), "FACEBOOK EXCEPTION ERROR", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -208,6 +212,7 @@ public class LoginFragment extends BaseFragment implements GoogleApiClient.OnCon
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
 //        if (requestCode == RC_GSIGN_IN) {
 //            GoogleSignInResult googleSignInResult = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
 //            if (googleSignInResult.isSuccess()) {
@@ -249,20 +254,24 @@ public class LoginFragment extends BaseFragment implements GoogleApiClient.OnCon
 //    }
 
     private void handleFacebookAccessToken(AccessToken token) {
+        Log.d("HANDLING", "handleFacebookAccessToken:" + token);
         AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
         mFirebaseAuth.signInWithCredential(credential)
                 .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (!task.isSuccessful()) {
+                            Log.e("SUCCESS?   ", "NO");
+                            Log.w("EXCEPTION", "signInWithCredential:failure", task.getException());
                             dismissDialog();
-                            Toast.makeText(getActivity(), getResources().getString(R.string.authentication_failed), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity().getApplicationContext(), "AUTHENTICATION FAILED", Toast.LENGTH_SHORT).show();
                         } else {
-                            Intent i = new Intent(getContext(), ProfileActivity.class);
+                            Log.e("SUCCESS?   ", "YES");
+                            Intent i = new Intent(getActivity().getApplicationContext(), ProfileActivity.class);
                             i.putExtra("fromLogin", 0);
                             startActivity(i);
-//                            startActivity(ChooseInterestActivity.newIntent(getContext()));
                             dismissDialog();
+                            Toast.makeText(getActivity().getApplicationContext(), "AUTHENTICATION SUCCESSFUL", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -284,5 +293,17 @@ public class LoginFragment extends BaseFragment implements GoogleApiClient.OnCon
     public void dismissDialog() {
         if (mDialog.isShowing())
             mDialog.dismiss();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mFirebaseAuth.getCurrentUser();
+        if (currentUser!=null){
+            Intent i = new Intent(getActivity().getApplicationContext(), ProfileActivity.class);
+            i.putExtra("fromLogin", 0);
+            startActivity(i);
+        }
     }
 }
