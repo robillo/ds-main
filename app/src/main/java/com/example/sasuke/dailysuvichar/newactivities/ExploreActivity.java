@@ -1,5 +1,6 @@
 package com.example.sasuke.dailysuvichar.newactivities;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
 import com.example.sasuke.dailysuvichar.R;
+import com.example.sasuke.dailysuvichar.activity.HomeActivity;
 import com.example.sasuke.dailysuvichar.newfragments.AllPhotosFragment;
 import com.example.sasuke.dailysuvichar.newfragments.AllStatusFragment;
 import com.example.sasuke.dailysuvichar.newfragments.AllVideosFragment;
@@ -39,5 +41,11 @@ public class ExploreActivity extends AppCompatActivity {
         adapter.addFragment(new AllPhotosFragment(), "Photos");
         adapter.addFragment(new AllVideosFragment(), "Videos");
         viewPager.setAdapter(adapter);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(this, HomeActivity.class));
     }
 }

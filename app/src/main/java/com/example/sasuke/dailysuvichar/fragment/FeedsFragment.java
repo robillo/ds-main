@@ -16,8 +16,8 @@ public class FeedsFragment extends BaseFragment {
     @NotEmpty
     @BindView(R.id.recyclerview)
     RecyclerView recyclerView;
-    @BindView(R.id.edittext)
-    EditText editText;
+//    @BindView(R.id.edittext)
+//    EditText editText;
 
     @Override
     protected int getLayoutResId() {

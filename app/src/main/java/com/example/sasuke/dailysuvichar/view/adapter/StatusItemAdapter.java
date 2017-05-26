@@ -56,34 +56,34 @@ public class StatusItemAdapter extends ItemViewBinder<Status, StatusViewHolder> 
             }
         });
         holder.setStatusDP(item.getUid());
-        holder.comment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new MaterialDialog.Builder(pContext)
-                        .title("Post Comment")
-                        .content("Enter The Comment here:")
-                        .inputType(InputType.TYPE_CLASS_TEXT)
-                        .input("Robillo Is A Great Guy.", "", new MaterialDialog.InputCallback() {
-                            @Override
-                            public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
-                                // Do something
-                                Toast.makeText(pContext, input, Toast.LENGTH_SHORT).show();
-                            }
-                        }).show();
-            }
-        });
-        holder.mBtnLike.setOnLikeListener(new OnLikeListener() {
-            @Override
-            public void liked(LikeButton likeButton) {
-                likeButton.setLiked(true);
-
-            }
-
-            @Override
-            public void unLiked(LikeButton likeButton) {
-                likeButton.setLiked(false);
-            }
-        });
+//        holder.comment.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                new MaterialDialog.Builder(pContext)
+//                        .title("Post Comment")
+//                        .content("Enter The Comment here:")
+//                        .inputType(InputType.TYPE_CLASS_TEXT)
+//                        .input("Robillo Is A Great Guy.", "", new MaterialDialog.InputCallback() {
+//                            @Override
+//                            public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
+//                                // Do something
+//                                Toast.makeText(pContext, input, Toast.LENGTH_SHORT).show();
+//                            }
+//                        }).show();
+//            }
+//        });
+//        holder.mBtnLike.setOnLikeListener(new OnLikeListener() {
+//            @Override
+//            public void liked(LikeButton likeButton) {
+//                likeButton.setLiked(true);
+//
+//            }
+//
+//            @Override
+//            public void unLiked(LikeButton likeButton) {
+//                likeButton.setLiked(false);
+//            }
+//        });
     }
 
     public static String getTimeAgo(long time) {

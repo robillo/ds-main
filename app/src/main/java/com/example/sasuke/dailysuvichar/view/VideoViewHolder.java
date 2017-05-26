@@ -9,16 +9,12 @@ import com.like.LikeButton;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * Created by Sasuke on 5/7/2017.
- */
-
 public class VideoViewHolder extends RecyclerView.ViewHolder {
 
     @BindView(R.id.webview)
     public YoutubeWebView mVideoView;
-    @BindView(R.id.button_like)
-    public LikeButton mBtnLike;
+//    @BindView(R.id.button_like)
+//    public LikeButton mBtnLike;
 //    @BindView(R.id.tv_like)
 //    TextView tv_like;
 

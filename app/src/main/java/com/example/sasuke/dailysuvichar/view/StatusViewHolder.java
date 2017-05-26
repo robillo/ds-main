@@ -36,16 +36,16 @@ public class StatusViewHolder extends RecyclerView.ViewHolder {
     TextView mTvUserName;
     @BindView(R.id.tv_post_time)
     TextView mTvPostTime;
-    @BindView(R.id.tv_likes)
-    TextView tvLikes;
-    @BindView(R.id.tv_comments)
-    TextView tvComments;
+//    @BindView(R.id.tv_likes)
+//    TextView tvLikes;
+//    @BindView(R.id.tv_comments)
+//    TextView tvComments;
     @BindView(R.id.status)
     TextView mTvStatus;
-    @BindView(R.id.button_like)
-    public LikeButton mBtnLike;
-    @BindView(R.id.comment)
-    public LinearLayout comment;
+//    @BindView(R.id.button_like)
+//    public LikeButton mBtnLike;
+//    @BindView(R.id.comment)
+//    public LinearLayout comment;
     @BindView(R.id.iv_profile)
     ImageView statusDP;
 
@@ -130,10 +130,10 @@ public class StatusViewHolder extends RecyclerView.ViewHolder {
             mTvStatus.setText(status);
     }
     public void setLikes(int likes){
-        tvLikes.setText(String.valueOf(likes)+" likes");
+//        tvLikes.setText(String.valueOf(likes)+" likes");
     }
     public void setComments(int comments){
-        tvComments.setText(String.valueOf(comments)+" comments");
+//        tvComments.setText(String.valueOf(comments)+" comments");
     }
 }
 

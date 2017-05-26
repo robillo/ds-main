@@ -2,18 +2,24 @@ package com.example.sasuke.dailysuvichar.newfragments;
 
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.sasuke.dailysuvichar.R;
 
+import butterknife.BindView;
+
 /**
  * A simple {@link Fragment} subclass.
  */
 public class AllStatusFragment extends Fragment {
 
+    @BindView(R.id.swiperefresh)
+    SwipeRefreshLayout refreshLayout;
 
     public AllStatusFragment() {
         // Required empty public constructor
@@ -27,4 +33,26 @@ public class AllStatusFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_all_status, container, false);
     }
 
+    private void refresh(){
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Handler handler = new Handler();
+                Handler handler1 = new Handler();
+                handler1.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        //CALL DATA HERE
+
+                    }
+                });
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        refreshLayout.setRefreshing(false);
+                    }
+                },1500);
+            }
+        });
+    }
 }
