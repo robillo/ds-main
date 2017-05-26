@@ -13,16 +13,22 @@ import android.support.v7.widget.Toolbar;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.fragment.MainFragment;
 import com.example.sasuke.dailysuvichar.fragment.SettingsFragment;
 import com.example.sasuke.dailysuvichar.utils.SharedPrefs;
 import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.mikhaellopez.circularimageview.CircularImageView;
@@ -78,24 +84,26 @@ public class HomeActivity extends BaseActivity {
 
     private void fetchData() {
 
-//        mUsersDatabase.child(mFirebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//
-//                if(dataSnapshot.child("photoUrl").getValue()!=null) {
-//                    Glide.with(HomeActivity.this).
-//                            using(new FirebaseImageLoader())
-//                            .load(mStorageReferenceDP.child(dataSnapshot.getKey()))
-//                            .fitCenter()
-//                            .placeholder(R.drawable.profile)
-//                            .diskCacheStrategy(DiskCacheStrategy.ALL)
-//                            .into(drawerDP);
-//                }
-//            }
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//            }
-//        });
+        mUsersDatabase.child(mFirebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                if(!HomeActivity.this.isDestroyed()) {
+                    if (dataSnapshot.child("photoUrl").getValue() != null) {
+                        Glide.with(HomeActivity.this).
+                                using(new FirebaseImageLoader())
+                                .load(mStorageReferenceDP.child(dataSnapshot.getKey()))
+                                .fitCenter()
+                                .placeholder(R.drawable.profile)
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .into(drawerDP);
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
     }
 
     @OnClick(R.id.drawer_button)
@@ -219,8 +227,9 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
+        Glide.clear(drawerDP);
         finish();
+        super.onDestroy();
     }
 
     @Override
