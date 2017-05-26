@@ -128,29 +128,23 @@ public class AllStatusFragment extends Fragment {
         mRvHome.setLayoutManager(mLayoutManager);
         mAdapter = new MultiTypeAdapter();
         mAdapter.register(Status.class, new StatusItemAdapter());
-//        mAdapter.register(Photo.class, new PhotoItemAdapter());
-//        mAdapter.register(CustomVideo.class, new CustomVideoAdapter());
-//        mAdapter.register(Video.class, new VideoItemAdapter(getActivity()));
         mRvHome.setAdapter(mAdapter);
 
         items = new Items();
 
-//        mRvHome.setOnScrollListener(new RecyclerView.OnScrollListener() {
-//            @Override
-//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-//                super.onScrolled(recyclerView, dx, dy);
-//                customVideoAdapter.releaseVideo();
-//            }
-//        });
 
-        refresh();
 
         mDatabaseReference = FirebaseDatabase.getInstance().getReference("users");
         Log.e(TAG, uid);
         Log.e(TAG, mDatabaseReference.toString());
 
         mSelectedSubInterests = new ArrayList<>();
+        isDone= new HashMap<>();
 
+        statusHashMap = new HashMap<>();
+        statusHashMapStore = new HashMap<>();
+
+        refresh();
 
         mDatabaseReference.child(mFirebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
@@ -201,7 +195,7 @@ public class AllStatusFragment extends Fragment {
                     public void run() {
                         //CALL DATA HERE
                         fetchStatusFromFirebase();
-
+//
                         mPullToRefresh.setRefreshing(false);
                         Toast.makeText(getActivity(), "Feeds Updated Successfully.", Toast.LENGTH_SHORT).show();
                     }
@@ -218,9 +212,6 @@ public class AllStatusFragment extends Fragment {
 
     private void fetchStatusFromFirebase() {
 
-        isDone= new HashMap<>();
-        statusHashMap = new HashMap<>();
-        statusHashMapStore = new HashMap<>();
 
         if (mSelectedSubInterests.size() > 0) {
             Log.d(TAG, "fetchStatusFromFirebase: SIZE " + mSelectedSubInterests.size());
