@@ -2,6 +2,7 @@ package com.example.sasuke.dailysuvichar.newactivities;
 
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -9,10 +10,14 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.example.sasuke.dailysuvichar.R;
+import com.example.sasuke.dailysuvichar.activity.HomeActivity;
 import com.example.sasuke.dailysuvichar.models.Guru;
 import com.example.sasuke.dailysuvichar.view.adapter.RVGuruAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -65,6 +70,10 @@ public class NewGurusActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_gurus);
         ButterKnife.bind(this);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         mStorageReference = FirebaseStorage.getInstance().getReference("profile").child("user").child("dp");
@@ -176,20 +185,15 @@ public class NewGurusActivity extends AppCompatActivity {
         }
 
     }
-//
-//    @Override
-//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        inflater.inflate(R.menu.main, menu);
-//
-//        super.onCreateOptionsMenu(menu, inflater);
-//    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         switch (id) {
@@ -209,6 +213,31 @@ public class NewGurusActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+//        @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        // Handle action bar item clicks here. The action bar will
+//        // automatically handle clicks on the Home/Up button, so long
+//        // as you specify a parent activity in AndroidManifest.xml.
+//        int id = item.getItemId();
+//
+//        switch (id) {
+//            case R.id.action_search: {
+//
+//                break;
+//            }
+//            case R.id.action_sort: {
+//                showPopup();
+//                break;
+//            }
+//            case R.id.about: {
+//
+//                break;
+//            }
+//        }
+//
+//        return super.onOptionsItemSelected(item);
+//    }
 
     private void showPopup() {
 
@@ -263,5 +292,11 @@ public class NewGurusActivity extends AppCompatActivity {
                     }
                 });
         builder.show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(this, HomeActivity.class));
     }
 }
