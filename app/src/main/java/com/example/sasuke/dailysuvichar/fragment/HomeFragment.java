@@ -271,7 +271,7 @@ public class HomeFragment extends BaseFragment {
 
                 intentDBReference = mStorageReferenceDP.child(dataSnapshot.getKey()).toString();
                 Log.e("REFERENCE", intentDBReference);
-                if(dataSnapshot.child("photoUrl").getValue()!=null) {
+                if(dataSnapshot.child("photoUrl").getValue()!=null &&getActivity()!=null) {
                     Glide.with(getActivity()).
                             using(new FirebaseImageLoader())
                             .load(mStorageReferenceDP.child(dataSnapshot.getKey()))
