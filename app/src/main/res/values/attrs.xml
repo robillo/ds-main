@@ -23,4 +23,12 @@
         <attr name="item_width" format="dimension" />
         <attr name="item_text_size" format="integer" />
     </declare-styleable>
+
+    <declare-styleable name="GooeyMenu">
+        <attr name="no_of_menu" format="integer" />
+        <attr name="fab_radius" format="dimension" />
+        <attr name="menu_radius" format="dimension" />
+        <attr name="gap_between_menu_fab" format="dimension" />
+        <attr name="menu_drawable" format="reference" />
+    </declare-styleable>
 </resources>
