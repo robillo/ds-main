@@ -210,11 +210,14 @@ public class SubInterestFragment extends BaseFragment {
             }
         }
         else {
-            Toast.makeText(getActivity(), "Oops. Seems Like There was some error in the login process.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Incomplete Data.", Toast.LENGTH_SHORT).show();
         }
 
         if(mSelectedSubInterests!=null && mSelectedSubInterests.size()<3){
             Toast.makeText(getActivity().getApplicationContext(), "Please select at least 3 sub interests", Toast.LENGTH_SHORT).show();
+        }
+        else if(mSelectedSubInterests==null){
+            Toast.makeText(getContext().getApplicationContext(), "Please Check Your Internet Connection.", Toast.LENGTH_SHORT).show();
         }
         else {
             mDatabase.child(mFirebaseUser.getUid()).child("mAllInterests").setValue(mAllInterests);
