@@ -264,4 +264,8 @@ public class NewGurusActivity extends AppCompatActivity {
                 });
         builder.show();
     }
+
+    public void refreshDB(){
+
+    }
 }

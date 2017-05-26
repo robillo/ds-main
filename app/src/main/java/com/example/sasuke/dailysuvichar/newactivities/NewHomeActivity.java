@@ -1,12 +1,11 @@
 package com.example.sasuke.dailysuvichar.newactivities;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.widget.Toast;
 
 import com.example.sasuke.dailysuvichar.R;
@@ -16,6 +15,8 @@ import com.example.sasuke.dailysuvichar.newfragments.AllStatusFragment;
 import com.example.sasuke.dailysuvichar.newfragments.AllVideosFragment;
 import com.example.sasuke.dailysuvichar.utils.GooeyMenu;
 import com.example.sasuke.dailysuvichar.view.adapter.ViewPagerAdapter;
+
+import butterknife.ButterKnife;
 
 public class NewHomeActivity extends AppCompatActivity implements GooeyMenu.GooeyMenuInterface{
 
@@ -28,6 +29,8 @@ public class NewHomeActivity extends AppCompatActivity implements GooeyMenu.Gooe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_home);
+        ButterKnife.bind(this);
+
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
