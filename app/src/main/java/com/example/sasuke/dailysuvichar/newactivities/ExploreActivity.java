@@ -52,7 +52,7 @@ public class ExploreActivity extends AppCompatActivity implements GooeyMenu.Gooe
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(this, HomeActivity.class));
+        startActivity(new Intent(this, NewMainActivity.class));
     }
 
     @Override

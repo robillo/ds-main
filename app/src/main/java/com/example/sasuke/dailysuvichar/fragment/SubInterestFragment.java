@@ -1,10 +1,12 @@
 package com.example.sasuke.dailysuvichar.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -12,6 +14,8 @@ import android.widget.Toast;
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.activity.HomeActivity;
 import com.example.sasuke.dailysuvichar.models.Data;
+import com.example.sasuke.dailysuvichar.newactivities.NewHomeActivity;
+import com.example.sasuke.dailysuvichar.newactivities.NewMainActivity;
 import com.example.sasuke.dailysuvichar.view.adapter.RecyclerViewAdapter;
 import com.example.sasuke.dailysuvichar.view.adapter.SubInterestAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -51,7 +55,7 @@ public class SubInterestFragment extends BaseFragment {
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
     private ArrayList<String> mSubInterests;
-    private ArrayList<String> mSelectedSubInterests;
+    private ArrayList<String> mSelectedSubInterests = null;
     private boolean mVisitedAlready = false;
     private HashMap<String,ArrayList<String>> mAllInterests;
 
@@ -197,20 +201,26 @@ public class SubInterestFragment extends BaseFragment {
 
     @OnClick(R.id.tv_next)
     public void openHomeActivity() {
+        if(data!=null){
+            mSelectedSubInterests= new ArrayList<>();
+            for(Data d:data){
+                if(d.getSelected()){
+                    mSelectedSubInterests.add(d.getHeader().toLowerCase());
+                }
+            }
+        }
+        else {
+            Toast.makeText(getActivity(), "Oops. Seems Like There was some error in the login process.", Toast.LENGTH_SHORT).show();
+        }
+
         if(mSelectedSubInterests!=null && mSelectedSubInterests.size()<3){
             Toast.makeText(getActivity().getApplicationContext(), "Please select at least 3 sub interests", Toast.LENGTH_SHORT).show();
         }
         else {
-            startActivity(HomeActivity.newIntent(getActivity()));
+            mDatabase.child(mFirebaseUser.getUid()).child("mAllInterests").setValue(mAllInterests);
+            mDatabase.child(mFirebaseUser.getUid()).child("mSelectedSubInterests").setValue(mSelectedSubInterests);
+            startActivity(new Intent(getActivity().getApplicationContext(), NewMainActivity.class));
         }
-        mSelectedSubInterests= new ArrayList<>();
-        for(Data d:data){
-            if(d.getSelected()){
-                mSelectedSubInterests.add(d.getHeader().toLowerCase());
-            }
-        }
-        mDatabase.child(mFirebaseUser.getUid()).child("mAllInterests").setValue(mAllInterests);
-        mDatabase.child(mFirebaseUser.getUid()).child("mSelectedSubInterests").setValue(mSelectedSubInterests);
 
 //        User user = new User(mAllInterests, mSelectedSubInterests);
 //        mDatabase.child(mFirebaseUser.getUid()).setValue(user);

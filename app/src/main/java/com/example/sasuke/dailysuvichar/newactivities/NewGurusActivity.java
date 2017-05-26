@@ -297,6 +297,6 @@ public class NewGurusActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(this, HomeActivity.class));
+        startActivity(new Intent(this, NewMainActivity.class));
     }
 }

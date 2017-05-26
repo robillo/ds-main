@@ -12,6 +12,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -35,7 +37,7 @@ public class NewMainActivity extends AppCompatActivity {
     private int[] layouts;
     private RecyclerView recyclerView;
     private List<Feature> list;
-    private String[] levels, levelHeaders, photoUrls;
+    private String[] names, descriptions, photoUrls;
     private static final int NUM_PAGES = 3;
     private ViewPager mPager;
     private PagerAdapter mPagerAdapter;
@@ -67,20 +69,26 @@ public class NewMainActivity extends AppCompatActivity {
         mPager.addOnPageChangeListener(viewPagerPageChangeListener);
 
         list = new ArrayList<>();
-        list.add(new Feature("Your Twisters", "Use Your Imagination To Create Your Own Twisters.", "https://3.bp.blogspot.com/-FTKj7QUV61w/WJBgEaJclgI/AAAAAAAAAFw/dX-wb54JX-AYiDGPPB1Z3lvS7ZCoUNKBACLcB/s1600/ph6.png", 1));
-        list.add(new Feature("Share App With Friends", "Enable Your Friends Gain Access To The Vast Collection Of Tongue Twisters.", "https://3.bp.blogspot.com/-FTKj7QUV61w/WJBgEaJclgI/AAAAAAAAAFw/dX-wb54JX-AYiDGPPB1Z3lvS7ZCoUNKBACLcB/s1600/ph6.png", 2));
-        list.add(new Feature("Review App?", "Like the App? Or Do You Want an additional feature to be added to be app? Here's The Place You Seek.", "https://3.bp.blogspot.com/-FTKj7QUV61w/WJBgEaJclgI/AAAAAAAAAFw/dX-wb54JX-AYiDGPPB1Z3lvS7ZCoUNKBACLcB/s1600/ph6.png", 3));
+        list.add(new Feature("Your Feeds",
+                "See What You Have Posted On Daily Suvichar So Far.",
+                "https://3.bp.blogspot.com/-FTKj7QUV61w/WJBgEaJclgI/AAAAAAAAAFw/dX-wb54JX-AYiDGPPB1Z3lvS7ZCoUNKBACLcB/s1600/ph6.png", 1));
+        list.add(new Feature("Your Profile",
+                "See Data That You Have Provided Us.",
+                "https://3.bp.blogspot.com/-FTKj7QUV61w/WJBgEaJclgI/AAAAAAAAAFw/dX-wb54JX-AYiDGPPB1Z3lvS7ZCoUNKBACLcB/s1600/ph6.png", 2));
+        list.add(new Feature("Review App?",
+                "Like the App? Or Do You Want an additional feature to be added to be app? Here's The Place You Seek.",
+                "www.google.com", 3));
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         recyclerView.setAdapter(new RVAFeature(getApplicationContext(), list));
     }
 
     private void assignStringValues(){
-        levels = new String[]{"HOME", "Guru List", "Explore"};
-        levelHeaders = new String[]{"A place where you get the feeds based on your Interests.",
+        names = new String[]{"HOME", "Guru List", "Explore"};
+        descriptions = new String[]{"A place where you get the feeds based on your Interests.",
         "See a List of Spiritual Leaders, their Profile and their Posts.",
         "See The Personalised Posts of Those you Follow."};
-        photoUrls = new String[]{"https://2.bp.blogspot.com/-IY-IOkq2V5A/WJBfTUFfrTI/AAAAAAAAAFY/rurHHcN20r0EVurB8NFU3BB15B1wubJJgCLcB/s1600/placeholder.png",
-        "https://1.bp.blogspot.com/-e3cvqWcBdhc/WJBgDvUM6BI/AAAAAAAAAFk/SOlb9rdvi7gm5iThWrCoH273_kn0rQo3gCLcB/s1600/ph2.png",
+        photoUrls = new String[]{"https://1.bp.blogspot.com/-KOrgmRC8Nj0/WSh6_7z7ryI/AAAAAAAAASc/_O4UwRnmDsAZ2IFzIAh_eKXuVh9gti_CACK4B/s320/yoga2.jpg",
+        "https://3.bp.blogspot.com/-O-kG5WpcVa8/WSh-Fh2m0_I/AAAAAAAAAS8/TwAT0D23cx0sQ0oCu_cKkPVL8MdAACtWgCK4B/s320/Buddha%2BSpiritual%2BBuddha%2B%2BAbstract%2B3D%2Band%2BCG%2BHD%2BDesktop%2BWallpaper.jpg",
         "https://1.bp.blogspot.com/-OYwFn64dzV0/WJBfWvYaXaI/AAAAAAAAAFc/1egquqeEF30HrOgarJflAGp8fXqyBeKDQCLcB/s1600/ph4.jpg"};
     }
 
@@ -179,8 +187,8 @@ public class NewMainActivity extends AppCompatActivity {
     private Fragment assignFragment(int position){
         Fragment fragment = new PagerFragment();
         Bundle args = new Bundle();
-        args.putString("level", levels[position]);
-        args.putString("levelHeader", levelHeaders[position]);
+        args.putString("level", names[position]);
+        args.putString("levelHeader", descriptions[position]);
         args.putString("photoUrl", photoUrls[position]);
         args.putInt("levelNumber", position + 1);
         fragment.setArguments(args);
@@ -217,4 +225,24 @@ public class NewMainActivity extends AppCompatActivity {
 
         }
     };
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.new_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch (id) {
+            case R.id.about: {
+
+                break;
+            }
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }
