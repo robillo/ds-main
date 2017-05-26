@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.sasuke.dailysuvichar.R;
+import com.example.sasuke.dailysuvichar.newactivities.NewHomeActivity;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.github.piasy.biv.BigImageViewer;
 import com.github.piasy.biv.loader.glide.GlideImageLoader;
@@ -45,6 +46,6 @@ public class FullScreenActivity extends BaseActivity{
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(this, HomeActivity.class));
+        startActivity(new Intent(this, NewHomeActivity.class));
     }
 }
