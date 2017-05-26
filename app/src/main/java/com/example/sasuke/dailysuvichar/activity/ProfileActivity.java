@@ -29,6 +29,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.models.Guru;
+import com.example.sasuke.dailysuvichar.newactivities.NewHomeActivity;
 import com.example.sasuke.dailysuvichar.utils.SharedPrefs;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -1068,7 +1069,7 @@ public class ProfileActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         if(code==1){
-            startActivity(new Intent(this,HomeActivity.class));
+            startActivity(new Intent(this, NewHomeActivity.class));
         }
     }
 
