@@ -207,8 +207,8 @@ public class AllPhotosFragment extends Fragment {
 
 
         if (mSelectedSubInterests.size() > 0) {
-            Log.d(TAG, "fetchPhotosFromFirebase: SIZE " + mSelectedSubInterests.size());
-            Log.d(TAG, "fetchPhotosFromFirebase: " + mSelectedSubInterests);
+            mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("tags");
+            mStorageReference = FirebaseStorage.getInstance().getReference("posts").child("images");
 
             mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("tags");
             for (int i = 0; i < mSelectedSubInterests.size(); i++) {
@@ -231,7 +231,7 @@ public class AllPhotosFragment extends Fragment {
                             photoSnap.setStorageReference(mStorageReference.child(postSnapshot.getKey()));
 
                             if (!isDone.containsKey(postSnapshot.getKey())) {
-//                                items.add(status);
+//                                items.add(photoSnap);
                                 isDone.put(postSnapshot.getKey(), photoSnap.getTimestamp());
                                 photoHashMapStore.put(postSnapshot.getKey(), photoSnap);
                             }
