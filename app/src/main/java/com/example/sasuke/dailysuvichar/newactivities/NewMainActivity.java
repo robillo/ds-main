@@ -1,5 +1,7 @@
 package com.example.sasuke.dailysuvichar.newactivities;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -20,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.sasuke.dailysuvichar.R;
+import com.example.sasuke.dailysuvichar.activity.MainActivity;
 import com.example.sasuke.dailysuvichar.models.Feature;
 import com.example.sasuke.dailysuvichar.newadapters.RVAFeature;
 import com.example.sasuke.dailysuvichar.newfragments.PagerFragment;
@@ -41,6 +44,10 @@ public class NewMainActivity extends AppCompatActivity {
     private static final int NUM_PAGES = 3;
     private ViewPager mPager;
     private PagerAdapter mPagerAdapter;
+
+    public static Intent newIntent(Context context) {
+        return new Intent(context, NewMainActivity.class);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

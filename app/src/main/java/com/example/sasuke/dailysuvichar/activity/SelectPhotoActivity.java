@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.models.Photo;
+import com.example.sasuke.dailysuvichar.newactivities.NewHomeActivity;
 import com.example.sasuke.dailysuvichar.view.RVTags;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -301,7 +302,7 @@ public class SelectPhotoActivity extends BaseActivity{
                     mDatabaseReferenceUser.child("users").child(mFirebaseUser.getUid()).child("posts").child("photo").push().setValue(photo);
 
                     Toast.makeText(this, "Post successful!", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(this, HomeActivity.class));
+                    startActivity(new Intent(this, NewHomeActivity.class));
                     finish();
                 }else{
                     Toast.makeText(this, "Write a caption", Toast.LENGTH_SHORT).show();

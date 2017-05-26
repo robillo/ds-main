@@ -33,10 +33,10 @@
         >
         <activity android:name=".activity.ChooseInterestActivity" />
         <activity android:name=".activity.SubInterestActivity" />
-        <activity
-            android:name=".activity.HomeActivity"
-            android:configChanges="orientation|screenSize"
-            android:hardwareAccelerated="true" />
+        <!--<activity-->
+            <!--android:name=".activity.HomeActivity"-->
+            <!--android:configChanges="orientation|screenSize"-->
+            <!--android:hardwareAccelerated="true" />-->
         <activity
             android:name=".activity.SelectActivity"
             android:theme="@style/AppTheme.NoActionBar"

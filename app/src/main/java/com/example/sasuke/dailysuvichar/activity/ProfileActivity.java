@@ -3,6 +3,7 @@ package com.example.sasuke.dailysuvichar.activity;
 import android.Manifest;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -28,6 +29,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.models.Guru;
+import com.example.sasuke.dailysuvichar.utils.SharedPrefs;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -93,6 +95,10 @@ public class ProfileActivity extends BaseActivity {
     ImageView govID;
     @BindView(R.id.specID)
     ImageView specID;
+
+    public static Intent newIntent(Context context) {
+        return new Intent(context, ProfileActivity.class);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -783,6 +789,7 @@ public class ProfileActivity extends BaseActivity {
             if(checkValidate("STANDARD")){
 //                writetoFirebaseAsStandard();
                 writetoFirebase();
+                SharedPrefs.setIsProfileSet("TRUE");
                 startActivity(new Intent(this, ChooseInterestActivity.class));
             }
             else {
@@ -794,6 +801,7 @@ public class ProfileActivity extends BaseActivity {
             if(checkValidate("GURU")){
 //                writetoFirebaseAsGuru();
                 writetoFirebase();
+                SharedPrefs.setIsProfileSet("TRUE");
                 startActivity(new Intent(this, ChooseInterestActivity.class));
             }
             else {

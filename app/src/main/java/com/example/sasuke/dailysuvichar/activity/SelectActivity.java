@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.models.Status;
+import com.example.sasuke.dailysuvichar.newactivities.NewHomeActivity;
 import com.example.sasuke.dailysuvichar.view.RVTags;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -189,7 +190,7 @@ public class SelectActivity extends BaseActivity {
                 mDatabaseReferenceUser.child("users").child(mFirebaseUser.getUid()).child("posts").child("status").push().setValue(status);
 
                 Toast.makeText(context,"Post successful!", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(this,HomeActivity.class));
+                startActivity(new Intent(this, NewHomeActivity.class));
                 finish();
             }
         }

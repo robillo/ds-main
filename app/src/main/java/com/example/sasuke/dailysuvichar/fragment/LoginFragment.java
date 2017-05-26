@@ -269,6 +269,7 @@ public class LoginFragment extends BaseFragment implements GoogleApiClient.OnCon
                             Log.e("SUCCESS?   ", "YES");
                             Intent i = new Intent(getActivity().getApplicationContext(), ProfileActivity.class);
                             i.putExtra("fromLogin", 0);
+                            SharedPrefs.setIsLoggedIn("TRUE");
                             startActivity(i);
                             dismissDialog();
                             Toast.makeText(getActivity().getApplicationContext(), "AUTHENTICATION SUCCESSFUL", Toast.LENGTH_SHORT).show();

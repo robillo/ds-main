@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.activity.SubInterestActivity;
+import com.example.sasuke.dailysuvichar.utils.SharedPrefs;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -161,6 +162,7 @@ public class ChooseInterestFragment extends BaseFragment implements BubblePicker
             mDatabase.child(mFirebaseUser.getUid()).child("mAllInterests").setValue(mAllInterests);
             mDatabase.child(mFirebaseUser.getUid()).child("mSelectedSubInterests").setValue(mSelectedSubInterests);
 //            mDatabase.child(mFirebaseUser.getUid()).setValue(user);
+            SharedPrefs.setIsInterestsSelected("TRUE");
             startActivity(SubInterestActivity.newIntent(getActivity()));
         }
     }

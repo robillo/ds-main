@@ -21,6 +21,7 @@ import android.widget.VideoView;
 
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.models.CustomVideo;
+import com.example.sasuke.dailysuvichar.newactivities.NewHomeActivity;
 import com.example.sasuke.dailysuvichar.view.RVTags;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -305,7 +306,7 @@ public class SelectVideoActivity extends BaseActivity{
                     mDatabaseReferenceUser.child("users").child(mFirebaseUser.getUid()).child("posts").child("video").push().setValue(video);
 
                     Toast.makeText(this, "Post successful!", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(this, HomeActivity.class));
+                    startActivity(new Intent(this, NewHomeActivity.class));
                     finish();
                 }else{
                     Toast.makeText(this, "Write a caption", Toast.LENGTH_SHORT).show();

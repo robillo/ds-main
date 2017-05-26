@@ -16,6 +16,7 @@ import com.example.sasuke.dailysuvichar.activity.HomeActivity;
 import com.example.sasuke.dailysuvichar.models.Data;
 import com.example.sasuke.dailysuvichar.newactivities.NewHomeActivity;
 import com.example.sasuke.dailysuvichar.newactivities.NewMainActivity;
+import com.example.sasuke.dailysuvichar.utils.SharedPrefs;
 import com.example.sasuke.dailysuvichar.view.adapter.RecyclerViewAdapter;
 import com.example.sasuke.dailysuvichar.view.adapter.SubInterestAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -222,6 +223,7 @@ public class SubInterestFragment extends BaseFragment {
         else {
             mDatabase.child(mFirebaseUser.getUid()).child("mAllInterests").setValue(mAllInterests);
             mDatabase.child(mFirebaseUser.getUid()).child("mSelectedSubInterests").setValue(mSelectedSubInterests);
+            SharedPrefs.setIsSubinterestsSelected("TRUE");
             startActivity(new Intent(getActivity().getApplicationContext(), NewMainActivity.class));
         }
 

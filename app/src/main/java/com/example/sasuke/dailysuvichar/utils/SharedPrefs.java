@@ -10,6 +10,50 @@ public class SharedPrefs {
     private static final String LOGIN_TOKEN = "login_token";
     private static final String FACEBOOK_TOKEN = "facebook_token";
     private static final String USER_TYPE = "STANDARD";
+    private static final String IS_LOGGED_IN = "FALSE";
+    private static final String IS_PROFILE_SET = "FALSE";
+    private static final String IS_INTERESTS_SELECTED = "FALSE";
+    private static final String IS_SUBINTERESTS_SELECTED = "FALSE";
+
+    public static void setIsLoggedIn(String token){
+        SharedPreferences.Editor editor = getPrefrences().edit();
+        editor.putString(IS_LOGGED_IN, token);
+        editor.apply();
+    }
+
+    public static void setIsProfileSet(String token){
+        SharedPreferences.Editor editor = getPrefrences().edit();
+        editor.putString(IS_PROFILE_SET, token);
+        editor.apply();
+    }
+
+    public static void setIsInterestsSelected(String token){
+        SharedPreferences.Editor editor = getPrefrences().edit();
+        editor.putString(IS_INTERESTS_SELECTED, token);
+        editor.apply();
+    }
+
+    public static void setIsSubinterestsSelected(String token){
+        SharedPreferences.Editor editor = getPrefrences().edit();
+        editor.putString(IS_SUBINTERESTS_SELECTED, token);
+        editor.apply();
+    }
+
+    public static String getIsLoggedIn() {
+        return getPrefrences().getString(IS_LOGGED_IN, null);
+    }
+
+    public static String getIsProfileSet() {
+        return getPrefrences().getString(IS_PROFILE_SET, null);
+    }
+
+    public static String getIsInterestsSelected() {
+        return getPrefrences().getString(IS_INTERESTS_SELECTED, null);
+    }
+
+    public static String getIsSubinterestsSelected() {
+        return getPrefrences().getString(IS_SUBINTERESTS_SELECTED, null);
+    }
 
     private SharedPrefs() {
     }
