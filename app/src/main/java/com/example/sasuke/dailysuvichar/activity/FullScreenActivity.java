@@ -1,6 +1,7 @@
 package com.example.sasuke.dailysuvichar.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
@@ -39,5 +40,11 @@ public class FullScreenActivity extends BaseActivity{
                 .load(gsReference)
                 .placeholder(new IndeterminateCircularProgressDrawable(getApplicationContext()))
                 .into((ImageView) findViewById(R.id.imageView));
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(this, HomeActivity.class));
     }
 }
