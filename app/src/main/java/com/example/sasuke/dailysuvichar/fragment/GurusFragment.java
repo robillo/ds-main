@@ -172,17 +172,21 @@ public class GurusFragment extends BaseFragment {
         }
 
         if(isFollowing){
-            following.add(guruUid);
-            guruFollowers.add(mFirebaseUser.getUid());
-            mDatabaseReferenceGuru.child(guruUid).child("followersCount").setValue(followerCount+1);
+            if(!following.contains(guruUid)) {
+                following.add(guruUid);
+                guruFollowers.add(mFirebaseUser.getUid());
+                mDatabaseReferenceUser.child("following").setValue(following);
+            }
+            mDatabaseReferenceGuru.child(guruUid).child("followersCount").setValue(followerCount + 1);
             mDatabaseReferenceGuru.child(guruUid).child("followers").setValue(guruFollowers);
-            mDatabaseReferenceUser.child("following").setValue(following);
         }else{
-            following.remove(guruUid);
-            guruFollowers.remove(mFirebaseUser.getUid());
-            mDatabaseReferenceGuru.child(guruUid).child("followersCount").setValue(followerCount-1);
+            if(following.contains(guruUid)) {
+                following.remove(guruUid);
+                guruFollowers.remove(mFirebaseUser.getUid());
+                mDatabaseReferenceUser.child("following").setValue(following);
+            }
+            mDatabaseReferenceGuru.child(guruUid).child("followersCount").setValue(followerCount - 1);
             mDatabaseReferenceGuru.child(guruUid).child("followers").setValue(guruFollowers);
-            mDatabaseReferenceUser.child("following").setValue(following);
         }
 
     }

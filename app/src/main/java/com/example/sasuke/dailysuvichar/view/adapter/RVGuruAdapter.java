@@ -13,6 +13,8 @@ import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.fragment.GurusFragment;
 import com.example.sasuke.dailysuvichar.models.Guru;
 import com.example.sasuke.dailysuvichar.view.VHGurus;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.willowtreeapps.spruce.Spruce;
 import com.willowtreeapps.spruce.animation.DefaultAnimations;
 import com.willowtreeapps.spruce.sort.LinearSort;
@@ -31,10 +33,12 @@ public class RVGuruAdapter extends RecyclerView.Adapter<VHGurus> {
     private String PANDIT = "Pandit";
     private String ASTROLOGY_GURU = "Astrology Guru";
     private List<Boolean> isFollowing;
+    private FirebaseUser mFirebaseUser;
 
     public RVGuruAdapter(Context context, ArrayList<Guru> list) {
         this.context = context;
         this.list = list;
+        mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
     }
 
     public RVGuruAdapter(Context context, ArrayList<Guru> list, int filterCategory) {
@@ -129,6 +133,12 @@ public class RVGuruAdapter extends RecyclerView.Adapter<VHGurus> {
                 }
             }
         });
+        if(item.getFollowers()!=null) {
+            if (item.getFollowers().contains(mFirebaseUser.getUid())) {
+                isFollowing.set(position, true);
+            }
+        }
+
         if(!isFollowing.get(position) && holder.follow.getText().equals("FOLLOWING")){
             holder.follow.setText("FOLLOW");
             holder.follow.setBackgroundColor(context.getResources().getColor(R.color.colorAccent));
@@ -146,12 +156,15 @@ public class RVGuruAdapter extends RecyclerView.Adapter<VHGurus> {
                     holder.follow.setText("FOLLOWING");
                     holder.follow.setBackgroundColor(context.getResources().getColor(R.color.green));
                     GurusFragment.setFollowing(item.getFollowers(), item.getFollowersCount(),true,item.getGuruUid());
+                    holder.setFollowersCount(item.getFollowersCount());
+
                 }
                 else if(isFollowing.get(position) && holder.follow.getText().equals("FOLLOWING")){
                     isFollowing.set(position, false);
                     holder.follow.setText("FOLLOW");
                     holder.follow.setBackgroundColor(context.getResources().getColor(R.color.colorAccent));
                     GurusFragment.setFollowing(item.getFollowers(),item.getFollowersCount(),false,item.getGuruUid());
+                    holder.setFollowersCount(item.getFollowersCount());
                 }
             }
         });
