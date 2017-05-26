@@ -10,6 +10,9 @@ import android.widget.Toast;
 
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.activity.HomeActivity;
+import com.example.sasuke.dailysuvichar.activity.SelectActivity;
+import com.example.sasuke.dailysuvichar.activity.SelectPhotoActivity;
+import com.example.sasuke.dailysuvichar.activity.SelectVideoActivity;
 import com.example.sasuke.dailysuvichar.newfragments.AllPhotosFragment;
 import com.example.sasuke.dailysuvichar.newfragments.AllStatusFragment;
 import com.example.sasuke.dailysuvichar.newfragments.AllVideosFragment;
@@ -68,14 +71,23 @@ public class ExploreActivity extends AppCompatActivity implements GooeyMenu.Gooe
     public void menuItemClicked(int menuNumber) {
         if(menuNumber==1){
             //UPLOAD STATUS
+            Intent i = new Intent(this, SelectActivity.class);
+            i.putExtra("from", 2);
+            startActivity(i);
             showToast("UPLOAD STATUS HERE");
         }
         else if(menuNumber==2){
             //UPLOAD PHOTO
+            Intent i = new Intent(this, SelectPhotoActivity.class);
+            i.putExtra("from", 2);
+            startActivity(i);
             showToast("UPLOAD PHOTOS HERE");
         }
         else if(menuNumber==3){
             //UPLOAD VIDEO
+            Intent i = new Intent(this, SelectVideoActivity.class);
+            i.putExtra("from", 2);
+            startActivity(i);
             showToast("UPLOAD VIDEOS HERE");
         }
     }

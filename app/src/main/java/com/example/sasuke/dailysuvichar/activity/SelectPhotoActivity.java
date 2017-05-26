@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.models.Photo;
+import com.example.sasuke.dailysuvichar.newactivities.ExploreActivity;
 import com.example.sasuke.dailysuvichar.newactivities.NewHomeActivity;
 import com.example.sasuke.dailysuvichar.view.RVTags;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -89,12 +90,16 @@ public class SelectPhotoActivity extends BaseActivity{
     String bucket, encoding, lang;
     Uri downloadUrl;
 
+    private int from = 1;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_photo);
         ButterKnife.bind(this);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
+        from = getIntent().getIntExtra("from", 1);
 
         showFileChooser();
 
@@ -302,7 +307,12 @@ public class SelectPhotoActivity extends BaseActivity{
                     mDatabaseReferenceUser.child("users").child(mFirebaseUser.getUid()).child("posts").child("photo").push().setValue(photo);
 
                     Toast.makeText(this, "Post successful!", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(this, NewHomeActivity.class));
+                    if(from == 1){
+                        startActivity(new Intent(this, NewHomeActivity.class));
+                    }
+                    else if(from == 2){
+                        startActivity(new Intent(this, ExploreActivity.class));
+                    }
                     finish();
                 }else{
                     Toast.makeText(this, "Write a caption", Toast.LENGTH_SHORT).show();

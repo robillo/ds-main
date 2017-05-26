@@ -74,17 +74,23 @@ public class NewHomeActivity extends AppCompatActivity implements GooeyMenu.Gooe
     public void menuItemClicked(int menuNumber) {
         if(menuNumber==1){
             //UPLOAD STATUS
-            startActivity(new Intent(this, SelectActivity.class));
+            Intent i = new Intent(this, SelectActivity.class);
+            i.putExtra("from", 1);
+            startActivity(i);
             showToast("UPLOAD STATUS HERE");
         }
         else if(menuNumber==2){
             //UPLOAD PHOTO
-            startActivity(new Intent(this, SelectPhotoActivity.class));
+            Intent i = new Intent(this, SelectPhotoActivity.class);
+            i.putExtra("from", 1);
+            startActivity(i);
             showToast("UPLOAD PHOTOS HERE");
         }
         else if(menuNumber==3){
             //UPLOAD VIDEO
-            startActivity(new Intent(this, SelectVideoActivity.class));
+            Intent i = new Intent(this, SelectVideoActivity.class);
+            i.putExtra("from", 1);
+            startActivity(i);
             showToast("UPLOAD VIDEOS HERE");
         }
     }
