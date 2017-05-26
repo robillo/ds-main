@@ -12,7 +12,6 @@ import android.widget.Toast;
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.activity.HomeActivity;
 import com.example.sasuke.dailysuvichar.models.Data;
-import com.example.sasuke.dailysuvichar.models.User;
 import com.example.sasuke.dailysuvichar.view.adapter.RecyclerViewAdapter;
 import com.example.sasuke.dailysuvichar.view.adapter.SubInterestAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -102,7 +101,7 @@ public class SubInterestFragment extends BaseFragment {
                     mAllInterests.putAll((Map<? extends String, ? extends ArrayList<String>>) dataSnapshot.child("mAllInterests").getValue());
                 }
 
-                User user = dataSnapshot.getValue(User.class);
+//                User user = dataSnapshot.getValue(User.class);
 //                mSubInterests = user.getAllSubInterests();
 
 //                mAllInterests = user.getAllInterests();
