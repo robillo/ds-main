@@ -233,7 +233,7 @@ public class HomeActivity extends BaseActivity {
         startActivity(new Intent(this, NewGurusActivity.class));
     }
 
-    @OnClick(R.id.home_activity)
+    @OnClick(R.id.explore_activity)
     public void exploreActivity(){
         startActivity(new Intent(this, ExploreActivity.class));
     }
