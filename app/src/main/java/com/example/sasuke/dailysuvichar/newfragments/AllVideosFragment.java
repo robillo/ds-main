@@ -197,15 +197,13 @@ public class AllVideosFragment extends Fragment {
                     public void run() {
                         //CALL DATA HERE
                         fetchVideosFromFirebase();
-//
-                        mPullToRefresh.setRefreshing(false);
-                        Toast.makeText(getActivity(), "Feeds Updated Successfully.", Toast.LENGTH_SHORT).show();
                     }
                 });
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         mPullToRefresh.setRefreshing(false);
+                        Toast.makeText(getActivity(), "Feeds Updated Successfully.", Toast.LENGTH_SHORT).show();
                     }
                 },1500);
             }

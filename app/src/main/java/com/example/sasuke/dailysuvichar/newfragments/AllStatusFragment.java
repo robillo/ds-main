@@ -195,15 +195,13 @@ public class AllStatusFragment extends Fragment {
                     public void run() {
                         //CALL DATA HERE
                         fetchStatusFromFirebase();
-//
-                        mPullToRefresh.setRefreshing(false);
-                        Toast.makeText(getActivity(), "Feeds Updated Successfully.", Toast.LENGTH_SHORT).show();
                     }
                 });
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         mPullToRefresh.setRefreshing(false);
+                        Toast.makeText(getActivity(), "Feeds Updated Successfully.", Toast.LENGTH_SHORT).show();
                     }
                 },1500);
             }
