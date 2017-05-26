@@ -101,8 +101,6 @@ public class SubInterestFragment extends BaseFragment {
                 if(dataSnapshot.child("mAllInterests").getValue()!=null){
                     mAllInterests.putAll((Map<? extends String, ? extends ArrayList<String>>) dataSnapshot.child("mAllInterests").getValue());
                 }
-
-                User user = dataSnapshot.getValue(User.class);
 //                mSubInterests = user.getAllSubInterests();
 
 //                mAllInterests = user.getAllInterests();

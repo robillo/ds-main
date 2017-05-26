@@ -18,6 +18,9 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.fragment.MainFragment;
 import com.example.sasuke.dailysuvichar.fragment.SettingsFragment;
+import com.example.sasuke.dailysuvichar.newactivities.ExploreActivity;
+import com.example.sasuke.dailysuvichar.newactivities.NewGurusActivity;
+import com.example.sasuke.dailysuvichar.newactivities.NewHomeActivity;
 import com.example.sasuke.dailysuvichar.utils.SharedPrefs;
 import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
@@ -135,13 +138,14 @@ public class HomeActivity extends BaseActivity {
 
     @OnClick(R.id.nav_home)
     public void onMyFeedClick() {
-        closeDrawer();
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                replaceFragment(MainFragment.newInstance(), MainFragment.class.getName());
-            }
-        }, 250);
+//        closeDrawer();
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                replaceFragment(MainFragment.newInstance(), MainFragment.class.getName());
+//            }
+//        }, 250);
+        startActivity(new Intent(this, ExploreActivity.class));
     }
 //
 //    @OnClick(R.id.nav_updates)
@@ -219,11 +223,20 @@ public class HomeActivity extends BaseActivity {
         transaction.commit();
     }
 
-//    @OnClick(R.id.iv_notification)
-//    public void openDrawer() {
-//        drawer.openDrawer(GravityCompat.START);
-//    }
+    @OnClick(R.id.home_activity)
+    public void homeActivity(){
+        startActivity(new Intent(this, NewHomeActivity.class));
+    }
 
+    @OnClick(R.id.gurus_activity)
+    public void gurusActivity(){
+        startActivity(new Intent(this, NewGurusActivity.class));
+    }
+
+    @OnClick(R.id.home_activity)
+    public void exploreActivity(){
+        startActivity(new Intent(this, ExploreActivity.class));
+    }
 
     @Override
     protected void onDestroy() {
