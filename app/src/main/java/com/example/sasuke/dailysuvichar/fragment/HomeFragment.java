@@ -27,7 +27,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.cleveroad.pulltorefresh.firework.FireworkyPullToRefreshLayout;
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.activity.FullScreenActivity;
-import com.example.sasuke.dailysuvichar.activity.HomeActivity;
 import com.example.sasuke.dailysuvichar.activity.SelectActivity;
 import com.example.sasuke.dailysuvichar.activity.SelectPhotoActivity;
 import com.example.sasuke.dailysuvichar.activity.SelectVideoActivity;
@@ -119,7 +118,7 @@ public class HomeFragment extends BaseFragment {
     private int CHECK = 1;
     private String intentDBReference = null;
     private HashMap<String, Long> isDone;
-    private HashMap<String, Long> allPostsHashMap, statusHashMap, photoHashMap, customVidHashMap;
+    private HashMap<String, Long> allPostsHashMap,allPostsHashMapFinal, statusHashMap, photoHashMap, customVidHashMap;
     private HashMap<String, Status> statusHashMapStore;
     private HashMap<String, Photo>  photoHashMapStore;
     private HashMap<String, CustomVideo> customVidHashMapStore;
@@ -210,6 +209,8 @@ public class HomeFragment extends BaseFragment {
         Log.e(TAG, mDatabaseReference.toString());
 
         mSelectedSubInterests = new ArrayList<>();
+        allPostsHashMap = new HashMap<>();
+        allPostsHashMapFinal = sortByComparator(allPostsHashMap, false);
 
 
         mDatabaseReference.child(mFirebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
@@ -237,6 +238,19 @@ public class HomeFragment extends BaseFragment {
         fetchStatusFromFirebase();
 
         fetchPhotosFromFirebase();
+
+
+        Handler handler= new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                Log.d(TAG, "onViewCreated: VAL "+allPostsHashMapFinal.size());
+                Log.d(TAG, "onViewCreated: VAL "+statusHashMap.size());
+                Log.d(TAG, "onViewCreated: VAL "+photoHashMap.size());
+                Log.d(TAG, "onViewCreated: VAL "+customVidHashMap.size());
+            }
+        },5000);
     }
 
     @OnClick(R.id.iv_profile)
@@ -277,7 +291,6 @@ public class HomeFragment extends BaseFragment {
         isVideoDone= new HashMap<>();
         customVidHashMap = new HashMap<>();
         customVidHashMapStore = new HashMap<>();
-        allPostsHashMap = new HashMap<>();
 
         if (mSelectedSubInterests.size() > 0) {
 
@@ -310,7 +323,6 @@ public class HomeFragment extends BaseFragment {
                                 customVidHashMap.put(postSnapshot.getKey(),videoSnap.getTimestamp());
                                 customVidHashMapStore.put(postSnapshot.getKey(),videoSnap);
                                 allPostsHashMap.put(postSnapshot.getKey(), videoSnap.getTimestamp());
-
                             }
                             mAdapter.notifyDataSetChanged();
                             if(mAdapter.getItemCount()>0){
@@ -350,7 +362,6 @@ public class HomeFragment extends BaseFragment {
         isPhotoDone= new HashMap<>();
         photoHashMap = new HashMap<>();
         photoHashMapStore = new HashMap<>();
-        allPostsHashMap = new HashMap<>();
 
 //        items = new Items();
         if (mSelectedSubInterests.size() > 0) {
@@ -405,7 +416,6 @@ public class HomeFragment extends BaseFragment {
         isDone= new HashMap<>();
         statusHashMap = new HashMap<>();
         statusHashMapStore = new HashMap<>();
-        allPostsHashMap = new HashMap<>();
 
         if (mSelectedSubInterests.size() > 0) {
             Log.d(TAG, "fetchStatusFromFirebase: SIZE " + mSelectedSubInterests.size());

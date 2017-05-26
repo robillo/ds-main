@@ -22,7 +22,6 @@ public class Guru {
     private String phone;
     private int age;
     private String uid;
-
     public String getUid() {
         return uid;
     }

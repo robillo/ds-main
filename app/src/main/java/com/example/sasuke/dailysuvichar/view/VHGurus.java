@@ -40,11 +40,6 @@ public class VHGurus extends RecyclerView.ViewHolder{
     }
 
     public void setFollowersCount(int followers){
-//        CountBadge.Factory circleFactory = new CountBadge.Factory(BadgeShape.circle(.7f, Gravity.CENTER | Gravity.CENTER), 0xffff0000, 0xffffffff);
-//
-//        Badger.sett(imageView1, circleFactory).setCount(followers);
-
-//        setBadgeCount(this, imageView1, "9");
 
         BadgeView badge = new BadgeView(context, imageView1);
         badge.setText(String.valueOf(followers));

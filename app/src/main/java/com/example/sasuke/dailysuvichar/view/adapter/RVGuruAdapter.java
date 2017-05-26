@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.sasuke.dailysuvichar.R;
+import com.example.sasuke.dailysuvichar.fragment.GurusFragment;
 import com.example.sasuke.dailysuvichar.models.Guru;
 import com.example.sasuke.dailysuvichar.view.VHGurus;
 import com.willowtreeapps.spruce.Spruce;
@@ -144,11 +145,13 @@ public class RVGuruAdapter extends RecyclerView.Adapter<VHGurus> {
                     isFollowing.set(position, true);
                     holder.follow.setText("FOLLOWING");
                     holder.follow.setBackgroundColor(context.getResources().getColor(R.color.green));
+                    GurusFragment.setFollowing(item.getFollowers(), item.getFollowersCount(),true,item.getUid());
                 }
                 else if(isFollowing.get(position) && holder.follow.getText().equals("FOLLOWING")){
                     isFollowing.set(position, false);
                     holder.follow.setText("FOLLOW");
                     holder.follow.setBackgroundColor(context.getResources().getColor(R.color.colorAccent));
+                    GurusFragment.setFollowing(item.getFollowers(),item.getFollowersCount(),false,item.getUid());
                 }
             }
         });
