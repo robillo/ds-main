@@ -8,6 +8,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.example.sasuke.dailysuvichar.R;
 
@@ -20,6 +21,8 @@ public class AllPhotosFragment extends Fragment {
 
     @BindView(R.id.swiperefresh)
     SwipeRefreshLayout refreshLayout;
+    @BindView(R.id.alternate_layout)
+    LinearLayout alternateLayout;
 
     public AllPhotosFragment() {
         // Required empty public constructor
