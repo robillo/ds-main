@@ -169,10 +169,10 @@ public class HomeFragment extends BaseFragment {
         mLayoutManager.setInitialPrefetchItemCount(10);
         mRvHome.setLayoutManager(mLayoutManager);
         mAdapter = new MultiTypeAdapter();
-        mAdapter.register(Status.class, new StatusItemAdapter());
         mAdapter.register(Photo.class, new PhotoItemAdapter());
         mAdapter.register(CustomVideo.class, new CustomVideoAdapter());
         mAdapter.register(Video.class, new VideoItemAdapter(getActivity()));
+        mAdapter.register(Status.class, new StatusItemAdapter());
         mRvHome.setAdapter(mAdapter);
 
         items = new Items();
