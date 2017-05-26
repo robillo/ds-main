@@ -18,14 +18,8 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.sasuke.dailysuvichar.R;
-import com.example.sasuke.dailysuvichar.models.CustomVideo;
-import com.example.sasuke.dailysuvichar.models.Photo;
 import com.example.sasuke.dailysuvichar.models.Status;
-import com.example.sasuke.dailysuvichar.models.Video;
-import com.example.sasuke.dailysuvichar.view.adapter.CustomVideoAdapter;
-import com.example.sasuke.dailysuvichar.view.adapter.PhotoItemAdapter;
 import com.example.sasuke.dailysuvichar.view.adapter.StatusItemAdapter;
-import com.example.sasuke.dailysuvichar.view.adapter.VideoItemAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -134,9 +128,9 @@ public class AllStatusFragment extends Fragment {
         mRvHome.setLayoutManager(mLayoutManager);
         mAdapter = new MultiTypeAdapter();
         mAdapter.register(Status.class, new StatusItemAdapter());
-        mAdapter.register(Photo.class, new PhotoItemAdapter());
-        mAdapter.register(CustomVideo.class, new CustomVideoAdapter());
-        mAdapter.register(Video.class, new VideoItemAdapter(getActivity()));
+//        mAdapter.register(Photo.class, new PhotoItemAdapter());
+//        mAdapter.register(CustomVideo.class, new CustomVideoAdapter());
+//        mAdapter.register(Video.class, new VideoItemAdapter(getActivity()));
         mRvHome.setAdapter(mAdapter);
 
         items = new Items();

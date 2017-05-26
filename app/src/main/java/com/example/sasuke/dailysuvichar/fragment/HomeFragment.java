@@ -34,8 +34,11 @@ import com.example.sasuke.dailysuvichar.event.DoubleTabEvent;
 import com.example.sasuke.dailysuvichar.models.CustomVideo;
 import com.example.sasuke.dailysuvichar.models.Photo;
 import com.example.sasuke.dailysuvichar.models.Status;
+import com.example.sasuke.dailysuvichar.models.Video;
 import com.example.sasuke.dailysuvichar.view.adapter.CustomVideoAdapter;
+import com.example.sasuke.dailysuvichar.view.adapter.PhotoItemAdapter;
 import com.example.sasuke.dailysuvichar.view.adapter.StatusItemAdapter;
+import com.example.sasuke.dailysuvichar.view.adapter.VideoItemAdapter;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -166,6 +169,9 @@ public class HomeFragment extends BaseFragment {
         mLayoutManager.setInitialPrefetchItemCount(10);
         mRvHome.setLayoutManager(mLayoutManager);
         mAdapter = new MultiTypeAdapter();
+        mAdapter.register(Photo.class, new PhotoItemAdapter());
+        mAdapter.register(CustomVideo.class, new CustomVideoAdapter());
+        mAdapter.register(Video.class, new VideoItemAdapter(getActivity()));
         mAdapter.register(Status.class, new StatusItemAdapter());
         mRvHome.setAdapter(mAdapter);
 
