@@ -30,7 +30,9 @@ public class VHFeature extends RecyclerView.ViewHolder{
     public void intent(int position){
         switch (position){
             case 1:{
-                context.startActivity(new Intent(context, ProfileActivity.class));
+                Intent i =new Intent(context, ProfileActivity.class);
+                i.putExtra("fromHome",1);
+                context.startActivity(i);
                 break;
             }
             case 2:{
