@@ -8,6 +8,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -35,6 +36,8 @@ import java.util.HashMap;
 import butterknife.BindView;
 import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
+
+import static com.bumptech.glide.gifdecoder.GifHeaderParser.TAG;
 
 public class GurusFragment extends BaseFragment {
 
@@ -109,12 +112,12 @@ public class GurusFragment extends BaseFragment {
                         guruList.add(guru);
                         guruMap.put(postSnapshot.getKey(), guruList.indexOf(guru));
                     }
+                    Log.d(TAG, "onDataChange: count "+guru.getFollowersCount());
 //                    if(postSnapshot.child("followers").getValue()!=null){
 //                        guruFollowers.addAll((Collection<? extends String>) postSnapshot.child("followers").getValue());
 //                    }
 //                    videoSnap.setStorageReference(mStorageReferenceVideo.child(postSnapshot.getKey()));
                     mRvGuruAdapter.notifyDataSetChanged();
-
                 }
             }
 
@@ -174,18 +177,18 @@ public class GurusFragment extends BaseFragment {
         if(isFollowing){
             if(!following.contains(guruUid)) {
                 following.add(guruUid);
-                guruFollowers.add(mFirebaseUser.getUid());
-                mDatabaseReferenceUser.child("following").setValue(following);
+//                mDatabaseReferenceUser.child("following").setValue(following);
             }
+            guruFollowers.add(mFirebaseUser.getUid());
             mDatabaseReferenceGuru.child(guruUid).child("followersCount").setValue(followerCount + 1);
             mDatabaseReferenceGuru.child(guruUid).child("followers").setValue(guruFollowers);
         }else{
-            if(following.contains(guruUid)) {
-                following.remove(guruUid);
-                guruFollowers.remove(mFirebaseUser.getUid());
-                mDatabaseReferenceUser.child("following").setValue(following);
+            if(followerCount>0){
+                mDatabaseReferenceGuru.child(guruUid).child("followersCount").setValue(followerCount - 1);
             }
-            mDatabaseReferenceGuru.child(guruUid).child("followersCount").setValue(followerCount - 1);
+            following.remove(guruUid);
+            guruFollowers.remove(mFirebaseUser.getUid());
+//            mDatabaseReferenceUser.child("following").setValue(following);
             mDatabaseReferenceGuru.child(guruUid).child("followers").setValue(guruFollowers);
         }
 

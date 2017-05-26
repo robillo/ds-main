@@ -156,7 +156,7 @@ public class RVGuruAdapter extends RecyclerView.Adapter<VHGurus> {
                     holder.follow.setText("FOLLOWING");
                     holder.follow.setBackgroundColor(context.getResources().getColor(R.color.green));
                     GurusFragment.setFollowing(item.getFollowers(), item.getFollowersCount(),true,item.getGuruUid());
-                    holder.setFollowersCount(item.getFollowersCount());
+//                    holder.setFollowersCount(item.getFollowersCount());
 
                 }
                 else if(isFollowing.get(position) && holder.follow.getText().equals("FOLLOWING")){
@@ -164,7 +164,7 @@ public class RVGuruAdapter extends RecyclerView.Adapter<VHGurus> {
                     holder.follow.setText("FOLLOW");
                     holder.follow.setBackgroundColor(context.getResources().getColor(R.color.colorAccent));
                     GurusFragment.setFollowing(item.getFollowers(),item.getFollowersCount(),false,item.getGuruUid());
-                    holder.setFollowersCount(item.getFollowersCount());
+//                    holder.setFollowersCount(item.getFollowersCount());
                 }
             }
         });
