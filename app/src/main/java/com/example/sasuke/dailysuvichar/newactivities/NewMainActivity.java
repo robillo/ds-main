@@ -36,7 +36,7 @@ public class NewMainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private List<Feature> list;
     private String[] levels, levelHeaders, photoUrls;
-    private static final int NUM_PAGES = 10;
+    private static final int NUM_PAGES = 3;
     private ViewPager mPager;
     private PagerAdapter mPagerAdapter;
 
@@ -152,24 +152,6 @@ public class NewMainActivity extends AppCompatActivity {
                 }
                 case 3:{
                     return assignFragment(3);
-                }
-                case 4:{
-                    return assignFragment(4);
-                }
-                case 5:{
-                    return assignFragment(5);
-                }
-                case 6:{
-                    return assignFragment(6);
-                }
-                case 7:{
-                    return assignFragment(7);
-                }
-                case 8:{
-                    return assignFragment(8);
-                }
-                case 9:{
-                    return assignFragment(9);
                 }
                 default:{
                     return assignFragment(0);

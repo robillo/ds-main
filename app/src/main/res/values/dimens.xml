@@ -11,6 +11,8 @@
     <dimen name="font_smaller">9sp</dimen>
     <dimen name="font_smallest">4sp</dimen>
     <dimen name="app_bar_elevation">8sp</dimen>
+    <dimen name="dots_height">30dp</dimen>
+    <dimen name="dots_margin_bottom">20dp</dimen>
 
     <dimen name="drawer_icon_size">25dp</dimen>
 
@@ -35,7 +37,7 @@
     <dimen name="appbar_padding_top">8dp</dimen>
 
     <dimen name="min_height">120dp</dimen>
-    <dimen name="big_circle_radius">20dp</dimen>
+    <dimen name="big_circle_radius">25dp</dimen>
     <dimen name="small_circle_radius">20dp</dimen>
 
     <dimen name="min_gap">80dp</dimen>
