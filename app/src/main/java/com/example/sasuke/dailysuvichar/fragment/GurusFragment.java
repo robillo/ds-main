@@ -30,6 +30,7 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 
 import butterknife.BindView;
 import me.drakeet.multitype.Items;
@@ -51,6 +52,7 @@ public class GurusFragment extends BaseFragment {
     private static FirebaseUser mFirebaseUser;
     private LinearLayoutManager mLayoutManager;
     Items items;
+    HashMap<String, Integer> guruMap;
     private MultiTypeAdapter mAdapter;
     private static ArrayList<String> following;
 //    private static ArrayList<String> guruFollowers;
@@ -85,20 +87,28 @@ public class GurusFragment extends BaseFragment {
         gridLayoutManager = new GridLayoutManager(getActivity(), 3);
         rv.setLayoutManager(gridLayoutManager);
 
-        guruList = new ArrayList<>();
         following= new ArrayList<>();
 //        guruFollowers= new ArrayList<>();
+        guruList = new ArrayList<>();
+        guruMap = new HashMap<>();
 
         mRvGuruAdapter = new RVGuruAdapter(getActivity(), guruList);
 
         mDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
 
                     Guru guru = postSnapshot.getValue(Guru.class);
+                    guru.setGuruUid(postSnapshot.getKey());
                     guru.setStorageReference(mStorageReference.child(guru.getUid()));
-                    guruList.add(guru);
+                    if(guruMap.containsKey(postSnapshot.getKey())){
+                        guruList.set(guruMap.get(postSnapshot.getKey()),guru);
+                    }else {
+                        guruList.add(guru);
+                        guruMap.put(postSnapshot.getKey(), guruList.indexOf(guru));
+                    }
 //                    if(postSnapshot.child("followers").getValue()!=null){
 //                        guruFollowers.addAll((Collection<? extends String>) postSnapshot.child("followers").getValue());
 //                    }
@@ -153,7 +163,7 @@ public class GurusFragment extends BaseFragment {
         return v;
     }
 
-    public static void setFollowing(ArrayList<String> guruFollowers, Integer followerCount, boolean isFollowing, String uid){
+    public static void setFollowing(ArrayList<String> guruFollowers, Integer followerCount, boolean isFollowing, String guruUid){
         DatabaseReference mDatabaseReferenceGuru = FirebaseDatabase.getInstance().getReference("gurus").child("official");
         DatabaseReference mDatabaseReferenceUser = FirebaseDatabase.getInstance().getReference("users").child(mFirebaseUser.getUid());
 
@@ -162,17 +172,17 @@ public class GurusFragment extends BaseFragment {
         }
 
         if(isFollowing){
-            following.add(uid);
+            following.add(guruUid);
             guruFollowers.add(mFirebaseUser.getUid());
-            mDatabaseReferenceGuru.child(uid).child("followersCount").setValue(followerCount+1);
-            mDatabaseReferenceGuru.child(uid).child("followers").setValue(guruFollowers);
-            mDatabaseReferenceUser.child(mFirebaseUser.getUid()).child("following").setValue(following);
+            mDatabaseReferenceGuru.child(guruUid).child("followersCount").setValue(followerCount+1);
+            mDatabaseReferenceGuru.child(guruUid).child("followers").setValue(guruFollowers);
+            mDatabaseReferenceUser.child("following").setValue(following);
         }else{
-            following.remove(uid);
+            following.remove(guruUid);
             guruFollowers.remove(mFirebaseUser.getUid());
-            mDatabaseReferenceGuru.child(uid).child("followersCount").setValue(followerCount-1);
-            mDatabaseReferenceGuru.child(uid).child("followers").setValue(guruFollowers);
-            mDatabaseReferenceUser.child(mFirebaseUser.getUid()).child("following").setValue(following);
+            mDatabaseReferenceGuru.child(guruUid).child("followersCount").setValue(followerCount-1);
+            mDatabaseReferenceGuru.child(guruUid).child("followers").setValue(guruFollowers);
+            mDatabaseReferenceUser.child("following").setValue(following);
         }
 
     }

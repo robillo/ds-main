@@ -25,8 +25,18 @@ public class Guru {
     public String getUid() {
         return uid;
     }
+    private String guruUid;
+
+    public String getGuruUid() {
+        return guruUid;
+    }
+
+    public void setGuruUid(String guruUid) {
+        this.guruUid = guruUid;
+    }
 
     public void setUid(String uid) {
+
         this.uid = uid;
     }
 
