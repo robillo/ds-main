@@ -10,8 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.sasuke.dailysuvichar.R;
-import com.example.sasuke.dailysuvichar.fragment.GurusFragment;
 import com.example.sasuke.dailysuvichar.models.Guru;
+import com.example.sasuke.dailysuvichar.newactivities.NewGurusActivity;
 import com.example.sasuke.dailysuvichar.view.VHGurus;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -155,7 +155,7 @@ public class RVGuruAdapter extends RecyclerView.Adapter<VHGurus> {
                     isFollowing.set(position, true);
                     holder.follow.setText("FOLLOWING");
                     holder.follow.setBackgroundColor(context.getResources().getColor(R.color.green));
-                    GurusFragment.setFollowing(item.getFollowers(), item.getFollowersCount(),true,item.getGuruUid());
+                    NewGurusActivity.setFollowing(item.getFollowers(), item.getFollowersCount(),true,item.getGuruUid());
 //                    holder.setFollowersCount(item.getFollowersCount());
 
                 }
@@ -163,7 +163,7 @@ public class RVGuruAdapter extends RecyclerView.Adapter<VHGurus> {
                     isFollowing.set(position, false);
                     holder.follow.setText("FOLLOW");
                     holder.follow.setBackgroundColor(context.getResources().getColor(R.color.colorAccent));
-                    GurusFragment.setFollowing(item.getFollowers(),item.getFollowersCount(),false,item.getGuruUid());
+                    NewGurusActivity.setFollowing(item.getFollowers(),item.getFollowersCount(),false,item.getGuruUid());
 //                    holder.setFollowersCount(item.getFollowersCount());
                 }
             }
