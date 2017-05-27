@@ -30,6 +30,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.models.Guru;
 import com.example.sasuke.dailysuvichar.newactivities.NewHomeActivity;
+import com.example.sasuke.dailysuvichar.newactivities.NewMainActivity;
 import com.example.sasuke.dailysuvichar.utils.SharedPrefs;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -106,8 +107,6 @@ public class ProfileActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         ButterKnife.bind(this);
-
-        code = getIntent().getIntExtra("fromLogin", 0);
 
         code = getIntent().getIntExtra("fromHome", 0);
 
@@ -1069,7 +1068,7 @@ public class ProfileActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         if(code==1){
-            startActivity(new Intent(this, NewHomeActivity.class));
+            startActivity(new Intent(this, NewMainActivity.class));
         }
     }
 

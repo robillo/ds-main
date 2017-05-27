@@ -85,6 +85,7 @@ public class AllPhotosFragment extends Fragment {
     private HashMap<String, Long> isDone;
     private HashMap<String, Photo> photoHashMapStore;
     private HashMap<String, Long> photoHashMap;
+    private String from = "HOME";
 
     @BindView(R.id.recyclerview)
     RecyclerView mRvHome;
@@ -99,6 +100,24 @@ public class AllPhotosFragment extends Fragment {
         // Inflate the layout for this fragment
         View v=  inflater.inflate(R.layout.fragment_all_photos, container, false);
         ButterKnife.bind(getActivity());
+
+        Bundle args = getArguments();
+        from = args.getString("from");
+
+        //WONT CAUSE NPE DONT WORRY
+        if(from.equals("YOUR")){
+            //SHOW YOUR FEEDS, COPY CODE FROM YOUR FEEDS FRAGMENT
+
+        }
+        else if(from.equals("HOME")){
+            //SHOW FEEDS ON YOUR INTERESTS
+
+        }
+        else if(from.equals("EXPLORE")){
+            //SHOW FEEDS FROM WHO YOU FOLLOW + DS PEOPLE
+
+        }
+
 
         mRvHome= (RecyclerView) v.findViewById(R.id.recyclerview);
         mPullToRefresh = (SwipeRefreshLayout) v.findViewById(R.id.swiperefresh);

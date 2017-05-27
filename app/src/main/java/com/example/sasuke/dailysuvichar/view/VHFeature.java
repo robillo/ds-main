@@ -39,7 +39,7 @@ public class VHFeature extends RecyclerView.ViewHolder{
             }
             case 2:{
                 Intent i = new Intent(context, ProfileActivity.class);
-                i.putExtra("from", "HOME");
+                i.putExtra("fromHome", 1);
                 context.startActivity(i);
                 break;
             }
