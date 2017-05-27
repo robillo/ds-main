@@ -33,10 +33,10 @@
         >
         <activity android:name=".activity.ChooseInterestActivity" />
         <activity android:name=".activity.SubInterestActivity" />
-        <!--<activity-->
-            <!--android:name=".activity.HomeActivity"-->
-            <!--android:configChanges="orientation|screenSize"-->
-            <!--android:hardwareAccelerated="true" />-->
+        <!-- <activity -->
+        <!-- android:name=".activity.HomeActivity" -->
+        <!-- android:configChanges="orientation|screenSize" -->
+        <!-- android:hardwareAccelerated="true" /> -->
         <activity
             android:name=".activity.SelectActivity"
             android:theme="@style/AppTheme.NoActionBar"
@@ -59,7 +59,8 @@
         <activity android:name=".newactivities.ExploreActivity" />
         <activity android:name=".newactivities.NewHomeActivity" />
         <activity android:name=".newactivities.NewGurusActivity" />
-        <activity android:name=".newactivities.NewMainActivity"></activity>
+        <activity android:name=".newactivities.NewMainActivity" />
+        <activity android:name=".newactivities.YourFeedsActivity"></activity>
     </application>
 
 </manifest>
