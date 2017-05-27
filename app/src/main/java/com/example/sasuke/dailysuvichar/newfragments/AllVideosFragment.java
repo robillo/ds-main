@@ -195,7 +195,7 @@ public class AllVideosFragment extends Fragment {
 
             fetchVideosFromFirebase();
         } else {
-            Toast.makeText(getActivity(), "No Internet Connection", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), getString(R.string.no_inter), Toast.LENGTH_SHORT).show();
         }
 
 //        Handler handler= new Handler();
@@ -226,7 +226,7 @@ public class AllVideosFragment extends Fragment {
                         if (isOnline()) {
                             fetchVideosFromFirebase();
                         } else {
-                            Toast.makeText(getActivity(), "No Internet Connection", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), getString(R.string.no_inter), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

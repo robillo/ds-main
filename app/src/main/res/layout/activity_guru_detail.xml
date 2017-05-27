@@ -37,7 +37,7 @@
                     android:background="@color/colorAccent"
                     android:textSize="30sp"
                     android:textColor="@color/white"
-                    android:text="Robillo Ruins"
+                    android:text="User"
                     android:tag="parallax=0.7"
                     android:id="@+id/name"/>
 
@@ -56,7 +56,7 @@
                 android:layout_width="100sp"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
-                android:text="FOLLOW"
+                android:text="@string/follow"
                 android:background="@color/colorAccent"
                 android:fontFamily="sans-serif-smallcaps"
                 android:layout_margin="5sp"
@@ -80,7 +80,7 @@
                     android:clickable="true"
                     android:elevation="4dp"
                     android:padding="20dp"
-                    android:text="Bio: Short Description Should Be Input Here."
+                    android:text="@string/biop"
                     android:id="@+id/bio"/>
 
                 <TextView
@@ -94,7 +94,7 @@
                     android:clickable="true"
                     android:elevation="4dp"
                     android:padding="20dp"
-                    android:text="Specialization: Yoga, Power Yoga."
+                    android:text="@string/specialization"
                     android:id="@+id/specialization"/>
 
             </LinearLayout>

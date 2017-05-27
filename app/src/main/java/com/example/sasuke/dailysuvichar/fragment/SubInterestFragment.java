@@ -38,10 +38,6 @@ import butterknife.OnClick;
 
 import static com.bumptech.glide.gifdecoder.GifHeaderParser.TAG;
 
-/**
- * Created by Sasuke on 4/24/2017.
- */
-
 public class SubInterestFragment extends BaseFragment {
 
     @BindView(R.id.rv_sub_interest)
@@ -211,14 +207,14 @@ public class SubInterestFragment extends BaseFragment {
             }
         }
         else {
-            Toast.makeText(getActivity(), "Incomplete Data.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.incomplete, Toast.LENGTH_SHORT).show();
         }
 
         if(mSelectedSubInterests!=null && mSelectedSubInterests.size()<3){
-            Toast.makeText(getActivity().getApplicationContext(), "Please select at least 3 sub interests", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity().getApplicationContext(), R.string.please_three, Toast.LENGTH_SHORT).show();
         }
         else if(mSelectedSubInterests==null){
-            Toast.makeText(getContext().getApplicationContext(), "Please Check Your Internet Connection.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext().getApplicationContext(), getString(R.string.no_inter), Toast.LENGTH_SHORT).show();
         }
         else {
             if(isOnline()) {
@@ -227,7 +223,7 @@ public class SubInterestFragment extends BaseFragment {
                 SharedPrefs.setIsSubinterestsSelected("TRUE");
                 startActivity(new Intent(getActivity().getApplicationContext(), NewMainActivity.class));
             }else{
-                Toast.makeText(getActivity(), "No Internet Connection. Please try again", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), getString(R.string.no_inter), Toast.LENGTH_SHORT).show();
             }
         }
 

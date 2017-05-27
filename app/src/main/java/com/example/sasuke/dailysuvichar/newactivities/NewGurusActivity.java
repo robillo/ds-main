@@ -145,7 +145,7 @@ public class NewGurusActivity extends AppCompatActivity {
                 }
             });
         }else{
-            Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.no_inter, Toast.LENGTH_SHORT).show();
         }
 
 
@@ -268,8 +268,8 @@ public class NewGurusActivity extends AppCompatActivity {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Choose Sorting Option:")
-                .setItems(new CharSequence[]{"Followers", "Astrology Gurus", "Yoga Gurus", "Pandits",
-                        "Motivation Gurus", "Ayurveda Gurus", "Show All"}, new DialogInterface.OnClickListener() {
+                .setItems(new CharSequence[]{getString(R.string.followers), getString(R.string.astrologyy), getString(R.string.yogaa), getString(R.string.pandit_),
+                        getString(R.string.motivationn), getString(R.string.ayurvedaa), getString(R.string.show_all)}, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int which) {
                         switch (which) {

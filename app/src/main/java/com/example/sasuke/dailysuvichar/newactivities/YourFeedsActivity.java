@@ -48,17 +48,17 @@ public class YourFeedsActivity extends AppCompatActivity{
         args.putString("from", "YOUR");
         fragment.setArguments(args);
 
-        adapter.addFragment(fragment, "Status");
+        adapter.addFragment(fragment, getString(R.string.statuss));
 
         fragment = new AllPhotosFragment();
         fragment.setArguments(args);
 
-        adapter.addFragment(fragment, "Photos");
+        adapter.addFragment(fragment, getString(R.string.photoss));
 
         fragment = new AllVideosFragment();
         fragment.setArguments(args);
 
-        adapter.addFragment(fragment, "Videos");
+        adapter.addFragment(fragment, getString(R.string.videoss));
 
         viewPager.setAdapter(adapter);
     }

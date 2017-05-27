@@ -20,7 +20,7 @@
             android:textSize="20sp"
             android:textColor="#FFFFFF"
             android:fontFamily="sans-serif-condensed"
-            android:text="Gurus List"/>
+            android:text="@string/gurus_list"/>
 
     </android.support.v7.widget.Toolbar>
 

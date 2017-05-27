@@ -471,7 +471,7 @@ public class ProfileActivity extends BaseActivity {
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception exception) {
-                                Toast.makeText(ProfileActivity.this, "Upload Failed. Please Try Again!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ProfileActivity.this, R.string.upload_failed, Toast.LENGTH_SHORT).show();
                             }
                         })
                         .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
@@ -508,13 +508,13 @@ public class ProfileActivity extends BaseActivity {
                         .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                Toast.makeText(ProfileActivity.this, "File Uploaded! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ProfileActivity.this, R.string.file_uploaded, Toast.LENGTH_SHORT).show();
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception exception) {
-                                Toast.makeText(ProfileActivity.this, "Upload Failed. Please Try Again!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ProfileActivity.this, R.string.upload_failed, Toast.LENGTH_SHORT).show();
                             }
                         })
                         .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
@@ -532,10 +532,10 @@ public class ProfileActivity extends BaseActivity {
     public void setName(){
         final Boolean[] b = {false};
         new MaterialDialog.Builder(this)
-                .title("Set Your Name")
-                .content("First Name + Last Name")
+                .title(R.string.set_name)
+                .content(R.string.full_name)
                 .inputType(InputType.TYPE_CLASS_TEXT)
-                .input("Enter your name...", "", new MaterialDialog.InputCallback() {
+                .input(getString(R.string.enter_name), "", new MaterialDialog.InputCallback() {
                     @Override
                     public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
                         name.setText(input);
@@ -551,13 +551,13 @@ public class ProfileActivity extends BaseActivity {
     public void setBio(){
         final Boolean[] b = {false};
         new MaterialDialog.Builder(this)
-                .title("Set Your Bio")
-                .content("A Short Descripton About Yourself.")
+                .title(R.string.set_bio)
+                .content(R.string.short_desc)
                 .inputType(InputType.TYPE_CLASS_TEXT)
-                .input("Enter bio here...", "", new MaterialDialog.InputCallback() {
+                .input(getString(R.string.enter_bio_here), "", new MaterialDialog.InputCallback() {
                     @Override
                     public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
-                        bio.setText("Bio: " + input);
+                        bio.setText(getString(R.string.bio) + input);
                         b[0] =true;
                     }
                 }).show();
@@ -570,10 +570,10 @@ public class ProfileActivity extends BaseActivity {
     public void setUserName(){
         final Boolean[] b = {false};
         new MaterialDialog.Builder(this)
-                .title("Set Your Username")
-                .content("A Short Name YouRepresent.")
+                .title(R.string.set_username)
+                .content(R.string.represent)
                 .inputType(InputType.TYPE_CLASS_TEXT)
-                .input("Enter username here...", "", new MaterialDialog.InputCallback() {
+                .input(getString(R.string.enter_username), "", new MaterialDialog.InputCallback() {
                     @Override
                     public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
                         userName.setText(input);
@@ -589,25 +589,25 @@ public class ProfileActivity extends BaseActivity {
     public void setLanguage(){
 
         new MaterialDialog.Builder(this)
-                .title("Set Your Language Preference")
-                .items(new String[]{"English", "Hindi"})
+                .title(R.string.preference)
+                .items(new String[]{getString(R.string.english_lang), getString(R.string.hindi_lang)})
                 .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
                     @Override
                     public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
                         switch (which){
                             case 0:{
-                                language.setText("ENGLISH");
+                                language.setText(R.string.english_lang);
                                 break;
                             }
                             case 1:{
-                                language.setText("HINDI");
+                                language.setText(R.string.hindi_lang);
                                 break;
                             }
                         }
                         return true;
                     }
                 })
-                .positiveText("Choose This")
+                .positiveText(R.string.choose)
                 .show();
         if(language.getText()!=null){
             mUsersDatabase.child(mFirebaseUser.getUid()).child("preferredLang").setValue(language.getText());
@@ -617,14 +617,14 @@ public class ProfileActivity extends BaseActivity {
     @OnClick(R.id.user_type)
     public void setUserType(){
         new MaterialDialog.Builder(this)
-                .title("Set Your Language Preference")
-                .items(new String[]{"Standard User", "Spiritual Leader"})
+                .title(R.string.usertype)
+                .items(new String[]{getString(R.string.standard), getString(R.string.spiritual)})
                 .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
                     @Override
                     public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
                         switch (which){
                             case 0:{
-                                userType.setText("STANDARD");
+                                userType.setText(R.string.standard_caps);
                                 if(mLinearLayout.getVisibility()== View.VISIBLE){
                                     mLinearLayout.setVisibility(View.GONE);
                                     specialization.setVisibility(View.GONE);
@@ -633,7 +633,7 @@ public class ProfileActivity extends BaseActivity {
                                 break;
                             }
                             case 1:{
-                                userType.setText("GURU");
+                                userType.setText(R.string.guru_caps);
                                 if(mLinearLayout.getVisibility()== View.GONE){
                                     mLinearLayout.setVisibility(View.VISIBLE);
                                     specialization.setVisibility(View.VISIBLE);
@@ -645,7 +645,7 @@ public class ProfileActivity extends BaseActivity {
                         return true;
                     }
                 })
-                .positiveText("Choose This")
+                .positiveText(R.string.choose)
                 .show();
         if(userType.getText()!=null){
             mUsersDatabase.child(mFirebaseUser.getUid()).child("preferredLang").setValue(language.getText());
@@ -660,25 +660,25 @@ public class ProfileActivity extends BaseActivity {
     @OnClick(R.id.gender)
     public void setGender(){
         new MaterialDialog.Builder(this)
-                .title("Gender:")
-                .items(new String[]{"Male", "Female"})
+                .title(R.string.gender)
+                .items(new String[]{getString(R.string.male), getString(R.string.female)})
                 .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
                     @Override
                     public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
                         switch (which){
                             case 0:{
-                                gender.setText("MALE");
+                                gender.setText(R.string.male_caps);
                                 break;
                             }
                             case 1:{
-                                gender.setText("FEMALE");
+                                gender.setText(R.string.female_caps);
                                 break;
                             }
                         }
                         return true;
                     }
                 })
-                .positiveText("Choose This")
+                .positiveText(R.string.choose)
                 .show();
         if(gender.getText()!=null){
             mUsersDatabase.child(mFirebaseUser.getUid()).child("gender").setValue(gender.getText());
@@ -731,9 +731,9 @@ public class ProfileActivity extends BaseActivity {
     public void setSpecialization(){
         final String[] temp = new String[1];
         new MaterialDialog.Builder(this)
-                .title("Set Your Specialization:")
-                .content("Spiritual Skill You Majorly Specialize In.")
-                .items(new String[]{"Astrology Guru", "Yoga Guru", "Pandit", "Motivation Guru", "Ayurveda Guru"})
+                .title(R.string.set_spec)
+                .content(R.string.descc)
+                .items(new String[]{getString(R.string.astrology_), getString(R.string.yoga_), getString(R.string.pandit_), getString(R.string.motivation_), getString(R.string.ayurveda_)})
                 .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
                     @Override
                     public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
@@ -743,31 +743,31 @@ public class ProfileActivity extends BaseActivity {
                          **/
                         switch (which){
                             case 0:{
-                                temp[0] = "Astrology Guru";
+                                temp[0] = getString(R.string.astrology_);
                                 specialization.setText(temp[0]);
                                 special = temp[0];
                                 break;
                             }
                             case 1:{
-                                temp[0] = "Yoga Guru";
+                                temp[0] = getString(R.string.yoga_);
                                 specialization.setText(temp[0]);
                                 special = temp[0];
                                 break;
                             }
                             case 2:{
-                                temp[0] = "Pandit";
+                                temp[0] = getString(R.string.pandit_);
                                 specialization.setText(temp[0]);
                                 special = temp[0];
                                 break;
                             }
                             case 3:{
-                                temp[0] = "Motivation Guru";
+                                temp[0] = getString(R.string.motivation_);
                                 specialization.setText(temp[0]);
                                 special = temp[0];
                                 break;
                             }
                             case 4:{
-                                temp[0] = "Ayurveda Guru";
+                                temp[0] = getString(R.string.ayurveda_);
                                 specialization.setText(temp[0]);
                                 special = temp[0];
                                 break;
@@ -800,52 +800,52 @@ public class ProfileActivity extends BaseActivity {
     @OnClick(R.id.age)
     public void setAge(){
         if(ageInt==0){
-            Toast.makeText(getApplicationContext(), "Please Enter Correct Date Of Birth", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), R.string.please_correct, Toast.LENGTH_SHORT).show();
         }
     }
 
     @OnClick(R.id.btnSave)
     public void save(){
-        if(userType.getText().equals("STANDARD")){
+        if(userType.getText().equals(getString(R.string.standard_caps))){
             //PUSH STANDARD USER DATA
-            if(checkValidate("STANDARD")){
+            if(checkValidate(getString(R.string.standard_caps))){
 //                writetoFirebaseAsStandard();
                 writetoFirebase();
                 SharedPrefs.setIsProfileSet("TRUE");
                 startActivity(new Intent(this, ChooseInterestActivity.class));
             }
             else {
-                Toast.makeText(getApplicationContext(), "PLEASE ENTER FULL DETAILS", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), R.string.please, Toast.LENGTH_SHORT).show();
             }
         }
-        else if(userType.getText().equals("GURU")){
+        else if(userType.getText().equals(getString(R.string.guru_caps))){
             //PUSH GURU USER DATA FIRST AS USER, THEN AS GURU
-            if(checkValidate("GURU")){
+            if(checkValidate(getString(R.string.guru_caps))){
 //                writetoFirebaseAsGuru();
                 writetoFirebase();
                 SharedPrefs.setIsProfileSet("TRUE");
                 startActivity(new Intent(this, ChooseInterestActivity.class));
             }
             else {
-                Toast.makeText(getApplicationContext(), "PLEASE ENTER FULL DETAILS", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getString(R.string.please), Toast.LENGTH_SHORT).show();
             }
         }
         else {
-            Toast.makeText(getApplicationContext(), "PLEASE SELECT USER TYPE", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), R.string.please_user, Toast.LENGTH_SHORT).show();
         }
     }
 
     private boolean checkValidate(String type){
         boolean flag = true;
         boolean[] check;
-        if(type.equals("STANDARD")){
+        if(type.equals(getString(R.string.standard_caps))){
             //VALIDATE FOR STANDARD USER
             check = new boolean[]{false, false, false, false, false, false, false, false, false, false};
-            if(!name.getText().equals("(Full Name: Not Selected)")){
+            if(!name.getText().equals(getString(R.string.ns_fullname))){
                 check[0] = true;
                 Log.e("LOG", name.getText().toString());
             }
-            if(!userName.getText().equals("Username: Not Selected")){
+            if(!userName.getText().equals(getString(R.string.ns_username))){
                 check[1] = true;
                 Log.e("LOG", userName.getText().toString());
             }
@@ -857,27 +857,27 @@ public class ProfileActivity extends BaseActivity {
                 check[3] = true;
                 Log.e("LOG", coverPath.toString());
             }
-            if(!bio.getText().equals("Short Description/Bio. : Not Selected")){
+            if(!bio.getText().equals(getString(R.string.ns_shortdesc))){
                 check[4] = true;
                 Log.e("LOG", bio.getText().toString());
             }
-            if(!language.getText().equals("Language: Not Selelcted")){
+            if(!language.getText().equals(getString(R.string.ns_lang))){
                 check[5] = true;
                 Log.e("LOG", language.getText().toString());
             }
-            if(!userType.getText().equals("User Type: Not Selected")){
+            if(!userType.getText().equals(getString(R.string.ns_usertype))){
                 check[6] = true;
                 Log.e("LOG", userType.getText().toString());
             }
-            if(!DOB.getText().equals("Date Of Birth: Not Selected")){
+            if(!DOB.getText().equals(getString(R.string.ns_dob))){
                 check[7] = true;
                 Log.e("LOG", DOB.getText().toString());
             }
-            if(!gender.getText().equals("Gender: Not Selected")){
+            if(!gender.getText().equals(getString(R.string.ns_gender))){
                 check[8] = true;
                 Log.e("LOG", gender.getText().toString());
             }
-            if(!age.getText().equals("Age: Select DOB to evaluate")){
+            if(!age.getText().equals(getString(R.string.ns_age))){
                 check[9] = true;
                 Log.e("LOG", age.getText().toString());
             }
@@ -890,11 +890,11 @@ public class ProfileActivity extends BaseActivity {
         else if(type.equals("GURU")){
             //VALIDATE FOR GURU
             check = new boolean[]{false, false, false, false, false, false, false, false, false, false, false, false, false};
-            if(!name.getText().equals("(Full Name: Not Selected)")){
+            if(!name.getText().equals(getString(R.string.ns_fullname))){
                 check[0] = true;
                 Log.e("LOG", name.getText().toString());
             }
-            if(!userName.getText().equals("Username: Not Selected")){
+            if(!userName.getText().equals(getString(R.string.ns_username))){
                 check[1] = true;
                 Log.e("LOG", userName.getText().toString());
             }
@@ -906,27 +906,27 @@ public class ProfileActivity extends BaseActivity {
                 check[3] = true;
                 Log.e("LOG", coverPath.toString());
             }
-            if(!bio.getText().equals("Short Description/Bio. : Not Selected")){
+            if(!bio.getText().equals(getString(R.string.ns_shortdesc))){
                 check[4] = true;
                 Log.e("LOG", bio.getText().toString());
             }
-            if(!language.getText().equals("Language: Not Selelcted")){
+            if(!language.getText().equals(getString(R.string.ns_lang))){
                 check[5] = true;
                 Log.e("LOG", language.getText().toString());
             }
-            if(!userType.getText().equals("User Type: Not Selected")){
+            if(!userType.getText().equals(getString(R.string.ns_usertype))){
                 check[6] = true;
                 Log.e("LOG", userType.getText().toString());
             }
-            if(!DOB.getText().equals("Date Of Birth: Not Selected")){
+            if(!DOB.getText().equals(getString(R.string.ns_dob))){
                 check[7] = true;
                 Log.e("LOG", DOB.getText().toString());
             }
-            if(!gender.getText().equals("Gender: Not Selected")){
+            if(!gender.getText().equals(getString(R.string.ns_gender))){
                 check[8] = true;
                 Log.e("LOG", gender.getText().toString());
             }
-            if(!age.getText().equals("Age: Select DOB to evaluate")){
+            if(!age.getText().equals(getString(R.string.ns_age))){
                 check[9] = true;
                 Log.e("LOG", age.getText().toString());
             }
@@ -938,7 +938,7 @@ public class ProfileActivity extends BaseActivity {
                 check[11] = true;
                 Log.e("LOG", specPath.toString());
             }
-            if(special!=null){
+            if(!special.equals(getString(R.string.ns_special))){
                 check[12] = true;
                 Log.e("LOG", special);
             }
@@ -1072,7 +1072,7 @@ public class ProfileActivity extends BaseActivity {
         }
         else {
             if(govPath==null || specPath==null){
-                Toast.makeText(this, "Please upload documents to get verified as a Guru", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.please_docs, Toast.LENGTH_SHORT).show();
             }else {
                 Guru user = new Guru(nameDB, mFirebaseUser.getEmail(), bioDB, new ArrayList<String>(), langDB, dpPathDB, coverPathDB, dobDB, genderDB, ageDB, govDB, specDB, special);
                 mGurusDatabase.child(mFirebaseUser.getUid()).child("name").setValue(nameDB);
