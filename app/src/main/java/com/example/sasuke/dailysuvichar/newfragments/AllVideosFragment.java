@@ -112,14 +112,14 @@ public class AllVideosFragment extends Fragment {
             Log.e("FROM", "YOUR TO VIDEOS");
 
         }
-        else if(from.equals("HOME")){
+        else if(from.equals("EXPLORE")){
             //SHOW FEEDS ON YOUR INTERESTS
-            Log.e("FROM", "HOME TO VIDEOS");
+            Log.e("FROM", "EXPLORE TO VIDEOS");
 
         }
-        else if(from.equals("EXPLORE")){
+        else if(from.equals("HOME")){
             //SHOW FEEDS FROM WHO YOU FOLLOW + DS PEOPLE
-            Log.e("FROM", "EXPLORE TO VIDEOS");
+            Log.e("FROM", "HOME TO VIDEOS");
         }
 
         mRvHome = (RecyclerView) v.findViewById(R.id.recyclerview);

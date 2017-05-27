@@ -157,9 +157,9 @@ public class AllPhotosFragment extends Fragment {
             }
 
         }
-        else if(from.equals("HOME")){
+        else if(from.equals("EXPLORE")){
             //SHOW FEEDS ON YOUR INTERESTS
-            Log.e("FROM", "HOME TO PHOTOS");
+            Log.e("FROM", "EXPLORE TO PHOTOS");
 
 
             mDatabaseReference = FirebaseDatabase.getInstance().getReference("users");
@@ -197,9 +197,9 @@ public class AllPhotosFragment extends Fragment {
             }
 
         }
-        else if(from.equals("EXPLORE")){
+        else if(from.equals("HOME")){
             //SHOW FEEDS FROM WHO YOU FOLLOW + DS PEOPLE
-            Log.e("FROM", "EXPLORE TO PHOTOS");
+            Log.e("FROM", "HOME TO PHOTOS");
 
             mSelectedGurus = new ArrayList<>();
             isPhotoDoneGuru = new HashMap<>();
@@ -252,14 +252,14 @@ public class AllPhotosFragment extends Fragment {
                                 fetchPhotosFromFirebaseYour();
 
                             }
-                            else if(from.equals("HOME")){
+                            else if(from.equals("EXPLORE")){
                                 //SHOW FEEDS ON YOUR INTERESTS
-                                Log.e("FROM", "HOME TO PHOTOS");
+                                Log.e("FROM", "EXPLORE TO PHOTOS");
                                     fetchPhotosFromFirebaseHome();
                             }
-                            else if(from.equals("EXPLORE")){
+                            else if(from.equals("HOME")){
                                 //SHOW FEEDS FROM WHO YOU FOLLOW + DS PEOPLE
-                                Log.e("FROM", "EXPLORE TO PHOTOS");
+                                Log.e("FROM", "HOME TO PHOTOS");
                                 fetchPhotosFromFirebaseGuru();
                             }
 
