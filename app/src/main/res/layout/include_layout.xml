@@ -30,7 +30,7 @@
                 android:fontFamily="sans-serif-smallcaps"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Diet"
+                android:text="@string/diett"
                 android:textColor="@color/black"
                 android:id="@+id/diet"
                 android:background="?attr/selectableItemBackground"/>
@@ -53,7 +53,7 @@
                 android:fontFamily="sans-serif-smallcaps"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Yoga"
+                android:text="@string/yogaa"
                 android:id="@+id/yoga"
                 android:textColor="@color/black"
                 android:background="?attr/selectableItemBackground"/>
@@ -76,7 +76,7 @@
                 android:fontFamily="sans-serif-smallcaps"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Health"
+                android:text="@string/healthh"
                 android:id="@+id/health"
                 android:textColor="@color/black"
                 android:background="?attr/selectableItemBackground"/>
@@ -99,7 +99,7 @@
                 android:fontFamily="sans-serif-smallcaps"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Religion"
+                android:text="@string/religionn"
                 android:id="@+id/religion"
                 android:textColor="@color/black"
                 android:background="?attr/selectableItemBackground"/>
@@ -122,7 +122,7 @@
                 android:fontFamily="sans-serif-smallcaps"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Motivation"
+                android:text="@string/motivationn"
                 android:id="@+id/motivation"
                 android:textColor="@color/black"
                 android:background="?attr/selectableItemBackground"/>
@@ -145,7 +145,7 @@
                 android:fontFamily="sans-serif-smallcaps"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Ayurveda"
+                android:text="@string/ayurveda_"
                 android:id="@+id/ayurveda"
                 android:textColor="@color/black"
                 android:background="?attr/selectableItemBackground"/>
@@ -168,7 +168,7 @@
                 android:fontFamily="sans-serif-smallcaps"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Astrology"
+                android:text="@string/astrology_"
                 android:id="@+id/astrology"
                 android:textColor="@color/black"
                 android:background="?attr/selectableItemBackground"/>
@@ -191,7 +191,7 @@
                 android:fontFamily="sans-serif-smallcaps"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Next"
+                android:text="@string/nextt"
                 android:id="@+id/next"
                 android:textColor="@color/white"
                 android:background="?attr/selectableItemBackground"/>

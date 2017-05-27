@@ -24,7 +24,7 @@
             android:layout_height="match_parent"
             android:fontFamily="sans-serif"
             android:padding="4sp"
-            android:text="Baba Ramdev"
+            android:text="@string/baba_ramdev"
             android:textAlignment="center"
             android:textColor="#000000" />
 
@@ -54,7 +54,7 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="FOLLOW"
+            android:text="@string/follow"
             android:textStyle="bold"
             android:id="@+id/follow"
             android:textColor="@color/white"

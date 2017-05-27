@@ -87,69 +87,69 @@ public class SelectActivity extends BaseActivity {
 
     @OnClick(R.id.diet)
     public void diet() {
-        setAptBG("diet", diet);
+        setAptBG(getString(R.string.diett), diet);
     }
 
     @OnClick(R.id.yoga)
     public void yoga() {
-        setAptBG("yoga", yoga);
+        setAptBG(getString(R.string.yogaa), yoga);
     }
 
     @OnClick(R.id.health)
     public void health() {
-        setAptBG("health", health);
+        setAptBG(getString(R.string.healthh), health);
     }
 
     @OnClick(R.id.religion)
     public void religion() {
-        setAptBG("religion", religion);
+        setAptBG(getString(R.string.religionn), religion);
     }
 
     @OnClick(R.id.motivation)
     public void motivation() {
-        setAptBG("motivation", motivation);
+        setAptBG(getString(R.string.motivationn), motivation);
     }
 
     @OnClick(R.id.ayurveda)
     public void ayurveda() {
-        setAptBG("ayurveda", ayurveda);
+        setAptBG(getString(R.string.ayurvedaa), ayurveda);
     }
 
     @OnClick(R.id.astrology)
     public void astrology() {
-        setAptBG("astrology", astrology);
+        setAptBG(getString(R.string.astrologyy), astrology);
     }
 
     @OnClick(R.id.next)
     public void nextIsSubinterests() {
         if (interests.size() < 1) {
-            Toast.makeText(context, "Please Choose The Interest Category", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, R.string.pluese, Toast.LENGTH_SHORT).show();
         } else {
-            if (interests.contains("diet")) {
+            if (interests.contains(getString(R.string.diett))) {
                 String[] temp = getResources().getStringArray(R.array.diet_array);
                 addToSubinterests(temp);
             }
-            if (interests.contains("yoga")) {
+            if (interests.contains(getString(R.string.yogaa))) {
                 String[] temp = getResources().getStringArray(R.array.yoga_array);
                 addToSubinterests(temp);
             }
-            if (interests.contains("health")) {
+            if (interests.contains(getString(R.string.healthh))) {
                 String[] temp = getResources().getStringArray(R.array.health_array);
                 addToSubinterests(temp);
             }
-            if (interests.contains("religion")) {
+            if (interests.contains(getString(R.string.religionn))) {
                 String[] temp = getResources().getStringArray(R.array.religion_array);
                 addToSubinterests(temp);
             }
-            if (interests.contains("motivation")) {
+            if (interests.contains(getString(R.string.motivationn))) {
                 String[] temp = getResources().getStringArray(R.array.motivation_array);
                 addToSubinterests(temp);
             }
-            if (interests.contains("ayurveda")) {
+            if (interests.contains(getString(R.string.ayurvedaa))) {
                 String[] temp = getResources().getStringArray(R.array.ayurveda_array);
                 addToSubinterests(temp);
             }
-            if (interests.contains("astrology")) {
+            if (interests.contains(getString(R.string.astrologyy))) {
                 String[] temp = getResources().getStringArray(R.array.astrology_array);
                 addToSubinterests(temp);
             }
@@ -157,7 +157,7 @@ public class SelectActivity extends BaseActivity {
             recyclerView.setVisibility(View.VISIBLE);
             recyclerView.setLayoutManager(new GridLayoutManager(context, 3));
 //            data = fillWithData();
-            subInterests.add("Others");
+            subInterests.add(getString(R.string.others));
             recyclerView.setAdapter(new RVTags(context, subInterests, mSelectedItems));
 //            submit.setVisibility(View.VISIBLE);
         }
@@ -184,7 +184,7 @@ public class SelectActivity extends BaseActivity {
     @OnClick(R.id.btnPostStatus)
     public void postStatus() {
         if (mSelectedItems.size() < 1) {
-            Toast.makeText(context, "Please Select Atleast One Subcategory.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, R.string.pleeease, Toast.LENGTH_SHORT).show();
         } else {
             if (etStatus.getText().length() >= 1) {
                 mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -210,7 +210,7 @@ public class SelectActivity extends BaseActivity {
                 mDatabaseReferenceUser = FirebaseDatabase.getInstance().getReference();
                 mDatabaseReferenceUser.child("users").child(mFirebaseUser.getUid()).child("posts").child("status").push().setValue(status);
 
-                Toast.makeText(context,"Post successful!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, getString(R.string.success), Toast.LENGTH_SHORT).show();
                 if(from == 1){
                     startActivity(new Intent(this, NewExploreyActivity.class));
                 }

@@ -41,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="76dp"
-                android:text="Username: Not Selected"
+                android:text="@string/ns_username"
                 android:textColor="#fff"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -51,7 +51,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:text="(Full Name: Not Selected)"
+                android:text="@string/ns_fullname"
                 android:layout_margin="4sp"
                 android:textColor="#fff"
                 android:layout_below="@id/user_name"
@@ -65,7 +65,7 @@
                 android:layout_below="@+id/name"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="12dp"
-                android:text="Short Description/Bio. : Not Selected"
+                android:text="@string/ns_shortdesc"
                 android:textColor="#fff"
                 android:textSize="14sp" />
         </RelativeLayout>
@@ -87,7 +87,7 @@
                 android:clickable="true"
                 android:elevation="4dp"
                 android:padding="20dp"
-                android:text="Language: Not Selelcted"
+                android:text="@string/ns_lang"
                 android:id="@+id/lang"/>
 
             <TextView
@@ -101,7 +101,7 @@
                 android:clickable="true"
                 android:elevation="4dp"
                 android:padding="20dp"
-                android:text="User Type: Not Selected"
+                android:text="@string/ns_usertype"
                 android:id="@+id/user_type"/>
 
             <LinearLayout
@@ -126,7 +126,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Upload A Govt. ID"
+                        android:text="@string/upload_a_govt_id"
                         android:background="@color/black"
                         android:textColor="@color/white"
                         android:gravity="center"
@@ -150,7 +150,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Upload Your Specialization Proof"
+                        android:text="@string/upload_your_specialization_proof"
                         android:background="@color/black"
                         android:textColor="@color/white"
                         android:gravity="center"
@@ -170,7 +170,7 @@
                 android:elevation="4dp"
                 android:textColor="@color/black"
                 android:padding="20dp"
-                android:text="Date Of Birth: Not Selected"
+                android:text="@string/ns_dob"
                 android:id="@+id/dob"/>
 
             <TextView
@@ -184,7 +184,7 @@
                 android:elevation="4dp"
                 android:textColor="@color/black"
                 android:padding="20dp"
-                android:text="Gender: Not Selected"
+                android:text="@string/ns_gender"
                 android:id="@+id/gender"/>
 
 
@@ -198,7 +198,7 @@
                 android:elevation="4dp"
                 android:textColor="@color/black"
                 android:padding="20dp"
-                android:text="Specialization (Guru): Not Selected"
+                android:text="@string/ns_special"
                 android:visibility="gone"
                 android:id="@+id/specialization"/>
 
@@ -211,7 +211,7 @@
                 android:elevation="4dp"
                 android:textColor="@color/black"
                 android:padding="20dp"
-                android:text="Age: Select DOB to evaluate"
+                android:text="@string/ns_age"
                 android:id="@+id/age"/>
 
         </LinearLayout>
@@ -225,7 +225,7 @@
             android:background="@color/black"
             android:fontFamily="sans-serif-condensed"
             android:textStyle="bold"
-            android:text="SAVE"
+            android:text="@string/save"
             android:textColor="@color/white"
             android:textSize="20dp" />
     </RelativeLayout>

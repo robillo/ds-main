@@ -123,69 +123,69 @@ public class SelectVideoActivity extends BaseActivity {
 
     @OnClick(R.id.diet)
     public void diet() {
-        setAptBG("diet", diet);
+        setAptBG(getString(R.string.diett), diet);
     }
 
     @OnClick(R.id.yoga)
     public void yoga() {
-        setAptBG("yoga", yoga);
+        setAptBG(getString(R.string.yogaa), yoga);
     }
 
     @OnClick(R.id.health)
     public void health() {
-        setAptBG("health", health);
+        setAptBG(getString(R.string.healthh), health);
     }
 
     @OnClick(R.id.religion)
     public void religion() {
-        setAptBG("religion", religion);
+        setAptBG(getString(R.string.religionn), religion);
     }
 
     @OnClick(R.id.motivation)
     public void motivation() {
-        setAptBG("motivation", motivation);
+        setAptBG(getString(R.string.motivationn), motivation);
     }
 
     @OnClick(R.id.ayurveda)
     public void ayurveda() {
-        setAptBG("ayurveda", ayurveda);
+        setAptBG(getString(R.string.ayurvedaa), ayurveda);
     }
 
     @OnClick(R.id.astrology)
     public void astrology() {
-        setAptBG("astrology", astrology);
+        setAptBG(getString(R.string.astrologyy), astrology);
     }
 
     @OnClick(R.id.next)
     public void nextIsSubinterests() {
         if (interests.size() < 1) {
-            Toast.makeText(context, "Please Choose The Interest Category", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, getString(R.string.pluese), Toast.LENGTH_SHORT).show();
         } else {
-            if (interests.contains("diet")) {
+            if (interests.contains(getString(R.string.diett))) {
                 String[] temp = getResources().getStringArray(R.array.diet_array);
                 addToSubinterests(temp);
             }
-            if (interests.contains("yoga")) {
+            if (interests.contains(getString(R.string.yogaa))) {
                 String[] temp = getResources().getStringArray(R.array.yoga_array);
                 addToSubinterests(temp);
             }
-            if (interests.contains("health")) {
+            if (interests.contains(getString(R.string.healthh))) {
                 String[] temp = getResources().getStringArray(R.array.health_array);
                 addToSubinterests(temp);
             }
-            if (interests.contains("religion")) {
+            if (interests.contains(getString(R.string.religionn))) {
                 String[] temp = getResources().getStringArray(R.array.religion_array);
                 addToSubinterests(temp);
             }
-            if (interests.contains("motivation")) {
+            if (interests.contains(getString(R.string.motivationn))) {
                 String[] temp = getResources().getStringArray(R.array.motivation_array);
                 addToSubinterests(temp);
             }
-            if (interests.contains("ayurveda")) {
+            if (interests.contains(getString(R.string.ayurvedaa))) {
                 String[] temp = getResources().getStringArray(R.array.ayurveda_array);
                 addToSubinterests(temp);
             }
-            if (interests.contains("astrology")) {
+            if (interests.contains(getString(R.string.astrologyy))) {
                 String[] temp = getResources().getStringArray(R.array.astrology_array);
                 addToSubinterests(temp);
             }
@@ -225,7 +225,7 @@ public class SelectVideoActivity extends BaseActivity {
         Intent intent = new Intent();
         intent.setType("video/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Video"), PICK_VIDEO_REQUEST);
+        startActivityForResult(Intent.createChooser(intent, getString(R.string.selecto)), PICK_VIDEO_REQUEST);
     }
 
     @Override
@@ -274,12 +274,12 @@ public class SelectVideoActivity extends BaseActivity {
 
     private void uploadToFirebase() {
         if (mSelectedItems.size() < 1) {
-            Toast.makeText(context, "Please Select Atleast One Subcategory.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, R.string.please_atleast, Toast.LENGTH_SHORT).show();
         } else {
             if (filePath != null) {
                 if (etCaption.length() >= 1) {
                     progressDialog = new ProgressDialog(this);
-                    progressDialog.setTitle("Uploading");
+                    progressDialog.setTitle(getString(R.string.uploading));
                     progressDialog.show();
 
                     mDatabaseReferenceTag = FirebaseDatabase.getInstance().getReference("tags");
@@ -301,14 +301,14 @@ public class SelectVideoActivity extends BaseActivity {
                                     downloadUrl = taskSnapshot.getDownloadUrl();
 
 //                            progressDialog.dismiss();
-                                    Toast.makeText(SelectVideoActivity.this, "File Uploaded ", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(SelectVideoActivity.this, R.string.uploaded, Toast.LENGTH_SHORT).show();
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception exception) {
 //                                progressDialog.dismiss();
-                                    Toast.makeText(SelectVideoActivity.this, "Upload Failed. Please Try Again!", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(SelectVideoActivity.this, R.string.failure, Toast.LENGTH_SHORT).show();
                                     Log.d(TAG, "onFailure: " + exception.getMessage());
 
                                 }
@@ -318,7 +318,7 @@ public class SelectVideoActivity extends BaseActivity {
                                 public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
                                     double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
 
-                                    progressDialog.setMessage("Uploaded " + ((int) progress) + "%...");
+                                progressDialog.setMessage(getString(R.string.uploaded) + " " + ((int) progress) + "%...");
                                 }
                             });
 
@@ -328,8 +328,8 @@ public class SelectVideoActivity extends BaseActivity {
                         video = new CustomVideo(name.getText().toString(), mFirebaseUser.getEmail(),
                                 System.currentTimeMillis(), 0, 0, null, etCaption.getText().toString(),
                                 mFirebaseUser.getUid(), mSelectedItems);
-                    } else {
-                        video = new CustomVideo("Unknown User", mFirebaseUser.getEmail(),
+                    }else{
+                        video = new CustomVideo(getString(R.string.unknown), mFirebaseUser.getEmail(),
                                 System.currentTimeMillis(), 0, 0, null, etCaption.getText().toString(),
                                 mFirebaseUser.getUid(), mSelectedItems);
                     }
@@ -341,18 +341,19 @@ public class SelectVideoActivity extends BaseActivity {
                     mDatabaseReferenceUser = FirebaseDatabase.getInstance().getReference();
                     mDatabaseReferenceUser.child("users").child(mFirebaseUser.getUid()).child("posts").child("video").child(postID).setValue(video);
 
-                    Toast.makeText(this, "Post successful!", Toast.LENGTH_SHORT).show();
-                    if (from == 1) {
+                    Toast.makeText(this, R.string.success, Toast.LENGTH_SHORT).show();
+                    if(from == 1){
                         startActivity(new Intent(this, NewExploreyActivity.class));
-                    } else if (from == 2) {
+                    }
+                    else if(from == 2){
                         startActivity(new Intent(this, NewHomeyActivity.class));
                     }
                     finish();
-                } else {
-                    Toast.makeText(this, "Write a caption", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(this, R.string.caption, Toast.LENGTH_SHORT).show();
                 }
             } else {
-                Toast.makeText(this, "No file chosen", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.no_file, Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "uploadToFirebase: No file chosen!");
             }
         }

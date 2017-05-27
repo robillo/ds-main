@@ -87,13 +87,13 @@ public class ChooseInterestFragment extends BaseFragment implements BubblePicker
     }
 
     private void mMapInit() {
-        mMap.put("diet", diet);
-        mMap.put("yoga", yoga);
-        mMap.put("health", health);
-        mMap.put("religion", religion);
-        mMap.put("motivation", motivation);
-        mMap.put("ayurveda", ayurveda);
-        mMap.put("astrology", astrology);
+        mMap.put(getString(R.string.diet__), diet);
+        mMap.put(getString(R.string.yoga__), yoga);
+        mMap.put(getString(R.string.health__), health);
+        mMap.put(getString(R.string.religion__), religion);
+        mMap.put(getString(R.string.motivation__), motivation);
+        mMap.put(getString(R.string.ayurveda__), ayurveda);
+        mMap.put(getString(R.string.astrology__), astrology);
     }
 
     private void arraysInit() {
@@ -152,10 +152,10 @@ public class ChooseInterestFragment extends BaseFragment implements BubblePicker
     @OnClick(R.id.tv_next)
     public void openSubInterestActivity() {
         if (mSelectedInterests.size() == 0) {
-            Toast.makeText(getContext(),"Please Choose at least 2 interests", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.atleasttt, Toast.LENGTH_SHORT).show();
         }
         else if(mSelectedInterests.size() == 1){
-            Toast.makeText(getContext(),"Please Choose at least 1 more interests", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.atleat, Toast.LENGTH_SHORT).show();
         }
 
         else{
@@ -168,7 +168,7 @@ public class ChooseInterestFragment extends BaseFragment implements BubblePicker
                 SharedPrefs.setIsInterestsSelected("TRUE");
                 startActivity(SubInterestActivity.newIntent(getActivity()));
             }else{
-                Toast.makeText(getActivity(), "No Internet Connection. Please try again", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), getString(R.string.no_inter), Toast.LENGTH_SHORT).show();
             }
         }
     }

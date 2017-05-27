@@ -32,7 +32,7 @@
                     android:layout_height="wrap_content"
                     android:background="@color/colorPrimary"
                     android:gravity="start"
-                    android:text="Your Suvichar"
+                    android:text="@string/your_suvichar"
                     android:textColor="#FFF"
                     android:textAlignment="viewStart"
                     android:fontFamily="cursive"
@@ -47,7 +47,7 @@
                     android:layout_height="wrap_content"
                     android:background="?attr/selectableItemBackground"
                     android:elevation="11dp"
-                    android:text="Post"
+                    android:text="@string/post"
                     android:textColor="@color/white" />
 
             </LinearLayout>
@@ -64,7 +64,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Language:"
+                android:text="@string/language"
                 android:textColor="@color/white"
                 android:layout_gravity="start"
                 android:fontFamily="sans-serif-smallcaps"
@@ -74,7 +74,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="English"
+                android:text="@string/english_lang"
                 android:layout_marginStart="35sp"
                 android:textColor="@color/white"
                 android:fontFamily="sans-serif-smallcaps"
@@ -89,7 +89,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Hindi"
+                android:text="@string/hindi_lang"
                 android:textColor="@color/white"
                 android:fontFamily="sans-serif-smallcaps"
                 android:textSize="15sp"
@@ -134,7 +134,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0sp"
                 android:layout_weight="1"
-                android:hint="Write a caption.." />
+                android:hint="@string/caption" />
 
         </LinearLayout>
 

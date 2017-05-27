@@ -311,23 +311,23 @@ public class GuruDetailActivity extends BaseActivity{
 
     public void setFollowing(boolean isFollowing){
         if(isFollowing){
-            follow.setText("FOLLOWING");
+            follow.setText(R.string.following);
             follow.setBackgroundColor(getResources().getColor(R.color.green));
         }
         else {
-            follow.setText("FOLLOW");
+            follow.setText(R.string.follow);
             follow.setBackgroundColor(getResources().getColor(R.color.colorAccent));
         }
     }
 
     @OnClick(R.id.follow)
     public void onClickFOllow(){
-        if(follow.getText().equals("FOLLOW")){
-            follow.setText("FOLLOWING");
+        if(follow.getText().equals(R.string.follow)){
+            follow.setText(R.string.following);
             follow.setBackgroundColor(getResources().getColor(R.color.green));
         }
         else {
-            follow.setText("FOLLOW");
+            follow.setText(R.string.follow);
             follow.setBackgroundColor(getResources().getColor(R.color.colorAccent));
         }
     }

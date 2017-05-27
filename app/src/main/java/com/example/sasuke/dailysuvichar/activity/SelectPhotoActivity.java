@@ -124,76 +124,71 @@ public class SelectPhotoActivity extends BaseActivity{
 
     }
 
-    @OnClick(R.id.upload)
-    public void setUpload(){
-        showFileChooser();
-    }
-
     @OnClick(R.id.diet)
     public void diet() {
-        setAptBG("diet", diet);
+        setAptBG(getString(R.string.diett), diet);
     }
 
     @OnClick(R.id.yoga)
     public void yoga() {
-        setAptBG("yoga", yoga);
+        setAptBG(getString(R.string.yogaa), yoga);
     }
 
     @OnClick(R.id.health)
     public void health() {
-        setAptBG("health", health);
+        setAptBG(getString(R.string.healthh), health);
     }
 
     @OnClick(R.id.religion)
     public void religion() {
-        setAptBG("religion", religion);
+        setAptBG(getString(R.string.religionn), religion);
     }
 
     @OnClick(R.id.motivation)
     public void motivation() {
-        setAptBG("motivation", motivation);
+        setAptBG(getString(R.string.motivationn), motivation);
     }
 
     @OnClick(R.id.ayurveda)
     public void ayurveda() {
-        setAptBG("ayurveda", ayurveda);
+        setAptBG(getString(R.string.ayurvedaa), ayurveda);
     }
 
     @OnClick(R.id.astrology)
     public void astrology() {
-        setAptBG("astrology", astrology);
+        setAptBG(getString(R.string.astrologyy), astrology);
     }
 
     @OnClick(R.id.next)
     public void nextIsSubinterests() {
         if (interests.size() < 1) {
-            Toast.makeText(context, "Please Choose The Interest Category", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, R.string.categ_inter, Toast.LENGTH_SHORT).show();
         } else {
-            if (interests.contains("diet")) {
+            if (interests.contains(getString(R.string.diett))) {
                 String[] temp = getResources().getStringArray(R.array.diet_array);
                 addToSubinterests(temp);
             }
-            if (interests.contains("yoga")) {
+            if (interests.contains(getString(R.string.yogaa))) {
                 String[] temp = getResources().getStringArray(R.array.yoga_array);
                 addToSubinterests(temp);
             }
-            if (interests.contains("health")) {
+            if (interests.contains(getString(R.string.healthh))) {
                 String[] temp = getResources().getStringArray(R.array.health_array);
                 addToSubinterests(temp);
             }
-            if (interests.contains("religion")) {
+            if (interests.contains(getString(R.string.religionn))) {
                 String[] temp = getResources().getStringArray(R.array.religion_array);
                 addToSubinterests(temp);
             }
-            if (interests.contains("motivation")) {
+            if (interests.contains(getString(R.string.motivationn))) {
                 String[] temp = getResources().getStringArray(R.array.motivation_array);
                 addToSubinterests(temp);
             }
-            if (interests.contains("ayurveda")) {
+            if (interests.contains(getString(R.string.ayurvedaa))) {
                 String[] temp = getResources().getStringArray(R.array.ayurveda_array);
                 addToSubinterests(temp);
             }
-            if (interests.contains("astrology")) {
+            if (interests.contains(getString(R.string.astrologyy))) {
                 String[] temp = getResources().getStringArray(R.array.astrology_array);
                 addToSubinterests(temp);
             }
@@ -233,7 +228,7 @@ public class SelectPhotoActivity extends BaseActivity{
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+        startActivityForResult(Intent.createChooser(intent, getString(R.string.selectt)), PICK_IMAGE_REQUEST);
     }
 
     @Override
@@ -253,12 +248,12 @@ public class SelectPhotoActivity extends BaseActivity{
 
     private void uploadToFirebase() {
         if (mSelectedItems.size() < 1) {
-            Toast.makeText(context, "Please Select Atleast One Subcategory.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, R.string.please__, Toast.LENGTH_SHORT).show();
         } else {
             if (filePath != null) {
                 if(etCaption.length()>=1) {
                     progressDialog = new ProgressDialog(this);
-                    progressDialog.setTitle("Uploading");
+                    progressDialog.setTitle(getString(R.string.uploadinggg));
                     progressDialog.show();
 
                     mDatabaseReferenceTag = FirebaseDatabase.getInstance().getReference("tags");
@@ -280,14 +275,14 @@ public class SelectPhotoActivity extends BaseActivity{
                                     downloadUrl = taskSnapshot.getDownloadUrl();
 
 //                            progressDialog.dismiss();
-                                    Toast.makeText(SelectPhotoActivity.this, "File Uploaded ", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(SelectPhotoActivity.this, getString(R.string.uploaded), Toast.LENGTH_SHORT).show();
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception exception) {
 //                                progressDialog.dismiss();
-                                    Toast.makeText(SelectPhotoActivity.this, "Upload Failed. Please Try Again!", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(SelectPhotoActivity.this, getString(R.string.upload_failed), Toast.LENGTH_SHORT).show();
                                     Log.d(TAG, "onFailure: " + exception.getMessage());
 
                                 }
@@ -310,7 +305,7 @@ public class SelectPhotoActivity extends BaseActivity{
                                 System.currentTimeMillis(), 0, 0, null, etCaption.getText().toString(),
                                 mFirebaseUser.getUid(), mSelectedItems, downloadUrl);
                     }else{
-                        photo = new Photo("Unknown User", size,
+                        photo = new Photo(getString(R.string.unknown), size,
                                 lang, encoding,
                                 bucket, mFirebaseUser.getEmail(),
                                 System.currentTimeMillis(), 0, 0, null, etCaption.getText().toString(),
@@ -324,7 +319,7 @@ public class SelectPhotoActivity extends BaseActivity{
                     mDatabaseReferenceUser = FirebaseDatabase.getInstance().getReference();
                     mDatabaseReferenceUser.child("users").child(mFirebaseUser.getUid()).child("posts").child("photo").child(postID).setValue(photo);
 
-                    Toast.makeText(this, "Post successful!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getString(R.string.success), Toast.LENGTH_SHORT).show();
                     if(from == 1){
                         startActivity(new Intent(this, NewExploreyActivity.class));
                     }
@@ -333,10 +328,10 @@ public class SelectPhotoActivity extends BaseActivity{
                     }
                     finish();
                 }else{
-                    Toast.makeText(this, "Write a caption", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getString(R.string.caption), Toast.LENGTH_SHORT).show();
                 }
             } else {
-                Toast.makeText(this, "No file chosen", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.no_file), Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "uploadToFirebase: No file chosen!");
             }
         }

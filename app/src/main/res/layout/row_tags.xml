@@ -19,7 +19,7 @@
             android:fontFamily="sans-serif-smallcaps"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Subinterest Text"
+            android:text="@string/subinterest_text"
             android:textColor="@color/black"
             android:id="@+id/tag"/>
 

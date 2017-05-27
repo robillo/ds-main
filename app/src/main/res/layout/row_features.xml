@@ -28,7 +28,7 @@
             android:padding="15sp"
             android:fontFamily="sans-serif-smallcaps"
             android:id="@+id/text"
-            android:text="FEATURE HEADER"
+            android:text="@string/feature_header"
             android:textStyle="bold"
             android:textColor="@color/colorWhiteShade"/>
 
