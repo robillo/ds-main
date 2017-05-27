@@ -240,6 +240,7 @@ public class SelectVideoActivity extends BaseActivity {
                 Log.e("selected video path", "null");
                 finish();
             } else {
+
                 mVideoView.setVisibility(View.VISIBLE);
                 Log.e("selectedVideoPath", filePath.getPath());
 //                mVideoView.setVideoURI(filePath);
