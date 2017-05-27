@@ -1,8 +1,11 @@
 package com.example.sasuke.dailysuvichar.newactivities;
 
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -13,11 +16,10 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.sasuke.dailysuvichar.R;
-import com.example.sasuke.dailysuvichar.activity.HomeActivity;
 import com.example.sasuke.dailysuvichar.models.Guru;
 import com.example.sasuke.dailysuvichar.view.adapter.RVGuruAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -91,46 +93,51 @@ public class NewGurusActivity extends AppCompatActivity {
 
         mRvGuruAdapter = new RVGuruAdapter(this, guruList);
 
-        mDatabaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+        if(isOnline()) {
 
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+            mDatabaseReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
 
-                    Guru guru = postSnapshot.getValue(Guru.class);
-                    guru.setGuruUid(postSnapshot.getKey());
-                    guru.setStorageReference(mStorageReference.child(guru.getUid()));
-                    if(guruMap.containsKey(postSnapshot.getKey())){
-                        guruList.set(guruMap.get(postSnapshot.getKey()),guru);
-                    }else {
-                        guruList.add(guru);
-                        guruMap.put(postSnapshot.getKey(), guruList.indexOf(guru));
-                    }
-                    Log.d(TAG, "onDataChange: count "+guru.getFollowersCount());
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+
+                        Guru guru = postSnapshot.getValue(Guru.class);
+                        guru.setGuruUid(postSnapshot.getKey());
+                        guru.setStorageReference(mStorageReference.child(guru.getUid()));
+                        if (guruMap.containsKey(postSnapshot.getKey())) {
+                            guruList.set(guruMap.get(postSnapshot.getKey()), guru);
+                        } else {
+                            guruList.add(guru);
+                            guruMap.put(postSnapshot.getKey(), guruList.indexOf(guru));
+                        }
+                        Log.d(TAG, "onDataChange: count " + guru.getFollowersCount());
 //                    if(postSnapshot.child("followers").getValue()!=null){
 //                        guruFollowers.addAll((Collection<? extends String>) postSnapshot.child("followers").getValue());
 //                    }
 //                    videoSnap.setStorageReference(mStorageReferenceVideo.child(postSnapshot.getKey()));
-                    mRvGuruAdapter.notifyDataSetChanged();
+                        mRvGuruAdapter.notifyDataSetChanged();
+                    }
                 }
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
-        mDatabaseReferenceUsers.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot.child("following").getValue()!=null){
-                    following.addAll((Collection<? extends String>) dataSnapshot.child("following").getValue());
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
                 }
-            }
+            });
+            mDatabaseReferenceUsers.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.child("following").getValue() != null) {
+                        following.addAll((Collection<? extends String>) dataSnapshot.child("following").getValue());
+                    }
+                }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                }
+            });
+        }else{
+            Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
+        }
 
 
 //        guruList.add(new Guru("Guru Robin", 721, ASTROLOGY_GURU));
@@ -302,5 +309,12 @@ public class NewGurusActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         startActivity(new Intent(this, NewMainActivity.class));
+    }
+
+    public boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 }

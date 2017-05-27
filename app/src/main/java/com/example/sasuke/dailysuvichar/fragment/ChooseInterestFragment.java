@@ -1,6 +1,9 @@
 package com.example.sasuke.dailysuvichar.fragment;
 
+import android.content.Context;
 import android.graphics.Typeface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -149,21 +152,24 @@ public class ChooseInterestFragment extends BaseFragment implements BubblePicker
     @OnClick(R.id.tv_next)
     public void openSubInterestActivity() {
         if (mSelectedInterests.size() == 0) {
-            Toast.makeText(getContext(),"Please Choose at least 3 interests", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(),"Please Choose at least 2 interests", Toast.LENGTH_SHORT).show();
         }
         else if(mSelectedInterests.size() == 1){
-            Toast.makeText(getContext(),"Please Choose at least 2 more interests", Toast.LENGTH_SHORT).show();
-        }
-        else if(mSelectedInterests.size() == 2){
             Toast.makeText(getContext(),"Please Choose at least 1 more interests", Toast.LENGTH_SHORT).show();
         }
+
         else{
+            if(isOnline()) {
+
 //            User user = new User(mSelectedSubInterests, mAllInterests);
-            mDatabase.child(mFirebaseUser.getUid()).child("mAllInterests").setValue(mAllInterests);
-            mDatabase.child(mFirebaseUser.getUid()).child("mSelectedSubInterests").setValue(mSelectedSubInterests);
+                mDatabase.child(mFirebaseUser.getUid()).child("mAllInterests").setValue(mAllInterests);
+                mDatabase.child(mFirebaseUser.getUid()).child("mSelectedSubInterests").setValue(mSelectedSubInterests);
 //            mDatabase.child(mFirebaseUser.getUid()).setValue(user);
-            SharedPrefs.setIsInterestsSelected("TRUE");
-            startActivity(SubInterestActivity.newIntent(getActivity()));
+                SharedPrefs.setIsInterestsSelected("TRUE");
+                startActivity(SubInterestActivity.newIntent(getActivity()));
+            }else{
+                Toast.makeText(getActivity(), "No Internet Connection. Please try again", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -198,5 +204,12 @@ public class ChooseInterestFragment extends BaseFragment implements BubblePicker
                 TEXT_SIZE, getResources().getDrawable(R.drawable.ayurveda)));
 
         return itemList;
+    }
+
+    public boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 }

@@ -1,20 +1,20 @@
 package com.example.sasuke.dailysuvichar.fragment;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import com.example.sasuke.dailysuvichar.R;
-import com.example.sasuke.dailysuvichar.activity.HomeActivity;
 import com.example.sasuke.dailysuvichar.models.Data;
-import com.example.sasuke.dailysuvichar.newactivities.NewHomeActivity;
 import com.example.sasuke.dailysuvichar.newactivities.NewMainActivity;
 import com.example.sasuke.dailysuvichar.utils.SharedPrefs;
 import com.example.sasuke.dailysuvichar.view.adapter.RecyclerViewAdapter;
@@ -221,13 +221,22 @@ public class SubInterestFragment extends BaseFragment {
             Toast.makeText(getContext().getApplicationContext(), "Please Check Your Internet Connection.", Toast.LENGTH_SHORT).show();
         }
         else {
-            mDatabase.child(mFirebaseUser.getUid()).child("mAllInterests").setValue(mAllInterests);
-            mDatabase.child(mFirebaseUser.getUid()).child("mSelectedSubInterests").setValue(mSelectedSubInterests);
-            SharedPrefs.setIsSubinterestsSelected("TRUE");
-            startActivity(new Intent(getActivity().getApplicationContext(), NewMainActivity.class));
+            if(isOnline()) {
+                mDatabase.child(mFirebaseUser.getUid()).child("mAllInterests").setValue(mAllInterests);
+                mDatabase.child(mFirebaseUser.getUid()).child("mSelectedSubInterests").setValue(mSelectedSubInterests);
+                SharedPrefs.setIsSubinterestsSelected("TRUE");
+                startActivity(new Intent(getActivity().getApplicationContext(), NewMainActivity.class));
+            }else{
+                Toast.makeText(getActivity(), "No Internet Connection. Please try again", Toast.LENGTH_SHORT).show();
+            }
         }
 
-//        User user = new User(mAllInterests, mSelectedSubInterests);
-//        mDatabase.child(mFirebaseUser.getUid()).setValue(user);
+    }
+
+    public boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 }
