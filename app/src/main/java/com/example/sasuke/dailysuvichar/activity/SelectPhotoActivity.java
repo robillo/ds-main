@@ -23,8 +23,8 @@ import android.widget.Toast;
 
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.models.Photo;
-import com.example.sasuke.dailysuvichar.newactivities.ExploreActivity;
-import com.example.sasuke.dailysuvichar.newactivities.NewHomeActivity;
+import com.example.sasuke.dailysuvichar.newactivities.NewHomeyActivity;
+import com.example.sasuke.dailysuvichar.newactivities.NewExploreyActivity;
 import com.example.sasuke.dailysuvichar.view.RVTags;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -326,10 +326,10 @@ public class SelectPhotoActivity extends BaseActivity{
 
                     Toast.makeText(this, "Post successful!", Toast.LENGTH_SHORT).show();
                     if(from == 1){
-                        startActivity(new Intent(this, NewHomeActivity.class));
+                        startActivity(new Intent(this, NewExploreyActivity.class));
                     }
                     else if(from == 2){
-                        startActivity(new Intent(this, ExploreActivity.class));
+                        startActivity(new Intent(this, NewHomeyActivity.class));
                     }
                     finish();
                 }else{

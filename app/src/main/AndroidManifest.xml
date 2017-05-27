@@ -56,8 +56,8 @@
             android:name=".activity.ProfileActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activity.GuruDetailActivity" />
-        <activity android:name=".newactivities.ExploreActivity" />
-        <activity android:name=".newactivities.NewHomeActivity" />
+        <activity android:name=".newactivities.NewHomeyActivity" />
+        <activity android:name=".newactivities.NewExploreyActivity" />
         <activity android:name=".newactivities.NewGurusActivity" />
         <activity android:name=".newactivities.NewMainActivity" />
         <activity android:name=".newactivities.YourFeedsActivity"></activity>

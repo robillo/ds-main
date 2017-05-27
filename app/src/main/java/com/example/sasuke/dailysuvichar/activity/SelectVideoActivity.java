@@ -1,15 +1,10 @@
 package com.example.sasuke.dailysuvichar.activity;
 
 import android.app.ProgressDialog;
-import android.content.ContentValues;
 import android.content.Context;
-import android.content.CursorLoader;
 import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
@@ -26,10 +21,9 @@ import android.widget.VideoView;
 
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.models.CustomVideo;
-import com.example.sasuke.dailysuvichar.newactivities.ExploreActivity;
-import com.example.sasuke.dailysuvichar.newactivities.NewHomeActivity;
+import com.example.sasuke.dailysuvichar.newactivities.NewHomeyActivity;
+import com.example.sasuke.dailysuvichar.newactivities.NewExploreyActivity;
 import com.example.sasuke.dailysuvichar.view.RVTags;
-import com.example.sasuke.dailysuvichar.view.YoutubeWebView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -50,8 +44,6 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import static android.provider.MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO;
 
 /**
  * Created by rishabhshukla on 14/05/17.
@@ -334,10 +326,10 @@ public class SelectVideoActivity extends BaseActivity{
 
                     Toast.makeText(this, "Post successful!", Toast.LENGTH_SHORT).show();
                     if(from == 1){
-                        startActivity(new Intent(this, NewHomeActivity.class));
+                        startActivity(new Intent(this, NewExploreyActivity.class));
                     }
                     else if(from == 2){
-                        startActivity(new Intent(this, ExploreActivity.class));
+                        startActivity(new Intent(this, NewHomeyActivity.class));
                     }
                     finish();
                 }else{

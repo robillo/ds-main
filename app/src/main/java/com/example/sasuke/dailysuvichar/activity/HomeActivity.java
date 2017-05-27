@@ -3,7 +3,6 @@ package com.example.sasuke.dailysuvichar.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -18,9 +17,9 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.fragment.MainFragment;
 import com.example.sasuke.dailysuvichar.fragment.SettingsFragment;
-import com.example.sasuke.dailysuvichar.newactivities.ExploreActivity;
+import com.example.sasuke.dailysuvichar.newactivities.NewHomeyActivity;
 import com.example.sasuke.dailysuvichar.newactivities.NewGurusActivity;
-import com.example.sasuke.dailysuvichar.newactivities.NewHomeActivity;
+import com.example.sasuke.dailysuvichar.newactivities.NewExploreyActivity;
 import com.example.sasuke.dailysuvichar.utils.SharedPrefs;
 import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
@@ -145,7 +144,7 @@ public class HomeActivity extends BaseActivity {
 //                replaceFragment(MainFragment.newInstance(), MainFragment.class.getName());
 //            }
 //        }, 250);
-        startActivity(new Intent(this, ExploreActivity.class));
+        startActivity(new Intent(this, NewHomeyActivity.class));
     }
 //
 //    @OnClick(R.id.nav_updates)
@@ -225,7 +224,7 @@ public class HomeActivity extends BaseActivity {
 
     @OnClick(R.id.home_activity)
     public void homeActivity(){
-        startActivity(new Intent(this, NewHomeActivity.class));
+        startActivity(new Intent(this, NewExploreyActivity.class));
     }
 
     @OnClick(R.id.gurus_activity)
@@ -235,7 +234,7 @@ public class HomeActivity extends BaseActivity {
 
     @OnClick(R.id.explore_activity)
     public void exploreActivity(){
-        startActivity(new Intent(this, ExploreActivity.class));
+        startActivity(new Intent(this, NewHomeyActivity.class));
     }
 
     @Override
