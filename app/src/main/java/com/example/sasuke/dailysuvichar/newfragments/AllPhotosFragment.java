@@ -66,9 +66,10 @@ public class AllPhotosFragment extends Fragment {
     private AVLoadingIndicatorView avi;
     private HashMap<String, String> userStatus;
     private static DatabaseReference mDatabaseReference;
-    private DatabaseReference mDatabaseReferencePosts;
+    private DatabaseReference mDatabaseReferencePosts, mDatabaseReferenceGuru;
     private StorageReference mStorageReference;
     private ArrayList<String> mSelectedSubInterests;
+    private ArrayList<String> mSelectedGurus;
 
     private StorageReference mStorageReferenceDP;
     private FirebaseAuth mFirebaseAuth;
@@ -82,6 +83,7 @@ public class AllPhotosFragment extends Fragment {
     private Animation slide_up;
     private int CHECK = 1;
     private String intentDBReference = null;
+    private HashMap<String,Boolean> isPhotoDoneYour,isPhotoDoneGuru;
     private HashMap<String, Long> isDone;
     private HashMap<String, Photo> photoHashMapStore;
     private HashMap<String, Long> photoHashMap;
@@ -138,6 +140,20 @@ public class AllPhotosFragment extends Fragment {
         if(from.equals("YOUR")){
             //SHOW YOUR FEEDS, COPY CODE FROM YOUR FEEDS FRAGMENT
             Log.e("FROM", "YOUR TO PHOTOS");
+            mDatabaseReference = FirebaseDatabase.getInstance().getReference("users");
+            Log.e(TAG, uid);
+            Log.e(TAG, mDatabaseReference.toString());
+
+            mSelectedSubInterests = new ArrayList<>();
+
+            if(isOnline()) {
+                refresh();
+
+                fetchPhotosFromFirebaseYour();
+
+            }else{
+                Toast.makeText(getActivity(), "No Internet Connection", Toast.LENGTH_SHORT).show();
+            }
 
         }
         else if(from.equals("HOME")){
@@ -183,6 +199,34 @@ public class AllPhotosFragment extends Fragment {
         else if(from.equals("EXPLORE")){
             //SHOW FEEDS FROM WHO YOU FOLLOW + DS PEOPLE
             Log.e("FROM", "EXPLORE TO PHOTOS");
+
+            mSelectedGurus = new ArrayList<>();
+
+            mDatabaseReferenceGuru = FirebaseDatabase.getInstance().getReference("users");
+
+            if(isOnline()) {
+                refresh();
+
+                mDatabaseReferenceGuru.child(mFirebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.child("mSelectedSubInterests").getValue() != null) {
+                            mSelectedSubInterests.addAll((Collection<? extends String>) dataSnapshot.child("mSelectedSubInterests").getValue());
+                        }
+                        fetchPhotosFromFirebaseHome();
+                        alternateLayout.setVisibility(View.INVISIBLE);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
+
+                fetchPhotosFromFirebaseHome();
+
+            }else{
+                Toast.makeText(getActivity(), "No Internet Connection", Toast.LENGTH_SHORT).show();
+            }
         }
 
 
@@ -203,6 +247,7 @@ public class AllPhotosFragment extends Fragment {
                             if(from.equals("YOUR")){
                                 //SHOW YOUR FEEDS, COPY CODE FROM YOUR FEEDS FRAGMENT
                                 Log.e("FROM", "YOUR TO PHOTOS");
+                                fetchPhotosFromFirebaseYour();
 
                             }
                             else if(from.equals("HOME")){
@@ -230,75 +275,148 @@ public class AllPhotosFragment extends Fragment {
         });
     }
 
+    private void fetchPhotosFromFirebaseGuru() {
+
+        isPhotoDoneGuru = new HashMap<>();
+
+        mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("users").child(mFirebaseUser.getUid()).child("posts");
+        mStorageReference = FirebaseStorage.getInstance().getReference("posts").child("images");
+
+        mDatabaseReferencePosts.child("photo").orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    Photo photoSnap = postSnapshot.getValue(Photo.class);
+                    photoSnap.setStorageReference(mStorageReference.child(postSnapshot.getKey()));
+
+                    if (!isPhotoDoneGuru.containsKey(postSnapshot.getKey())) {
+
+                        items.add(photoSnap);
+                        isPhotoDoneGuru.put(postSnapshot.getKey(), true);
+                    }
+                    mAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d(TAG, "onCancelled: " + databaseError.getMessage());
+            }
+        });
+
+        Log.d(TAG, "fetchStatusFromFirebase: " + items.size());
+        mAdapter.setItems(items);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    private void fetchPhotosFromFirebaseYour() {
+
+        isPhotoDoneYour = new HashMap<>();
+
+        mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("users").child(mFirebaseUser.getUid()).child("posts");
+        mStorageReference = FirebaseStorage.getInstance().getReference("posts").child("images");
+
+        mDatabaseReferencePosts.child("photo").orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    Photo photoSnap = postSnapshot.getValue(Photo.class);
+                    photoSnap.setStorageReference(mStorageReference.child(postSnapshot.getKey()));
+
+                    if (!isPhotoDoneYour.containsKey(postSnapshot.getKey())) {
+
+                        items.add(photoSnap);
+                        isPhotoDoneYour.put(postSnapshot.getKey(), true);
+                    }
+                    mAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d(TAG, "onCancelled: " + databaseError.getMessage());
+            }
+        });
+
+        Log.d(TAG, "fetchStatusFromFirebase: " + items.size());
+        mAdapter.setItems(items);
+        mAdapter.notifyDataSetChanged();
+    }
+
     private void fetchPhotosFromFirebaseHome() {
 
 
-        if (mSelectedSubInterests.size() > 0) {
-            mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("tags");
-            mStorageReference = FirebaseStorage.getInstance().getReference("posts").child("images");
+        if(mSelectedSubInterests!=null) {
 
-            mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("tags");
-            for (int i = 0; i < mSelectedSubInterests.size(); i++) {
+            if (mSelectedSubInterests.size() > 0) {
+                mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("tags");
+                mStorageReference = FirebaseStorage.getInstance().getReference("posts").child("images");
 
-                String subInt = mSelectedSubInterests.get(i);
+                mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("tags");
+                for (int i = 0; i < mSelectedSubInterests.size(); i++) {
+
+                    String subInt = mSelectedSubInterests.get(i);
 //                mDatabaseReferencePosts.child(subInt).child("status");
 
-                final int finalI = i;
-                mDatabaseReferencePosts.child(subInt).child("photo").addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
+                    final int finalI = i;
+                    mDatabaseReferencePosts.child(subInt).child("photo").addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
 
 //                        Log.i(TAG, "onDataChange2222: " + dataSnapshot.getValue());
 //                        Log.i(TAG, "onDataChange2222: " + dataSnapshot.getChildrenCount());
 
 //                        Log.i(TAG, "onDataChange: "+mUserList.size()+" ");
 
-                        for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                            Photo photoSnap = postSnapshot.getValue(Photo.class);
-                            photoSnap.setStorageReference(mStorageReference.child(postSnapshot.getKey()));
+                            for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                                Photo photoSnap = postSnapshot.getValue(Photo.class);
+                                photoSnap.setStorageReference(mStorageReference.child(postSnapshot.getKey()));
 
-                            if (!isDone.containsKey(postSnapshot.getKey())) {
+                                if (!isDone.containsKey(postSnapshot.getKey())) {
 //                                items.add(photoSnap);
-                                isDone.put(postSnapshot.getKey(), photoSnap.getTimestamp());
-                                photoHashMapStore.put(postSnapshot.getKey(), photoSnap);
-                            }
+                                    isDone.put(postSnapshot.getKey(), photoSnap.getTimestamp());
+                                    photoHashMapStore.put(postSnapshot.getKey(), photoSnap);
+                                }
 //                            Log.d(TAG, "fetchPhotosFromFirebaseHome: ISDONE "+isDone.size());
 
-                            mAdapter.notifyDataSetChanged();
+                                mAdapter.notifyDataSetChanged();
 //                            if (mAdapter.getItemCount() > 0) {
 //                                avi.hide();
 //                            }
-                        }
-                        Log.d(TAG, "fetchPhotosFromFirebaseHome: ISDONE " + isDone.size());
-                        if (finalI == mSelectedSubInterests.size() - 1 && isDone.size() > 0) {
-                            photoHashMap = sortByComparator(isDone, false);
-                            Log.d(TAG, "fetchPhotosFromFirebaseHome: photo" + photoHashMap);
-                            Log.d(TAG, "fetchPhotosFromFirebaseHome: photo" + photoHashMapStore);
-                            for (int i = 0; i < photoHashMap.size(); i++) {
-                                if (!items.contains(photoHashMapStore.get(photoHashMap.keySet().toArray()[i]))) {
-                                    items.add(photoHashMapStore.get(photoHashMap.keySet().toArray()[i]));
+                            }
+                            Log.d(TAG, "fetchPhotosFromFirebaseHome: ISDONE " + isDone.size());
+                            if (finalI == mSelectedSubInterests.size() - 1 && isDone.size() > 0) {
+                                photoHashMap = sortByComparator(isDone, false);
+                                Log.d(TAG, "fetchPhotosFromFirebaseHome: photo" + photoHashMap);
+                                Log.d(TAG, "fetchPhotosFromFirebaseHome: photo" + photoHashMapStore);
+                                for (int i = 0; i < photoHashMap.size(); i++) {
+                                    if (!items.contains(photoHashMapStore.get(photoHashMap.keySet().toArray()[i]))) {
+                                        items.add(photoHashMapStore.get(photoHashMap.keySet().toArray()[i]));
+                                    }
                                 }
                             }
                         }
-                    }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        Log.d(TAG, "onCancelled: " + databaseError.getMessage());
-                    }
-                });
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            Log.d(TAG, "onCancelled: " + databaseError.getMessage());
+                        }
+                    });
 //                Log.d(TAG, "fetchPhotosFromFirebaseHome: ISDONE "+isDone.size());
 
-            }
+                }
 //            Log.d(TAG, "fetchPhotosFromFirebaseHome: ISDONE "+isDone.size());
 
-        }
-        Log.d(TAG, "fetchPhotosFromFirebaseHome: " + items.size());
-        mAdapter.setItems(items);
-        mAdapter.notifyDataSetChanged();
+            }
+            Log.d(TAG, "fetchPhotosFromFirebaseHome: " + items.size());
+            mAdapter.setItems(items);
+            mAdapter.notifyDataSetChanged();
 //        if(mAdapter.getItemCount()>0){
 //            avi.hide();
 //        }
+        }
     }
 
     private static HashMap<String, Long> sortByComparator(HashMap<String, Long> unsortMap, final boolean order)
