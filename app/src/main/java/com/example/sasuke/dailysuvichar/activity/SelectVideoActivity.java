@@ -322,7 +322,7 @@ public class SelectVideoActivity extends BaseActivity{
                     }
 
                     mDatabaseReferenceUser = FirebaseDatabase.getInstance().getReference();
-                    mDatabaseReferenceUser.child("users").child(mFirebaseUser.getUid()).child("posts").child("video").push().setValue(video);
+                    mDatabaseReferenceUser.child("users").child(mFirebaseUser.getUid()).child("posts").child("video").child(postID).setValue(video);
 
                     Toast.makeText(this, R.string.success, Toast.LENGTH_SHORT).show();
                     if(from == 1){

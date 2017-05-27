@@ -1,5 +1,6 @@
 package com.example.sasuke.dailysuvichar.view;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +18,8 @@ import com.google.firebase.storage.StorageReference;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.facebook.login.widget.ProfilePictureView.TAG;
 
 
 public class PhotoViewHolder extends RecyclerView.ViewHolder {
@@ -78,7 +81,10 @@ public class PhotoViewHolder extends RecyclerView.ViewHolder {
 
     public void setImage(StorageReference storageReference, Context ctx) {
 //        Picasso.with(itemView.getContext()).load(photo).fit().into(mIvPhoto);
-        if(storageReference!=null&&ctx!=null) {
+        Log.d(TAG, "setImage: NOTNULL");
+        Activity a = (Activity) context;
+
+        if(storageReference!=null&&ctx!=null&& !a.isDestroyed()) {
             this.storageReference = storageReference;
             Glide.with(ctx).
                     using(new FirebaseImageLoader())

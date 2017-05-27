@@ -174,7 +174,7 @@ public class NewGurusActivity extends AppCompatActivity {
         rv.setAdapter(mRvGuruAdapter);
     }
 
-    public static void setFollowing(ArrayList<String> guruFollowers, Integer followerCount, boolean isFollowing, String guruUid){
+    public static void setFollowing(ArrayList<String> guruFollowers, String uid, boolean isFollowing, String guruUid){
         DatabaseReference mDatabaseReferenceGuru = FirebaseDatabase.getInstance().getReference("gurus").child("official");
         DatabaseReference mDatabaseReferenceUser = FirebaseDatabase.getInstance().getReference("users").child(mFirebaseUser.getUid());
 
@@ -183,9 +183,9 @@ public class NewGurusActivity extends AppCompatActivity {
         }
 
         if(isFollowing){
-            if(!following.contains(guruUid)) {
+            if(!following.contains(uid)) {
 
-                following.add(guruUid);
+                following.add(uid);
 
                 Set<String> set = new HashSet<>();
                 set.addAll(following);
@@ -199,10 +199,10 @@ public class NewGurusActivity extends AppCompatActivity {
             mDatabaseReferenceGuru.child(guruUid).child("followersCount").setValue(guruFollowers.size());
             mDatabaseReferenceGuru.child(guruUid).child("followers").setValue(guruFollowers);
         }else{
-            following.remove(guruUid);
+            following.remove(uid);
             guruFollowers.remove(mFirebaseUser.getUid());
-            if(!guruFollowers.contains(mFirebaseUser.getUid())&&following.contains(guruUid)){
-                following.remove(guruUid);
+            if(!guruFollowers.contains(mFirebaseUser.getUid())&&following.contains(uid)){
+                following.remove(uid);
             }
             mDatabaseReferenceGuru.child(guruUid).child("followersCount").setValue(guruFollowers.size());
             mDatabaseReferenceUser.child("following").setValue(following);
@@ -222,10 +222,6 @@ public class NewGurusActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         switch (id) {
-            case R.id.action_search: {
-
-                break;
-            }
             case R.id.action_sort: {
                 showPopup();
                 break;

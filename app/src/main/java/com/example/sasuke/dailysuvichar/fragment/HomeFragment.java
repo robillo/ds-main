@@ -692,10 +692,6 @@ public class HomeFragment extends BaseFragment {
         int id = item.getItemId();
 
         switch (id){
-            case R.id.action_search:{
-
-                break;
-            }
             case R.id.action_sort:{
 
                 break;
