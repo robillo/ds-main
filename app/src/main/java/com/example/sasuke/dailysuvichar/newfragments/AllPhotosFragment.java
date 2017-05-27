@@ -104,23 +104,6 @@ public class AllPhotosFragment extends Fragment {
         Bundle args = getArguments();
         from = args.getString("from");
 
-        //WONT CAUSE NPE DONT WORRY
-        if(from.equals("YOUR")){
-            //SHOW YOUR FEEDS, COPY CODE FROM YOUR FEEDS FRAGMENT
-            Log.e("FROM", "YOUR TO PHOTOS");
-
-        }
-        else if(from.equals("HOME")){
-            //SHOW FEEDS ON YOUR INTERESTS
-            Log.e("FROM", "HOME TO PHOTOS");
-
-        }
-        else if(from.equals("EXPLORE")){
-            //SHOW FEEDS FROM WHO YOU FOLLOW + DS PEOPLE
-            Log.e("FROM", "EXPLORE TO PHOTOS");
-        }
-
-
         mRvHome= (RecyclerView) v.findViewById(R.id.recyclerview);
         mPullToRefresh = (SwipeRefreshLayout) v.findViewById(R.id.swiperefresh);
         alternateLayout = (LinearLayout) v.findViewById(R.id.alternate_layout);
@@ -132,9 +115,6 @@ public class AllPhotosFragment extends Fragment {
         mUsersDatabase = FirebaseDatabase.getInstance().getReference("users");
         mStorageReferenceDP = FirebaseStorage.getInstance().getReference("profile").child("user").child("dp");
 
-//        fetchDP();
-
-//        avi = (AVLoadingIndicatorView) view.findViewById(R.id.avi);
         mRvHome.setVisibility(View.VISIBLE);
 
         uid = mFirebaseUser.getUid();
@@ -143,7 +123,6 @@ public class AllPhotosFragment extends Fragment {
 
         slide_down = AnimationUtils.loadAnimation(getContext(), R.anim.slide_down);
         slide_up = AnimationUtils.loadAnimation(getContext(), R.anim.slide_up);
-//        customVideoAdapter = new CustomVideoAdapter();
 
         mLayoutManager = new LinearLayoutManager(getContext());
         mLayoutManager.setItemPrefetchEnabled(true);
@@ -155,51 +134,57 @@ public class AllPhotosFragment extends Fragment {
 
         items = new Items();
 
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference("users");
-        Log.e(TAG, uid);
-        Log.e(TAG, mDatabaseReference.toString());
+        //WONT CAUSE NPE DONT WORRY
+        if(from.equals("YOUR")){
+            //SHOW YOUR FEEDS, COPY CODE FROM YOUR FEEDS FRAGMENT
+            Log.e("FROM", "YOUR TO PHOTOS");
 
-        mSelectedSubInterests = new ArrayList<>();
+        }
+        else if(from.equals("HOME")){
+            //SHOW FEEDS ON YOUR INTERESTS
+            Log.e("FROM", "HOME TO PHOTOS");
 
-        isDone= new HashMap<>();
-        photoHashMap = new HashMap<>();
-        photoHashMapStore = new HashMap<>();
 
-        if(isOnline()) {
-            refresh();
+            mDatabaseReference = FirebaseDatabase.getInstance().getReference("users");
+            Log.e(TAG, uid);
+            Log.e(TAG, mDatabaseReference.toString());
 
-            mDatabaseReference.child(mFirebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.child("mSelectedSubInterests").getValue() != null) {
-                        mSelectedSubInterests.addAll((Collection<? extends String>) dataSnapshot.child("mSelectedSubInterests").getValue());
+            mSelectedSubInterests = new ArrayList<>();
+
+            isDone= new HashMap<>();
+            photoHashMap = new HashMap<>();
+            photoHashMapStore = new HashMap<>();
+
+            if(isOnline()) {
+                refresh();
+
+                mDatabaseReference.child(mFirebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.child("mSelectedSubInterests").getValue() != null) {
+                            mSelectedSubInterests.addAll((Collection<? extends String>) dataSnapshot.child("mSelectedSubInterests").getValue());
+                        }
+                        fetchPhotosFromFirebaseHome();
+                        alternateLayout.setVisibility(View.INVISIBLE);
                     }
-                    fetchPhotosFromFirebase();
-                    alternateLayout.setVisibility(View.INVISIBLE);
-                }
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                }
-            });
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
 
-            fetchPhotosFromFirebase();
+                fetchPhotosFromFirebaseHome();
 
-        }else{
-            Toast.makeText(getActivity(), "No Internet Connection", Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(getActivity(), "No Internet Connection", Toast.LENGTH_SHORT).show();
+            }
+
+        }
+        else if(from.equals("EXPLORE")){
+            //SHOW FEEDS FROM WHO YOU FOLLOW + DS PEOPLE
+            Log.e("FROM", "EXPLORE TO PHOTOS");
         }
 
-//        Handler handler= new Handler();
-//        handler.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//
-//                Log.d(TAG, "onViewCreated: VAL "+allPostsHashMapFinal.size());
-//                Log.d(TAG, "onViewCreated: VAL "+photoHashMap.size());
-//                Log.d(TAG, "onViewCreated: VAL "+photoHashMap.size());
-//                Log.d(TAG, "onViewCreated: VAL "+customVidHashMap.size());
-//            }
-//        },5000);
 
         return v;
     }
@@ -215,7 +200,21 @@ public class AllPhotosFragment extends Fragment {
                     public void run() {
                         //CALL DATA HERE
                         if(isOnline()) {
-                            fetchPhotosFromFirebase();
+                            if(from.equals("YOUR")){
+                                //SHOW YOUR FEEDS, COPY CODE FROM YOUR FEEDS FRAGMENT
+                                Log.e("FROM", "YOUR TO PHOTOS");
+
+                            }
+                            else if(from.equals("HOME")){
+                                //SHOW FEEDS ON YOUR INTERESTS
+                                Log.e("FROM", "HOME TO PHOTOS");
+                                    fetchPhotosFromFirebaseHome();
+                            }
+                            else if(from.equals("EXPLORE")){
+                                //SHOW FEEDS FROM WHO YOU FOLLOW + DS PEOPLE
+                                Log.e("FROM", "EXPLORE TO PHOTOS");
+                            }
+
                         }else{
                             Toast.makeText(getActivity(), "No Internet Connection", Toast.LENGTH_SHORT).show();
                         }
@@ -231,7 +230,7 @@ public class AllPhotosFragment extends Fragment {
         });
     }
 
-    private void fetchPhotosFromFirebase() {
+    private void fetchPhotosFromFirebaseHome() {
 
 
         if (mSelectedSubInterests.size() > 0) {
@@ -256,25 +255,25 @@ public class AllPhotosFragment extends Fragment {
 
                         for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                             Photo photoSnap = postSnapshot.getValue(Photo.class);
+                            photoSnap.setStorageReference(mStorageReference.child(postSnapshot.getKey()));
 
                             if (!isDone.containsKey(postSnapshot.getKey())) {
 //                                items.add(photoSnap);
-                                photoSnap.setStorageReference(mStorageReference.child(postSnapshot.getKey()));
                                 isDone.put(postSnapshot.getKey(), photoSnap.getTimestamp());
                                 photoHashMapStore.put(postSnapshot.getKey(), photoSnap);
                             }
-//                            Log.d(TAG, "fetchPhotosFromFirebase: ISDONE "+isDone.size());
+//                            Log.d(TAG, "fetchPhotosFromFirebaseHome: ISDONE "+isDone.size());
 
                             mAdapter.notifyDataSetChanged();
 //                            if (mAdapter.getItemCount() > 0) {
 //                                avi.hide();
 //                            }
                         }
-                        Log.d(TAG, "fetchPhotosFromFirebase: ISDONE " + isDone.size());
+                        Log.d(TAG, "fetchPhotosFromFirebaseHome: ISDONE " + isDone.size());
                         if (finalI == mSelectedSubInterests.size() - 1 && isDone.size() > 0) {
                             photoHashMap = sortByComparator(isDone, false);
-                            Log.d(TAG, "fetchPhotosFromFirebase: photo" + photoHashMap);
-                            Log.d(TAG, "fetchPhotosFromFirebase: photo" + photoHashMapStore);
+                            Log.d(TAG, "fetchPhotosFromFirebaseHome: photo" + photoHashMap);
+                            Log.d(TAG, "fetchPhotosFromFirebaseHome: photo" + photoHashMapStore);
                             for (int i = 0; i < photoHashMap.size(); i++) {
                                 if (!items.contains(photoHashMapStore.get(photoHashMap.keySet().toArray()[i]))) {
                                     items.add(photoHashMapStore.get(photoHashMap.keySet().toArray()[i]));
@@ -288,13 +287,13 @@ public class AllPhotosFragment extends Fragment {
                         Log.d(TAG, "onCancelled: " + databaseError.getMessage());
                     }
                 });
-//                Log.d(TAG, "fetchPhotosFromFirebase: ISDONE "+isDone.size());
+//                Log.d(TAG, "fetchPhotosFromFirebaseHome: ISDONE "+isDone.size());
 
             }
-//            Log.d(TAG, "fetchPhotosFromFirebase: ISDONE "+isDone.size());
+//            Log.d(TAG, "fetchPhotosFromFirebaseHome: ISDONE "+isDone.size());
 
         }
-        Log.d(TAG, "fetchPhotosFromFirebase: " + items.size());
+        Log.d(TAG, "fetchPhotosFromFirebaseHome: " + items.size());
         mAdapter.setItems(items);
         mAdapter.notifyDataSetChanged();
 //        if(mAdapter.getItemCount()>0){

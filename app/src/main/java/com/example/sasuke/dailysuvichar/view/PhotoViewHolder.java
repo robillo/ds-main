@@ -2,13 +2,10 @@ package com.example.sasuke.dailysuvichar.view;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -17,7 +14,6 @@ import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.activity.FullScreenActivity;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.firebase.storage.StorageReference;
-import com.like.LikeButton;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -82,7 +78,7 @@ public class PhotoViewHolder extends RecyclerView.ViewHolder {
 
     public void setImage(StorageReference storageReference, Context ctx) {
 //        Picasso.with(itemView.getContext()).load(photo).fit().into(mIvPhoto);
-        if(storageReference!=null) {
+        if(storageReference!=null&&ctx!=null) {
             this.storageReference = storageReference;
             Glide.with(ctx).
                     using(new FirebaseImageLoader())
