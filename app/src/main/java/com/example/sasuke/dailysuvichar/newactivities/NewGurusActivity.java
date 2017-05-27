@@ -34,6 +34,8 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -61,7 +63,7 @@ public class NewGurusActivity extends AppCompatActivity {
     HashMap<String, Integer> guruMap;
     private MultiTypeAdapter mAdapter;
     private static ArrayList<String> following;
-    private HashMap<String, Boolean> followingMap;
+    private static HashMap<String, Boolean> followingMap;
     //    private static ArrayList<String> guruFollowers;
     private static Integer getFollowerCount;
     @BindView(R.id.recyclerview)
@@ -133,7 +135,6 @@ public class NewGurusActivity extends AppCompatActivity {
                                 following.add(String.valueOf(postSnapshot.getValue()));
                                 followingMap.put(String.valueOf(postSnapshot.getValue()),true);
                             }
-
                             mRvGuruAdapter.notifyDataSetChanged();
                         }
                     }
@@ -183,15 +184,26 @@ public class NewGurusActivity extends AppCompatActivity {
 
         if(isFollowing){
             if(!following.contains(guruUid)) {
+
                 following.add(guruUid);
+
+                Set<String> set = new HashSet<>();
+                set.addAll(following);
+                following.clear();
+                following.addAll(set);
+
                 mDatabaseReferenceUser.child("following").setValue(following);
             }
+
             guruFollowers.add(mFirebaseUser.getUid());
             mDatabaseReferenceGuru.child(guruUid).child("followersCount").setValue(guruFollowers.size());
             mDatabaseReferenceGuru.child(guruUid).child("followers").setValue(guruFollowers);
         }else{
             following.remove(guruUid);
             guruFollowers.remove(mFirebaseUser.getUid());
+            if(!guruFollowers.contains(mFirebaseUser.getUid())&&following.contains(guruUid)){
+                following.remove(guruUid);
+            }
             mDatabaseReferenceGuru.child(guruUid).child("followersCount").setValue(guruFollowers.size());
             mDatabaseReferenceUser.child("following").setValue(following);
             mDatabaseReferenceGuru.child(guruUid).child("followers").setValue(guruFollowers);
