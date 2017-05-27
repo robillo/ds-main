@@ -348,7 +348,6 @@ public class SelectVideoActivity extends BaseActivity{
                     name = String.valueOf(dataSnapshot.child("name").getValue());
                 }
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
