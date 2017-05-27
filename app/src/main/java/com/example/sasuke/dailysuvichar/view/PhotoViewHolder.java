@@ -84,12 +84,12 @@ public class PhotoViewHolder extends RecyclerView.ViewHolder {
 //        Picasso.with(itemView.getContext()).load(photo).fit().into(mIvPhoto);
         if(storageReference!=null) {
             this.storageReference = storageReference;
-            Glide.with(ctx).
-                    using(new FirebaseImageLoader())
-                    .load(storageReference)
-                    .centerCrop()
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(mIvPhoto);
+//            Glide.with(ctx).
+//                    using(new FirebaseImageLoader())
+//                    .load(storageReference)
+//                    .centerCrop()
+//                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+//                    .into(mIvPhoto);
         }
     }
 

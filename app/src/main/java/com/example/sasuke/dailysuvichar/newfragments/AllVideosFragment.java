@@ -205,10 +205,6 @@ public class AllVideosFragment extends Fragment {
                         //CALL DATA HERE
                         if (isOnline()) {
                             fetchVideosFromFirebase();
-//
-                            mPullToRefresh.setRefreshing(false);
-                            Toast.makeText(getActivity(), "Feeds Updated Successfully.", Toast.LENGTH_SHORT).show();
-
                         } else {
                             Toast.makeText(getActivity(), "No Internet Connection", Toast.LENGTH_SHORT).show();
                         }
@@ -218,7 +214,6 @@ public class AllVideosFragment extends Fragment {
                     @Override
                     public void run() {
                         mPullToRefresh.setRefreshing(false);
-                        Toast.makeText(getActivity(), "Feeds Updated Successfully.", Toast.LENGTH_SHORT).show();
                     }
                 }, 1500);
             }

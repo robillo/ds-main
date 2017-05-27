@@ -43,21 +43,5 @@
             android:paddingBottom="12dp"
             android:paddingTop="12dp"/>
 
-        <TextView
-            android:id="@+id/select_button"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="Download"
-            android:fontFamily="sans-serif-smallcaps"
-            android:background="@color/white"
-            android:textAllCaps="true"
-            android:gravity="center"
-            android:textColor="@color/colorAccent"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:paddingBottom="12dp"
-            android:paddingTop="12dp"/>
-
     </LinearLayout>
 </FrameLayout>
