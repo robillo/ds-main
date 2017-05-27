@@ -364,4 +364,15 @@ public class SelectPhotoActivity extends BaseActivity{
         }
         super.onDestroy();
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if(from == 1){
+            startActivity(new Intent(this, NewExploreyActivity.class));
+        }
+        else if(from == 2){
+            startActivity(new Intent(this, NewHomeyActivity.class));
+        }
+    }
 }

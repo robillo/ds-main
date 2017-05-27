@@ -45,10 +45,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-/**
- * Created by rishabhshukla on 14/05/17.
- */
-
 public class SelectVideoActivity extends BaseActivity{
 
 
@@ -366,5 +362,16 @@ public class SelectVideoActivity extends BaseActivity{
             progressDialog.dismiss();
         }
         super.onDestroy();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if(from == 1){
+            startActivity(new Intent(this, NewExploreyActivity.class));
+        }
+        else if(from == 2){
+            startActivity(new Intent(this, NewHomeyActivity.class));
+        }
     }
 }
