@@ -52,6 +52,8 @@ import butterknife.OnClick;
 public class SelectVideoActivity extends BaseActivity{
 
 
+    @BindView(R.id.name)
+    TextView name;
     @BindView(R.id.vidView)
     VideoView mVideoView;
     @BindView(R.id.diet)
@@ -89,7 +91,6 @@ public class SelectVideoActivity extends BaseActivity{
     private StorageReference mStorageReference;
     ProgressDialog progressDialog;
     Long size;
-    private String name;
     String bucket, encoding, lang;
     Uri downloadUrl;
     private int from = 1;
@@ -102,6 +103,8 @@ public class SelectVideoActivity extends BaseActivity{
         ButterKnife.bind(this);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
+        mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        getName();
         from = getIntent().getIntExtra("from", 1);
 
         showFileChooser();
@@ -304,8 +307,8 @@ public class SelectVideoActivity extends BaseActivity{
 
                     CustomVideo video = null;
 
-                    if(name!=null) {
-                        video = new CustomVideo(name, mFirebaseUser.getEmail(),
+                    if(name.getText()!="") {
+                        video = new CustomVideo(name.getText().toString(), mFirebaseUser.getEmail(),
                                 System.currentTimeMillis(), 0, 0, null, etCaption.getText().toString(),
                                 mFirebaseUser.getUid(), mSelectedItems);
                     }else{
@@ -340,20 +343,23 @@ public class SelectVideoActivity extends BaseActivity{
     }
 
     public void getName(){
+
         DatabaseReference ref =FirebaseDatabase.getInstance().getReference().child("users").child(mFirebaseUser.getUid());
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot.child("name").getValue()!=null){
-                    name = String.valueOf(dataSnapshot.child("name").getValue());
+                    Log.d(TAG, "onDataChange: NAMEE"+(dataSnapshot.child("name").getValue()));
+                    name.setText(String.valueOf(dataSnapshot.child("name").getValue()));
                 }
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
         });
+//        return null;
     }
-
     @Override
     protected void onDestroy() {
         if(progressDialog!=null) {
