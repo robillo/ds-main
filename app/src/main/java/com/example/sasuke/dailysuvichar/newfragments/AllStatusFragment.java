@@ -66,13 +66,14 @@ public class AllStatusFragment extends Fragment {
     private AVLoadingIndicatorView avi;
     private HashMap<String, String> userStatus;
     private static DatabaseReference mDatabaseReference;
-    private DatabaseReference mDatabaseReferencePosts;
+    private DatabaseReference mDatabaseReferencePosts, mDatabaseReferenceGuru;
     private StorageReference mStorageReference;
     private ArrayList<String> mSelectedSubInterests;
 
     private StorageReference mStorageReferenceDP;
     private FirebaseAuth mFirebaseAuth;
     private DatabaseReference mUsersDatabase;
+    private ArrayList<String> mSelectedGurus;
 
     private static final String TAG = "ALLSTATUS", STATUS = "status";
     private static final int PICK_IMAGE_REQUEST = 250;
@@ -86,7 +87,7 @@ public class AllStatusFragment extends Fragment {
     private HashMap<String, Status> statusHashMapStore;
     private HashMap<String, Long> statusHashMap;
     private String from = "HOME";
-    private HashMap<String, Boolean> isStatusDone;
+    private HashMap<String, Boolean> isStatusDone, isStatusDoneGuru;
 
     @BindView(R.id.recyclerview)
     RecyclerView mRvHome;
@@ -132,6 +133,7 @@ public class AllStatusFragment extends Fragment {
 
         mLayoutManager = new LinearLayoutManager(getContext());
         mLayoutManager.setItemPrefetchEnabled(true);
+//        mLayoutManager.setStackFromEnd(true);
         mLayoutManager.setInitialPrefetchItemCount(10);
         mRvHome.setLayoutManager(mLayoutManager);
         mAdapter = new MultiTypeAdapter();
@@ -145,6 +147,7 @@ public class AllStatusFragment extends Fragment {
             if (from.equals("YOUR")) {
                 //SHOW YOUR FEEDS, COPY CODE FROM YOUR FEEDS FRAGMENT
                 Log.e("FROM", "YOUR TO STATUS");
+                mLayoutManager.setStackFromEnd(true);
                 isStatusDone = new HashMap<>();
                 fetchStatusFromFirebaseYour();
                 refresh();
@@ -191,6 +194,32 @@ public class AllStatusFragment extends Fragment {
             } else if (from.equals("HOME")) {
                 //SHOW FEEDS FROM WHO YOU FOLLOW + DS PEOPLE
                 Log.e("FROM", "HOME TO STATUS");
+                mLayoutManager.setStackFromEnd(true);
+
+                mSelectedGurus = new ArrayList<>();
+                isStatusDoneGuru = new HashMap<>();
+
+                mDatabaseReferenceGuru = FirebaseDatabase.getInstance().getReference("users");
+
+                    refresh();
+
+                    mDatabaseReferenceGuru.child(mFirebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.child("following").getValue() != null) {
+                                mSelectedGurus.addAll((Collection<? extends String>) dataSnapshot.child("following").getValue());
+                            }
+                            fetchStatusFromFirebaseGuru();
+                            alternateLayout.setVisibility(View.INVISIBLE);
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                        }
+                    });
+
+                fetchStatusFromFirebaseGuru();
+
             }
         } else {
             Toast.makeText(getActivity(), getString(R.string.no_inter), Toast.LENGTH_SHORT).show();
@@ -198,6 +227,44 @@ public class AllStatusFragment extends Fragment {
 
 
         return v;
+    }
+
+
+    private void fetchStatusFromFirebaseGuru() {
+
+        if(mSelectedGurus!=null && mSelectedGurus.size()>0) {
+
+            for(String guru: mSelectedGurus) {
+
+                mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("users").child(guru).child("posts");
+
+                mDatabaseReferencePosts.child("status").orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                        for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                            Status statusSnap = postSnapshot.getValue(Status.class);
+
+                            if (!isStatusDoneGuru.containsKey(postSnapshot.getKey())) {
+
+                                items.add(statusSnap);
+                                isStatusDoneGuru.put(postSnapshot.getKey(), true);
+                            }
+                            mAdapter.notifyDataSetChanged();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.d(TAG, "onCancelled: " + databaseError.getMessage());
+                    }
+                });
+            }
+
+            Log.d(TAG, "fetchStatusFromFirebase: " + items.size());
+            mAdapter.setItems(items);
+            mAdapter.notifyDataSetChanged();
+        }
     }
 
     private void fetchStatusFromFirebaseYour() {
@@ -258,7 +325,7 @@ public class AllStatusFragment extends Fragment {
                             } else if (from.equals("HOME")) {
                                 //SHOW FEEDS FROM WHO YOU FOLLOW + DS PEOPLE
                                 Log.e("FROM", "HOME TO PHOTOS");
-//                                fetchPhotosFromFirebaseGuru();
+                                fetchStatusFromFirebaseGuru();
                             }
 
                         } else {
