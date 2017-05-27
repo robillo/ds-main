@@ -173,29 +173,29 @@ public class GuruDetailActivity extends BaseActivity{
             });
         }
 
-        cover.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(SharedPrefs.getUserType().equals("GURU")){
-                    Intent i = new Intent(
-                            Intent.ACTION_PICK,
-                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(i, RESULT_LOAD_COVER);
-                }
-            }
-        });
+//        cover.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if(SharedPrefs.getUserType().equals("GURU")){
+//                    Intent i = new Intent(
+//                            Intent.ACTION_PICK,
+//                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//                    startActivityForResult(i, RESULT_LOAD_COVER);
+//                }
+//            }
+//        });
 
-        dp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(SharedPrefs.getUserType().equals("GURU")){
-                    Intent i = new Intent(
-                            Intent.ACTION_PICK,
-                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(i, RESULT_LOAD_IMAGE);
-                }
-            }
-        });
+//        dp.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if(SharedPrefs.getUserType().equals("GURU")){
+//                    Intent i = new Intent(
+//                            Intent.ACTION_PICK,
+//                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//                    startActivityForResult(i, RESULT_LOAD_IMAGE);
+//                }
+//            }
+//        });
     }
 
     @Override
@@ -235,78 +235,78 @@ public class GuruDetailActivity extends BaseActivity{
 
     @OnClick(R.id.name)
     public void setName(){
-        if(SharedPrefs.getUserType().equals("GURU")){
-            new MaterialDialog.Builder(this)
-                    .title("Set Your Username")
-                    .content("First Name + Last Name")
-                    .inputType(InputType.TYPE_CLASS_TEXT)
-                    .input("Enter the name...", "", new MaterialDialog.InputCallback() {
-                        @Override
-                        public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
-                            name.setText(input);
-                        }
-                    }).show();
-        }
+//        if(SharedPrefs.getUserType().equals("GURU")){
+//            new MaterialDialog.Builder(this)
+//                    .title("Set Your Username")
+//                    .content("First Name + Last Name")
+//                    .inputType(InputType.TYPE_CLASS_TEXT)
+//                    .input("Enter the name...", "", new MaterialDialog.InputCallback() {
+//                        @Override
+//                        public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
+//                            name.setText(input);
+//                        }
+//                    }).show();
+//        }
     }
 
     @OnClick(R.id.bio)
     public void setBio(){
-        if(SharedPrefs.getUserType().equals("GURU")){
-            new MaterialDialog.Builder(this)
-                    .title("Set Your Bio")
-                    .content("A Short Descripton About Yourself.")
-                    .inputType(InputType.TYPE_CLASS_TEXT)
-                    .input("Enter bio here...", "", new MaterialDialog.InputCallback() {
-                        @Override
-                        public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
-                            bio.setText("Bio:" + input);
-                        }
-                    }).show();
-        }
+//        if(SharedPrefs.getUserType().equals("GURU")){
+//            new MaterialDialog.Builder(this)
+//                    .title("Set Your Bio")
+//                    .content("A Short Descripton About Yourself.")
+//                    .inputType(InputType.TYPE_CLASS_TEXT)
+//                    .input("Enter bio here...", "", new MaterialDialog.InputCallback() {
+//                        @Override
+//                        public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
+//                            bio.setText("Bio:" + input);
+//                        }
+//                    }).show();
+//        }
     }
 
     @OnClick(R.id.specialization)
     public void setSpec(){
-        if(SharedPrefs.getUserType().equals("GURU")){
-            new MaterialDialog.Builder(this)
-                    .title("Set Your Specialization:")
-                    .content("Spiritual Skill You Majorly Specialize In.")
-                    .items(new String[]{"Astrology Guru", "Yoga Guru", "Pandit", "Motivation Guru", "Ayurveda Guru"})
-                    .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
-                        @Override
-                        public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                            /**
-                             * If you use alwaysCallSingleChoiceCallback(), which is discussed below,
-                             * returning false here won't allow the newly selected radio button to actually be selected.
-                             **/
-                            switch (which){
-                                case 0:{
-                                    spec.setText("Astrology Guru");
-                                    break;
-                                }
-                                case 1:{
-                                    spec.setText("Yoga Guru");
-                                    break;
-                                }
-                                case 2:{
-                                    spec.setText("Pandit");
-                                    break;
-                                }
-                                case 3:{
-                                    spec.setText("Motivation Guru");
-                                    break;
-                                }
-                                case 4:{
-                                    spec.setText("Ayurveda Guru");
-                                    break;
-                                }
-                            }
-                            return true;
-                        }
-                    })
-                    .positiveText("Choose This")
-                    .show();
-        }
+//        if(SharedPrefs.getUserType().equals("GURU")){
+//            new MaterialDialog.Builder(this)
+//                    .title("Set Your Specialization:")
+//                    .content("Spiritual Skill You Majorly Specialize In.")
+//                    .items(new String[]{"Astrology Guru", "Yoga Guru", "Pandit", "Motivation Guru", "Ayurveda Guru"})
+//                    .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
+//                        @Override
+//                        public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+//                            /**
+//                             * If you use alwaysCallSingleChoiceCallback(), which is discussed below,
+//                             * returning false here won't allow the newly selected radio button to actually be selected.
+//                             **/
+//                            switch (which){
+//                                case 0:{
+//                                    spec.setText("Astrology Guru");
+//                                    break;
+//                                }
+//                                case 1:{
+//                                    spec.setText("Yoga Guru");
+//                                    break;
+//                                }
+//                                case 2:{
+//                                    spec.setText("Pandit");
+//                                    break;
+//                                }
+//                                case 3:{
+//                                    spec.setText("Motivation Guru");
+//                                    break;
+//                                }
+//                                case 4:{
+//                                    spec.setText("Ayurveda Guru");
+//                                    break;
+//                                }
+//                            }
+//                            return true;
+//                        }
+//                    })
+//                    .positiveText("Choose This")
+//                    .show();
+//        }
     }
 
     public void setFollowing(boolean isFollowing){
