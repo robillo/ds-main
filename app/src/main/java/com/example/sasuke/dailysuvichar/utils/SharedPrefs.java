@@ -10,10 +10,25 @@ public class SharedPrefs {
     private static final String LOGIN_TOKEN = "login_token";
     private static final String FACEBOOK_TOKEN = "facebook_token";
     private static final String USER_TYPE = "STANDARD";
-    private static final String IS_LOGGED_IN = "FALSE";
-    private static final String IS_PROFILE_SET = "FALSE";
-    private static final String IS_INTERESTS_SELECTED = "FALSE";
-    private static final String IS_SUBINTERESTS_SELECTED = "FALSE";
+    private static final String IS_LOGGED_IN = "true_or_false_login";
+    private static final String IS_PROFILE_SET = "true_or_false_profile";
+    private static final String IS_INTERESTS_SELECTED = "true_or_false_interest";
+    private static final String IS_SUBINTERESTS_SELECTED = "true_or_false_subinterest";
+
+    public static void setDefaults(){
+        if(getIsLoggedIn()==null){
+            setIsLoggedIn("FALSE");
+        }
+        if(getIsProfileSet()==null){
+            setIsProfileSet("FALSE");
+        }
+        if(getIsSubinterestsSelected()==null){
+            setIsSubinterestsSelected("FALSE");
+        }
+        if(getIsInterestsSelected()==null){
+            setIsInterestsSelected("TRUE");
+        }
+    }
 
     public static void setIsLoggedIn(String token){
         SharedPreferences.Editor editor = getPrefrences().edit();
