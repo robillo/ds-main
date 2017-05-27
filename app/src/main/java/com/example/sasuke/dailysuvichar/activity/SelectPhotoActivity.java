@@ -322,7 +322,7 @@ public class SelectPhotoActivity extends BaseActivity{
                     }
 
                     mDatabaseReferenceUser = FirebaseDatabase.getInstance().getReference();
-                    mDatabaseReferenceUser.child("users").child(mFirebaseUser.getUid()).child("posts").child("photo").push().setValue(photo);
+                    mDatabaseReferenceUser.child("users").child(mFirebaseUser.getUid()).child("posts").child("photo").child(postID).setValue(photo);
 
                     Toast.makeText(this, "Post successful!", Toast.LENGTH_SHORT).show();
                     if(from == 1){

@@ -1,5 +1,6 @@
 package com.example.sasuke.dailysuvichar.view;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -81,7 +82,9 @@ public class PhotoViewHolder extends RecyclerView.ViewHolder {
     public void setImage(StorageReference storageReference, Context ctx) {
 //        Picasso.with(itemView.getContext()).load(photo).fit().into(mIvPhoto);
         Log.d(TAG, "setImage: NOTNULL");
-        if(storageReference!=null&&ctx!=null) {
+        Activity a = (Activity) context;
+
+        if(storageReference!=null&&ctx!=null&& !a.isDestroyed()) {
             this.storageReference = storageReference;
             Glide.with(ctx).
                     using(new FirebaseImageLoader())
