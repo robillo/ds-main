@@ -10,8 +10,6 @@ import android.view.ViewGroup;
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.models.Video;
 import com.example.sasuke.dailysuvichar.view.VideoViewHolder;
-import com.like.LikeButton;
-import com.like.OnLikeListener;
 
 import me.drakeet.multitype.ItemViewBinder;
 

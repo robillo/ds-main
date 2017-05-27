@@ -17,12 +17,11 @@ import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.VideoView;
 
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.models.CustomVideo;
-import com.example.sasuke.dailysuvichar.newactivities.NewHomeyActivity;
 import com.example.sasuke.dailysuvichar.newactivities.NewExploreyActivity;
+import com.example.sasuke.dailysuvichar.newactivities.NewHomeyActivity;
 import com.example.sasuke.dailysuvichar.view.RVTags;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -38,6 +37,7 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.klinker.android.simple_videoview.SimpleVideoView;
 
 import java.util.ArrayList;
 
@@ -45,13 +45,17 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class SelectVideoActivity extends BaseActivity{
+/**
+ * Created by rishabhshukla on 14/05/17.
+ */
+
+public class SelectVideoActivity extends BaseActivity {
 
 
     @BindView(R.id.name)
     TextView name;
     @BindView(R.id.vidView)
-    VideoView mVideoView;
+    SimpleVideoView mVideoView;
     @BindView(R.id.diet)
     TextView diet;
     @BindView(R.id.yoga)
@@ -78,12 +82,13 @@ public class SelectVideoActivity extends BaseActivity{
 
     private ArrayList<String> interests, subInterests, data, mSelectedItems;
     private Context context;
+    private SimpleVideoView currentlyPlaying;
 
     private static final String TAG = "PHOTO_POST";
     private static final int PICK_VIDEO_REQUEST = 250;
     private Uri filePath;
     private FirebaseUser mFirebaseUser;
-    private DatabaseReference mDatabaseReferenceTag,mDatabaseReferenceUser;
+    private DatabaseReference mDatabaseReferenceTag, mDatabaseReferenceUser;
     private StorageReference mStorageReference;
     ProgressDialog progressDialog;
     Long size;
@@ -212,7 +217,7 @@ public class SelectVideoActivity extends BaseActivity{
     }
 
     @OnClick(R.id.btnPostImage)
-    public void postImage(){
+    public void postImage() {
         uploadToFirebase();
     }
 
@@ -235,12 +240,32 @@ public class SelectVideoActivity extends BaseActivity{
                 Log.e("selected video path", "null");
                 finish();
             } else {
+
+                mVideoView.setVisibility(View.VISIBLE);
                 Log.e("selectedVideoPath", filePath.getPath());
-                mVideoView.setVideoURI(filePath);
+//                mVideoView.setVideoURI(filePath);
                 mVideoView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        mVideoView.start();
+                        if (mVideoView.isPlaying()) {
+                            mVideoView.pause();
+                        } else {
+                            if (mVideoView != currentlyPlaying) {
+                                releaseVideo();
+                                mVideoView.start(Uri.parse(String.valueOf(filePath)));
+                                currentlyPlaying = mVideoView;
+                            }else {
+                                mVideoView.setVisibility(View.VISIBLE);
+//                    if(holder.videoUrl!=null) {
+//                        holder.videoView.start(holder.videoUrl.toString() + ".mp4");
+//                    }
+                                mVideoView.play();
+
+//                            } else {
+//                                Toast.makeText(context, "Sorry. This Video Cannot Be Played", Toast.LENGTH_SHORT).show();
+//                            }
+                            }
+                        }
                     }
                 });
                 if (filePath != null) {
@@ -249,6 +274,7 @@ public class SelectVideoActivity extends BaseActivity{
                 }
             }
         }
+
     }
 
     private void uploadToFirebase() {
@@ -256,7 +282,7 @@ public class SelectVideoActivity extends BaseActivity{
             Toast.makeText(context, R.string.please_atleast, Toast.LENGTH_SHORT).show();
         } else {
             if (filePath != null) {
-                if(etCaption.length()>=1) {
+                if (etCaption.length() >= 1) {
                     progressDialog = new ProgressDialog(this);
                     progressDialog.setTitle(getString(R.string.uploading));
                     progressDialog.show();
@@ -295,7 +321,7 @@ public class SelectVideoActivity extends BaseActivity{
                             .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                                 @Override
                                 public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                                double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+                                    double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
 
                                 progressDialog.setMessage(getString(R.string.uploaded) + " " + ((int) progress) + "%...");
                                 }
@@ -303,7 +329,7 @@ public class SelectVideoActivity extends BaseActivity{
 
                     CustomVideo video = null;
 
-                    if(name.getText()!="") {
+                    if (name.getText() != "") {
                         video = new CustomVideo(name.getText().toString(), mFirebaseUser.getEmail(),
                                 System.currentTimeMillis(), 0, 0, null, etCaption.getText().toString(),
                                 mFirebaseUser.getUid(), mSelectedItems);
@@ -338,14 +364,21 @@ public class SelectVideoActivity extends BaseActivity{
         }
     }
 
-    public void getName(){
+    public void releaseVideo() {
+        if (currentlyPlaying != null) {
+            currentlyPlaying.release();
+            currentlyPlaying.setVisibility(View.GONE);
+        }
+    }
 
-        DatabaseReference ref =FirebaseDatabase.getInstance().getReference().child("users").child(mFirebaseUser.getUid());
+    public void getName() {
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("users").child(mFirebaseUser.getUid());
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot.child("name").getValue()!=null){
-                    Log.d(TAG, "onDataChange: NAMEE"+(dataSnapshot.child("name").getValue()));
+                if (dataSnapshot.child("name").getValue() != null) {
+                    Log.d(TAG, "onDataChange: NAMEE" + (dataSnapshot.child("name").getValue()));
                     name.setText(String.valueOf(dataSnapshot.child("name").getValue()));
                 }
             }
@@ -356,11 +389,13 @@ public class SelectVideoActivity extends BaseActivity{
         });
 //        return null;
     }
+
     @Override
     protected void onDestroy() {
-        if(progressDialog!=null) {
+        if (progressDialog != null) {
             progressDialog.dismiss();
         }
+        mVideoView.release();
         super.onDestroy();
     }
 

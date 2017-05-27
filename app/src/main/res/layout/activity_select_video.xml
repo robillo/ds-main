@@ -119,12 +119,15 @@
             android:layout_weight="6"
             android:orientation="vertical">
 
-            <VideoView
+            <com.klinker.android.simple_videoview.SimpleVideoView
                 android:id="@+id/vidView"
                 android:layout_height="0sp"
                 android:layout_weight="5"
                 android:layout_width="match_parent"
-                android:background="@color/black" />
+                android:background="@color/black"
+                app:loop="true"
+                app:stopSystemAudio="false"
+                app:muted="false"/>
 
             <EditText
                 android:id="@+id/etCaption"
