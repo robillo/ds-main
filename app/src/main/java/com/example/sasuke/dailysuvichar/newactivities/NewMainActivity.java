@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.sasuke.dailysuvichar.R;
+import com.example.sasuke.dailysuvichar.activity.AboutActivity;
 import com.example.sasuke.dailysuvichar.activity.MainActivity;
 import com.example.sasuke.dailysuvichar.models.Feature;
 import com.example.sasuke.dailysuvichar.newadapters.RVAFeature;
@@ -248,7 +249,7 @@ public class NewMainActivity extends AppCompatActivity {
 
         switch (id) {
             case R.id.about: {
-
+                startActivity(new Intent(this, AboutActivity.class));
                 break;
             }
         }
