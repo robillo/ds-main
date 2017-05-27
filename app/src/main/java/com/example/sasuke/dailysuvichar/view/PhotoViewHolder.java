@@ -18,6 +18,8 @@ import com.google.firebase.storage.StorageReference;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.facebook.login.widget.ProfilePictureView.TAG;
+
 
 public class PhotoViewHolder extends RecyclerView.ViewHolder {
 
@@ -78,6 +80,7 @@ public class PhotoViewHolder extends RecyclerView.ViewHolder {
 
     public void setImage(StorageReference storageReference, Context ctx) {
 //        Picasso.with(itemView.getContext()).load(photo).fit().into(mIvPhoto);
+        Log.d(TAG, "setImage: NOTNULL");
         if(storageReference!=null&&ctx!=null) {
             this.storageReference = storageReference;
             Glide.with(ctx).

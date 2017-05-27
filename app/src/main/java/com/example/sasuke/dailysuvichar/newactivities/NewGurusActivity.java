@@ -222,10 +222,6 @@ public class NewGurusActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         switch (id) {
-            case R.id.action_search: {
-
-                break;
-            }
             case R.id.action_sort: {
                 showPopup();
                 break;

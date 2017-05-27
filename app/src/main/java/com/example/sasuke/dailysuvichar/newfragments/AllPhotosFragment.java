@@ -140,11 +140,12 @@ public class AllPhotosFragment extends Fragment {
         if(from.equals("YOUR")){
             //SHOW YOUR FEEDS, COPY CODE FROM YOUR FEEDS FRAGMENT
             Log.e("FROM", "YOUR TO PHOTOS");
+
+            isPhotoDoneYour = new HashMap<>();
+
             mDatabaseReference = FirebaseDatabase.getInstance().getReference("users");
             Log.e(TAG, uid);
             Log.e(TAG, mDatabaseReference.toString());
-
-            mSelectedSubInterests = new ArrayList<>();
 
             if(isOnline()) {
                 refresh();
@@ -201,6 +202,7 @@ public class AllPhotosFragment extends Fragment {
             Log.e("FROM", "EXPLORE TO PHOTOS");
 
             mSelectedGurus = new ArrayList<>();
+            isPhotoDoneGuru = new HashMap<>();
 
             mDatabaseReferenceGuru = FirebaseDatabase.getInstance().getReference("users");
 
@@ -210,10 +212,10 @@ public class AllPhotosFragment extends Fragment {
                 mDatabaseReferenceGuru.child(mFirebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.child("mSelectedSubInterests").getValue() != null) {
-                            mSelectedSubInterests.addAll((Collection<? extends String>) dataSnapshot.child("mSelectedSubInterests").getValue());
+                        if (dataSnapshot.child("following").getValue() != null) {
+                            mSelectedGurus.addAll((Collection<? extends String>) dataSnapshot.child("following").getValue());
                         }
-                        fetchPhotosFromFirebaseHome();
+                        fetchPhotosFromFirebaseGuru();
                         alternateLayout.setVisibility(View.INVISIBLE);
                     }
 
@@ -222,7 +224,7 @@ public class AllPhotosFragment extends Fragment {
                     }
                 });
 
-                fetchPhotosFromFirebaseHome();
+                fetchPhotosFromFirebaseGuru();
 
             }else{
                 Toast.makeText(getActivity(), "No Internet Connection", Toast.LENGTH_SHORT).show();
@@ -258,6 +260,7 @@ public class AllPhotosFragment extends Fragment {
                             else if(from.equals("EXPLORE")){
                                 //SHOW FEEDS FROM WHO YOU FOLLOW + DS PEOPLE
                                 Log.e("FROM", "EXPLORE TO PHOTOS");
+                                fetchPhotosFromFirebaseGuru();
                             }
 
                         }else{
@@ -277,43 +280,45 @@ public class AllPhotosFragment extends Fragment {
 
     private void fetchPhotosFromFirebaseGuru() {
 
-        isPhotoDoneGuru = new HashMap<>();
+        if(mSelectedGurus!=null && mSelectedGurus.size()>0) {
 
-        mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("users").child(mFirebaseUser.getUid()).child("posts");
-        mStorageReference = FirebaseStorage.getInstance().getReference("posts").child("images");
+            for(String guru: mSelectedGurus) {
 
-        mDatabaseReferencePosts.child("photo").orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+                mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("users").child(guru).child("posts");
+                mStorageReference = FirebaseStorage.getInstance().getReference("posts").child("images");
 
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    Photo photoSnap = postSnapshot.getValue(Photo.class);
-                    photoSnap.setStorageReference(mStorageReference.child(postSnapshot.getKey()));
+                mDatabaseReferencePosts.child("photo").orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
 
-                    if (!isPhotoDoneGuru.containsKey(postSnapshot.getKey())) {
+                        for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                            Photo photoSnap = postSnapshot.getValue(Photo.class);
+                            photoSnap.setStorageReference(mStorageReference.child(postSnapshot.getKey()));
 
-                        items.add(photoSnap);
-                        isPhotoDoneGuru.put(postSnapshot.getKey(), true);
+                            if (!isPhotoDoneGuru.containsKey(postSnapshot.getKey())) {
+
+                                items.add(photoSnap);
+                                isPhotoDoneGuru.put(postSnapshot.getKey(), true);
+                            }
+                            mAdapter.notifyDataSetChanged();
+                        }
                     }
-                    mAdapter.notifyDataSetChanged();
-                }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.d(TAG, "onCancelled: " + databaseError.getMessage());
+                    }
+                });
             }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.d(TAG, "onCancelled: " + databaseError.getMessage());
-            }
-        });
-
-        Log.d(TAG, "fetchStatusFromFirebase: " + items.size());
-        mAdapter.setItems(items);
-        mAdapter.notifyDataSetChanged();
+            Log.d(TAG, "fetchStatusFromFirebase: " + items.size());
+            mAdapter.setItems(items);
+            mAdapter.notifyDataSetChanged();
+        }
     }
 
     private void fetchPhotosFromFirebaseYour() {
 
-        isPhotoDoneYour = new HashMap<>();
-
         mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("users").child(mFirebaseUser.getUid()).child("posts");
         mStorageReference = FirebaseStorage.getInstance().getReference("posts").child("images");
 
@@ -322,8 +327,12 @@ public class AllPhotosFragment extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+
+
                     Photo photoSnap = postSnapshot.getValue(Photo.class);
                     photoSnap.setStorageReference(mStorageReference.child(postSnapshot.getKey()));
+
+                    Log.d(TAG, "onDataChange:uuuuuu "+mStorageReference.child(postSnapshot.getKey()));
 
                     if (!isPhotoDoneYour.containsKey(postSnapshot.getKey())) {
 
