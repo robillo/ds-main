@@ -289,7 +289,9 @@ public class AllPhotosFragment extends Fragment {
                 mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("users").child(guru).child("posts");
                 mStorageReference = FirebaseStorage.getInstance().getReference("posts").child("images");
 
+
                 mDatabaseReferencePosts.child("photo").orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
+
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
