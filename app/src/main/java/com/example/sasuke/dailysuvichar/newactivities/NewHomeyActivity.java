@@ -10,7 +10,6 @@ import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
 import com.example.sasuke.dailysuvichar.R;
-import com.example.sasuke.dailysuvichar.activity.HomeActivity;
 import com.example.sasuke.dailysuvichar.activity.SelectActivity;
 import com.example.sasuke.dailysuvichar.activity.SelectPhotoActivity;
 import com.example.sasuke.dailysuvichar.activity.SelectVideoActivity;
@@ -20,7 +19,7 @@ import com.example.sasuke.dailysuvichar.newfragments.AllVideosFragment;
 import com.example.sasuke.dailysuvichar.utils.GooeyMenu;
 import com.example.sasuke.dailysuvichar.view.adapter.ViewPagerAdapter;
 
-public class ExploreActivity extends AppCompatActivity implements GooeyMenu.GooeyMenuInterface{
+public class NewHomeyActivity extends AppCompatActivity implements GooeyMenu.GooeyMenuInterface{
 
     private Toolbar toolbar;
     private TabLayout tabLayout;
@@ -30,7 +29,7 @@ public class ExploreActivity extends AppCompatActivity implements GooeyMenu.Gooe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_explore);
+        setContentView(R.layout.activity_new_homey);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -49,7 +48,7 @@ public class ExploreActivity extends AppCompatActivity implements GooeyMenu.Gooe
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         Fragment fragment = new AllStatusFragment();
         Bundle args = new Bundle();
-        args.putString("from", "EXPLORE");
+        args.putString("from", "HOME");
         fragment.setArguments(args);
 
         adapter.addFragment(fragment, "Status");

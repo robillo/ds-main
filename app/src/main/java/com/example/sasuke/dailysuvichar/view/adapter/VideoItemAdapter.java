@@ -15,10 +15,6 @@ import com.like.OnLikeListener;
 
 import me.drakeet.multitype.ItemViewBinder;
 
-/**
- * Created by Sasuke on 5/7/2017.
- */
-
 public class VideoItemAdapter extends ItemViewBinder<Video, VideoViewHolder> {
 
     private Activity activity;
@@ -40,6 +36,7 @@ public class VideoItemAdapter extends ItemViewBinder<Video, VideoViewHolder> {
             @Override
             public void run() {
                 holder.mVideoView.loadYoutubeVideo(activity, item.getVideoUrl());
+                holder.caption.setText(item.getTitle() );
 //                holder.mBtnLike.setOnLikeListener(new OnLikeListener() {
 //                    @Override
 //                    public void liked(LikeButton likeButton) {

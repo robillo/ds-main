@@ -17,6 +17,9 @@ public class SplashScreen extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SharedPrefs.setDefaults();
+
         if (SharedPrefs.getLoginToken() != null) {
 
             Log.e("CASE", "LOGIN TOKEN NOT NULL");

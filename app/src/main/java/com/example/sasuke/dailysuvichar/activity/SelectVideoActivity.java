@@ -21,8 +21,8 @@ import android.widget.VideoView;
 
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.models.CustomVideo;
-import com.example.sasuke.dailysuvichar.newactivities.ExploreActivity;
-import com.example.sasuke.dailysuvichar.newactivities.NewHomeActivity;
+import com.example.sasuke.dailysuvichar.newactivities.NewHomeyActivity;
+import com.example.sasuke.dailysuvichar.newactivities.NewExploreyActivity;
 import com.example.sasuke.dailysuvichar.view.RVTags;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -239,8 +239,8 @@ public class SelectVideoActivity extends BaseActivity{
                 Log.e("selected video path", "null");
                 finish();
             } else {
-                Log.e("selectedVideoPath", filePath.toString());
-                mVideoView.setVideoPath(String.valueOf(filePath));
+                Log.e("selectedVideoPath", filePath.getPath());
+                mVideoView.setVideoURI(filePath);
                 mVideoView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -326,10 +326,10 @@ public class SelectVideoActivity extends BaseActivity{
 
                     Toast.makeText(this, "Post successful!", Toast.LENGTH_SHORT).show();
                     if(from == 1){
-                        startActivity(new Intent(this, NewHomeActivity.class));
+                        startActivity(new Intent(this, NewExploreyActivity.class));
                     }
                     else if(from == 2){
-                        startActivity(new Intent(this, ExploreActivity.class));
+                        startActivity(new Intent(this, NewHomeyActivity.class));
                     }
                     finish();
                 }else{
@@ -367,5 +367,4 @@ public class SelectVideoActivity extends BaseActivity{
         }
         super.onDestroy();
     }
-
 }

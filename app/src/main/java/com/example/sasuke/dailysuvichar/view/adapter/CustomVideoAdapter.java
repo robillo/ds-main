@@ -4,9 +4,11 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.models.CustomVideo;
@@ -80,9 +82,14 @@ public class CustomVideoAdapter  extends ItemViewBinder<CustomVideo, CustomVideo
 //                    if(holder.videoUrl!=null) {
 //                        holder.videoView.start(holder.videoUrl.toString() + ".mp4");
 //                    }
-                    holder.videoView.start(Uri.parse(item.getVideoURI()));
-
-                    currentlyPlaying = holder.videoView;
+                    Log.e("URI", " " + item.getVideoURI());
+                    if(item.getVideoURI()!=null){
+                        holder.videoView.start(Uri.parse(item.getVideoURI()));
+                        currentlyPlaying = holder.videoView;
+                    }
+                    else {
+                        Toast.makeText(context, "Sorry. This Video Cannot Be Played", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });

@@ -21,7 +21,7 @@ import com.example.sasuke.dailysuvichar.view.adapter.ViewPagerAdapter;
 
 import butterknife.ButterKnife;
 
-public class NewHomeActivity extends AppCompatActivity implements GooeyMenu.GooeyMenuInterface{
+public class NewExploreyActivity extends AppCompatActivity implements GooeyMenu.GooeyMenuInterface{
 
     private Toolbar toolbar;
     private TabLayout tabLayout;
@@ -31,7 +31,7 @@ public class NewHomeActivity extends AppCompatActivity implements GooeyMenu.Gooe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_home);
+        setContentView(R.layout.activity_new_explorey);
         ButterKnife.bind(this);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -51,7 +51,7 @@ public class NewHomeActivity extends AppCompatActivity implements GooeyMenu.Gooe
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         Fragment fragment = new AllStatusFragment();
         Bundle args = new Bundle();
-        args.putString("from", "HOME");
+        args.putString("from", "EXPLORE");
         fragment.setArguments(args);
 
         adapter.addFragment(fragment, "Status");

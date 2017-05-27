@@ -14,9 +14,9 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.sasuke.dailysuvichar.R;
-import com.example.sasuke.dailysuvichar.newactivities.ExploreActivity;
+import com.example.sasuke.dailysuvichar.newactivities.NewHomeyActivity;
 import com.example.sasuke.dailysuvichar.newactivities.NewGurusActivity;
-import com.example.sasuke.dailysuvichar.newactivities.NewHomeActivity;
+import com.example.sasuke.dailysuvichar.newactivities.NewExploreyActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -52,7 +52,7 @@ public class PagerFragment extends Fragment {
             public void onClick(View view) {
                 switch (levelNumber){
                     case 1:{
-                        Intent i = new Intent(getActivity(), NewHomeActivity.class);
+                        Intent i = new Intent(getActivity(), NewHomeyActivity.class);
                         getActivity().startActivity(i);
                         break;
                     }
@@ -62,7 +62,7 @@ public class PagerFragment extends Fragment {
                         break;
                     }
                     case 3:{
-                        Intent i = new Intent(getActivity(), ExploreActivity.class);
+                        Intent i = new Intent(getActivity(), NewExploreyActivity.class);
                         getActivity().startActivity(i);
                         break;
                     }

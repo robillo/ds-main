@@ -121,11 +121,10 @@
 
             <VideoView
                 android:id="@+id/vidView"
-                android:layout_width="match_parent"
                 android:layout_height="0sp"
                 android:layout_weight="5"
-                android:background="@color/blue_dark"
-                android:contentDescription="@string/app_name" />
+                android:layout_width="match_parent"
+                android:background="@color/black" />
 
             <EditText
                 android:id="@+id/etCaption"
