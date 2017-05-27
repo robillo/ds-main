@@ -33,7 +33,6 @@ public class NewHomeActivity extends AppCompatActivity implements GooeyMenu.Gooe
         setContentView(R.layout.activity_new_home);
         ButterKnife.bind(this);
 
-
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
