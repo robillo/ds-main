@@ -43,17 +43,4 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"  />
 
-    <com.example.sasuke.dailysuvichar.utils.GooeyMenu
-        android:id="@+id/gooey_menu"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="bottom|center_horizontal"
-        android:layout_margin="16sp"
-        android:padding="20sp"
-        app:fab_radius="@dimen/big_circle_radius"
-        app:gap_between_menu_fab="@dimen/min_gap"
-        app:menu_drawable="@array/drawable_array"
-        app:menu_radius="@dimen/small_circle_radius"
-        app:no_of_menu="3" />
-
 </android.support.design.widget.CoordinatorLayout>
