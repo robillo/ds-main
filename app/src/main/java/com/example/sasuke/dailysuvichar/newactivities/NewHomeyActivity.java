@@ -48,7 +48,7 @@ public class NewHomeyActivity extends AppCompatActivity implements GooeyMenu.Goo
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         Fragment fragment = new AllStatusFragment();
         Bundle args = new Bundle();
-        args.putString("from", "EXPLORE");
+        args.putString("from", "HOME");
         fragment.setArguments(args);
 
         adapter.addFragment(fragment, "Status");

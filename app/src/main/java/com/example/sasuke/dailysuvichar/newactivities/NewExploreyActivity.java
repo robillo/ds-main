@@ -51,7 +51,7 @@ public class NewExploreyActivity extends AppCompatActivity implements GooeyMenu.
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         Fragment fragment = new AllStatusFragment();
         Bundle args = new Bundle();
-        args.putString("from", "HOME");
+        args.putString("from", "EXPLORE");
         fragment.setArguments(args);
 
         adapter.addFragment(fragment, "Status");
