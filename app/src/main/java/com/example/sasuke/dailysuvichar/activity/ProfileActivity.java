@@ -17,6 +17,7 @@ import android.support.v4.app.ActivityCompat;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -96,6 +97,8 @@ public class ProfileActivity extends BaseActivity {
     ImageView govID;
     @BindView(R.id.specID)
     ImageView specID;
+    @BindView(R.id.btnSave)
+    Button saveButton;
 
     public static Intent newIntent(Context context) {
         return new Intent(context, ProfileActivity.class);
@@ -182,7 +185,27 @@ public class ProfileActivity extends BaseActivity {
                 startActivityForResult(i, RESULT_LOAD_IMAGE);
             }
         });
+
+        if(code == 1){
+            setNotEditable();
+        }
     }
+
+    public void setNotEditable(){
+        saveButton.setVisibility(View.INVISIBLE);
+        saveButton.setClickable(false);
+        name.setClickable(false);
+        userName.setClickable(false);
+        language.setClickable(false);
+        userType.setClickable(false);
+        DOB.setClickable(false);
+        gender.setClickable(false);
+        userProfilePic.setClickable(false);
+        userCoverPic.setClickable(false);
+        bio.setClickable(false);
+        age.setClickable(false);
+    }
+
 //
 //    private void loadDP(String token){
 //        String url = "https://graph.facebook.com/me/picture?type=large&method=GET&access_token=" + token;
