@@ -36,7 +36,7 @@ public class VideoItemAdapter extends ItemViewBinder<Video, VideoViewHolder> {
             @Override
             public void run() {
                 holder.mVideoView.loadYoutubeVideo(activity, item.getVideoUrl());
-                holder.caption.setText(item.getTitle());
+                holder.caption.setText(item.getTitle() );
 //                holder.mBtnLike.setOnLikeListener(new OnLikeListener() {
 //                    @Override
 //                    public void liked(LikeButton likeButton) {
