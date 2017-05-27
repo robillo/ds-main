@@ -21,8 +21,11 @@ import com.example.sasuke.dailysuvichar.newactivities.NewHomeActivity;
 import com.example.sasuke.dailysuvichar.view.RVTags;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -58,6 +61,7 @@ public class SelectActivity extends BaseActivity {
 
     private ArrayList<String> interests, subInterests, data, mSelectedItems;
     private Context context;
+    private String name;
     private FirebaseUser mFirebaseUser;
     private DatabaseReference mDatabaseReferenceTag, mDatabaseReferenceUser;
 
@@ -183,8 +187,18 @@ public class SelectActivity extends BaseActivity {
             if (etStatus.getText().length() >= 1) {
                 mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
-                Status status = new Status(mFirebaseUser.getUid(),mSelectedItems,"Rishabh", System.currentTimeMillis(),
-                        0,0,null,etStatus.getText().toString(),mFirebaseUser.getEmail());
+                getName();
+                Status status = null;
+
+                if(name!=null) {
+
+                    status = new Status(mFirebaseUser.getUid(), mSelectedItems, name, System.currentTimeMillis(),
+                            0, 0, null, etStatus.getText().toString(), mFirebaseUser.getEmail());
+                }else{
+
+                    status = new Status(mFirebaseUser.getUid(), mSelectedItems, "Unknown User", System.currentTimeMillis(),
+                            0, 0, null, etStatus.getText().toString(), mFirebaseUser.getEmail());
+                }
 
                 mDatabaseReferenceTag = FirebaseDatabase.getInstance().getReference("tags");
                 String postID = mDatabaseReferenceTag.push().getKey();
@@ -206,6 +220,22 @@ public class SelectActivity extends BaseActivity {
             }
         }
 
+    }
+
+    public void getName(){
+        DatabaseReference ref =FirebaseDatabase.getInstance().getReference().child("users").child(mFirebaseUser.getUid());
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.child("name").getValue()!=null){
+                    name = String.valueOf(dataSnapshot.child("name").getValue());
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
     }
 
 }

@@ -33,7 +33,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 
 import butterknife.BindView;
@@ -62,6 +61,7 @@ public class NewGurusActivity extends AppCompatActivity {
     HashMap<String, Integer> guruMap;
     private MultiTypeAdapter mAdapter;
     private static ArrayList<String> following;
+    private HashMap<String, Boolean> followingMap;
     //    private static ArrayList<String> guruFollowers;
     private static Integer getFollowerCount;
     @BindView(R.id.recyclerview)
@@ -90,7 +90,7 @@ public class NewGurusActivity extends AppCompatActivity {
 //        guruFollowers= new ArrayList<>();
         guruList = new ArrayList<>();
         guruMap = new HashMap<>();
-
+        followingMap = new HashMap<>();
         mRvGuruAdapter = new RVGuruAdapter(this, guruList);
 
         if(isOnline()) {
@@ -123,11 +123,19 @@ public class NewGurusActivity extends AppCompatActivity {
                 public void onCancelled(DatabaseError databaseError) {
                 }
             });
-            mDatabaseReferenceUsers.addValueEventListener(new ValueEventListener() {
+            mDatabaseReferenceUsers.child("following").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.child("following").getValue() != null) {
-                        following.addAll((Collection<? extends String>) dataSnapshot.child("following").getValue());
+                    if (dataSnapshot.getValue() != null) {
+                        for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+
+                            if(!followingMap.containsKey(String.valueOf(postSnapshot.getValue()))){
+                                following.add(String.valueOf(postSnapshot.getValue()));
+                                followingMap.put(String.valueOf(postSnapshot.getValue()),true);
+                            }
+
+                            mRvGuruAdapter.notifyDataSetChanged();
+                        }
                     }
                 }
 
@@ -176,18 +184,16 @@ public class NewGurusActivity extends AppCompatActivity {
         if(isFollowing){
             if(!following.contains(guruUid)) {
                 following.add(guruUid);
-//                mDatabaseReferenceUser.child("following").setValue(following);
+                mDatabaseReferenceUser.child("following").setValue(following);
             }
             guruFollowers.add(mFirebaseUser.getUid());
-            mDatabaseReferenceGuru.child(guruUid).child("followersCount").setValue(followerCount + 1);
+            mDatabaseReferenceGuru.child(guruUid).child("followersCount").setValue(guruFollowers.size());
             mDatabaseReferenceGuru.child(guruUid).child("followers").setValue(guruFollowers);
         }else{
-            if(followerCount>0){
-                mDatabaseReferenceGuru.child(guruUid).child("followersCount").setValue(followerCount - 1);
-            }
             following.remove(guruUid);
             guruFollowers.remove(mFirebaseUser.getUid());
-//            mDatabaseReferenceUser.child("following").setValue(following);
+            mDatabaseReferenceGuru.child(guruUid).child("followersCount").setValue(guruFollowers.size());
+            mDatabaseReferenceUser.child("following").setValue(following);
             mDatabaseReferenceGuru.child(guruUid).child("followers").setValue(guruFollowers);
         }
 

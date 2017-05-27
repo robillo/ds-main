@@ -28,8 +28,11 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageMetadata;
@@ -86,6 +89,7 @@ public class SelectVideoActivity extends BaseActivity{
     private StorageReference mStorageReference;
     ProgressDialog progressDialog;
     Long size;
+    private String name;
     String bucket, encoding, lang;
     Uri downloadUrl;
     private int from = 1;
@@ -260,6 +264,7 @@ public class SelectVideoActivity extends BaseActivity{
 
                     mDatabaseReferenceTag = FirebaseDatabase.getInstance().getReference("tags");
                     final String postID = mDatabaseReferenceTag.push().getKey();
+                    getName();
                     StorageReference riversRef = mStorageReference.child(postID);
                     riversRef.putFile(filePath)
                             .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -297,10 +302,17 @@ public class SelectVideoActivity extends BaseActivity{
                                 }
                             });
 
+                    CustomVideo video = null;
 
-                    CustomVideo video = new CustomVideo("Rishabh Shukla", mFirebaseUser.getEmail(),
-                            System.currentTimeMillis(), 0, 0, null, etCaption.getText().toString(),
-                            mFirebaseUser.getUid(), mSelectedItems);
+                    if(name!=null) {
+                        video = new CustomVideo(name, mFirebaseUser.getEmail(),
+                                System.currentTimeMillis(), 0, 0, null, etCaption.getText().toString(),
+                                mFirebaseUser.getUid(), mSelectedItems);
+                    }else{
+                        video = new CustomVideo("Unknown User", mFirebaseUser.getEmail(),
+                                System.currentTimeMillis(), 0, 0, null, etCaption.getText().toString(),
+                                mFirebaseUser.getUid(), mSelectedItems);
+                    }
 
                     for (String subInt : mSelectedItems) {
                         mDatabaseReferenceTag.child(subInt.toLowerCase()).child("video").child(postID).setValue(video);
@@ -325,6 +337,22 @@ public class SelectVideoActivity extends BaseActivity{
                 Log.d(TAG, "uploadToFirebase: No file chosen!");
             }
         }
+    }
+
+    public void getName(){
+        DatabaseReference ref =FirebaseDatabase.getInstance().getReference().child("users").child(mFirebaseUser.getUid());
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.child("name").getValue()!=null){
+                    name = String.valueOf(dataSnapshot.child("name").getValue());
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
     }
 
     @Override

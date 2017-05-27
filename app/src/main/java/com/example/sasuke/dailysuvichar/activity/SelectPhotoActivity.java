@@ -30,8 +30,11 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -86,6 +89,7 @@ public class SelectPhotoActivity extends BaseActivity{
     private DatabaseReference mDatabaseReferenceTag,mDatabaseReferenceUser;
     private StorageReference mStorageReference;
     ProgressDialog progressDialog;
+    private String name;
     Long size;
     String bucket, encoding, lang;
     Uri downloadUrl;
@@ -255,6 +259,7 @@ public class SelectPhotoActivity extends BaseActivity{
 
                     mDatabaseReferenceTag = FirebaseDatabase.getInstance().getReference("tags");
                     final String postID = mDatabaseReferenceTag.push().getKey();
+                    getName();
                     StorageReference riversRef = mStorageReference.child(postID);
                     riversRef.putFile(filePath)
                             .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -293,11 +298,20 @@ public class SelectPhotoActivity extends BaseActivity{
                             });
 
 
-                    Photo photo = new Photo("Rishabh Shukla", size,
-                            lang, encoding,
-                            bucket, mFirebaseUser.getEmail(),
-                            System.currentTimeMillis(), 0, 0, null, etCaption.getText().toString(),
-                            mFirebaseUser.getUid(), mSelectedItems, downloadUrl);
+                    Photo photo=null;
+                    if(name!=null) {
+                        photo = new Photo(name, size,
+                                lang, encoding,
+                                bucket, mFirebaseUser.getEmail(),
+                                System.currentTimeMillis(), 0, 0, null, etCaption.getText().toString(),
+                                mFirebaseUser.getUid(), mSelectedItems, downloadUrl);
+                    }else{
+                        photo = new Photo("Unknown User", size,
+                                lang, encoding,
+                                bucket, mFirebaseUser.getEmail(),
+                                System.currentTimeMillis(), 0, 0, null, etCaption.getText().toString(),
+                                mFirebaseUser.getUid(), mSelectedItems, downloadUrl);
+                    }
 
                     for (String subInt : mSelectedItems) {
                         mDatabaseReferenceTag.child(subInt.toLowerCase()).child("photo").child(postID).setValue(photo);
@@ -322,6 +336,23 @@ public class SelectPhotoActivity extends BaseActivity{
                 Log.d(TAG, "uploadToFirebase: No file chosen!");
             }
         }
+    }
+
+
+    public void getName(){
+        DatabaseReference ref =FirebaseDatabase.getInstance().getReference().child("users").child(mFirebaseUser.getUid());
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.child("name").getValue()!=null){
+                    name = String.valueOf(dataSnapshot.child("name").getValue());
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
     }
 
     @Override
