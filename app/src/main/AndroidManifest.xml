@@ -60,7 +60,8 @@
         <activity android:name=".newactivities.NewExploreyActivity" />
         <activity android:name=".newactivities.NewGurusActivity" />
         <activity android:name=".newactivities.NewMainActivity" />
-        <activity android:name=".newactivities.YourFeedsActivity"></activity>
+        <activity android:name=".newactivities.YourFeedsActivity" />
+        <activity android:name=".activity.AboutActivity"></activity>
     </application>
 
 </manifest>
