@@ -233,6 +233,8 @@ public class SelectVideoActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_VIDEO_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             filePath = data.getData();
+            mVideoView.setShowSpinner(false);
+
             StorageMetadata metadata = new StorageMetadata.Builder()
                     .setContentType("video/mpeg")
                     .build();
@@ -240,7 +242,6 @@ public class SelectVideoActivity extends BaseActivity {
                 Log.e("selected video path", "null");
                 finish();
             } else {
-
                 mVideoView.setVisibility(View.VISIBLE);
                 Log.e("selectedVideoPath", filePath.getPath());
 //                mVideoView.setVideoURI(filePath);

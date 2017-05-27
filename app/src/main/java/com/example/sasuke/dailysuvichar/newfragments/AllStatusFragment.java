@@ -66,13 +66,14 @@ public class AllStatusFragment extends Fragment {
     private AVLoadingIndicatorView avi;
     private HashMap<String, String> userStatus;
     private static DatabaseReference mDatabaseReference;
-    private DatabaseReference mDatabaseReferencePosts;
+    private DatabaseReference mDatabaseReferencePosts, mDatabaseReferenceGuru;
     private StorageReference mStorageReference;
     private ArrayList<String> mSelectedSubInterests;
 
     private StorageReference mStorageReferenceDP;
     private FirebaseAuth mFirebaseAuth;
     private DatabaseReference mUsersDatabase;
+    private ArrayList<String> mSelectedGurus;
 
     private static final String TAG = "ALLSTATUS", STATUS = "status";
     private static final int PICK_IMAGE_REQUEST = 250;
@@ -86,6 +87,7 @@ public class AllStatusFragment extends Fragment {
     private HashMap<String, Status> statusHashMapStore;
     private HashMap<String, Long> statusHashMap;
     private String from = "HOME";
+    private HashMap<String, Boolean> isStatusDone, isStatusDoneGuru;
 
     @BindView(R.id.recyclerview)
     RecyclerView mRvHome;
@@ -99,30 +101,13 @@ public class AllStatusFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v=  inflater.inflate(R.layout.fragment_all_status, container, false);
+        View v = inflater.inflate(R.layout.fragment_all_status, container, false);
         ButterKnife.bind(getActivity());
 
         Bundle args = getArguments();
         from = args.getString("from");
 
-        //WONT CAUSE NPE DONT WORRY
-        if(from.equals("YOUR")){
-            //SHOW YOUR FEEDS, COPY CODE FROM YOUR FEEDS FRAGMENT
-            Log.e("FROM", "YOUR TO STATUS");
-
-        }
-        else if(from.equals("HOME")){
-            //SHOW FEEDS ON YOUR INTERESTS
-            Log.e("FROM", "HOME TO STATUS");
-
-        }
-        else if(from.equals("EXPLORE")){
-            //SHOW FEEDS FROM WHO YOU FOLLOW + DS PEOPLE
-            Log.e("FROM", "EXPLORE TO STATUS");
-        }
-
-
-        mRvHome= (RecyclerView) v.findViewById(R.id.recyclerview);
+        mRvHome = (RecyclerView) v.findViewById(R.id.recyclerview);
         mPullToRefresh = (SwipeRefreshLayout) v.findViewById(R.id.swiperefresh);
         alternateLayout = (LinearLayout) v.findViewById(R.id.alternate_layout);
         mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -148,6 +133,7 @@ public class AllStatusFragment extends Fragment {
 
         mLayoutManager = new LinearLayoutManager(getContext());
         mLayoutManager.setItemPrefetchEnabled(true);
+//        mLayoutManager.setStackFromEnd(true);
         mLayoutManager.setInitialPrefetchItemCount(10);
         mRvHome.setLayoutManager(mLayoutManager);
         mAdapter = new MultiTypeAdapter();
@@ -156,60 +142,168 @@ public class AllStatusFragment extends Fragment {
 
         items = new Items();
 
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference("users");
-        Log.e(TAG, uid);
-        Log.e(TAG, mDatabaseReference.toString());
+        //WONT CAUSE NPE DONT WORRY
+        if (isOnline()) {
+            if (from.equals("YOUR")) {
+                //SHOW YOUR FEEDS, COPY CODE FROM YOUR FEEDS FRAGMENT
+                Log.e("FROM", "YOUR TO STATUS");
+                isStatusDone = new HashMap<>();
+                fetchStatusFromFirebaseYour();
+                refresh();
 
-        mSelectedSubInterests = new ArrayList<>();
-        isDone= new HashMap<>();
+            } else if (from.equals("EXPLORE")) {
+                //SHOW FEEDS ON YOUR INTERESTS
 
-        statusHashMap = new HashMap<>();
-        statusHashMapStore = new HashMap<>();
+                mDatabaseReference = FirebaseDatabase.getInstance().getReference("users");
+                Log.e(TAG, uid);
+                Log.e(TAG, mDatabaseReference.toString());
 
-        if(isOnline()) {
-            refresh();
+                mSelectedSubInterests = new ArrayList<>();
+                isDone = new HashMap<>();
 
-            mDatabaseReference.child(mFirebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
+                statusHashMap = new HashMap<>();
+                statusHashMapStore = new HashMap<>();
+
+                refresh();
+
+                mDatabaseReference.child(mFirebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
 //                Log.d(TAG, "onDataChange: SUBINTS " + dataSnapshot.child("selectedSubInterests"));
 //                Log.d(TAG, "onDataChange: SUBINTS " + dataSnapshot.getChildrenCount());
 //                User user = dataSnapshot.getValue(User.class);
 //                Log.d(TAG, "onDataChange: INTTTT "+dataSnapshot.child("selectedSubInterests").getValue());
-                    if (dataSnapshot.child("mSelectedSubInterests").getValue() != null) {
-                        mSelectedSubInterests.addAll((Collection<? extends String>) dataSnapshot.child("mSelectedSubInterests").getValue());
+                        if (dataSnapshot.child("mSelectedSubInterests").getValue() != null) {
+                            mSelectedSubInterests.addAll((Collection<? extends String>) dataSnapshot.child("mSelectedSubInterests").getValue());
+                        }
+                        fetchStatusFromFirebaseExplore();
+                        alternateLayout.setVisibility(View.INVISIBLE);
                     }
-                    fetchStatusFromFirebase();
-                    alternateLayout.setVisibility(View.INVISIBLE);
-                }
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                }
-            });
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
 
-            fetchStatusFromFirebase();
-        }else{
+                fetchStatusFromFirebaseExplore();
+
+
+                Log.e("FROM", "EXPLORE TO STATUS");
+
+            } else if (from.equals("HOME")) {
+                //SHOW FEEDS FROM WHO YOU FOLLOW + DS PEOPLE
+                Log.e("FROM", "HOME TO STATUS");
+
+                mSelectedGurus = new ArrayList<>();
+                isStatusDoneGuru = new HashMap<>();
+
+                mDatabaseReferenceGuru = FirebaseDatabase.getInstance().getReference("users");
+
+                    refresh();
+
+                    mDatabaseReferenceGuru.child(mFirebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.child("following").getValue() != null) {
+                                mSelectedGurus.addAll((Collection<? extends String>) dataSnapshot.child("following").getValue());
+                            }
+                            fetchStatusFromFirebaseGuru();
+                            alternateLayout.setVisibility(View.INVISIBLE);
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                        }
+                    });
+
+                fetchStatusFromFirebaseGuru();
+
+            }
+        } else {
             Toast.makeText(getActivity(), getString(R.string.no_inter), Toast.LENGTH_SHORT).show();
         }
 
 
-//        Handler handler= new Handler();
-//        handler.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//
-//                Log.d(TAG, "onViewCreated: VAL "+allPostsHashMapFinal.size());
-//                Log.d(TAG, "onViewCreated: VAL "+statusHashMap.size());
-//                Log.d(TAG, "onViewCreated: VAL "+photoHashMap.size());
-//                Log.d(TAG, "onViewCreated: VAL "+customVidHashMap.size());
-//            }
-//        },5000);
-
         return v;
     }
 
-    private void refresh(){
+
+    private void fetchStatusFromFirebaseGuru() {
+
+        mLayoutManager.setStackFromEnd(true);
+
+        if(mSelectedGurus!=null && mSelectedGurus.size()>0) {
+
+            for(String guru: mSelectedGurus) {
+
+                mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("users").child(guru).child("posts");
+
+                mDatabaseReferencePosts.child("status").orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                        for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                            Status statusSnap = postSnapshot.getValue(Status.class);
+
+                            if (!isStatusDoneGuru.containsKey(postSnapshot.getKey())) {
+
+                                items.add(statusSnap);
+                                isStatusDoneGuru.put(postSnapshot.getKey(), true);
+                            }
+                            mAdapter.notifyDataSetChanged();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.d(TAG, "onCancelled: " + databaseError.getMessage());
+                    }
+                });
+            }
+
+            Log.d(TAG, "fetchStatusFromFirebase: " + items.size());
+            mAdapter.setItems(items);
+            mAdapter.notifyDataSetChanged();
+        }
+    }
+
+    private void fetchStatusFromFirebaseYour() {
+
+        mLayoutManager.setStackFromEnd(true);
+
+        mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("users").child(mFirebaseUser.getUid()).child("posts");
+
+        Log.d(TAG, "fetchStatusFromFirebase: URLL " + mDatabaseReferencePosts);
+        mDatabaseReferencePosts.child("status").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+//                        Log.i(TAG, "onDataChange: "+mUserList.size()+" ");
+
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    Status status = postSnapshot.getValue(Status.class);
+
+                    if (!isStatusDone.containsKey(postSnapshot.getKey())) {
+                        items.add(status);
+                        isStatusDone.put(postSnapshot.getKey(), true);
+                    }
+                    mAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d(TAG, "onCancelled: " + databaseError.getMessage());
+            }
+        });
+
+
+        Log.d(TAG, "fetchStatusFromFirebase: " + items.size());
+        mAdapter.setItems(items);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    private void refresh() {
         mPullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -219,9 +313,23 @@ public class AllStatusFragment extends Fragment {
                     @Override
                     public void run() {
                         //CALL DATA HERE
-                        if(isOnline()) {
-                            fetchStatusFromFirebase();
-                        }else{
+                        if (isOnline()) {
+                            if (from.equals("YOUR")) {
+                                //SHOW YOUR FEEDS, COPY CODE FROM YOUR FEEDS FRAGMENT
+                                Log.e("FROM", "YOUR TO PHOTOS");
+                                fetchStatusFromFirebaseYour();
+
+                            } else if (from.equals("EXPLORE")) {
+                                //SHOW FEEDS ON YOUR INTERESTS
+                                Log.e("FROM", "EXPLORE TO PHOTOS");
+                                fetchStatusFromFirebaseExplore();
+                            } else if (from.equals("HOME")) {
+                                //SHOW FEEDS FROM WHO YOU FOLLOW + DS PEOPLE
+                                Log.e("FROM", "HOME TO PHOTOS");
+                                fetchStatusFromFirebaseGuru();
+                            }
+
+                        } else {
                             Toast.makeText(getActivity(), getString(R.string.no_inter), Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -231,17 +339,17 @@ public class AllStatusFragment extends Fragment {
                     public void run() {
                         mPullToRefresh.setRefreshing(false);
                     }
-                },1500);
+                }, 1500);
             }
         });
     }
 
-    private void fetchStatusFromFirebase() {
+    private void fetchStatusFromFirebaseExplore() {
 
 
         if (mSelectedSubInterests.size() > 0) {
-            Log.d(TAG, "fetchStatusFromFirebase: SIZE " + mSelectedSubInterests.size());
-            Log.d(TAG, "fetchStatusFromFirebase: " + mSelectedSubInterests);
+            Log.d(TAG, "fetchStatusFromFirebaseExplore: SIZE " + mSelectedSubInterests.size());
+            Log.d(TAG, "fetchStatusFromFirebaseExplore: " + mSelectedSubInterests);
 
             mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("tags");
             for (int i = 0; i < mSelectedSubInterests.size(); i++) {
@@ -267,18 +375,18 @@ public class AllStatusFragment extends Fragment {
                                 isDone.put(postSnapshot.getKey(), status.getTimestamp());
                                 statusHashMapStore.put(postSnapshot.getKey(), status);
                             }
-//                            Log.d(TAG, "fetchStatusFromFirebase: ISDONE "+isDone.size());
+//                            Log.d(TAG, "fetchStatusFromFirebaseExplore: ISDONE "+isDone.size());
 
                             mAdapter.notifyDataSetChanged();
 //                            if (mAdapter.getItemCount() > 0) {
 //                                avi.hide();
 //                            }
                         }
-                        Log.d(TAG, "fetchStatusFromFirebase: ISDONE " + isDone.size());
+                        Log.d(TAG, "fetchStatusFromFirebaseExplore: ISDONE " + isDone.size());
                         if (finalI == mSelectedSubInterests.size() - 1 && isDone.size() > 0) {
                             statusHashMap = sortByComparator(isDone, false);
-                            Log.d(TAG, "fetchStatusFromFirebase: STATUS" + statusHashMap);
-                            Log.d(TAG, "fetchStatusFromFirebase: STATUS" + statusHashMapStore);
+                            Log.d(TAG, "fetchStatusFromFirebaseExplore: STATUS" + statusHashMap);
+                            Log.d(TAG, "fetchStatusFromFirebaseExplore: STATUS" + statusHashMapStore);
                             for (int i = 0; i < statusHashMap.size(); i++) {
                                 if (!items.contains(statusHashMapStore.get(statusHashMap.keySet().toArray()[i]))) {
                                     items.add(statusHashMapStore.get(statusHashMap.keySet().toArray()[i]));
@@ -292,13 +400,13 @@ public class AllStatusFragment extends Fragment {
                         Log.d(TAG, "onCancelled: " + databaseError.getMessage());
                     }
                 });
-//                Log.d(TAG, "fetchStatusFromFirebase: ISDONE "+isDone.size());
+//                Log.d(TAG, "fetchStatusFromFirebaseExplore: ISDONE "+isDone.size());
 
             }
-//            Log.d(TAG, "fetchStatusFromFirebase: ISDONE "+isDone.size());
+//            Log.d(TAG, "fetchStatusFromFirebaseExplore: ISDONE "+isDone.size());
 
         }
-        Log.d(TAG, "fetchStatusFromFirebase: " + items.size());
+        Log.d(TAG, "fetchStatusFromFirebaseExplore: " + items.size());
         mAdapter.setItems(items);
         mAdapter.notifyDataSetChanged();
 //        if(mAdapter.getItemCount()>0){
@@ -306,23 +414,17 @@ public class AllStatusFragment extends Fragment {
 //        }
     }
 
-    private static HashMap<String, Long> sortByComparator(HashMap<String, Long> unsortMap, final boolean order)
-    {
+    private static HashMap<String, Long> sortByComparator(HashMap<String, Long> unsortMap, final boolean order) {
 
         List<HashMap.Entry<String, Long>> list = new LinkedList<>(unsortMap.entrySet());
 
         // Sorting the list based on values
-        Collections.sort(list, new Comparator<HashMap.Entry<String, Long>>()
-        {
+        Collections.sort(list, new Comparator<HashMap.Entry<String, Long>>() {
             public int compare(HashMap.Entry<String, Long> o1,
-                               HashMap.Entry<String, Long> o2)
-            {
-                if (order)
-                {
+                               HashMap.Entry<String, Long> o2) {
+                if (order) {
                     return o1.getValue().compareTo(o2.getValue());
-                }
-                else
-                {
+                } else {
                     return o2.getValue().compareTo(o1.getValue());
 
                 }
@@ -330,8 +432,7 @@ public class AllStatusFragment extends Fragment {
         });
 
         HashMap<String, Long> sortedMap = new LinkedHashMap<>();
-        for (HashMap.Entry<String, Long> entry : list)
-        {
+        for (HashMap.Entry<String, Long> entry : list) {
             sortedMap.put(entry.getKey(), entry.getValue());
         }
 
