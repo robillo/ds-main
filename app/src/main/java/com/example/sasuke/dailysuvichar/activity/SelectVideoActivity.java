@@ -240,6 +240,7 @@ public class SelectVideoActivity extends BaseActivity {
                 Log.e("selected video path", "null");
                 finish();
             } else {
+                mVideoView.setVisibility(View.VISIBLE);
                 Log.e("selectedVideoPath", filePath.getPath());
 //                mVideoView.setVideoURI(filePath);
                 mVideoView.setOnClickListener(new View.OnClickListener() {
@@ -250,15 +251,18 @@ public class SelectVideoActivity extends BaseActivity {
                         } else {
                             if (mVideoView != currentlyPlaying) {
                                 releaseVideo();
-
+                                mVideoView.start(Uri.parse(String.valueOf(filePath)));
+                                currentlyPlaying = mVideoView;
+                            }else {
                                 mVideoView.setVisibility(View.VISIBLE);
 //                    if(holder.videoUrl!=null) {
 //                        holder.videoView.start(holder.videoUrl.toString() + ".mp4");
 //                    }
-                                mVideoView.start(Uri.parse(String.valueOf(filePath)));
-                                currentlyPlaying = mVideoView;
-                            } else {
-                                Toast.makeText(context, "Sorry. This Video Cannot Be Played", Toast.LENGTH_SHORT).show();
+                                mVideoView.play();
+
+//                            } else {
+//                                Toast.makeText(context, "Sorry. This Video Cannot Be Played", Toast.LENGTH_SHORT).show();
+//                            }
                             }
                         }
                     }
@@ -390,6 +394,7 @@ public class SelectVideoActivity extends BaseActivity {
         if (progressDialog != null) {
             progressDialog.dismiss();
         }
+        mVideoView.release();
         super.onDestroy();
     }
 
