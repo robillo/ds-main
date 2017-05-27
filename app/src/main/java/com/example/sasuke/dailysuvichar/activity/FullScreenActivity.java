@@ -44,15 +44,6 @@ public class FullScreenActivity extends BaseActivity{
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        if(from == 0){
-            startActivity(new Intent(this, YourFeedsActivity.class));
-        }
-        else if(from == 1){
-            startActivity(new Intent(this, NewHomeyActivity.class));
-        }
-        else if(from == 2){
-            startActivity(new Intent(this, NewExploreyActivity.class));
-        }
+        finish();
     }
 }

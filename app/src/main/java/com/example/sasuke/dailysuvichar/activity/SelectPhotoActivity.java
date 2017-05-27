@@ -47,10 +47,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-/**
- * Created by robinkamboj on 11/05/17.
- */
-
 public class SelectPhotoActivity extends BaseActivity{
 
     @BindView(R.id.upload)
