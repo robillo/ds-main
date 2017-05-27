@@ -55,6 +55,8 @@ public class SelectPhotoActivity extends BaseActivity{
 
     @BindView(R.id.upload)
     ImageView upload;
+    @BindView(R.id.name)
+    TextView name;
     @BindView(R.id.diet)
     TextView diet;
     @BindView(R.id.yoga)
@@ -89,7 +91,6 @@ public class SelectPhotoActivity extends BaseActivity{
     private DatabaseReference mDatabaseReferenceTag,mDatabaseReferenceUser;
     private StorageReference mStorageReference;
     ProgressDialog progressDialog;
-    private String name;
     Long size;
     String bucket, encoding, lang;
     Uri downloadUrl;
@@ -102,6 +103,9 @@ public class SelectPhotoActivity extends BaseActivity{
         setContentView(R.layout.activity_select_photo);
         ButterKnife.bind(this);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
+        mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        getName();
 
         from = getIntent().getIntExtra("from", 1);
 
@@ -299,8 +303,8 @@ public class SelectPhotoActivity extends BaseActivity{
 
 
                     Photo photo=null;
-                    if(name!=null) {
-                        photo = new Photo(name, size,
+                    if(name.getText()!="") {
+                        photo = new Photo(name.getText().toString(), size,
                                 lang, encoding,
                                 bucket, mFirebaseUser.getEmail(),
                                 System.currentTimeMillis(), 0, 0, null, etCaption.getText().toString(),
@@ -340,12 +344,14 @@ public class SelectPhotoActivity extends BaseActivity{
 
 
     public void getName(){
+
         DatabaseReference ref =FirebaseDatabase.getInstance().getReference().child("users").child(mFirebaseUser.getUid());
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot.child("name").getValue()!=null){
-                    name = String.valueOf(dataSnapshot.child("name").getValue());
+                    Log.d(TAG, "onDataChange: NAMEE"+(dataSnapshot.child("name").getValue()));
+                    name.setText(String.valueOf(dataSnapshot.child("name").getValue()));
                 }
             }
 
@@ -353,6 +359,7 @@ public class SelectPhotoActivity extends BaseActivity{
             public void onCancelled(DatabaseError databaseError) {
             }
         });
+//        return null;
     }
 
     @Override
