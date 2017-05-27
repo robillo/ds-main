@@ -3,6 +3,7 @@ package com.example.sasuke.dailysuvichar.newactivities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -48,9 +49,24 @@ public class NewHomeActivity extends AppCompatActivity implements GooeyMenu.Gooe
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new AllStatusFragment(), "Status");
-        adapter.addFragment(new AllPhotosFragment(), "Photos");
-        adapter.addFragment(new AllVideosFragment(), "Videos");
+        Fragment fragment = new AllStatusFragment();
+        Bundle args = new Bundle();
+        args.putString("from", "HOME");
+        fragment.setArguments(args);
+
+        adapter.addFragment(fragment, "Status");
+
+        fragment = new AllPhotosFragment();
+        fragment.setArguments(args);
+
+        adapter.addFragment(fragment, "Photos");
+
+        fragment = new AllVideosFragment();
+        fragment.setArguments(args);
+
+        adapter.addFragment(fragment, "Videos");
+
+        viewPager.setAdapter(adapter);
         viewPager.setAdapter(adapter);
     }
 
