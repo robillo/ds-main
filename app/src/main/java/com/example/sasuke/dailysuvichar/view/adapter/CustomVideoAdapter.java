@@ -83,7 +83,7 @@ public class CustomVideoAdapter  extends ItemViewBinder<CustomVideo, CustomVideo
 //                        holder.videoView.start(holder.videoUrl.toString() + ".mp4");
 //                    }
                     Log.e("URI", " " + item.getVideoURI());
-                    if(Uri.parse(item.getVideoURI())!=null){
+                    if(item.getVideoURI()!=null){
                         holder.videoView.start(Uri.parse(item.getVideoURI()));
                         currentlyPlaying = holder.videoView;
                     }
