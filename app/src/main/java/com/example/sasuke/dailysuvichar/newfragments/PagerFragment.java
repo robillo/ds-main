@@ -52,7 +52,7 @@ public class PagerFragment extends Fragment {
             public void onClick(View view) {
                 switch (levelNumber){
                     case 1:{
-                        Intent i = new Intent(getActivity(), NewHomeActivity.class);
+                        Intent i = new Intent(getActivity(), ExploreActivity.class);
                         getActivity().startActivity(i);
                         break;
                     }
@@ -62,7 +62,7 @@ public class PagerFragment extends Fragment {
                         break;
                     }
                     case 3:{
-                        Intent i = new Intent(getActivity(), ExploreActivity.class);
+                        Intent i = new Intent(getActivity(), NewHomeActivity.class);
                         getActivity().startActivity(i);
                         break;
                     }
