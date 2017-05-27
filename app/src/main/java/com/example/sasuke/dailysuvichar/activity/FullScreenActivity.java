@@ -8,6 +8,8 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.newactivities.NewExploreyActivity;
+import com.example.sasuke.dailysuvichar.newactivities.NewHomeyActivity;
+import com.example.sasuke.dailysuvichar.newactivities.YourFeedsActivity;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -17,11 +19,17 @@ import me.zhanghai.android.materialprogressbar.IndeterminateCircularProgressDraw
 
 public class FullScreenActivity extends BaseActivity{
 
+    private int from = 0;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_full_screen);
         ButterKnife.bind(this);
+
+        //0 YOUR    1 HOME      2 EXPLORE
+
+        from = getIntent().getIntExtra("from", 0);
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
         String path = getIntent().getStringExtra("path");
@@ -37,6 +45,14 @@ public class FullScreenActivity extends BaseActivity{
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(this, NewExploreyActivity.class));
+        if(from == 0){
+            startActivity(new Intent(this, YourFeedsActivity.class));
+        }
+        else if(from == 1){
+            startActivity(new Intent(this, NewHomeyActivity.class));
+        }
+        else if(from == 2){
+            startActivity(new Intent(this, NewExploreyActivity.class));
+        }
     }
 }
