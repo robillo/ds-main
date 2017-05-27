@@ -108,14 +108,14 @@ public class StatusViewHolder extends RecyclerView.ViewHolder {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 if(dataSnapshot.child("photoUrl").getValue()!=null) {
-                    Glide.with(context).
-                            using(new FirebaseImageLoader())
-                            .load(mStorageReferenceDP.child(dataSnapshot.getKey()))
-                            .fitCenter()
-                            .placeholder(R.drawable.profile)
-                            .diskCacheStrategy(DiskCacheStrategy.ALL)
-                            .into(statusDP);
-                    Log.e("GLIDINGGGGGG", "YES");
+//                    Glide.with(context).
+//                            using(new FirebaseImageLoader())
+//                            .load(mStorageReferenceDP.child(dataSnapshot.getKey()))
+//                            .fitCenter()
+//                            .placeholder(R.drawable.profile)
+//                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+//                            .into(statusDP);
+//                    Log.e("GLIDINGGGGGG", "YES");
                 }
             }
             @Override

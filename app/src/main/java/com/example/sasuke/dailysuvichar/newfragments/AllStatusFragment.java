@@ -200,10 +200,6 @@ public class AllStatusFragment extends Fragment {
                         //CALL DATA HERE
                         if(isOnline()) {
                             fetchStatusFromFirebase();
-//
-                            mPullToRefresh.setRefreshing(false);
-                            Toast.makeText(getActivity(), "Feeds Updated Successfully.", Toast.LENGTH_SHORT).show();
-
                         }else{
                             Toast.makeText(getActivity(), "No Internet Connection", Toast.LENGTH_SHORT).show();
                         }
@@ -213,7 +209,6 @@ public class AllStatusFragment extends Fragment {
                     @Override
                     public void run() {
                         mPullToRefresh.setRefreshing(false);
-                        Toast.makeText(getActivity(), "Feeds Updated Successfully.", Toast.LENGTH_SHORT).show();
                     }
                 },1500);
             }
