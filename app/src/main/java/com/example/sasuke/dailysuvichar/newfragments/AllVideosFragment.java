@@ -99,10 +99,10 @@ public class AllVideosFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v=  inflater.inflate(R.layout.fragment_all_videos, container, false);
+        View v = inflater.inflate(R.layout.fragment_all_videos, container, false);
         ButterKnife.bind(getActivity());
 
-        mRvHome= (RecyclerView) v.findViewById(R.id.recyclerview);
+        mRvHome = (RecyclerView) v.findViewById(R.id.recyclerview);
         mPullToRefresh = (SwipeRefreshLayout) v.findViewById(R.id.swiperefresh);
         alternateLayout = (LinearLayout) v.findViewById(R.id.alternate_layout);
         mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -151,10 +151,10 @@ public class AllVideosFragment extends Fragment {
 
         mSelectedSubInterests = new ArrayList<>();
 
-        isDone= new HashMap<>();
+        isDone = new HashMap<>();
         videoHashMap = new HashMap<>();
         videoHashMapStore = new HashMap<>();
-        if(isOnline()) {
+        if (isOnline()) {
             refresh();
 
 
@@ -174,7 +174,7 @@ public class AllVideosFragment extends Fragment {
             });
 
             fetchVideosFromFirebase();
-        }else{
+        } else {
             Toast.makeText(getActivity(), "No Internet Connection", Toast.LENGTH_SHORT).show();
         }
 
@@ -193,7 +193,7 @@ public class AllVideosFragment extends Fragment {
         return v;
     }
 
-    private void refresh(){
+    private void refresh() {
         mPullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -203,13 +203,13 @@ public class AllVideosFragment extends Fragment {
                     @Override
                     public void run() {
                         //CALL DATA HERE
-                        if(isOnline()) {
+                        if (isOnline()) {
                             fetchVideosFromFirebase();
 //
                             mPullToRefresh.setRefreshing(false);
                             Toast.makeText(getActivity(), "Feeds Updated Successfully.", Toast.LENGTH_SHORT).show();
 
-                        }else{
+                        } else {
                             Toast.makeText(getActivity(), "No Internet Connection", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -220,13 +220,14 @@ public class AllVideosFragment extends Fragment {
                         mPullToRefresh.setRefreshing(false);
                         Toast.makeText(getActivity(), "Feeds Updated Successfully.", Toast.LENGTH_SHORT).show();
                     }
-                },1500);
+                }, 1500);
             }
         });
     }
 
     private void fetchVideosFromFirebase() {
 
+//        final ExecutorService executor = new ThreadPoolExecutor(3, 3, 0L, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<Runnable>(15));
 
         if (mSelectedSubInterests.size() > 0) {
 
@@ -241,35 +242,44 @@ public class AllVideosFragment extends Fragment {
                 final int finalI = i;
                 mDatabaseReferencePosts.child(subInt).child("video").addValueEventListener(new ValueEventListener() {
                     @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
+                    public void onDataChange(final DataSnapshot dataSnapshot) {
 
 //                        Log.i(TAG, "onDataChange2222: " + dataSnapshot.getValue());
 //                        Log.i(TAG, "onDataChange2222: " + dataSnapshot.getChildrenCount());
 
 //                        Log.i(TAG, "onDataChange: "+mUserList.size()+" ");
 
-                        for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                            Log.d(TAG, "onDataChange: HOMEFRAGVIDEO 2 "+mStorageReferenceVideo);
+//                        executor.execute(new Runnable() {
+//                            @Override
+//                            public void run() {
+                        for (final DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                            Log.d(TAG, "onDataChange: HOMEFRAGVIDEO 2 " + mStorageReferenceVideo);
                             final CustomVideo videoSnap = postSnapshot.getValue(CustomVideo.class);
-                            videoSnap.setStorageReference(mStorageReferenceVideo.child(postSnapshot.getKey()));
-                            mStorageReferenceVideo.child(postSnapshot.getKey()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    videoSnap.setVideoURI(uri.toString());
-                                }
-                            });
-                            if (!isDone.containsKey(postSnapshot.getKey())) {
+                            if (mStorageReferenceVideo.child(postSnapshot.getKey()) != null) {
+
+                                if (!isDone.containsKey(postSnapshot.getKey())) {
 //                                items.add(photoSnap);
-                                isDone.put(postSnapshot.getKey(), videoSnap.getTimestamp());
-                                videoHashMapStore.put(postSnapshot.getKey(), videoSnap);
+                                    videoSnap.setStorageReference(mStorageReferenceVideo.child(postSnapshot.getKey()));
+                                    isDone.put(postSnapshot.getKey(), videoSnap.getTimestamp());
+                                    videoHashMapStore.put(postSnapshot.getKey(), videoSnap);
+                                    mStorageReferenceVideo.child(postSnapshot.getKey()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                        @Override
+                                        public void onSuccess(Uri uri) {
+                                            videoSnap.setVideoURI(uri.toString());
+                                        }
+                                    });
+                                }
                             }
+
+                        }
 //                            Log.d(TAG, "fetchVideosFromFirebase: ISDONE "+isDone.size());
 
-                            mAdapter.notifyDataSetChanged();
+                        mAdapter.notifyDataSetChanged();
 //                            if (mAdapter.getItemCount() > 0) {
 //                                avi.hide();
 //                            }
-                        }
+
+//                        });
                         Log.d(TAG, "fetchVideosFromFirebase: ISDONE " + isDone.size());
                         if (finalI == mSelectedSubInterests.size() - 1 && isDone.size() > 0) {
                             videoHashMap = sortByComparator(isDone, false);
@@ -297,28 +307,23 @@ public class AllVideosFragment extends Fragment {
         Log.d(TAG, "fetchVideosFromFirebase: " + items.size());
         mAdapter.setItems(items);
         mAdapter.notifyDataSetChanged();
+//        executor.shutdown();
 //        if(mAdapter.getItemCount()>0){
 //            avi.hide();
 //        }
     }
 
-    private static HashMap<String, Long> sortByComparator(HashMap<String, Long> unsortMap, final boolean order)
-    {
+    private static HashMap<String, Long> sortByComparator(HashMap<String, Long> unsortMap, final boolean order) {
 
         List<HashMap.Entry<String, Long>> list = new LinkedList<>(unsortMap.entrySet());
 
         // Sorting the list based on values
-        Collections.sort(list, new Comparator<HashMap.Entry<String, Long>>()
-        {
+        Collections.sort(list, new Comparator<HashMap.Entry<String, Long>>() {
             public int compare(HashMap.Entry<String, Long> o1,
-                               HashMap.Entry<String, Long> o2)
-            {
-                if (order)
-                {
+                               HashMap.Entry<String, Long> o2) {
+                if (order) {
                     return o1.getValue().compareTo(o2.getValue());
-                }
-                else
-                {
+                } else {
                     return o2.getValue().compareTo(o1.getValue());
 
                 }
@@ -326,8 +331,7 @@ public class AllVideosFragment extends Fragment {
         });
 
         HashMap<String, Long> sortedMap = new LinkedHashMap<>();
-        for (HashMap.Entry<String, Long> entry : list)
-        {
+        for (HashMap.Entry<String, Long> entry : list) {
             sortedMap.put(entry.getKey(), entry.getValue());
         }
 
