@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.activity.ProfileActivity;
+import com.example.sasuke.dailysuvichar.fragment.YourFeedsFragment;
+import com.example.sasuke.dailysuvichar.newactivities.YourFeedsActivity;
 
 public class VHFeature extends RecyclerView.ViewHolder{
 
@@ -30,16 +32,14 @@ public class VHFeature extends RecyclerView.ViewHolder{
     public void intent(int position){
         switch (position){
             case 1:{
-                Intent i =new Intent(context, ProfileActivity.class);
+                Intent i =new Intent(context, YourFeedsActivity.class);
                 i.putExtra("fromHome",1);
                 context.startActivity(i);
                 break;
             }
             case 2:{
-                Intent i = new Intent();
-                i.setAction(Intent.ACTION_SEND);
-                i.putExtra(Intent.EXTRA_TEXT, "Hey, Check out this exciting App at: https://play.google.com/store/apps/details?id=com.firstapp.robinpc.tongue_twisters_deluxe");
-                i.setType("text/plain");
+                Intent i = new Intent(context, ProfileActivity.class);
+                i.putExtra("from", "HOME");
                 context.startActivity(i);
                 break;
             }
