@@ -76,6 +76,7 @@ public class NewHomeActivity extends AppCompatActivity implements GooeyMenu.Gooe
             Intent i = new Intent(this, SelectActivity.class);
             i.putExtra("from", 1);
             startActivity(i);
+            finish();
             showToast("UPLOAD STATUS HERE");
         }
         else if(menuNumber==2){
@@ -83,6 +84,7 @@ public class NewHomeActivity extends AppCompatActivity implements GooeyMenu.Gooe
             Intent i = new Intent(this, SelectPhotoActivity.class);
             i.putExtra("from", 1);
             startActivity(i);
+            finish();
             showToast("UPLOAD PHOTOS HERE");
         }
         else if(menuNumber==3){
@@ -90,6 +92,7 @@ public class NewHomeActivity extends AppCompatActivity implements GooeyMenu.Gooe
             Intent i = new Intent(this, SelectVideoActivity.class);
             i.putExtra("from", 1);
             startActivity(i);
+            finish();
             showToast("UPLOAD VIDEOS HERE");
         }
     }

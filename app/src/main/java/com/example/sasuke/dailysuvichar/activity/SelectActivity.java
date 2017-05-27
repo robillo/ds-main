@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -35,6 +36,9 @@ import butterknife.OnClick;
 
 public class SelectActivity extends BaseActivity {
 
+    private static final String TAG = "SELECT";
+    @BindView(R.id.name)
+    TextView name;
     @BindView(R.id.diet)
     TextView diet;
     @BindView(R.id.yoga)
@@ -61,7 +65,6 @@ public class SelectActivity extends BaseActivity {
 
     private ArrayList<String> interests, subInterests, data, mSelectedItems;
     private Context context;
-    private String name;
     private FirebaseUser mFirebaseUser;
     private DatabaseReference mDatabaseReferenceTag, mDatabaseReferenceUser;
 
@@ -73,10 +76,9 @@ public class SelectActivity extends BaseActivity {
         setContentView(R.layout.activity_select);
         ButterKnife.bind(this);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-
-
+        mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        getName();
         from = getIntent().getIntExtra("from", 1);
-
         context = getApplicationContext();
         interests = new ArrayList<>();
         subInterests = new ArrayList<>();
@@ -187,12 +189,11 @@ public class SelectActivity extends BaseActivity {
             if (etStatus.getText().length() >= 1) {
                 mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
-                getName();
                 Status status = null;
+                Log.d(TAG, "postStatus: NAMEE "+name);
+                if(name.getText()!="") {
 
-                if(name!=null) {
-
-                    status = new Status(mFirebaseUser.getUid(), mSelectedItems, name, System.currentTimeMillis(),
+                    status = new Status(mFirebaseUser.getUid(), mSelectedItems, name.getText().toString(), System.currentTimeMillis(),
                             0, 0, null, etStatus.getText().toString(), mFirebaseUser.getEmail());
                 }else{
 
@@ -223,12 +224,14 @@ public class SelectActivity extends BaseActivity {
     }
 
     public void getName(){
+
         DatabaseReference ref =FirebaseDatabase.getInstance().getReference().child("users").child(mFirebaseUser.getUid());
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot.child("name").getValue()!=null){
-                    name = String.valueOf(dataSnapshot.child("name").getValue());
+                    Log.d(TAG, "onDataChange: NAMEE"+(dataSnapshot.child("name").getValue()));
+                    name.setText(String.valueOf(dataSnapshot.child("name").getValue()));
                 }
             }
 
@@ -236,6 +239,6 @@ public class SelectActivity extends BaseActivity {
             public void onCancelled(DatabaseError databaseError) {
             }
         });
+//        return null;
     }
-
 }
