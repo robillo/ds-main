@@ -108,15 +108,17 @@ public class AllStatusFragment extends Fragment {
         //WONT CAUSE NPE DONT WORRY
         if(from.equals("YOUR")){
             //SHOW YOUR FEEDS, COPY CODE FROM YOUR FEEDS FRAGMENT
+            Log.e("FROM", "YOUR TO STATUS");
 
         }
         else if(from.equals("HOME")){
             //SHOW FEEDS ON YOUR INTERESTS
+            Log.e("FROM", "HOME TO STATUS");
 
         }
         else if(from.equals("EXPLORE")){
             //SHOW FEEDS FROM WHO YOU FOLLOW + DS PEOPLE
-
+            Log.e("FROM", "EXPLORE TO STATUS");
         }
 
 
