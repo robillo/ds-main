@@ -1,6 +1,9 @@
 package com.example.sasuke.dailysuvichar.newfragments;
 
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -141,26 +144,29 @@ public class AllPhotosFragment extends Fragment {
         photoHashMap = new HashMap<>();
         photoHashMapStore = new HashMap<>();
 
-        refresh();
+        if(isOnline()) {
+            refresh();
 
-        mDatabaseReference.child(mFirebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot.child("mSelectedSubInterests").getValue()!=null) {
-                    mSelectedSubInterests.addAll((Collection<? extends String>) dataSnapshot.child("mSelectedSubInterests").getValue());
+            mDatabaseReference.child(mFirebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.child("mSelectedSubInterests").getValue() != null) {
+                        mSelectedSubInterests.addAll((Collection<? extends String>) dataSnapshot.child("mSelectedSubInterests").getValue());
+                    }
+                    fetchPhotosFromFirebase();
+                    alternateLayout.setVisibility(View.INVISIBLE);
                 }
-                fetchPhotosFromFirebase();
-                alternateLayout.setVisibility(View.INVISIBLE);
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                }
+            });
 
-        fetchPhotosFromFirebase();
+            fetchPhotosFromFirebase();
 
-
+        }else{
+            Toast.makeText(getActivity(), "No Internet Connection", Toast.LENGTH_SHORT).show();
+        }
 
 //        Handler handler= new Handler();
 //        handler.postDelayed(new Runnable() {
@@ -187,7 +193,14 @@ public class AllPhotosFragment extends Fragment {
                     @Override
                     public void run() {
                         //CALL DATA HERE
-                        fetchPhotosFromFirebase();
+                        if(isOnline()) {
+                            fetchPhotosFromFirebase();
+                            mPullToRefresh.setRefreshing(false);
+                            Toast.makeText(getActivity(), "Feeds Updated Successfully.", Toast.LENGTH_SHORT).show();
+
+                        }else{
+                            Toast.makeText(getActivity(), "No Internet Connection", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
                 handler.postDelayed(new Runnable() {
@@ -302,6 +315,13 @@ public class AllPhotosFragment extends Fragment {
         }
 
         return sortedMap;
+    }
+
+    public boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 
 }

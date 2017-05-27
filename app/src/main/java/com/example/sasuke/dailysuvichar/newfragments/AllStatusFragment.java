@@ -1,6 +1,9 @@
 package com.example.sasuke.dailysuvichar.newfragments;
 
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -132,8 +135,6 @@ public class AllStatusFragment extends Fragment {
 
         items = new Items();
 
-
-
         mDatabaseReference = FirebaseDatabase.getInstance().getReference("users");
         Log.e(TAG, uid);
         Log.e(TAG, mDatabaseReference.toString());
@@ -144,29 +145,32 @@ public class AllStatusFragment extends Fragment {
         statusHashMap = new HashMap<>();
         statusHashMapStore = new HashMap<>();
 
-        refresh();
+        if(isOnline()) {
+            refresh();
 
-        mDatabaseReference.child(mFirebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            mDatabaseReference.child(mFirebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
 //                Log.d(TAG, "onDataChange: SUBINTS " + dataSnapshot.child("selectedSubInterests"));
 //                Log.d(TAG, "onDataChange: SUBINTS " + dataSnapshot.getChildrenCount());
 //                User user = dataSnapshot.getValue(User.class);
 //                Log.d(TAG, "onDataChange: INTTTT "+dataSnapshot.child("selectedSubInterests").getValue());
-                if(dataSnapshot.child("mSelectedSubInterests").getValue()!=null) {
-                    mSelectedSubInterests.addAll((Collection<? extends String>) dataSnapshot.child("mSelectedSubInterests").getValue());
+                    if (dataSnapshot.child("mSelectedSubInterests").getValue() != null) {
+                        mSelectedSubInterests.addAll((Collection<? extends String>) dataSnapshot.child("mSelectedSubInterests").getValue());
+                    }
+                    fetchStatusFromFirebase();
+                    alternateLayout.setVisibility(View.INVISIBLE);
                 }
-                fetchStatusFromFirebase();
-                alternateLayout.setVisibility(View.INVISIBLE);
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                }
+            });
 
-        fetchStatusFromFirebase();
-
+            fetchStatusFromFirebase();
+        }else{
+            Toast.makeText(getActivity(), "No Internet Connection", Toast.LENGTH_SHORT).show();
+        }
 
 
 //        Handler handler= new Handler();
@@ -194,7 +198,15 @@ public class AllStatusFragment extends Fragment {
                     @Override
                     public void run() {
                         //CALL DATA HERE
-                        fetchStatusFromFirebase();
+                        if(isOnline()) {
+                            fetchStatusFromFirebase();
+//
+                            mPullToRefresh.setRefreshing(false);
+                            Toast.makeText(getActivity(), "Feeds Updated Successfully.", Toast.LENGTH_SHORT).show();
+
+                        }else{
+                            Toast.makeText(getActivity(), "No Internet Connection", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
                 handler.postDelayed(new Runnable() {
@@ -310,4 +322,10 @@ public class AllStatusFragment extends Fragment {
         return sortedMap;
     }
 
+    public boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
+    }
 }
