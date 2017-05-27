@@ -73,7 +73,9 @@ public class NewExploreyActivity extends AppCompatActivity implements GooeyMenu.
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(this, NewMainActivity.class));
+        Intent i = new Intent(this, NewMainActivity.class);
+        i.putExtra("pageNumber", 2);
+        startActivity(i);
     }
 
     @Override

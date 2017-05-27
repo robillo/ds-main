@@ -326,7 +326,9 @@ public class NewGurusActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(this, NewMainActivity.class));
+        Intent i = new Intent(this, NewMainActivity.class);
+        i.putExtra("pageNumber", 1);
+        startActivity(i);
     }
 
     public boolean isOnline() {

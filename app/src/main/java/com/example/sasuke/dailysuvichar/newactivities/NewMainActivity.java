@@ -44,6 +44,7 @@ public class NewMainActivity extends AppCompatActivity {
     private static final int NUM_PAGES = 3;
     private ViewPager mPager;
     private PagerAdapter mPagerAdapter;
+    private int currentPage = 0;
 
     public static Intent newIntent(Context context) {
         return new Intent(context, NewMainActivity.class);
@@ -56,8 +57,11 @@ public class NewMainActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        Intent i = getIntent();
+        currentPage = i.getIntExtra("pageNumber", 0);
+
         assignStringValues();
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
@@ -74,6 +78,8 @@ public class NewMainActivity extends AppCompatActivity {
         mPager.setClipToPadding(false);
         mPager.setPageTransformer(true, new ZoomOutPageTransformer());
         mPager.addOnPageChangeListener(viewPagerPageChangeListener);
+
+        mPager.setCurrentItem(currentPage);
 
         list = new ArrayList<>();
         list.add(new Feature("Your Feeds",
