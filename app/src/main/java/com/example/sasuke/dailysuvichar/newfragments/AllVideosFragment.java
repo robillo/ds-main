@@ -66,10 +66,13 @@ public class AllVideosFragment extends Fragment {
     private String uid;
     private AVLoadingIndicatorView avi;
     private HashMap<String, String> userStatus;
+    private HashMap<String, Boolean>isVideoDoneYour;
     private static DatabaseReference mDatabaseReference;
-    private DatabaseReference mDatabaseReferencePosts;
+    private DatabaseReference mDatabaseReferencePosts, mDatabaseReferenceGuru;
     private StorageReference mStorageReference;
     private ArrayList<String> mSelectedSubInterests;
+    private ArrayList<String> mSelectedGurus;
+    private HashMap<String, Boolean> isVideoDoneGuru;
 
     private StorageReference mStorageReferenceDP;
     private FirebaseAuth mFirebaseAuth;
@@ -149,11 +152,22 @@ public class AllVideosFragment extends Fragment {
             }
         });
 
-        if(isOnline()) {
+        if (isOnline()) {
             //WONT CAUSE NPE DONT WORRY
             if (from.equals("YOUR")) {
                 //SHOW YOUR FEEDS, COPY CODE FROM YOUR FEEDS FRAGMENT
                 Log.e("FROM", "YOUR TO VIDEOS");
+
+
+                isVideoDoneYour = new HashMap<>();
+
+                mDatabaseReference = FirebaseDatabase.getInstance().getReference("users");
+                Log.e(TAG, uid);
+                Log.e(TAG, mDatabaseReference.toString());
+
+                refresh();
+
+                fetchVideosFromFirebaseYour();
 
             } else if (from.equals("EXPLORE")) {
                 //SHOW FEEDS ON YOUR INTERESTS
@@ -190,8 +204,32 @@ public class AllVideosFragment extends Fragment {
             } else if (from.equals("HOME")) {
                 //SHOW FEEDS FROM WHO YOU FOLLOW + DS PEOPLE
                 Log.e("FROM", "HOME TO VIDEOS");
+
+                mSelectedGurus = new ArrayList<>();
+                isVideoDoneGuru = new HashMap<>();
+
+                mDatabaseReferenceGuru = FirebaseDatabase.getInstance().getReference("users");
+
+                refresh();
+
+                mDatabaseReferenceGuru.child(mFirebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.child("following").getValue() != null) {
+                            mSelectedGurus.addAll((Collection<? extends String>) dataSnapshot.child("following").getValue());
+                        }
+                        fetchVideosFromFirebaseGuru();
+                        alternateLayout.setVisibility(View.INVISIBLE);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
+
+                fetchVideosFromFirebaseGuru();
             }
-        }else{
+        } else {
             Toast.makeText(getActivity(), getString(R.string.no_inter), Toast.LENGTH_SHORT).show();
         }
         return v;
@@ -222,6 +260,95 @@ public class AllVideosFragment extends Fragment {
                 }, 1500);
             }
         });
+    }
+
+    private void fetchVideosFromFirebaseGuru() {
+
+        mLayoutManager.setStackFromEnd(true);
+
+        if (mSelectedGurus != null && mSelectedGurus.size() > 0) {
+
+            for (String guru : mSelectedGurus) {
+
+                mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("users").child(guru).child("posts");
+                mStorageReference = FirebaseStorage.getInstance().getReference("posts").child("videos");
+
+                mDatabaseReferencePosts.child("video").orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                        for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                            final CustomVideo videoSnap = postSnapshot.getValue(CustomVideo.class);
+                            videoSnap.setStorageReference(mStorageReference.child(postSnapshot.getKey()));
+                            mStorageReference.child(postSnapshot.getKey()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    videoSnap.setVideoURI(uri.toString());
+                                }
+                            });
+
+                            if (!isVideoDoneGuru.containsKey(postSnapshot.getKey())) {
+
+                                items.add(videoSnap);
+                                isVideoDoneGuru.put(postSnapshot.getKey(), true);
+                            }
+                            mAdapter.notifyDataSetChanged();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.d(TAG, "onCancelled: " + databaseError.getMessage());
+                    }
+                });
+            }
+
+            Log.d(TAG, "fetchStatusFromFirebase: " + items.size());
+            mAdapter.setItems(items);
+            mAdapter.notifyDataSetChanged();
+        }
+    }
+
+    private void fetchVideosFromFirebaseYour() {
+
+        mLayoutManager.setStackFromEnd(true);
+
+        mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("users").child(mFirebaseUser.getUid()).child("posts");
+        mStorageReference = FirebaseStorage.getInstance().getReference("posts").child("videos");
+
+        mDatabaseReferencePosts.child("video").orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    final CustomVideo videoSnap = postSnapshot.getValue(CustomVideo.class);
+                    videoSnap.setStorageReference(mStorageReference.child(postSnapshot.getKey()));
+                    mStorageReference.child(postSnapshot.getKey()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            videoSnap.setVideoURI(uri.toString());
+                        }
+                    });
+
+                    if (!isVideoDoneYour.containsKey(postSnapshot.getKey())) {
+
+                        items.add(videoSnap);
+                        isVideoDoneYour.put(postSnapshot.getKey(), true);
+                    }
+                    mAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d(TAG, "onCancelled: " + databaseError.getMessage());
+            }
+        });
+
+
+        Log.d(TAG, "fetchStatusFromFirebase: " + items.size());
+        mAdapter.setItems(items);
+        mAdapter.notifyDataSetChanged();
     }
 
     private void fetchVideosFromFirebaseExplore() {
