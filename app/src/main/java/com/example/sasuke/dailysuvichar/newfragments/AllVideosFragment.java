@@ -245,9 +245,25 @@ public class AllVideosFragment extends Fragment {
                     @Override
                     public void run() {
                         //CALL DATA HERE
-                        if (isOnline()) {
-                            fetchVideosFromFirebaseExplore();
-                        } else {
+                        if(isOnline()) {
+                            if(from.equals("YOUR")){
+                                //SHOW YOUR FEEDS, COPY CODE FROM YOUR FEEDS FRAGMENT
+                                Log.e("FROM", "YOUR TO PHOTOS");
+                                fetchVideosFromFirebaseYour();
+
+                            }
+                            else if(from.equals("EXPLORE")){
+                                //SHOW FEEDS ON YOUR INTERESTS
+                                Log.e("FROM", "EXPLORE TO PHOTOS");
+                                fetchVideosFromFirebaseExplore();
+                            }
+                            else if(from.equals("HOME")){
+                                //SHOW FEEDS FROM WHO YOU FOLLOW + DS PEOPLE
+                                Log.e("FROM", "HOME TO PHOTOS");
+                                fetchVideosFromFirebaseGuru();
+                            }
+
+                        }else{
                             Toast.makeText(getActivity(), getString(R.string.no_inter), Toast.LENGTH_SHORT).show();
                         }
                     }
