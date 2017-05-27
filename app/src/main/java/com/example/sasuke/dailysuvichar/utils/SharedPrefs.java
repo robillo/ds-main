@@ -15,20 +15,20 @@ public class SharedPrefs {
     private static final String IS_INTERESTS_SELECTED = "true_or_false_interest";
     private static final String IS_SUBINTERESTS_SELECTED = "true_or_false_subinterest";
 
-    public static void setDefaults(){
-        if(getIsLoggedIn()==null){
-            setIsLoggedIn("FALSE");
-        }
-        if(getIsProfileSet()==null){
-            setIsProfileSet("FALSE");
-        }
-        if(getIsSubinterestsSelected()==null){
-            setIsSubinterestsSelected("FALSE");
-        }
-        if(getIsInterestsSelected()==null){
-            setIsInterestsSelected("TRUE");
-        }
-    }
+//    public static void setDefaults(){
+//        if(getIsLoggedIn()==null){
+//            setIsLoggedIn("FALSE");
+//        }
+//        if(getIsProfileSet()==null){
+//            setIsProfileSet("FALSE");
+//        }
+//        if(getIsSubinterestsSelected()==null){
+//            setIsSubinterestsSelected("FALSE");
+//        }
+//        if(getIsInterestsSelected()==null){
+//            setIsInterestsSelected("FALSE");
+//        }
+//    }
 
     public static void setIsLoggedIn(String token){
         SharedPreferences.Editor editor = getPrefrences().edit();

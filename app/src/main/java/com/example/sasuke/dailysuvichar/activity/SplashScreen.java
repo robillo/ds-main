@@ -18,46 +18,26 @@ public class SplashScreen extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        SharedPrefs.setDefaults();
+//        SharedPrefs.setDefaults();
 
         if (SharedPrefs.getLoginToken() != null) {
-
             Log.e("CASE", "LOGIN TOKEN NOT NULL");
 
-            if(SharedPrefs.getIsProfileSet().equals("TRUE") && SharedPrefs.getIsSubinterestsSelected().equals("TRUE")){
+            if(SharedPrefs.getIsProfileSet()==null){
                 startActivity(NewMainActivity.newIntent(this));
-            }
-            else if(SharedPrefs.getIsProfileSet().equals("TRUE") && SharedPrefs.getIsSubinterestsSelected().equals("FALSE")){
-                startActivity(ChooseInterestActivity.newIntent(this));
-            }
-            else if(!SharedPrefs.getIsProfileSet().equals("TRUE")){
-                startActivity(ProfileActivity.newIntent(this));
             }
             else {
                 startActivity(NewMainActivity.newIntent(this));
             }
+
         }
         else {
-
             Log.e("CASE", "LOGIN TOKEN NULL");
-
             if (AccessToken.getCurrentAccessToken() != null) {
-                if(SharedPrefs.getIsProfileSet().equals("TRUE") && SharedPrefs.getIsSubinterestsSelected().equals("TRUE")){
-                    Log.e("CASE", "LOGIN TOKEN NULL PROFILE AND SUBINT SET");
+                if(SharedPrefs.getIsProfileSet()==null){
                     startActivity(NewMainActivity.newIntent(this));
                 }
-                else if(SharedPrefs.getIsProfileSet().equals("TRUE") && SharedPrefs.getIsSubinterestsSelected().equals("FALSE")){
-
-                    Log.e("CASE", "LOGIN TOKEN NULL PROFILE SCREEN SET SUNINT NOT SET");
-                    startActivity(ChooseInterestActivity.newIntent(this));
-                }
-                else if(!SharedPrefs.getIsProfileSet().equals("TRUE")){
-                    Log.e("CASE", "LOGIN TOKEN NULL PROFILE NOT SET");
-
-                    startActivity(ProfileActivity.newIntent(this));
-                }
                 else {
-                    Log.e("CASE", "LOGIN TOKEN NULL NOTHING SET");
                     startActivity(NewMainActivity.newIntent(this));
                 }
             } else {
