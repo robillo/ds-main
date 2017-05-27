@@ -239,10 +239,10 @@ public class AllPhotosFragment extends Fragment {
 
                         for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                             Photo photoSnap = postSnapshot.getValue(Photo.class);
-                            photoSnap.setStorageReference(mStorageReference.child(postSnapshot.getKey()));
 
                             if (!isDone.containsKey(postSnapshot.getKey())) {
 //                                items.add(photoSnap);
+                                photoSnap.setStorageReference(mStorageReference.child(postSnapshot.getKey()));
                                 isDone.put(postSnapshot.getKey(), photoSnap.getTimestamp());
                                 photoHashMapStore.put(postSnapshot.getKey(), photoSnap);
                             }

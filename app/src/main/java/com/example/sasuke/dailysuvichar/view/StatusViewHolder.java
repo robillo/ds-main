@@ -6,16 +6,12 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.sasuke.dailysuvichar.R;
-import com.example.sasuke.dailysuvichar.activity.HomeActivity;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,12 +19,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.like.LikeButton;
-import com.mikhaellopez.circularimageview.CircularImageView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import me.zhanghai.android.materialprogressbar.IndeterminateCircularProgressDrawable;
 
 public class StatusViewHolder extends RecyclerView.ViewHolder {
 
@@ -108,14 +101,16 @@ public class StatusViewHolder extends RecyclerView.ViewHolder {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 if(dataSnapshot.child("photoUrl").getValue()!=null) {
-                    Glide.with(context).
-                            using(new FirebaseImageLoader())
-                            .load(mStorageReferenceDP.child(dataSnapshot.getKey()))
-                            .fitCenter()
-                            .placeholder(R.drawable.profile)
-                            .diskCacheStrategy(DiskCacheStrategy.ALL)
-                            .into(statusDP);
-                    Log.e("GLIDINGGGGGG", "YES");
+                    if(context!=null) {
+                        Glide.with(context).
+                                using(new FirebaseImageLoader())
+                                .load(mStorageReferenceDP.child(dataSnapshot.getKey()))
+                                .fitCenter()
+                                .placeholder(R.drawable.profile)
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .into(statusDP);
+                        Log.e("GLIDINGGGGGG", "YES");
+                    }
                 }
             }
             @Override
