@@ -106,22 +106,6 @@ public class AllVideosFragment extends Fragment {
         Bundle args = getArguments();
         from = args.getString("from");
 
-        //WONT CAUSE NPE DONT WORRY
-        if(from.equals("YOUR")){
-            //SHOW YOUR FEEDS, COPY CODE FROM YOUR FEEDS FRAGMENT
-            Log.e("FROM", "YOUR TO VIDEOS");
-
-        }
-        else if(from.equals("EXPLORE")){
-            //SHOW FEEDS ON YOUR INTERESTS
-            Log.e("FROM", "EXPLORE TO VIDEOS");
-
-        }
-        else if(from.equals("HOME")){
-            //SHOW FEEDS FROM WHO YOU FOLLOW + DS PEOPLE
-            Log.e("FROM", "HOME TO VIDEOS");
-        }
-
         mRvHome = (RecyclerView) v.findViewById(R.id.recyclerview);
         mPullToRefresh = (SwipeRefreshLayout) v.findViewById(R.id.swiperefresh);
         alternateLayout = (LinearLayout) v.findViewById(R.id.alternate_layout);
@@ -165,51 +149,51 @@ public class AllVideosFragment extends Fragment {
             }
         });
 
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference("users");
-        Log.e(TAG, uid);
-        Log.e(TAG, mDatabaseReference.toString());
+        if(isOnline()) {
+            //WONT CAUSE NPE DONT WORRY
+            if (from.equals("YOUR")) {
+                //SHOW YOUR FEEDS, COPY CODE FROM YOUR FEEDS FRAGMENT
+                Log.e("FROM", "YOUR TO VIDEOS");
 
-        mSelectedSubInterests = new ArrayList<>();
+            } else if (from.equals("EXPLORE")) {
+                //SHOW FEEDS ON YOUR INTERESTS
+                Log.e("FROM", "EXPLORE TO VIDEOS");
 
-        isDone = new HashMap<>();
-        videoHashMap = new HashMap<>();
-        videoHashMapStore = new HashMap<>();
-        if (isOnline()) {
-            refresh();
+                mDatabaseReference = FirebaseDatabase.getInstance().getReference("users");
+                Log.e(TAG, uid);
+                Log.e(TAG, mDatabaseReference.toString());
 
+                mSelectedSubInterests = new ArrayList<>();
 
-            mDatabaseReference.child(mFirebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.child("mSelectedSubInterests").getValue() != null) {
-                        mSelectedSubInterests.addAll((Collection<? extends String>) dataSnapshot.child("mSelectedSubInterests").getValue());
+                isDone = new HashMap<>();
+                videoHashMap = new HashMap<>();
+                videoHashMapStore = new HashMap<>();
+
+                mDatabaseReference.child(mFirebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.child("mSelectedSubInterests").getValue() != null) {
+                            mSelectedSubInterests.addAll((Collection<? extends String>) dataSnapshot.child("mSelectedSubInterests").getValue());
+                        }
+                        fetchVideosFromFirebaseExplore();
+                        alternateLayout.setVisibility(View.INVISIBLE);
                     }
-                    fetchVideosFromFirebase();
-                    alternateLayout.setVisibility(View.INVISIBLE);
-                }
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                }
-            });
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
 
-            fetchVideosFromFirebase();
-        } else {
+                fetchVideosFromFirebaseExplore();
+                Toast.makeText(getActivity(), getString(R.string.no_inter), Toast.LENGTH_SHORT).show();
+
+            } else if (from.equals("HOME")) {
+                //SHOW FEEDS FROM WHO YOU FOLLOW + DS PEOPLE
+                Log.e("FROM", "HOME TO VIDEOS");
+            }
+        }else{
             Toast.makeText(getActivity(), getString(R.string.no_inter), Toast.LENGTH_SHORT).show();
         }
-
-//        Handler handler= new Handler();
-//        handler.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//
-//                Log.d(TAG, "onViewCreated: VAL "+allPostsHashMapFinal.size());
-//                Log.d(TAG, "onViewCreated: VAL "+videoHashMap.size());
-//                Log.d(TAG, "onViewCreated: VAL "+videoHashMap.size());
-//                Log.d(TAG, "onViewCreated: VAL "+customVidHashMap.size());
-//            }
-//        },5000);
-
         return v;
     }
 
@@ -224,7 +208,7 @@ public class AllVideosFragment extends Fragment {
                     public void run() {
                         //CALL DATA HERE
                         if (isOnline()) {
-                            fetchVideosFromFirebase();
+                            fetchVideosFromFirebaseExplore();
                         } else {
                             Toast.makeText(getActivity(), getString(R.string.no_inter), Toast.LENGTH_SHORT).show();
                         }
@@ -240,7 +224,7 @@ public class AllVideosFragment extends Fragment {
         });
     }
 
-    private void fetchVideosFromFirebase() {
+    private void fetchVideosFromFirebaseExplore() {
 
 //        final ExecutorService executor = new ThreadPoolExecutor(3, 3, 0L, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<Runnable>(15));
 
@@ -287,7 +271,7 @@ public class AllVideosFragment extends Fragment {
                             }
 
                         }
-//                            Log.d(TAG, "fetchVideosFromFirebase: ISDONE "+isDone.size());
+//                            Log.d(TAG, "fetchVideosFromFirebaseExplore: ISDONE "+isDone.size());
 
                         mAdapter.notifyDataSetChanged();
 //                            if (mAdapter.getItemCount() > 0) {
@@ -295,11 +279,11 @@ public class AllVideosFragment extends Fragment {
 //                            }
 
 //                        });
-                        Log.d(TAG, "fetchVideosFromFirebase: ISDONE " + isDone.size());
+                        Log.d(TAG, "fetchVideosFromFirebaseExplore: ISDONE " + isDone.size());
                         if (finalI == mSelectedSubInterests.size() - 1 && isDone.size() > 0) {
                             videoHashMap = sortByComparator(isDone, false);
-                            Log.d(TAG, "fetchVideosFromFirebase: photo" + videoHashMap);
-                            Log.d(TAG, "fetchVideosFromFirebase: photo" + videoHashMapStore);
+                            Log.d(TAG, "fetchVideosFromFirebaseExplore: photo" + videoHashMap);
+                            Log.d(TAG, "fetchVideosFromFirebaseExplore: photo" + videoHashMapStore);
                             for (int i = 0; i < videoHashMap.size(); i++) {
                                 if (!items.contains(videoHashMapStore.get(videoHashMap.keySet().toArray()[i]))) {
                                     items.add(videoHashMapStore.get(videoHashMap.keySet().toArray()[i]));
@@ -313,13 +297,13 @@ public class AllVideosFragment extends Fragment {
                         Log.d(TAG, "onCancelled: " + databaseError.getMessage());
                     }
                 });
-//                Log.d(TAG, "fetchVideosFromFirebase: ISDONE "+isDone.size());
+//                Log.d(TAG, "fetchVideosFromFirebaseExplore: ISDONE "+isDone.size());
 
             }
-//            Log.d(TAG, "fetchVideosFromFirebase: ISDONE "+isDone.size());
+//            Log.d(TAG, "fetchVideosFromFirebaseExplore: ISDONE "+isDone.size());
 
         }
-        Log.d(TAG, "fetchVideosFromFirebase: " + items.size());
+        Log.d(TAG, "fetchVideosFromFirebaseExplore: " + items.size());
         mAdapter.setItems(items);
         mAdapter.notifyDataSetChanged();
 //        executor.shutdown();

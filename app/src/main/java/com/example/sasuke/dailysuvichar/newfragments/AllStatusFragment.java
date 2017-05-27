@@ -147,7 +147,6 @@ public class AllStatusFragment extends Fragment {
             if (from.equals("YOUR")) {
                 //SHOW YOUR FEEDS, COPY CODE FROM YOUR FEEDS FRAGMENT
                 Log.e("FROM", "YOUR TO STATUS");
-                mLayoutManager.setStackFromEnd(true);
                 isStatusDone = new HashMap<>();
                 fetchStatusFromFirebaseYour();
                 refresh();
@@ -194,7 +193,6 @@ public class AllStatusFragment extends Fragment {
             } else if (from.equals("HOME")) {
                 //SHOW FEEDS FROM WHO YOU FOLLOW + DS PEOPLE
                 Log.e("FROM", "HOME TO STATUS");
-                mLayoutManager.setStackFromEnd(true);
 
                 mSelectedGurus = new ArrayList<>();
                 isStatusDoneGuru = new HashMap<>();
@@ -231,6 +229,8 @@ public class AllStatusFragment extends Fragment {
 
 
     private void fetchStatusFromFirebaseGuru() {
+
+        mLayoutManager.setStackFromEnd(true);
 
         if(mSelectedGurus!=null && mSelectedGurus.size()>0) {
 
@@ -269,6 +269,7 @@ public class AllStatusFragment extends Fragment {
 
     private void fetchStatusFromFirebaseYour() {
 
+        mLayoutManager.setStackFromEnd(true);
 
         mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("users").child(mFirebaseUser.getUid()).child("posts");
 

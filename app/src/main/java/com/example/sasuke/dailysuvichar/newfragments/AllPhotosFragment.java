@@ -280,6 +280,8 @@ public class AllPhotosFragment extends Fragment {
 
     private void fetchPhotosFromFirebaseGuru() {
 
+        mLayoutManager.setStackFromEnd(true);
+
         if(mSelectedGurus!=null && mSelectedGurus.size()>0) {
 
             for(String guru: mSelectedGurus) {
@@ -318,6 +320,8 @@ public class AllPhotosFragment extends Fragment {
     }
 
     private void fetchPhotosFromFirebaseYour() {
+
+        mLayoutManager.setStackFromEnd(true);
 
         mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("users").child(mFirebaseUser.getUid()).child("posts");
         mStorageReference = FirebaseStorage.getInstance().getReference("posts").child("images");
