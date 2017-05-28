@@ -170,7 +170,7 @@ public class HomeFragment extends BaseFragment {
         mRvHome.setLayoutManager(mLayoutManager);
         mAdapter = new MultiTypeAdapter();
         mAdapter.register(Photo.class, new PhotoItemAdapter());
-        mAdapter.register(CustomVideo.class, new CustomVideoAdapter());
+//        mAdapter.register(CustomVideo.class, new CustomVideoAdapter());
         mAdapter.register(Video.class, new VideoItemAdapter(getActivity()));
         mAdapter.register(Status.class, new StatusItemAdapter());
         mRvHome.setAdapter(mAdapter);
@@ -193,7 +193,7 @@ public class HomeFragment extends BaseFragment {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        fetchVideosFromFirebase();
+//                        fetchVideosFromFirebase();
                         fetchStatusFromFirebase();
                         fetchPhotosFromFirebase();
 
@@ -223,7 +223,7 @@ public class HomeFragment extends BaseFragment {
                 if(dataSnapshot.child("mSelectedSubInterests").getValue()!=null) {
                     mSelectedSubInterests.addAll((Collection<? extends String>) dataSnapshot.child("mSelectedSubInterests").getValue());
                 }
-                fetchVideosFromFirebase();
+//                fetchVideosFromFirebase();
                 fetchStatusFromFirebase();
                 fetchPhotosFromFirebase();
             }
@@ -233,7 +233,7 @@ public class HomeFragment extends BaseFragment {
             }
         });
 
-        fetchVideosFromFirebase();
+//        fetchVideosFromFirebase();
 
         fetchStatusFromFirebase();
 

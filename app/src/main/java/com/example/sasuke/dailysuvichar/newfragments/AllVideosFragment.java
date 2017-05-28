@@ -1,10 +1,14 @@
 package com.example.sasuke.dailysuvichar.newfragments;
 
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -46,7 +50,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
 
 /**
@@ -59,7 +62,7 @@ public class AllVideosFragment extends Fragment {
     @BindView(R.id.alternate_layout)
     LinearLayout alternateLayout;
 
-    private MultiTypeAdapter mAdapter;
+    private MultiTypeAdapter mAdaapter;
 
     private LinearLayoutManager mLayoutManager;
     private static FirebaseUser mFirebaseUser;
@@ -81,7 +84,7 @@ public class AllVideosFragment extends Fragment {
     private static final String TAG = "ALLSTATUS", STATUS = "status";
     private static final int PICK_IMAGE_REQUEST = 250;
     private Uri filePath;
-    Items items;
+    ArrayList<CustomVideo> items;
     private Animation slide_down;
     private Animation slide_up;
     private int CHECK = 1;
@@ -137,11 +140,11 @@ public class AllVideosFragment extends Fragment {
         mLayoutManager.setItemPrefetchEnabled(true);
         mLayoutManager.setInitialPrefetchItemCount(10);
         mRvHome.setLayoutManager(mLayoutManager);
-        mAdapter = new MultiTypeAdapter();
-        mAdapter.register(CustomVideo.class, new CustomVideoAdapter());
-        mRvHome.setAdapter(mAdapter);
+//        mAdapter = new MultiTypeAdapter();
+//        mAdapter.register(CustomVideo.class, new CustomVideoAdapter());
+        mRvHome.setAdapter(customVideoAdapter);
 
-        items = new Items();
+        items = new ArrayList<>();
 
 
         mRvHome.setOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -157,7 +160,6 @@ public class AllVideosFragment extends Fragment {
             if (from.equals("YOUR")) {
                 //SHOW YOUR FEEDS, COPY CODE FROM YOUR FEEDS FRAGMENT
                 Log.e("FROM", "YOUR TO VIDEOS");
-
 
                 isVideoDoneYour = new HashMap<>();
 
@@ -317,7 +319,7 @@ public class AllVideosFragment extends Fragment {
                                 Collections.reverse(items);
                             }
                             k++;
-                            mAdapter.notifyDataSetChanged();
+                            customVideoAdapter.notifyDataSetChanged();
                         }
                     }
 
@@ -330,8 +332,10 @@ public class AllVideosFragment extends Fragment {
             }
 
             Log.d(TAG, "fetchStatusFromFirebase: " + items.size());
-            mAdapter.setItems(items);
-            mAdapter.notifyDataSetChanged();
+            setAdapter(items);
+            customVideoAdapter.notifyDataSetChanged();
+//            mAdapter.setItems(items);
+//            mAdapter.notifyDataSetChanged();
         }
     }
 
@@ -369,7 +373,7 @@ public class AllVideosFragment extends Fragment {
                     }
                     k++;
 
-                    mAdapter.notifyDataSetChanged();
+                    customVideoAdapter.notifyDataSetChanged();
                 }
             }
 
@@ -381,8 +385,10 @@ public class AllVideosFragment extends Fragment {
 
 
         Log.d(TAG, "fetchStatusFromFirebase: " + items.size());
-        mAdapter.setItems(items);
-        mAdapter.notifyDataSetChanged();
+        setAdapter(items);
+        customVideoAdapter.notifyDataSetChanged();
+//        mAdapter.setItems(items);
+//        mAdapter.notifyDataSetChanged();
     }
 
     private void fetchVideosFromFirebaseExplore() {
@@ -434,7 +440,7 @@ public class AllVideosFragment extends Fragment {
                         }
 //                            Log.d(TAG, "fetchVideosFromFirebaseExplore: ISDONE "+isDone.size());
 
-                        mAdapter.notifyDataSetChanged();
+                        customVideoAdapter.notifyDataSetChanged();
 //                            if (mAdapter.getItemCount() > 0) {
 //                                avi.hide();
 //                            }
@@ -465,12 +471,14 @@ public class AllVideosFragment extends Fragment {
 
         }
         Log.d(TAG, "fetchVideosFromFirebaseExplore: " + items.size());
-        mAdapter.setItems(items);
-        mAdapter.notifyDataSetChanged();
+//        mAdapter.setItems(items);
+//        mAdapter.notifyDataSetChanged();
 //        executor.shutdown();
 //        if(mAdapter.getItemCount()>0){
 //            avi.hide();
 //        }
+        setAdapter(items);
+        customVideoAdapter.notifyDataSetChanged();
     }
 
     private static HashMap<String, Long> sortByComparator(HashMap<String, Long> unsortMap, final boolean order) {
@@ -536,5 +544,70 @@ public class AllVideosFragment extends Fragment {
 
 
         super.onStop();
+    }
+
+    private static class DownloadVideo extends AsyncTask<Void, Void, Uri> {
+
+        Activity activity;
+        String video;
+        ProgressDialog dialog;
+
+        public DownloadVideo(Activity activity, String videoLink) {
+            this.activity = activity;
+            this.video = videoLink;
+        }
+
+        @Override
+        public void onPreExecute() {
+            dialog = new ProgressDialog(activity);
+            dialog.setIndeterminate(true);
+            dialog.setCancelable(false);
+            dialog.setMessage("downloading" + "...");
+            dialog.show();
+        }
+
+        @Override
+        protected Uri doInBackground(Void... arg0) {
+            try {
+//                return IOUtils.saveGiffy(video);
+                return null;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Uri downloadedTo) {
+            if (downloadedTo != null) {
+                activity.setResult(Activity.RESULT_OK, new Intent().setData(downloadedTo));
+                activity.finish();
+
+                try {
+                    dialog.dismiss();
+                } catch (Exception e) { }
+            } else {
+                Toast.makeText(activity, "Error downloading GIF", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+    }
+
+    private void setAdapter(ArrayList<CustomVideo> videos) {
+//        progressSpinner.setVisibility(View.GONE);
+
+        if (customVideoAdapter != null) {
+            customVideoAdapter.releaseVideo();
+        }
+
+//        adapter = new GifSearchAdapter(gifs, new GifSearchAdapter.Callback() {
+//            @Override
+//            public void onClick(final GiphyHelper.Gif item) {
+//                new DownloadVideo(GiphySearch.this, item.gifUrl).execute();
+//            }
+//        });
+        customVideoAdapter.setItems(videos);
+        mRvHome.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRvHome.setAdapter(customVideoAdapter);
     }
 }
