@@ -69,7 +69,7 @@ public class AllStatusFragment extends Fragment {
     private DatabaseReference mDatabaseReferencePosts, mDatabaseReferenceGuru;
     private StorageReference mStorageReference;
     private ArrayList<String> mSelectedSubInterests;
-
+    private ArrayList<Status> statusYouraList, statusHomeaList;
     private StorageReference mStorageReferenceDP;
     private FirebaseAuth mFirebaseAuth;
     private DatabaseReference mUsersDatabase;
@@ -148,6 +148,7 @@ public class AllStatusFragment extends Fragment {
                 //SHOW YOUR FEEDS, COPY CODE FROM YOUR FEEDS FRAGMENT
                 Log.e("FROM", "YOUR TO STATUS");
                 isStatusDone = new HashMap<>();
+                statusYouraList = new ArrayList<>();
                 fetchStatusFromFirebaseYour();
                 refresh();
 
@@ -196,6 +197,7 @@ public class AllStatusFragment extends Fragment {
 
                 mSelectedGurus = new ArrayList<>();
                 isStatusDoneGuru = new HashMap<>();
+                statusHomeaList = new ArrayList<>();
 
                 mDatabaseReferenceGuru = FirebaseDatabase.getInstance().getReference("users");
 
@@ -230,17 +232,19 @@ public class AllStatusFragment extends Fragment {
 
     private void fetchStatusFromFirebaseGuru() {
 
-        mLayoutManager.setStackFromEnd(true);
-
+//        mLayoutManager.setStackFromEnd(true);
         if(mSelectedGurus!=null && mSelectedGurus.size()>0) {
 
             for(String guru: mSelectedGurus) {
+                int i=0;
 
                 mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("users").child(guru).child("posts");
 
+                final int finalI = i;
                 mDatabaseReferencePosts.child("status").orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+                        int k=0;
 
                         for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                             Status statusSnap = postSnapshot.getValue(Status.class);
@@ -251,6 +255,11 @@ public class AllStatusFragment extends Fragment {
                                 isStatusDoneGuru.put(postSnapshot.getKey(), true);
                             }
                             mAdapter.notifyDataSetChanged();
+
+                            if(finalI ==mSelectedGurus.size()-1 && k==dataSnapshot.getChildrenCount()-1){
+                                Collections.reverse(items);
+                            }
+                            k++;
                         }
                     }
 
@@ -259,6 +268,7 @@ public class AllStatusFragment extends Fragment {
                         Log.d(TAG, "onCancelled: " + databaseError.getMessage());
                     }
                 });
+                i++;
             }
 
             Log.d(TAG, "fetchStatusFromFirebase: " + items.size());
@@ -269,14 +279,16 @@ public class AllStatusFragment extends Fragment {
 
     private void fetchStatusFromFirebaseYour() {
 
-        mLayoutManager.setStackFromEnd(true);
+//        mLayoutManager.setStackFromEnd(true);
 
         mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("users").child(mFirebaseUser.getUid()).child("posts");
 
         Log.d(TAG, "fetchStatusFromFirebase: URLL " + mDatabaseReferencePosts);
-        mDatabaseReferencePosts.child("status").addValueEventListener(new ValueEventListener() {
+        mDatabaseReferencePosts.child("status").orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
+                int k=0;
 
 //                        Log.i(TAG, "onDataChange: "+mUserList.size()+" ");
 
@@ -287,7 +299,11 @@ public class AllStatusFragment extends Fragment {
                         items.add(status);
                         isStatusDone.put(postSnapshot.getKey(), true);
                     }
+                    if(k==dataSnapshot.getChildrenCount()-1){
+                        Collections.reverse(items);
+                    }
                     mAdapter.notifyDataSetChanged();
+                    k++;
                 }
             }
 
@@ -298,6 +314,8 @@ public class AllStatusFragment extends Fragment {
         });
 
 
+//        Collections.reverse(statusYouraList);
+//        items.addAll(statusYouraList);
         Log.d(TAG, "fetchStatusFromFirebase: " + items.size());
         mAdapter.setItems(items);
         mAdapter.notifyDataSetChanged();
