@@ -38,7 +38,7 @@ public class PhotoViewHolder extends RecyclerView.ViewHolder {
     TextView mTvUserName;
     @BindView(R.id.tv_post_time)
     TextView mTvPostTime;
-    @BindView(R.id.iv_profile)
+    @BindView(R.id.iv_profile_dp)
     public ImageView mPhotoDP;
 //    @BindView(R.id.tv_likes)
 //    TextView tvLikes;
@@ -107,27 +107,28 @@ public class PhotoViewHolder extends RecyclerView.ViewHolder {
         }
     }
 
-    public void setStatusDP(String UID){
-//        mUsersDatabase.child(UID).addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                if(dataSnapshot.child("photoUrl").getValue()!=null) {
-//                    if(context!=null) {
-//                        Glide.with(context).
-//                                using(new FirebaseImageLoader())
-//                                .load(mStorageReferenceDP)
-//                                .centerCrop()
-//                                .placeholder(R.mipmap.ic_launcher)
-//                                .diskCacheStrategy(DiskCacheStrategy.ALL)
-//                                .into(mPhotoDP);
-//                    }
-//                }
-//            }
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//                Log.e("GLIDINGGGGGG", "CANCELLED");
-//            }
-//        });
+    public void setStatusDP(final String UID){
+        mUsersDatabase.child(UID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.child("photoUrl").getValue()!=null) {
+                    Activity a = (Activity) context;
+                    if(context!=null&&!a.isDestroyed()) {
+                        Glide.with(context).
+                                using(new FirebaseImageLoader())
+                                .load(mStorageReferenceDP.child(UID))
+                                .centerCrop()
+                                .placeholder(R.mipmap.ic_launcher)
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .into(mPhotoDP);
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e("GLIDINGGGGGG", "CANCELLED");
+            }
+        });
     }
 
     public void setName(String name){

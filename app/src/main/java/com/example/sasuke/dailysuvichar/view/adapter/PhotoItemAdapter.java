@@ -1,27 +1,15 @@
 package com.example.sasuke.dailysuvichar.view.adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.net.Uri;
 import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.ceylonlabs.imageviewpopup.ImagePopup;
 import com.example.sasuke.dailysuvichar.R;
-import com.example.sasuke.dailysuvichar.fragment.HomeFragment;
 import com.example.sasuke.dailysuvichar.models.Photo;
 import com.example.sasuke.dailysuvichar.view.PhotoViewHolder;
-import com.like.LikeButton;
-import com.like.OnLikeListener;
 
 import me.drakeet.multitype.ItemViewBinder;
 
@@ -67,9 +55,11 @@ public class PhotoItemAdapter extends ItemViewBinder<Photo, PhotoViewHolder> {
                 if(item.getStorageReference()!=null && context!=null) {
                     holder.setImage(item.getStorageReference(), context);
                 }
+                if(item.getUid()!=null) {
+                    holder.setStatusDP(item.getUid());
+                }
             }
         });
-        holder.setStatusDP(item.getUid());
 //        holder.comment.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {

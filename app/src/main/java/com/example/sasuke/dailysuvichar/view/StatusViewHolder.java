@@ -1,5 +1,6 @@
 package com.example.sasuke.dailysuvichar.view;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -39,7 +40,7 @@ public class StatusViewHolder extends RecyclerView.ViewHolder {
 //    public LikeButton mBtnLike;
 //    @BindView(R.id.comment)
 //    public LinearLayout comment;
-    @BindView(R.id.iv_profile)
+    @BindView(R.id.iv_profile_dp)
     ImageView mStatusDP;
 
     private Context context;
@@ -95,30 +96,32 @@ public class StatusViewHolder extends RecyclerView.ViewHolder {
         }
     }
 
-    public void setStatusDP(String UID){
-//        mUsersDatabase.child(UID).addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                if(dataSnapshot.child("photoUrl").getValue()!=null) {
-//                    if(context!=null) {
-//                        Glide.with(context).
-//                                using(new FirebaseImageLoader())
-//                                .load(mStorageReferenceDP)
-//                                .centerCrop()
-//                                .placeholder(R.mipmap.ic_launcher)
-//                                .diskCacheStrategy(DiskCacheStrategy.ALL)
-//                                .into(mStatusDP);
-//                    }
-//                }
-//                else {
-//                    Log.e("PHOTOURL", "NULL");
-//                }
-//            }
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//                Log.e("GLIDINGGGGGG", "CANCELLED");
-//            }
-//        });
+    public void setStatusDP(final String UID){
+        mUsersDatabase.child(UID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.child("photoUrl").getValue()!=null) {
+                    Activity a = (Activity) context;
+                    if(context!=null&&!a.isDestroyed()) {
+                        Log.e("GLIDE","YES ");
+                        Glide.with(context).
+                                using(new FirebaseImageLoader())
+                                .load(mStorageReferenceDP.child(UID))
+                                .centerCrop()
+                                .placeholder(R.mipmap.ic_launcher)
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .into(mStatusDP);
+                    }
+                }
+                else {
+                    Log.e("PHOTOURL", "NULL");
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e("GLIDINGGGGGG", "CANCELLED");
+            }
+        });
     }
 
     public void setStatus(String status) {

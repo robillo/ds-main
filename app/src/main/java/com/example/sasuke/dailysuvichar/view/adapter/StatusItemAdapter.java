@@ -3,18 +3,13 @@ package com.example.sasuke.dailysuvichar.view.adapter;
 import android.content.Context;
 import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.models.Status;
 import com.example.sasuke.dailysuvichar.view.StatusViewHolder;
-import com.like.LikeButton;
-import com.like.OnLikeListener;
 
 import me.drakeet.multitype.ItemViewBinder;
 
@@ -53,9 +48,12 @@ public class StatusItemAdapter extends ItemViewBinder<Status, StatusViewHolder> 
                 }else{
                     holder.setComments(0);
                 }
+                if(item.getUid()!=null) {
+                    holder.setStatusDP(item.getUid());
+                }
+
             }
         });
-        holder.setStatusDP(item.getUid());
 //        holder.comment.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {

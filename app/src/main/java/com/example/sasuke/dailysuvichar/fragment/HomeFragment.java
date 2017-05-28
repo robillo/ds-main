@@ -91,7 +91,7 @@ public class HomeFragment extends BaseFragment {
     TextView status;
     @BindView(R.id.pullToRefresh)
     FireworkyPullToRefreshLayout mPullToRefresh;
-    @BindView(R.id.iv_profile)
+    @BindView(R.id.iv_profile_dp)
     CircularImageView homeDP;
 
     private LinearLayoutManager mLayoutManager;
@@ -253,7 +253,7 @@ public class HomeFragment extends BaseFragment {
         },5000);
     }
 
-    @OnClick(R.id.iv_profile)
+    @OnClick(R.id.iv_profile_dp)
     public void viewHomeDP(){
         if(intentDBReference!=null){
             Intent i = new Intent(getActivity(), FullScreenActivity.class);

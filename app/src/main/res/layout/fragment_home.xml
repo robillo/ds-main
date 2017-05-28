@@ -15,7 +15,7 @@
         android:padding="8dp">
 
         <com.mikhaellopez.circularimageview.CircularImageView
-            android:id="@+id/iv_profile"
+            android:id="@+id/iv_profile_dp"
             android:layout_width="60dp"
             android:layout_height="60dp"
             app:civ_border_color="@color/white"
@@ -28,14 +28,14 @@
             android:layout_width="1dp"
             android:layout_height="60dp"
             android:layout_marginStart="10dp"
-            android:layout_toEndOf="@+id/iv_profile"
+            android:layout_toEndOf="@+id/iv_profile_dp"
             android:background="@color/white"
             android:contentDescription="@string/seperator" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/iv_profile">
+            android:layout_toEndOf="@+id/iv_profile_dp">
 
             <TextView
                 android:id="@+id/tv_header"

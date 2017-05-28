@@ -6,7 +6,7 @@
     android:background="@color/white">
 
     <ImageView
-        android:id="@+id/iv_profile"
+        android:id="@+id/iv_profile_dp"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:src="@mipmap/ic_launcher" />
@@ -16,7 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_toEndOf="@+id/iv_profile"
+        android:layout_toEndOf="@+id/iv_profile_dp"
         android:text="@string/user"
         android:textColor="@color/black"
         android:textSize="@dimen/font_normal"
@@ -38,7 +38,7 @@
         android:layout_below="@+id/tv_user_name"
         android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
-        android:layout_toEndOf="@+id/iv_profile"
+        android:layout_toEndOf="@+id/iv_profile_dp"
         android:text="@string/_21_mins"
         android:textColor="@color/gray"
         android:textSize="@dimen/font_small" />
