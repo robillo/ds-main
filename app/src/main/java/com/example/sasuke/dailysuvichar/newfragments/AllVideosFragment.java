@@ -147,8 +147,8 @@ public class AllVideosFragment extends Fragment {
         mRvHome.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
                 customVideoAdapter.releaseVideo();
+                super.onScrolled(recyclerView, dx, dy);
             }
         });
 
@@ -300,15 +300,16 @@ public class AllVideosFragment extends Fragment {
                         for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                             final CustomVideo videoSnap = postSnapshot.getValue(CustomVideo.class);
                             videoSnap.setStorageReference(mStorageReference.child(postSnapshot.getKey()));
-                            mStorageReference.child(postSnapshot.getKey()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    videoSnap.setVideoURI(uri.toString());
-                                }
-                            });
+
 
                             if (!isVideoDoneGuru.containsKey(postSnapshot.getKey())) {
 
+                                mStorageReference.child(postSnapshot.getKey()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+                                        videoSnap.setVideoURI(uri.toString());
+                                    }
+                                });
                                 items.add(videoSnap);
                                 isVideoDoneGuru.put(postSnapshot.getKey(), true);
                             }
@@ -512,5 +513,28 @@ public class AllVideosFragment extends Fragment {
         }
 
         super.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+
+
+        if (customVideoAdapter != null) {
+            customVideoAdapter.releaseVideo();
+        }
+
+        super.onDestroy();
+    }
+
+    @Override
+    public void onStop() {
+
+
+        if (customVideoAdapter != null) {
+            customVideoAdapter.releaseVideo();
+        }
+
+
+        super.onStop();
     }
 }

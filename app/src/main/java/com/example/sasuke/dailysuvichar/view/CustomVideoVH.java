@@ -5,14 +5,12 @@ import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.sasuke.dailysuvichar.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.StorageReference;
 import com.klinker.android.simple_videoview.SimpleVideoView;
-import com.like.LikeButton;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
