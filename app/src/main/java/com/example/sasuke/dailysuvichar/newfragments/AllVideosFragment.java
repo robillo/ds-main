@@ -280,11 +280,14 @@ public class AllVideosFragment extends Fragment {
 
     private void fetchVideosFromFirebaseGuru() {
 
-        mLayoutManager.setStackFromEnd(true);
+//        mLayoutManager.setStackFromEnd(true);
 
         if (mSelectedGurus != null && mSelectedGurus.size() > 0) {
 
             for (String guru : mSelectedGurus) {
+
+                int i=0;
+                final int finalI = i;
 
                 mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("users").child(guru).child("posts");
                 mStorageReference = FirebaseStorage.getInstance().getReference("posts").child("videos");
@@ -292,6 +295,7 @@ public class AllVideosFragment extends Fragment {
                 mDatabaseReferencePosts.child("video").orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+                        int k=0;
 
                         for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                             final CustomVideo videoSnap = postSnapshot.getValue(CustomVideo.class);
@@ -308,6 +312,10 @@ public class AllVideosFragment extends Fragment {
                                 items.add(videoSnap);
                                 isVideoDoneGuru.put(postSnapshot.getKey(), true);
                             }
+                            if(finalI ==mSelectedGurus.size()-1 && k==dataSnapshot.getChildrenCount()-1){
+                                Collections.reverse(items);
+                            }
+                            k++;
                             mAdapter.notifyDataSetChanged();
                         }
                     }
@@ -317,6 +325,7 @@ public class AllVideosFragment extends Fragment {
                         Log.d(TAG, "onCancelled: " + databaseError.getMessage());
                     }
                 });
+                i++;
             }
 
             Log.d(TAG, "fetchStatusFromFirebase: " + items.size());
@@ -327,7 +336,7 @@ public class AllVideosFragment extends Fragment {
 
     private void fetchVideosFromFirebaseYour() {
 
-        mLayoutManager.setStackFromEnd(true);
+//        mLayoutManager.setStackFromEnd(true);
 
         mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("users").child(mFirebaseUser.getUid()).child("posts");
         mStorageReference = FirebaseStorage.getInstance().getReference("posts").child("videos");
@@ -335,6 +344,8 @@ public class AllVideosFragment extends Fragment {
         mDatabaseReferencePosts.child("video").orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
+                int k=0;
 
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     final CustomVideo videoSnap = postSnapshot.getValue(CustomVideo.class);
@@ -351,6 +362,12 @@ public class AllVideosFragment extends Fragment {
                         items.add(videoSnap);
                         isVideoDoneYour.put(postSnapshot.getKey(), true);
                     }
+
+                    if(k==dataSnapshot.getChildrenCount()-1){
+                        Collections.reverse(items);
+                    }
+                    k++;
+
                     mAdapter.notifyDataSetChanged();
                 }
             }
