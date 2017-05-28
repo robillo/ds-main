@@ -45,7 +45,7 @@
             android:textColor="@color/white"
             android:text="Daily Suvichar"
             android:padding="20sp"
-            android:background="@color/colorAccent"
+            android:background="@color/blue_dark"
             android:fontFamily="sans-serif-smallcaps"
             android:layout_margin="5sp"
             android:textSize="20sp"
