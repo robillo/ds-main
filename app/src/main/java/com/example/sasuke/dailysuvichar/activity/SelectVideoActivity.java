@@ -292,7 +292,10 @@ public class SelectVideoActivity extends BaseActivity {
                 }
             }
         }
-
+        else {
+            Toast.makeText(context, getString(R.string.no_file), Toast.LENGTH_SHORT).show();
+            onBackPressed();
+        }
     }
 
     private void uploadToFirebase() {
