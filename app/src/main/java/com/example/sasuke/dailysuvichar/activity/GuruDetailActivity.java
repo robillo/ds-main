@@ -305,23 +305,23 @@ public class GuruDetailActivity extends BaseActivity{
 
     public void setFollowing(boolean isFollowing){
         if(isFollowing){
-            follow.setText(R.string.following);
+            follow.setText(getString(R.string.following_caps));
             follow.setBackgroundColor(getResources().getColor(R.color.green));
         }
         else {
-            follow.setText(R.string.follow);
+            follow.setText(getString(R.string.follow_caps));
             follow.setBackgroundColor(getResources().getColor(R.color.colorAccent));
         }
     }
 
     @OnClick(R.id.follow)
     public void onClickFOllow(){
-        if(follow.getText().equals(R.string.follow)){
-            follow.setText(R.string.following);
+        if(follow.getText().equals(getString(R.string.follow_caps))){
+            follow.setText(getString(R.string.following_caps));
             follow.setBackgroundColor(getResources().getColor(R.color.green));
         }
         else {
-            follow.setText(R.string.follow);
+            follow.setText(getString(R.string.follow_caps));
             follow.setBackgroundColor(getResources().getColor(R.color.colorAccent));
         }
     }
