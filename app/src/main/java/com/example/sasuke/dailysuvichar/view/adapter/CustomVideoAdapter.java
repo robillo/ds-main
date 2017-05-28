@@ -175,7 +175,11 @@ public class CustomVideoAdapter  extends RecyclerView.Adapter<CustomVideoVH>  {
 
     @Override
     public int getItemCount() {
-        return videos.size();
+        if(videos!=null) {
+            return videos.size();
+        }else{
+            return 0;
+        }
     }
 
     public void setItems(ArrayList<CustomVideo> list) {
