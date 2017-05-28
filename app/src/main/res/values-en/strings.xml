@@ -378,5 +378,10 @@ Happy Discovering!</string>
     <string name="gurud">See a List of Spiritual Leaders, their Profile and their Posts.</string>
     <string name="explored">A place where you get the feeds based on your Interests.</string>
     <string name="about_ds">About</string>
-
+    <string name="following_caps">FOLLOWING</string>
+    <string name="follow_caps">FOLLOW</string>
+    <string name="exception">FACEBOOK EXCEPTION ERROR</string>
+    <string name="cancelled">FACEBOOK ON CANCEL</string>
+    <string name="authfailed">AUTHENTICATION FAILED</string>
+    <string name="authsuccess">AUTHENTICATION SUCCESSFUL</string>
 </resources>

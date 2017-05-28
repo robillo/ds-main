@@ -193,12 +193,12 @@ public class LoginFragment extends BaseFragment implements GoogleApiClient.OnCon
 
             @Override
             public void onCancel() {
-                Toast.makeText(getActivity().getApplicationContext(), "FACEBOOK ON CANCEL", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity().getApplicationContext(), R.string.cancelled, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onError(FacebookException error) {
-                Toast.makeText(getActivity().getApplicationContext(), "FACEBOOK EXCEPTION ERROR", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity().getApplicationContext(), R.string.exception, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -264,7 +264,7 @@ public class LoginFragment extends BaseFragment implements GoogleApiClient.OnCon
                             Log.e("SUCCESS?   ", "NO");
                             Log.w("EXCEPTION", "signInWithCredential:failure", task.getException());
                             dismissDialog();
-                            Toast.makeText(getActivity().getApplicationContext(), "AUTHENTICATION FAILED", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity().getApplicationContext(), R.string.authfailed, Toast.LENGTH_SHORT).show();
                         } else {
                             Log.e("SUCCESS?   ", "YES");
                             Intent i = new Intent(getActivity().getApplicationContext(), ProfileActivity.class);
@@ -272,7 +272,7 @@ public class LoginFragment extends BaseFragment implements GoogleApiClient.OnCon
                             SharedPrefs.setIsLoggedIn("TRUE");
                             startActivity(i);
                             dismissDialog();
-                            Toast.makeText(getActivity().getApplicationContext(), "AUTHENTICATION SUCCESSFUL", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity().getApplicationContext(), R.string.authsuccess, Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

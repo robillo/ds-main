@@ -343,4 +343,8 @@
     <string name="about_ds">के बारे में</string>
     <string name="following_caps">निम्नलिखित</string>
     <string name="follow_caps">का पालन करें</string>
+    <string name="exception">प्रमाणीकरण विफल </string>
+    <string name="cancelled">प्रमाणीकरण विफल </string>
+    <string name="authfailed">प्रमाणीकरण विफल होना</string>
+    <string name="authsuccess">प्रमाणीकरण सफलता</string>
 </resources>
