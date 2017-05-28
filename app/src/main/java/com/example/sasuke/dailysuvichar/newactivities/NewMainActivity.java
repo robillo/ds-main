@@ -125,7 +125,6 @@ public class NewMainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-
         if (doubleBackToExitPressedOnce) {
             finish();
             return;

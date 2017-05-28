@@ -40,7 +40,7 @@ public class StatusViewHolder extends RecyclerView.ViewHolder {
 //    @BindView(R.id.comment)
 //    public LinearLayout comment;
     @BindView(R.id.iv_profile)
-    ImageView statusDP;
+    ImageView mStatusDP;
 
     private Context context;
     private StorageReference mStorageReferenceDP;
@@ -96,21 +96,29 @@ public class StatusViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void setStatusDP(String UID){
-        mUsersDatabase.child(UID).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                if(dataSnapshot.child("photoUrl").getValue()!=null) {
-                    if(context!=null) {
-
-                    }
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.e("GLIDINGGGGGG", "CANCELLED");
-            }
-        });
+//        mUsersDatabase.child(UID).addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                if(dataSnapshot.child("photoUrl").getValue()!=null) {
+//                    if(context!=null) {
+//                        Glide.with(context).
+//                                using(new FirebaseImageLoader())
+//                                .load(mStorageReferenceDP)
+//                                .centerCrop()
+//                                .placeholder(R.mipmap.ic_launcher)
+//                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+//                                .into(mStatusDP);
+//                    }
+//                }
+//                else {
+//                    Log.e("PHOTOURL", "NULL");
+//                }
+//            }
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//                Log.e("GLIDINGGGGGG", "CANCELLED");
+//            }
+//        });
     }
 
     public void setStatus(String status) {

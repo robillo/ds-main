@@ -69,6 +69,7 @@ public class PhotoItemAdapter extends ItemViewBinder<Photo, PhotoViewHolder> {
                 }
             }
         });
+        holder.setStatusDP(item.getUid());
 //        holder.comment.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {

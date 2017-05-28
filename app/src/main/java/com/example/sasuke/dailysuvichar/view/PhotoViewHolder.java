@@ -14,6 +14,12 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.activity.FullScreenActivity;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import butterknife.BindView;
@@ -32,6 +38,8 @@ public class PhotoViewHolder extends RecyclerView.ViewHolder {
     TextView mTvUserName;
     @BindView(R.id.tv_post_time)
     TextView mTvPostTime;
+    @BindView(R.id.iv_profile)
+    public ImageView mPhotoDP;
 //    @BindView(R.id.tv_likes)
 //    TextView tvLikes;
 //    @BindView(R.id.tv_comments)
@@ -51,11 +59,15 @@ public class PhotoViewHolder extends RecyclerView.ViewHolder {
 
     private Context context;
     private StorageReference storageReference;
+    private StorageReference mStorageReferenceDP;
+    private DatabaseReference mUsersDatabase;
 
     public PhotoViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
         context = itemView.getContext();
+        mUsersDatabase = FirebaseDatabase.getInstance().getReference("users");
+        mStorageReferenceDP = FirebaseStorage.getInstance().getReference("profile").child("user").child("dp");
 //        mBtnLike.setOnLikeListener(new OnLikeListener() {
 //            @Override
 //            public void liked(LikeButton likeButton) {
@@ -93,6 +105,29 @@ public class PhotoViewHolder extends RecyclerView.ViewHolder {
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(mIvPhoto);
         }
+    }
+
+    public void setStatusDP(String UID){
+//        mUsersDatabase.child(UID).addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                if(dataSnapshot.child("photoUrl").getValue()!=null) {
+//                    if(context!=null) {
+//                        Glide.with(context).
+//                                using(new FirebaseImageLoader())
+//                                .load(mStorageReferenceDP)
+//                                .centerCrop()
+//                                .placeholder(R.mipmap.ic_launcher)
+//                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+//                                .into(mPhotoDP);
+//                    }
+//                }
+//            }
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//                Log.e("GLIDINGGGGGG", "CANCELLED");
+//            }
+//        });
     }
 
     public void setName(String name){
