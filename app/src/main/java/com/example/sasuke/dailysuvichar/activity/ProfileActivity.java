@@ -29,7 +29,6 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.sasuke.dailysuvichar.R;
-import com.example.sasuke.dailysuvichar.models.Guru;
 import com.example.sasuke.dailysuvichar.newactivities.NewMainActivity;
 import com.example.sasuke.dailysuvichar.utils.SharedPrefs;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
@@ -46,8 +45,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-
-import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -269,6 +266,9 @@ public class ProfileActivity extends BaseActivity {
                     age.setText(dataSnapshot.child("age").getValue().toString());
                 if(dataSnapshot.child("userName").getValue()!=null) {
                     userName.setText(dataSnapshot.child("userName").getValue().toString());
+                }
+                if(dataSnapshot.child("userType").getValue()!=null) {
+                    userType.setText(dataSnapshot.child("userType").getValue().toString());
                 }
                 if(dataSnapshot.child("bio").getValue()!=null) {
                     bio.setText(dataSnapshot.child("bio").getValue().toString());
@@ -1058,6 +1058,9 @@ public class ProfileActivity extends BaseActivity {
         if(bio!=null && bio.getText().length()>0){
             bioDB = bio.getText().toString();
         }
+        if(userType!=null&&userType.getText().length()>0){
+            usertypeDB=userType.getText().toString();
+        }
 
         Log.d(TAG, "writetoFirebase: "+mFirebaseUser.getUid());
         Log.d(TAG, "writetoFirebase: "+userType);
@@ -1068,16 +1071,18 @@ public class ProfileActivity extends BaseActivity {
             mUsersDatabase.child(mFirebaseUser.getUid()).child("gender").setValue(genderDB);
             mUsersDatabase.child(mFirebaseUser.getUid()).child("name").setValue(nameDB);
             mUsersDatabase.child(mFirebaseUser.getUid()).child("bio").setValue(bioDB);
+            mUsersDatabase.child(mFirebaseUser.getUid()).child("userType").setValue(usertypeDB);
             mUsersDatabase.child(mFirebaseUser.getUid()).child("email").setValue(mFirebaseUser.getEmail());
         }
         else {
             if(govPath==null || specPath==null){
                 Toast.makeText(this, R.string.please_docs, Toast.LENGTH_SHORT).show();
             }else {
-                Guru user = new Guru(nameDB, mFirebaseUser.getEmail(), bioDB, new ArrayList<String>(), langDB, dpPathDB, coverPathDB, dobDB, genderDB, ageDB, govDB, specDB, special);
+//                Guru user = new Guru(nameDB, mFirebaseUser.getEmail(), bioDB, new ArrayList<String>(), langDB, dpPathDB, coverPathDB, dobDB, genderDB, ageDB, govDB, specDB, special);
                 mGurusDatabase.child(mFirebaseUser.getUid()).child("name").setValue(nameDB);
                 mGurusDatabase.child(mFirebaseUser.getUid()).child("email").setValue(mFirebaseUser.getEmail());
                 mGurusDatabase.child(mFirebaseUser.getUid()).child("dob").setValue(dobDB);
+                mUsersDatabase.child(mFirebaseUser.getUid()).child("userType").setValue(usertypeDB);
                 mGurusDatabase.child(mFirebaseUser.getUid()).child("age").setValue(ageDB);
                 mGurusDatabase.child(mFirebaseUser.getUid()).child("uid").setValue(mFirebaseUser.getUid());
                 if(special!=null){
