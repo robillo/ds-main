@@ -147,8 +147,8 @@ public class AllVideosFragment extends Fragment {
         mRvHome.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
                 customVideoAdapter.releaseVideo();
+                super.onScrolled(recyclerView, dx, dy);
             }
         });
 
@@ -513,5 +513,28 @@ public class AllVideosFragment extends Fragment {
         }
 
         super.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+
+
+        if (customVideoAdapter != null) {
+            customVideoAdapter.releaseVideo();
+        }
+
+        super.onDestroy();
+    }
+
+    @Override
+    public void onStop() {
+
+
+        if (customVideoAdapter != null) {
+            customVideoAdapter.releaseVideo();
+        }
+
+
+        super.onStop();
     }
 }
