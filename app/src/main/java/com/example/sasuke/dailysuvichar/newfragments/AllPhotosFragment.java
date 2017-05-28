@@ -280,11 +280,13 @@ public class AllPhotosFragment extends Fragment {
 
     private void fetchPhotosFromFirebaseGuru() {
 
-        mLayoutManager.setStackFromEnd(true);
+//        mLayoutManager.setStackFromEnd(true);
 
         if(mSelectedGurus!=null && mSelectedGurus.size()>0) {
 
             for(String guru: mSelectedGurus) {
+                int i=0;
+                final int finalI = i;
 
                 mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("users").child(guru).child("posts");
                 mStorageReference = FirebaseStorage.getInstance().getReference("posts").child("images");
@@ -294,6 +296,7 @@ public class AllPhotosFragment extends Fragment {
 
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+                        int k=0;
 
                         for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                             Photo photoSnap = postSnapshot.getValue(Photo.class);
@@ -304,6 +307,10 @@ public class AllPhotosFragment extends Fragment {
                                 items.add(photoSnap);
                                 isPhotoDoneGuru.put(postSnapshot.getKey(), true);
                             }
+                            if(finalI ==mSelectedGurus.size()-1 && k==dataSnapshot.getChildrenCount()-1){
+                                Collections.reverse(items);
+                            }
+                            k++;
                             mAdapter.notifyDataSetChanged();
                         }
                     }
@@ -313,6 +320,7 @@ public class AllPhotosFragment extends Fragment {
                         Log.d(TAG, "onCancelled: " + databaseError.getMessage());
                     }
                 });
+                i++;
             }
 
             Log.d(TAG, "fetchStatusFromFirebase: " + items.size());
@@ -323,7 +331,7 @@ public class AllPhotosFragment extends Fragment {
 
     private void fetchPhotosFromFirebaseYour() {
 
-        mLayoutManager.setStackFromEnd(true);
+//        mLayoutManager.setStackFromEnd(true);
 
         mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("users").child(mFirebaseUser.getUid()).child("posts");
         mStorageReference = FirebaseStorage.getInstance().getReference("posts").child("images");
@@ -331,6 +339,7 @@ public class AllPhotosFragment extends Fragment {
         mDatabaseReferencePosts.child("photo").orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                int k=0;
 
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
 
@@ -345,6 +354,10 @@ public class AllPhotosFragment extends Fragment {
                         items.add(photoSnap);
                         isPhotoDoneYour.put(postSnapshot.getKey(), true);
                     }
+                    if(k==dataSnapshot.getChildrenCount()-1){
+                        Collections.reverse(items);
+                    }
+                    k++;
                     mAdapter.notifyDataSetChanged();
                 }
             }
