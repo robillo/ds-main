@@ -127,7 +127,8 @@
                 android:background="@color/black"
                 app:loop="true"
                 app:stopSystemAudio="false"
-                app:muted="false"/>
+                app:muted="false"
+                app:showSpinner="false"/>
 
             <EditText
                 android:id="@+id/etCaption"

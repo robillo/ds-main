@@ -10,19 +10,15 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.InputType;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.sasuke.dailysuvichar.R;
@@ -30,7 +26,6 @@ import com.example.sasuke.dailysuvichar.models.CustomVideo;
 import com.example.sasuke.dailysuvichar.models.Photo;
 import com.example.sasuke.dailysuvichar.models.Status;
 import com.example.sasuke.dailysuvichar.models.Video;
-import com.example.sasuke.dailysuvichar.utils.SharedPrefs;
 import com.example.sasuke.dailysuvichar.view.adapter.CustomVideoAdapter;
 import com.example.sasuke.dailysuvichar.view.adapter.PhotoItemAdapter;
 import com.example.sasuke.dailysuvichar.view.adapter.StatusItemAdapter;
@@ -46,7 +41,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -131,7 +125,7 @@ public class GuruDetailActivity extends BaseActivity{
         mAdapter.register(Status.class, new StatusItemAdapter());
         mAdapter.register(Photo.class, new PhotoItemAdapter());
         mAdapter.register(Video.class, new VideoItemAdapter(this));
-        mAdapter.register(CustomVideo.class, new CustomVideoAdapter());
+//        mAdapter.register(CustomVideo.class, new CustomVideoAdapter());
         mRvHome.setAdapter(mAdapter);
 
         customVideoAdapter = new CustomVideoAdapter();
@@ -147,7 +141,7 @@ public class GuruDetailActivity extends BaseActivity{
 
         fetchStatusFromFirebase();
         fetchPhotosFromFirebase();
-        fetchVideosFromFirebase();
+//        fetchVideosFromFirebase();
 
         if(ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 5);
