@@ -54,7 +54,7 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/follow"
+            android:text="@string/follow_caps"
             android:textStyle="bold"
             android:id="@+id/follow"
             android:textColor="@color/white"

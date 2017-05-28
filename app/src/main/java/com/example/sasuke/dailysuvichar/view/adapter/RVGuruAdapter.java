@@ -139,29 +139,29 @@ public class RVGuruAdapter extends RecyclerView.Adapter<VHGurus> {
             }
         }
 
-        if(!isFollowing.get(position) && holder.follow.getText().equals("FOLLOWING")){
-            holder.follow.setText("FOLLOW");
+        if(!isFollowing.get(position) && holder.follow.getText().equals(context.getString(R.string.following_caps))){
+            holder.follow.setText(context.getString(R.string.follow_caps));
             holder.follow.setBackgroundColor(context.getResources().getColor(R.color.colorAccent));
         }
-        else if(isFollowing.get(position) && holder.follow.getText().equals("FOLLOW")){
-            holder.follow.setText("FOLLOWING");
+        else if(isFollowing.get(position) && holder.follow.getText().equals(context.getString(R.string.follow_caps))){
+            holder.follow.setText(context.getString(R.string.following_caps));
             holder.follow.setBackgroundColor(context.getResources().getColor(R.color.green));
         }
 
         holder.follow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!isFollowing.get(position) && holder.follow.getText().equals("FOLLOW")){
+                if(!isFollowing.get(position) && holder.follow.getText().equals(context.getString(R.string.follow_caps))){
                     isFollowing.set(position, true);
-                    holder.follow.setText("FOLLOWING");
+                    holder.follow.setText(context.getString(R.string.following_caps));
                     holder.follow.setBackgroundColor(context.getResources().getColor(R.color.green));
                     NewGurusActivity.setFollowing(item.getFollowers(), item.getUid(),true,item.getGuruUid());
 //                    holder.setFollowersCount(item.getFollowersCount());
 
                 }
-                else if(isFollowing.get(position) && holder.follow.getText().equals("FOLLOWING")){
+                else if(isFollowing.get(position) && holder.follow.getText().equals(context.getString(R.string.following_caps))){
                     isFollowing.set(position, false);
-                    holder.follow.setText("FOLLOW");
+                    holder.follow.setText(context.getString(R.string.follow_caps));
                     holder.follow.setBackgroundColor(context.getResources().getColor(R.color.colorAccent));
                     NewGurusActivity.setFollowing(item.getFollowers(),item.getUid(),false,item.getGuruUid());
 //                    holder.setFollowersCount(item.getFollowersCount());
