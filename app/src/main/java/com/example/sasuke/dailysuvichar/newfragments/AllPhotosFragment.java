@@ -153,7 +153,7 @@ public class AllPhotosFragment extends Fragment {
                 fetchPhotosFromFirebaseYour();
 
             }else{
-                Toast.makeText(getActivity(), "No Internet Connection", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), getString(R.string.no_inter), Toast.LENGTH_SHORT).show();
             }
 
         }
@@ -225,7 +225,7 @@ public class AllPhotosFragment extends Fragment {
                 fetchPhotosFromFirebaseGuru();
 
             }else{
-                Toast.makeText(getActivity(), "No Internet Connection", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), getString(R.string.no_inter), Toast.LENGTH_SHORT).show();
             }
         }
 
