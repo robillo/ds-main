@@ -1,241 +1,350 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="app_name">Daily Suvichar</string>
-    <string name="click_back_again_to_exit">बाहर निकलने के लिए वापस फिर से क्लिक करें</string>
+<resources> 
+    <string name="app_name">Daily Suvichar</string> 
+    <string name="click_back_again_to_exit">वापस दबायें App बंद करने के लिए </string> 
+    <string name="validation_successful">पुष्टि संपूर्ण</string> 
+    <string name="registered_successfully">पंजीकरण संपूर्ण </string> 
+    <string name="registration_unsuccessfully"> पुष्टिकरण असफल </string> 
+    <string name="divider"> भाजक </string> 
+    <string name="logo"> लोगो </string> 
+    <string name="tab"> टैब </string> 
+    <string name="seperator"> भाजक </string>  
 
-    <string name="validation_successful">मान्यकरण सफल</string>
-    <string name="registered_successfully">सफलतापूर्वक पंजीकृत</string>
-    <string name="registration_unsuccessfully">पंजीकरण असफल</string>
-    <string name="divider">Divider</string>
-    <string name="logo">Logo</string>
-    <string name="seperator">Seperator</string>
+    <!-- Login Activity --> 
+    <string name="login_activity_title"> लॉगिन </string> 
+    <string name="email_number">ईमेल/ फोन</string> 
+    <string name="password"> पासवर्ड </string> 
+    <string name="login"> लॉगिन </string> 
+    <string name="redirect_to_register"> अकाउंट नही है? यहा रिजिस्टर करें </string> 
+    <string name="logout"> लोग आउट </string> 
+    <string name="forgot_password"> पासवर्ड भूल गये??</string> 
+    <string name="please_wait"> प्रतीक्षा करें</string>  
 
-    <!-- Login Activity -->
-    <string name="login_activity_title">लॉग इन करें</string>
-    <string name="email_number">ईमेल आईडी / फोन</string>
-    <string name="password">पासवर्ड</string>
-    <string name="login">लॉग इन</string>
-    <string name="logout">लोग आउट</string>
-    <string name="forgot_password">क्या आप पासवर्ड भूल गए?</string>
-    <string name="redirect_to_register">Don\'t have an Account? Register Here</string>
-    <string name="please_wait">Please wait...</string>
+    <!--Register Activity --> 
+    <string name="password_again"> पासवर्ड फिर से दर्ज करें </string> 
+    <string name="register"> रिजिस्टर करें </string> 
+    <string name="redirect_to_login"> अकाउंट पहले से है??</string> 
+    <string name="invalid_email"> अमान्य ईमेल </string> 
+    <string name="invalid_password"> पासवर्ड की लंबाई > 6</string> 
+    <string name="invalid_password_again"> पासवर्ड मेल नही हुआ </string> 
+    <string name="sign_up_failed"> साइन अप असफल ! दोबारा कोशिश करें </string> 
+    <string name="sign_up_successful"> साइन अप सफल !</string>   
 
-    <!--Register Activity -->
-    <string name="password_again">पासवर्ड फिर से दर्ज करें</string>
-    <string name="register">रजिस्टर</string>
-    <string name="redirect_to_login">क्या आपके पास पहले से एक खाता मौजूद है? लॉग इन करें</string>
-    <string name="invalid_email">Invalid Email</string>
-    <string name="invalid_password">Password Length should be > 6</string>
-    <string name="invalid_password_again">Password Doesn\'t Match</string>
+    <!-- Main Activity --> 
+    <string name="choose_language"> भाषा चुनें -</string> 
+    <string name="english"> अँग्रेज़ी </string> 
+    <string name="hindi"> हिन्दी </string> 
+    <string name="next"> नेक्स्ट </string>  
 
-    <!-- Main Activity -->
-    <string name="choose_language">Choose Language-</string>
-    <string name="english">English</string>
-    <string name="hindi">Hindi\t\t</string>
-    <string name="next">आगामी</string>
-    <string name="sign_up_failed">Sign Up Failed! Retry</string>
-    <string name="sign_up_successful">Sign Up Successful!</string>
+    <!-- Navigation Drawer --> 
+    <string name="Feeds"> फीड </string> 
+    <string name="home"> होम </string> 
+    <string name="settings"> सेटिंग </string> 
+    <string name="profile"> प्रोफ़ाइल </string> 
+    <string name="updates"> अपडेट </string>  
 
-    <!-- Navigation Drawer -->
-    <string name="Feeds">फ़ीड्स</string>
-    <string name="home">घर</string>
-    <string name="settings">सेटिंग्स</string>
-    <string name="profile">प्रोफाइल</string>
-    <string name="tab">टैब</string>
-    <string name="updates">Updates</string>
+    <!-- Home Activity --> 
+    <string name="trending"> ट्रेन्डिंग </string> 
+    <string name="gurus"> गुरु </string> 
+    <string name="search_for_gurus"> गुरु ढूंडे </string> 
+    <string name="suggested"> प्रस्तावित गुरु </string> 
+    <string name="menu"> मेनू </string>  
 
-    <!-- Home Menu -->
-    <string name="share_your_suvichar">Share your suvichar</string>
-    <string name="status">Status</string>
-    <string name="photo">Photo</string>
-    <string name="video">Video</string>
+    <!-- Home Menu --> 
+    <string name="share_your_suvichar"> आपका सुविचार </string> 
+    <string name="status"> स्टेटस </string> 
+    <string name="photo"> छवि </string> 
+    <string name="video"> वीडियो </string>  
 
-    <!-- Home Activity -->
-    <string name="trending">रुझान</string>
-    <string name="gurus">गुरु</string>
-    <string name="search_for_gurus">Search for Gurus</string>
-    <string name="suggested">Suggested</string>
-    <string name="menu">Menu</string>
+    <!--LoginFragment--> 
+    <string name="facebook_app_id">298302307256927</string> 
+    <string name="sign_in_failed"> साइन अप असफल </string> 
+    <string name="play_services_error"> गूगल प्ले सर्विस एरर </string> 
+    <string name="authentication_failed"> प्रमाणीकरण असफल </string>  
 
-    <!--LoginFragment-->
-    <string name="facebook_app_id">298302307256927</string>
-    <string name="sign_in_failed">Sign In Failed</string>
-    <string name="play_services_error">PLAY SERVICES ERROR</string>
-    <string name="authentication_failed">Authentication failed</string>
+    <!--Choose Interest Activity --> 
+    <string name="choose_interest"> दिलचस्पी चुने </string> 
+    <string name="please_choose_at_least_two_interests"> कृपया कम से कम 2 दिलचस्पी चुनिए </string>  
 
-    <!--Choose Interest Activity -->
-    <string name="choose_interest">रुचि चुनें</string>
-    <string name="please_choose_at_least_two_interests">कृपया कम से कम 2 रुचियां चुनें:</string>
+    <!-- Sub Interest Activity --> 
+    <string name="choose_more_interest"> और दिलचस्पी चुने </string>  
 
-    <!-- Sub Interest Activity -->
-    <string name="choose_more_interest">Choose more interest</string>
+    <!-- Interests --> 
+    <string name="astrology"> ज्योतिष </string> 
+    <string name="diet"> आहार </string> 
+    <string name="religion"> भक्ति भाव </string> 
+    <string name="ayurveda"> आयुर्वेद </string> 
+    <string name="yoga"> योग </string> 
+    <string name="motivation"> प्रेरणा </string> 
+    <string name="health"> स्वास्थ्य </string>  
 
-    <!-- Interests -->
-    <string name="astrology">ASTROLOGY</string>
-    <string name="diet">DIET</string>
-    <string name="religion">RELIGION</string>
-    <string name="ayurveda">AYURVEDA</string>
-    <string name="yoga">YOGA</string>
-    <string name="motivation">MOTIVATION</string>
-    <string name="health">HEALTH</string>
+    <!-- Interests --> 
+    <string name="astrology__"> ज्योतिष </string> 
+    <string name="diet__"> आहार </string> 
+    <string name="religion__"> भक्ति भाव </string> 
+    <string name="ayurveda__"> आयुर्वेद </string> 
+    <string name="yoga__"> योग </string> 
+    <string name="motivation__"> प्रेरणा </string> 
+    <string name="health__"> स्वास्थ्य </string>  
+    <array name="allInterests"> 
+        <item> आहार </item> 
+        <item> योग </item> 
+        <item> स्वास्थ्य </item> 
+        <item> भक्ति भाव </item> 
+        <item> प्रेरणा </item> 
+        <item> आयुर्वेद </item> 
+        <item> ज्योतिष </item> 
+    </array>  
+    <!--Motivation Array--> 
+    <string-array name="motivation_array"> 
+        <item> प्रेरणा स्त्रोत </item> 
+        <item> कहानियाँ </item> 
+        <item> ज़िंदगी </item> 
+        <item> सीख </item> 
+        <item> सुविचार </item> 
+        <item> आज का सुविचार </item> 
+        <item> भाषण </item> 
+        <item> नैतिक कहानियाँ </item> 
+        <item> असल ज़िंदगी की प्रेरणा </item> 
+        <item> कहावत </item> 
+        <item> हिम्मत </item> 
+        <item> खुशी </item> 
+        <item> आत्मविश्वास </item> 
+        <item> मनोविज्ञान </item> 
+        <item> फाइट डिप्रेशन </item> 
+        <item> करियर प्रेरणा </item> 
+    </string-array>  
+    <!--Religion Array--> 
+    <string-array name="religion_array"> 
+        <item> भगवान </item> 
+        <item> गीता </item> 
+        <item> महाभारत </item> 
+        <item> कहावत </item> 
+        <item> भजन </item> 
+        <item> प्रार्थना </item> 
+        <item> कहानियाँ </item> 
+        <item> रामायण </item> 
+        <item> मंदिर </item> 
+        <item> पंडित </item> 
+        <item> पूजा </item> 
+        <item> त्योहार </item> 
+        <item> कृष्णा </item> 
+        <item> राम </item> 
+        <item> दुर्गा </item> 
+        <item> गणेश </item> 
+        <item> लक्ष्मी </item> 
+        <item> डेली दर्शन </item> 
+    </string-array>  
+    <!--Ayurveda Array--> 
+    <string-array name="ayurveda_array"> 
+        <item> आयुर्वेदिक टिप्स </item> 
+        <item> आयुर्वेदिक दवा </item> 
+        <item> खुद करें आयुर्वेद </item> 
+        <item> घरेलू उपचार </item> 
+        <item> आयुर्वेदिक संस्कृति </item> 
+        <item> आयुर्वेदिक उत्पाद </item> 
+        <item> आयुर्वेदिक उपचार </item> 
+        <item> आयुर्वेदिक चिकित्सालय </item> 
+        <item> आयुर्वेदिक जड़ी बूटी </item> 
+        <item> आयुर्वेदिक पर्यटन </item> 
+        <item> आयुर्वेदिक त्वचा देख भाल </item> 
+        <item> मूल </item> 
+        <item> सेक्स </item> 
+        <item> आयुर्वेदिक चिकित्सक </item> 
+        <item> आयुर्वेदिक भोजन </item> 
+    </string-array>  
+    <!--Health Array--> 
+    <string-array name="health_array"> 
+        <item> स्वास्थ्य  टिप्स </item> 
+        <item> जिम टिप्स </item> 
+        <item> मुद्रा चिकित्सा </item> 
+        <item> घरेलू स्वास्थ्य उपाए </item> 
+        <item> वजन घटायें </item> 
+        <item> वजन बढ़ायें </item> 
+        <item> खूबसूरती </item> 
+        <item> स्किन केर </item> 
+        <item> स्वस्थ खाना </item> 
+        <item> स्वस्थ जीवनशैली </item> 
+        <item> वर्क आउट </item> 
+        <item> जिम वर्क आउट </item> 
+        <item> ध्यान </item> 
+    </string-array>  
+    <!--Diet Array--> 
 
-    <!-- Interests -->
-    <array name="allInterests">
-        <item>diet</item>
-        <item>yoga</item>
-        <item>health</item>
-        <item>religion</item>
-        <item>motivation</item>
-        <item>ayurveda</item>
-        <item>astrology</item>
-    </array>
+    <string-array name="diet_array"> 
+        <item> फिटनेस फूड </item> 
+        <item> भारतीय आहार </item>
+         <item> शाकाहारी आहार </item> 
+        <item> दैनिक आहार </item> 
+        <item> संतुलित आहार </item> 
+        <item> खुद बनाए आहार </item> 
+        <item> हरित आहार </item> 
+        <item> फ्रूट आहार </item> 
+        <item>0 मोटापा आहार </item> 
+        <item> आहार टिप्स </item> 
+        <item> रात्रि आहार </item> 
+        <item> दोपहर आहार </item> 
+        <item> ब्रेकफास्ट आहार </item> 
+        <item> प्रोटीन आहार </item> 
+        <item> कॅल्षियम आहार </item> 
+        <item> आहार संयोजन </item> 
+    </string-array>  
 
-    <!--Motivation Array-->
-    <string-array name="motivation_array">
+    <!--Astrology Array--> 
+    <string-array name="astrology_array"> 
+        <item> भविष्यवाणी </item> 
+        <item> आज का सुझाव </item> 
+        <item> राशिफल </item> 
+        <item> सीखें </item> 
+        <item> मेष राशि </item> 
+        <item> सिंह राशि </item> 
+        <item> धनु राशि </item> 
+        <item> वृषभ राशि </item> 
+        <item> कन्या राशि </item> 
+        <item> मकर राशि </item> 
+        <item> मिथुन राशि </item> 
+        <item> तुला राशि </item> 
+        <item> कुंभ राशि </item> 
+        <item> कर्क राशि </item> 
+        <item> वृश्चिक राशि </item> 
+        <item> मीन राशि </item> 
+    </string-array>  
 
-        <item>Inspiration</item>
-        <item>Stories</item>
-        <item>Life</item>
-        <item>Learning</item>
-        <item>Good Thoughts</item>
-        <item>Thought of the day</item>
-        <item>Speeches</item>
-        <item>Moral Stories</item>
-        <item>Real Life Inspiration</item>
-        <item>Quotes</item>
-        <item>Courage</item>
-        <item>Happiness</item>
-        <item>Confidence</item>
-        <item>Psychology</item>
-        <item>Fight Deperssion</item>
-        <item>Career motivation</item>
+    <!--Yoga Array--> 
+    <string-array name="yoga_array"> 
+        <item> योग आसान </item> 
+        <item> पावर योगा </item> 
+        <item> योगा टिप्स </item> 
+        <item> फिटनेस योगा </item> 
+        <item> डेली योगा </item> 
+        <item>30 sec योगा </item> 
+        <item> योगा कहावत </item> 
+        <item> योगा वीडियोस </item> 
+        <item> एडवांस योगा </item> 
+        <item> प्रोफेशनल योगा </item> 
+        <item> योगा अभ्यास </item> 
+        <item> योगा दर्शन </item> 
+        <item> योगा इतिहास </item> 
+        <item> योगा स्तिथि  </item> 
+        <item> रामदेव योगा </item> 
+        <item> ओशो योगा </item> 
+        <item> ध्यान </item> 
+    </string-array>  
 
-    </string-array>
+    <string name="hindi_text"> अंग्रेजी पाठ का उपयोग </string> 
+    <string name="select_tags"> टैग सेलेक्ट करें </string> 
+    <string name="write_something"> यहा लिखें</string> 
+    <string name="your_feeds"> आपकी फीड </string>  
 
-    <!--Religion Array-->
-    <string-array name="religion_array">
-        <item>God</item>
-        <item>Geeta</item>
-        <item>Mahabharat</item>
-        <item>Quotes</item>
-        <item>Bhajan</item>
-        <item>Prayers</item>
-        <item>Stories</item>
-        <item>Ramayan</item>
-        <item>Temples</item>
-        <item>Pandits</item>
-        <item>Pooja</item>
-        <item>Festival</item>
-        <item>Krishna</item>
-        <item>Ram</item>
-        <item>Durga</item>
-        <item>Ganesh</item>
-        <item>Laxmi</item>
-        <item>Daily Darshan</item>
-    </string-array>
-
-    <!--Ayurveda Array-->
-    <string-array name="ayurveda_array">
-        <item>Ayurvedic Tips</item>
-        <item>Ayurvedic Medicines</item>
-        <item>DIY</item>
-        <item>Home Remedies</item>
-        <item>Ayurvedic Culture</item>
-        <item>Ayurvedic Products</item>
-        <item>Ayurvedic Treatment</item>
-        <item>Ayurvedic Clinics</item>
-        <item>Ayurvedic Herbs</item>
-        <item>Ayurvedic Tourism</item>
-        <item>Ayurvedic Skin care</item>
-        <item>Origin</item>
-        <item>Sex</item>
-        <item>Ayurvedic Doctors</item>
-        <item>Ayurvedic Cooking</item>
-    </string-array>
-
-    <!--Health Array-->
-    <string-array name="health_array">
-        <item>Health Tips</item>
-        <item>Gym Tips</item>
-        <item>Mudra Healing</item>
-        <item>Home health remedies</item>
-        <item>Weight loss</item>
-        <item>Weight Gain</item>
-        <item>Beauty</item>
-        <item>Skincare</item>
-        <item>Health Food</item>
-        <item>Healthy Lifestyle</item>
-        <item>Workouts</item>
-        <item>Gym Workouts</item>
-        <item>Meditation</item>
-    </string-array>
-
-    <!--Diet Array-->
-    <string-array name="diet_array">
-        <item>Fitness Food</item>
-        <item>Indian Diet</item>
-        <item>Vegetarian Diet</item>
-        <item>Daily Diet</item>
-        <item>Balanced Diet</item>
-        <item>DIY Diet</item>
-        <item>Green Diet</item>
-        <item>Fruit Diet</item>
-        <item>0 Fat Diet</item>
-        <item>Diet Tips</item>
-        <item>Dinner Diet</item>
-        <item>Lunch Diet</item>
-        <item>Breakfast Diet</item>
-        <item>Protein Diet</item>
-        <item>Calcium Diet</item>
-        <item>Diet Combinations</item>
-    </string-array>
-
-    <!--Astrology Array-->
-    <string-array name="astrology_array">
-        <item>Prediction</item>
-        <item>Tip of the day</item>
-        <item>Horoscope</item>
-        <item>Learn</item>
-        <item>Aries</item>
-        <item>Leo</item>
-        <item>Sagittarius</item>
-        <item>Taurus</item>
-        <item>Virgo</item>
-        <item>Capricon</item>
-        <item>Gemini</item>
-        <item>Libra</item>
-        <item>Aquarius</item>
-        <item>Cancer</item>
-        <item>Scorpio</item>
-        <item>Piesces</item>
-    </string-array>
-
-    <!--Yoga Array-->
-    <string-array name="yoga_array">
-        <item>Aasana</item>
-        <item>Power Yoga</item>
-        <item>Yoga Tips</item>
-        <item>Fitness Yoga</item>
-        <item>Daily Yoga</item>
-        <item>30 sec Yoga</item>
-        <item>Yoga Quotes</item>
-        <item>Yoga Videos</item>
-        <item>Advanced Yoga</item>
-        <item>Professional Yoga</item>
-        <item>Yoga Exercises</item>
-        <item>Yoga Philosophy</item>
-        <item>Yoga History</item>
-        <item>Yoga Poses</item>
-        <item>Ramdev Yoga</item>
-        <item>Osho Yoga</item>
-        <item>Meditation</item>
-    </string-array>
-
-    <string name="hindi_text">English Text Accessed</string>
-    <string name="select_tags">SELECT TAGS</string>
-    <string name="write_something">Write something here...</string>
-    <string name="your_feeds">Your Feeds</string>
-    <string name="following">FOLLOWING</string>
-    <string name="follow">FOLLOW</string>
-
-</resources>
+    <string name="hello_blank_fragment"> नमस्कार blank fragment</string> 
+    <string name="following"> जुड़ गये </string> 
+    <string name="follow"> जुड़ें </string> 
+    <string name="upload_failed"> अपलोड असफल ! दोबारा कोशिश करें </string> 
+    <string name="file_uploaded"> अपलोड सफ़ल ! </string> 
+    <string name="set_name"> अपना नाम बतायें </string> 
+    <string name="full_name"> पहला नाम + आखरी नाम </string> 
+    <string name="enter_name"> अपना नाम बतायें </string> 
+    <string name="set_bio"> अपने बारे मे बताएँ </string> 
+    <string name="short_desc"> आपके बारे मे चंद शब्द</string> 
+    <string name="enter_bio_here"> अपने बारे मे बताएँ </string> 
+    <string name="bio"> अपने बारे मे:</string> 
+    <string name="set_username"> यूज़रनेम सेट करें </string> 
+    <string name="represent"> छोटा नाम.</string> 
+    <string name="enter_username"> यूज़रनेम सेट करें</string> 
+    <string name="preference"> अपनी भाषा सेट करें </string> 
+    <string name="english_lang"> अँग्रेज़ी </string> 
+    <string name="hindi_lang"> हिन्दी </string> 
+    <string name="choose"> यह चुनें </string> 
+    <string name="usertype"> यूज़र टाइप </string> 
+    <string name="standard"> स्टॅंडर्ड यूज़र </string> 
+    <string name="spiritual"> गुरु </string> 
+    <string name="standard_caps"> स्टॅंडर्ड </string> 
+    <string name="guru_caps"> गुरु </string> 
+    <string name="gender"> लिंग:</string> 
+    <string name="male"> पुरुष </string> 
+    <string name="female"> महिला </string> 
+    <string name="male_caps"> पुरुष </string> 
+    <string name="female_caps"> महिला </string> 
+    <string name="astrology_"> ज्योतिष गुरु </string> 
+    <string name="yoga_"> योग गुरु </string> 
+    <string name="pandit_"> पंडित </string> 
+    <string name="motivation_"> प्रेरक गुरु </string> 
+    <string name="ayurveda_"> आयुर्वेद गुरु </string> 
+    <string name="set_spec"> विशेषज्ञता:</string> 
+    <string name="descc"> आध्यात्मिक कौशल </string> 
+    <string name="please_correct"> कृपया सही डटे ऑफ बर्थ डालें </string> 
+    <string name="please"> कृपया पूरी जानकारी भरें  </string> 
+    <string name="please_user"> कृपया यूज़र टाइप बताए </string> 
+    <string name="ns_fullname">( पूरा नाम : चयनित नही हुआ)</string> 
+    <string name="ns_username"> यूज़र नेम : चयनित नही हुआ </string> 
+    <string name="ns_shortdesc"> अपने बारे मे  : चयनित नही हुआ </string> 
+    <string name="ns_lang"> भाषा : चयनित नही हुआ </string> 
+    <string name="ns_usertype"> यूज़र टाइप : चयनित नही हुआ </string> 
+    <string name="ns_dob"> डेट ऑफ बर्थ : चयनित नही हुआ </string> 
+    <string name="ns_gender"> लिंग : चयनित नही हुआ  </string> 
+    <string name="ns_age"> उम्र : चयनित करें </string> 
+    <string name="please_docs"> कृपया सही दस्तावेज़ अपलोड करें - वेरिफाइ होने के लिए  </string> 
+    <string name="uploading"> अपलोडइंग </string> 
+    <string name="please_atleast"> कृपया एक सब केटेगरी चुने.</string> 
+    <string name="failure"> अपलोड असफल | दोबारा कोशिश करें </string> 
+    <string name="uploaded"> अपलोड सफल </string> 
+    <string name="success"> पोस्ट सफल </string> 
+    <string name="caption"> कॅपशन लिखें </string> 
+    <string name="no_file"> फाइल नही चुनी गयी </string> 
+    <string name="unknown"> अग्यात यूज़र  </string> 
+    <string name="pleeease"> कृपया एक सब केटेगरी चुने</string> 
+    <string name="pluese"> कृपया एक दिलचस्पी की केटेगरी चुने </string> 
+    <string name="diett"> आहार </string> 
+    <string name="yogaa"> योग </string> 
+    <string name="healthh"> स्वास्थ्य </string> 
+    <string name="religionn"> भक्ति भाव </string> 
+    <string name="motivationn"> प्रेरणा </string> 
+    <string name="ayurvedaa"> आयुर्वेद </string> 
+    <string name="astrologyy"> ज्योतिष </string> 
+    <string name="others"> अन्य </string> 
+    <string name="please__"> कृपया एक सब केटेगरी चुने.</string> 
+    <string name="categ_inter"> कृपया एक दिलचस्पी की केटेगरी चुने </string> 
+    <string name="uploadinggg"> अपलोडइंग </string> 
+    <string name="selectt"> पिक्चर चुने </string> 
+    <string name="selecto"> वीडियो चुने </string> 
+    <string name="play"> चलाए </string> 
+    <string name="subinterest_text"> सब दिलचस्पी टेक्स्ट </string> 
+    <string name="light"> प्रकाश </string> 
+    <string name="baba_ramdev"> बाबा रामदेव </string> 
+    <string name="feature_header"> फीचर हेडर </string> 
+    <string name="user"> यूज़र </string> 
+    <string name="shared_an_update">  अपडेट शेर किया </string> 
+    <string name="_21_mins">21 मिनिट </string> 
+    <string name="dot">.</string> 
+    <string name="nextt"> नेक्स्ट </string> 
+    <string name="no_data"> दिखाने को कुछ नही है </string> 
+    <string name="videoo"> वीडियो:</string> 
+    <string name="your_feedss"> आपकी फीड </string> 
+    <string name="your_suvichar"> आपका सुविचार </string> 
+    <string name="language"> भाषा: </string> 
+    <string name="post"> पोस्ट </string> 
+    <string name="upload_a_govt_id"> सरकारी दस्तावेज़ अपलोडकरें </string> 
+    <string name="upload_your_specialization_proof"> स्पेशलाइज़ेशन प्रूफ अपलोड करें </string> 
+    <string name="ns_special"> स्पेशलाइज़ेशन (गुरु): नही चुना गया </string> 
+    <string name="save"> सवे करे </string> 
+    <string name="daily_suvichar">Daily Suvichar</string> 
+    <string name="other_features"> अन्य विशेषतायें:</string> 
+    <string name="zhome"> होम </string> 
+    <string name="gurus_list"> गुरु सूची </string> 
+    <string name="explore"> एक्सप्लोर </string> 
+    <string name="biop"> अपने बारे मे:</string> 
+    <string name="specialization"> स्पेशलाइज़ेशन:</string> 
+    <string name="statuss"> स्टेटस </string> 
+    <string name="photoss"> फोटो </string> 
+    <string name="videoss"> वीडियोस </string> 
+    <string name="no_inter"> इंटरनेट उप्लप्ब्ध नही है </string> 
+    <string name="followers"> जुड़े हुए लोग </string> 
+    <string name="show_all"> सब दिखायें </string> 
+    <string name="click_back"> बॅक बटन दयाए फिर से बाहर जाने के लिए </string> 
+    <string name="atleasttt"> कृपया 2 दिलचस्पी चुने </string> 
+    <string name="atleat"> कृपया 1 या अधिक दिलचस्पी चुने </string> 
+    <string name="please_three"> कृपया 3 या अधिक सब-दिलचस्पी चुने </string> 
+    <string name="incomplete"> अधूरी जानकारी </string>  
+    <string name="about_short"> जुड़े, पढ़े और अनुभव करें! </string>
+     <string name="about_long">आध्यतम धारणा नही ज़िंदगी का तरीका है |  हमारे तेज गति, प्रौद्योगिकी केंद्रित जीवन में,  हम सभी को खुश, स्वस्थ और सिद्ध जीवन जीने के लिए दिशा की आवश्यकता है! यह आध्यात्मीकता के प्रति अपना जीवन मोड़ने का समय है!  आध्यात्मीकता आपके आस-पास है औरआध्यात्मिक गुरु भी! Daily Suvichar आपको उनको खोजने और उनका अनुसरण करने के लिए एक मंच प्रदान करता है | हम पूरे भारत में धार्मिक, प्रेरणा, ज्योतिष्, योग, स्वास्थ्य और आहार जैसे विषयों पर आध्यात्मिक विचारों को लेकर आते हैं!
+आप अपने विचारों को अन्य यूज़र्स के साथ बाँट भी सकते हैं और उनके विचार भी पढ़ सखते है! Daily Suvichar आपको जोड़े रखेगा |
+जुड़ें रहे !</string>  </resources> 
