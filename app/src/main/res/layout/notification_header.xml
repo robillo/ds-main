@@ -9,7 +9,7 @@
         android:id="@+id/iv_profile"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:src="@drawable/profile" />
+        android:src="@mipmap/ic_launcher" />
 
     <TextView
         android:id="@+id/tv_user_name"

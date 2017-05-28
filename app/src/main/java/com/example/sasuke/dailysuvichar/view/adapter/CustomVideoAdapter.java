@@ -55,14 +55,6 @@ public class CustomVideoAdapter  extends ItemViewBinder<CustomVideo, CustomVideo
                     holder.setPostTime(getTimeAgo(item.getTimestamp()));
                 }
                 holder.setName(item.getName());
-                if(item.getLikes()!=null) {
-                    holder.setLikes(item.getLikes());
-                }
-                if(item.getComments()!=null) {
-                    holder.setComments(item.getComments().size());
-                }else{
-                    holder.setComments(0);
-                }
                 if(item.getCaption()!=null){
                     holder.setCaption(item.getCaption());
                 }

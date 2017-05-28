@@ -182,7 +182,6 @@ public class AllPhotosFragment extends Fragment {
                             mSelectedSubInterests.addAll((Collection<? extends String>) dataSnapshot.child("mSelectedSubInterests").getValue());
                         }
                         fetchPhotosFromFirebaseHome();
-                        alternateLayout.setVisibility(View.INVISIBLE);
                     }
 
                     @Override
@@ -216,7 +215,6 @@ public class AllPhotosFragment extends Fragment {
                             mSelectedGurus.addAll((Collection<? extends String>) dataSnapshot.child("following").getValue());
                         }
                         fetchPhotosFromFirebaseGuru();
-                        alternateLayout.setVisibility(View.INVISIBLE);
                     }
 
                     @Override
@@ -324,6 +322,9 @@ public class AllPhotosFragment extends Fragment {
             }
 
             Log.d(TAG, "fetchStatusFromFirebase: " + items.size());
+            if(items.size()>0){
+                alternateLayout.setVisibility(View.INVISIBLE);
+            }
             mAdapter.setItems(items);
             mAdapter.notifyDataSetChanged();
         }
@@ -370,6 +371,9 @@ public class AllPhotosFragment extends Fragment {
 
         Log.d(TAG, "fetchStatusFromFirebase: " + items.size());
         mAdapter.setItems(items);
+        if(items.size()>0){
+            alternateLayout.setVisibility(View.INVISIBLE);
+        }
         mAdapter.notifyDataSetChanged();
     }
 
@@ -440,6 +444,9 @@ public class AllPhotosFragment extends Fragment {
             }
             Log.d(TAG, "fetchPhotosFromFirebaseHome: " + items.size());
             mAdapter.setItems(items);
+            if(items.size()>0){
+                alternateLayout.setVisibility(View.INVISIBLE);
+            }
             mAdapter.notifyDataSetChanged();
 //        if(mAdapter.getItemCount()>0){
 //            avi.hide();
