@@ -1,5 +1,6 @@
 package com.example.sasuke.dailysuvichar.view;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
@@ -8,8 +9,17 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.sasuke.dailysuvichar.R;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.klinker.android.simple_videoview.SimpleVideoView;
 
@@ -31,6 +41,8 @@ public class CustomVideoVH extends RecyclerView.ViewHolder{
     @BindView(R.id.image)
     public
     ImageView imageView;
+    @BindView(R.id.iv_profile_dp)
+    public ImageView mPhotoDP;
     @BindView(R.id.play_button)
     public TextView play;
     @BindView(R.id.video_view)
@@ -45,12 +57,15 @@ public class CustomVideoVH extends RecyclerView.ViewHolder{
 
     private Context context;
     private StorageReference storageReference;
+    private StorageReference mStorageReferenceDP;
+    private DatabaseReference mUsersDatabase;
 
     public CustomVideoVH(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
         context = itemView.getContext();
-    }
+        mUsersDatabase = FirebaseDatabase.getInstance().getReference("users");
+        mStorageReferenceDP = FirebaseStorage.getInstance().getReference("profile").child("user").child("dp");    }
 
     public void setName(String name){
         if(name!=null && name.length()>0){
@@ -107,4 +122,29 @@ public class CustomVideoVH extends RecyclerView.ViewHolder{
     public void setImageView(){
         imageView.setImageResource(R.drawable.astrology);
     }
+
+    public void setStatusDP(final String UID){
+        mUsersDatabase.child(UID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.child("photoUrl").getValue()!=null) {
+                    Activity a = (Activity) context;
+                    if(context!=null&&!a.isDestroyed()) {
+                        Glide.with(context).
+                                using(new FirebaseImageLoader())
+                                .load(mStorageReferenceDP.child(UID))
+                                .centerCrop()
+                                .placeholder(R.mipmap.ic_launcher)
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .into(mPhotoDP);
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e("GLIDINGGGGGG", "CANCELLED");
+            }
+        });
+    }
+
 }

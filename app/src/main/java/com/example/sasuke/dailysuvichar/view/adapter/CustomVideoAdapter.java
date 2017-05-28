@@ -146,6 +146,9 @@ public class CustomVideoAdapter  extends RecyclerView.Adapter<CustomVideoVH>  {
                     holder.videoView.play();
             }
         });
+        if(item.getUid()!=null) {
+            holder.setStatusDP(item.getUid());
+        }
 
 //        holder.videoView.setOnClickListener(new View.OnClickListener() {
 //            @Override
