@@ -108,6 +108,7 @@ public class CustomVideoAdapter  extends RecyclerView.Adapter<CustomVideoVH>  {
                 if(item.getStorageReference()!=null && context!=null) {
                     holder.setVideo(item.getStorageReference());
                 }
+                holder.setImageView();
             }
         });
 
@@ -116,7 +117,7 @@ public class CustomVideoAdapter  extends RecyclerView.Adapter<CustomVideoVH>  {
             public void onClick(View view) {
                 if (holder.videoView != currentlyPlaying) {
                     releaseVideo();
-
+                    holder.imageView.setVisibility(View.INVISIBLE);
                     holder.videoView.setVisibility(View.VISIBLE);
 //                    if(holder.videoUrl!=null) {
 //                        holder.videoView.start(holder.videoUrl.toString() + ".mp4");
@@ -129,6 +130,10 @@ public class CustomVideoAdapter  extends RecyclerView.Adapter<CustomVideoVH>  {
                     else {
                         Toast.makeText(context, "Sorry. This Video Cannot Be Played", Toast.LENGTH_SHORT).show();
                     }
+                }else{
+//                    holder.imageView.setVisibility(View.INVISIBLE);
+//                    holder.videoView.setVisibility(View.VISIBLE);
+//                    holder.videoView.start(Uri.parse(item.getVideoURI()));
                 }
             }
         });

@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.sasuke.dailysuvichar.R;
@@ -27,6 +28,9 @@ public class CustomVideoVH extends RecyclerView.ViewHolder{
     private static final String SAMPLE_VIDEO =
             "https://firebasestorage.googleapis.com/v0/b/dailysuvichar-708d4.appspot.com/o/posts%2Fvideos%2F-KkM_JU-RlzvykGl9HUc?alt=media&token=95994318-8a65-402a-a8cb-f8c91c0dba6a.mp4";
 
+    @BindView(R.id.image)
+    public
+    ImageView imageView;
     @BindView(R.id.play_button)
     public TextView play;
     @BindView(R.id.video_view)
@@ -99,5 +103,8 @@ public class CustomVideoVH extends RecyclerView.ViewHolder{
                 }
             });
         }
+    }
+    public void setImageView(){
+        imageView.setImageResource(R.drawable.astrology);
     }
 }
