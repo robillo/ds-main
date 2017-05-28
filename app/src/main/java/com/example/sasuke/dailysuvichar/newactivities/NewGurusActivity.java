@@ -249,7 +249,7 @@ public class NewGurusActivity extends AppCompatActivity {
                         switch (which) {
                             case 0: {
                                 //Filter By Followers
-                                sortGuru("Following", false);
+                                sortGuru("Following", false,false);
                                 rv.setAdapter(mRvGuruAdapter);
                                 mRvGuruAdapter.notifyDataSetChanged();
                                 break;
@@ -257,7 +257,7 @@ public class NewGurusActivity extends AppCompatActivity {
                             case 1: {
                                 //Astrology Gurus1
 //                                mRvGuruAdapter = new RVGuruAdapter(getActivity(), guruList, 1);
-                                sortGuru("Astrology Guru", true);
+                                sortGuru("Astrology Guru", true,false);
                                 mRvGuruAdapter.notifyDataSetChanged();
                                 rv.setAdapter(mRvGuruAdapter);
                                 break;
@@ -265,7 +265,7 @@ public class NewGurusActivity extends AppCompatActivity {
                             case 2: {
                                 //Yoga Gurus2
 //                                mRvGuruAdapter = new RVGuruAdapter(getActivity(), guruList, 2);
-                                sortGuru("Yoga Guru", true);
+                                sortGuru("Yoga Guru", true,false);
                                 mRvGuruAdapter.notifyDataSetChanged();
                                 rv.setAdapter(mRvGuruAdapter);
                                 break;
@@ -273,7 +273,7 @@ public class NewGurusActivity extends AppCompatActivity {
                             case 3: {
                                 //Pandits Gurus3
 //                                mRvGuruAdapter = new RVGuruAdapter(getActivity(), guruList, 3);
-                                sortGuru("Pandit Guru", true);
+                                sortGuru("Pandit Guru", true,false);
                                 mRvGuruAdapter.notifyDataSetChanged();
                                 rv.setAdapter(mRvGuruAdapter);
                                 break;
@@ -281,7 +281,7 @@ public class NewGurusActivity extends AppCompatActivity {
                             case 4: {
                                 //Motivation Gurus4
 //                                mRvGuruAdapter = new RVGuruAdapter(getActivity(), guruList, 4);
-                                sortGuru("Motivation Guru", true);
+                                sortGuru("Motivation Guru", true,false);
                                 rv.setAdapter(mRvGuruAdapter);
                                 mRvGuruAdapter.notifyDataSetChanged();
                                 break;
@@ -289,7 +289,7 @@ public class NewGurusActivity extends AppCompatActivity {
                             case 5: {
                                 //Ayurveda Gurus5
 //                                mRvGuruAdapter = new RVGuruAdapter(getActivity(), guruList, 5);
-                                sortGuru("Ayurveda Guru", true);
+                                sortGuru("Ayurveda Guru", true, false);
                                 mRvGuruAdapter.notifyDataSetChanged();
                                 rv.setAdapter(mRvGuruAdapter);
                                 break;
@@ -297,7 +297,7 @@ public class NewGurusActivity extends AppCompatActivity {
                             case 6: {
                                 //SHOW ALL
 //                                mRvGuruAdapter = new RVGuruAdapter(NewGurusActivity.this, guruList, 100);
-                                sortGuru("All", true);
+                                sortGuru("All", true, true);
                                 mRvGuruAdapter.notifyDataSetChanged();
                                 rv.setAdapter(mRvGuruAdapter);                            }
                         }
@@ -310,55 +310,89 @@ public class NewGurusActivity extends AppCompatActivity {
 
     }
 
-    public void sortGuru(String option, boolean b) {
+    public void sortGuru(String option, boolean b, boolean all) {
 
         if (isOnline()) {
+            if(!all) {
+                if (!b) {
 
-            if (!b) {
+                    guruList.clear();
+                    guruMap.clear();
 
-                guruList.clear();
-                guruMap.clear();
+                    mDatabaseReference.orderByChild("followersCount").addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            int k = 0;
 
-                mDatabaseReference.orderByChild("followersCount").addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        int k=0;
+                            for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
 
-                        for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-
-                            Guru guru = postSnapshot.getValue(Guru.class);
-                            guru.setGuruUid(postSnapshot.getKey());
-                            guru.setStorageReference(mStorageReference.child(guru.getUid()));
-                            if (guruMap.containsKey(postSnapshot.getKey())) {
-                                guruList.set(guruMap.get(postSnapshot.getKey()), guru);
-                            } else {
-                                guruList.add(guru);
-                                guruMap.put(postSnapshot.getKey(), guruList.indexOf(guru));
-                            }
-                            Log.d(TAG, "onDataChange: count " + guru.getFollowersCount());
+                                Guru guru = postSnapshot.getValue(Guru.class);
+                                guru.setGuruUid(postSnapshot.getKey());
+                                guru.setStorageReference(mStorageReference.child(guru.getUid()));
+                                if (guruMap.containsKey(postSnapshot.getKey())) {
+                                    guruList.set(guruMap.get(postSnapshot.getKey()), guru);
+                                } else {
+                                    guruList.add(guru);
+                                    guruMap.put(postSnapshot.getKey(), guruList.indexOf(guru));
+                                }
+                                Log.d(TAG, "onDataChange: count " + guru.getFollowersCount());
 //                    if(postSnapshot.child("followers").getValue()!=null){
 //                        guruFollowers.addAll((Collection<? extends String>) postSnapshot.child("followers").getValue());
 //                    }
 //                    videoSnap.setStorageReference(mStorageReferenceVideo.child(postSnapshot.getKey()));
-                            if(k==dataSnapshot.getChildrenCount()-1){
-                                Collections.reverse(guruList);
+                                if (k == dataSnapshot.getChildrenCount() - 1) {
+                                    Collections.reverse(guruList);
+                                }
+                                k++;
+                                mRvGuruAdapter.notifyDataSetChanged();
                             }
-                            k++;
-                            mRvGuruAdapter.notifyDataSetChanged();
                         }
-                    }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                    }
-                });
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                        }
+                    });
+                } else {
+                    guruList.clear();
+                    guruMap.clear();
+
+                    mDatabaseReference.orderByChild("specialization").equalTo(option).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+
+                            for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+
+                                Guru guru = postSnapshot.getValue(Guru.class);
+                                guru.setGuruUid(postSnapshot.getKey());
+                                guru.setStorageReference(mStorageReference.child(guru.getUid()));
+                                if (guruMap.containsKey(postSnapshot.getKey())) {
+                                    guruList.set(guruMap.get(postSnapshot.getKey()), guru);
+                                } else {
+                                    guruList.add(guru);
+                                    guruMap.put(postSnapshot.getKey(), guruList.indexOf(guru));
+                                }
+                                Log.d(TAG, "onDataChange: count " + guru.getFollowersCount());
+//                    if(postSnapshot.child("followers").getValue()!=null){
+//                        guruFollowers.addAll((Collection<? extends String>) postSnapshot.child("followers").getValue());
+//                    }
+//                    videoSnap.setStorageReference(mStorageReferenceVideo.child(postSnapshot.getKey()));
+                                mRvGuruAdapter.notifyDataSetChanged();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                        }
+                    });
+                }
             }else{
                 guruList.clear();
                 guruMap.clear();
 
-                mDatabaseReference.orderByChild("specialization").equalTo(option).addValueEventListener(new ValueEventListener() {
+                mDatabaseReference.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+                        int k = 0;
 
                         for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
 
@@ -376,6 +410,10 @@ public class NewGurusActivity extends AppCompatActivity {
 //                        guruFollowers.addAll((Collection<? extends String>) postSnapshot.child("followers").getValue());
 //                    }
 //                    videoSnap.setStorageReference(mStorageReferenceVideo.child(postSnapshot.getKey()));
+                            if (k == dataSnapshot.getChildrenCount() - 1) {
+                                Collections.reverse(guruList);
+                            }
+                            k++;
                             mRvGuruAdapter.notifyDataSetChanged();
                         }
                     }
