@@ -58,7 +58,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/blue_dark"
-            android:text="Short Description Goes Here"
+            android:text="@string/about_short"
             android:padding="10sp"
             android:background="@color/white"
             android:fontFamily="serif-monospace"
@@ -117,25 +117,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/lorem"
-                    android:textSize="16sp"
-                    android:padding="5sp"
-                    android:textColor="@color/black"
-                    android:fontFamily="serif-monospace"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/lorem"
-                    android:textSize="16sp"
-                    android:padding="5sp"
-                    android:textColor="@color/black"
-                    android:fontFamily="serif-monospace"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/lorem"
+                    android:text="@string/about_long"
                     android:textSize="16sp"
                     android:padding="5sp"
                     android:textColor="@color/black"
