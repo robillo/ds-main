@@ -42,6 +42,7 @@ public class NewHomeyActivity extends AppCompatActivity implements GooeyMenu.Goo
 
         mGooeyMenu = (GooeyMenu) findViewById(R.id.gooey_menu);
         mGooeyMenu.setOnMenuListener(this);
+
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -89,21 +90,18 @@ public class NewHomeyActivity extends AppCompatActivity implements GooeyMenu.Goo
             Intent i = new Intent(this, SelectActivity.class);
             i.putExtra("from", 2);
             startActivity(i);
-            showToast("UPLOAD STATUS HERE");
         }
         else if(menuNumber==2){
             //UPLOAD PHOTO
             Intent i = new Intent(this, SelectPhotoActivity.class);
             i.putExtra("from", 2);
             startActivity(i);
-            showToast("UPLOAD PHOTOS HERE");
         }
         else if(menuNumber==3){
             //UPLOAD VIDEO
             Intent i = new Intent(this, SelectVideoActivity.class);
             i.putExtra("from", 2);
             startActivity(i);
-            showToast("UPLOAD VIDEOS HERE");
         }
     }
 
