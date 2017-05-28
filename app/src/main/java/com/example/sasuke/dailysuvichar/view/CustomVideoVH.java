@@ -39,16 +39,7 @@ public class CustomVideoVH extends RecyclerView.ViewHolder{
     TextView mTvUserName;
     @BindView(R.id.tv_post_time)
     TextView mTvPostTime;
-    @BindView(R.id.tv_likes)
-    TextView tvLikes;
-    @BindView(R.id.tv_comments)
-    TextView tvComments;
-    @BindView(R.id.button_like)
-    public LikeButton mBtnLike;
     public Uri videoUrl;
-
-    @BindView(R.id.comment)
-    public LinearLayout comment;
 
     private Context context;
     private StorageReference storageReference;
@@ -69,13 +60,6 @@ public class CustomVideoVH extends RecyclerView.ViewHolder{
             mTvPostTime.setText(postTime);
         }
     }
-    public void setLikes(int likes){
-        tvLikes.setText(String.valueOf(likes)+" likes");
-    }
-    public void setComments(int comments){
-        tvComments.setText(String.valueOf(comments)+" comments");
-    }
-
     public void setCaption(String caption){
         if(caption!=null && caption.length()>0) {
 //            tvCaption.setText(caption);
