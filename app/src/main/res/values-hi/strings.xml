@@ -1,4 +1,4 @@
-<resources> 
+<resources>
     <string name="app_name">Daily Suvichar</string> 
     <string name="click_back_again_to_exit">वापस दबायें App बंद करने के लिए </string> 
     <string name="validation_successful">पुष्टि संपूर्ण</string> 
@@ -9,7 +9,6 @@
     <string name="tab"> टैब </string> 
     <string name="seperator"> भाजक </string>  
 
-    <!-- Login Activity --> 
     <string name="login_activity_title"> लॉगिन </string> 
     <string name="email_number">ईमेल/ फोन</string> 
     <string name="password"> पासवर्ड </string> 
@@ -19,7 +18,6 @@
     <string name="forgot_password"> पासवर्ड भूल गये??</string> 
     <string name="please_wait"> प्रतीक्षा करें</string>  
 
-    <!--Register Activity --> 
     <string name="password_again"> पासवर्ड फिर से दर्ज करें </string> 
     <string name="register"> रिजिस्टर करें </string> 
     <string name="redirect_to_login"> अकाउंट पहले से है??</string> 
@@ -29,46 +27,38 @@
     <string name="sign_up_failed"> साइन अप असफल ! दोबारा कोशिश करें </string> 
     <string name="sign_up_successful"> साइन अप सफल !</string>   
 
-    <!-- Main Activity --> 
     <string name="choose_language"> भाषा चुनें -</string> 
     <string name="english"> अँग्रेज़ी </string> 
     <string name="hindi"> हिन्दी </string> 
     <string name="next"> नेक्स्ट </string>  
 
-    <!-- Navigation Drawer --> 
     <string name="Feeds"> फीड </string> 
     <string name="home"> होम </string> 
     <string name="settings"> सेटिंग </string> 
     <string name="profile"> प्रोफ़ाइल </string> 
     <string name="updates"> अपडेट </string>  
 
-    <!-- Home Activity --> 
     <string name="trending"> ट्रेन्डिंग </string> 
     <string name="gurus"> गुरु </string> 
     <string name="search_for_gurus"> गुरु ढूंडे </string> 
     <string name="suggested"> प्रस्तावित गुरु </string> 
     <string name="menu"> मेनू </string>  
 
-    <!-- Home Menu --> 
     <string name="share_your_suvichar"> आपका सुविचार </string> 
     <string name="status"> स्टेटस </string> 
     <string name="photo"> छवि </string> 
     <string name="video"> वीडियो </string>  
 
-    <!--LoginFragment--> 
     <string name="facebook_app_id">298302307256927</string> 
     <string name="sign_in_failed"> साइन अप असफल </string> 
     <string name="play_services_error"> गूगल प्ले सर्विस एरर </string> 
     <string name="authentication_failed"> प्रमाणीकरण असफल </string>  
 
-    <!--Choose Interest Activity --> 
     <string name="choose_interest"> दिलचस्पी चुने </string> 
     <string name="please_choose_at_least_two_interests"> कृपया कम से कम 2 दिलचस्पी चुनिए </string>  
 
-    <!-- Sub Interest Activity --> 
     <string name="choose_more_interest"> और दिलचस्पी चुने </string>  
 
-    <!-- Interests --> 
     <string name="astrology"> ज्योतिष </string> 
     <string name="diet"> आहार </string> 
     <string name="religion"> भक्ति भाव </string> 
@@ -77,7 +67,6 @@
     <string name="motivation"> प्रेरणा </string> 
     <string name="health"> स्वास्थ्य </string>  
 
-    <!-- Interests --> 
     <string name="astrology__"> ज्योतिष </string> 
     <string name="diet__"> आहार </string> 
     <string name="religion__"> भक्ति भाव </string> 
@@ -94,7 +83,6 @@
         <item> आयुर्वेद </item> 
         <item> ज्योतिष </item> 
     </array>  
-    <!--Motivation Array--> 
     <string-array name="motivation_array"> 
         <item> प्रेरणा स्त्रोत </item> 
         <item> कहानियाँ </item> 
@@ -113,7 +101,6 @@
         <item> फाइट डिप्रेशन </item> 
         <item> करियर प्रेरणा </item> 
     </string-array>  
-    <!--Religion Array--> 
     <string-array name="religion_array"> 
         <item> भगवान </item> 
         <item> गीता </item> 
@@ -134,7 +121,6 @@
         <item> लक्ष्मी </item> 
         <item> डेली दर्शन </item> 
     </string-array>  
-    <!--Ayurveda Array--> 
     <string-array name="ayurveda_array"> 
         <item> आयुर्वेदिक टिप्स </item> 
         <item> आयुर्वेदिक दवा </item> 
@@ -152,7 +138,6 @@
         <item> आयुर्वेदिक चिकित्सक </item> 
         <item> आयुर्वेदिक भोजन </item> 
     </string-array>  
-    <!--Health Array--> 
     <string-array name="health_array"> 
         <item> स्वास्थ्य  टिप्स </item> 
         <item> जिम टिप्स </item> 
@@ -168,8 +153,6 @@
         <item> जिम वर्क आउट </item> 
         <item> ध्यान </item> 
     </string-array>  
-    <!--Diet Array--> 
-
     <string-array name="diet_array"> 
         <item> फिटनेस फूड </item> 
         <item> भारतीय आहार </item>
@@ -187,9 +170,7 @@
         <item> प्रोटीन आहार </item> 
         <item> कॅल्षियम आहार </item> 
         <item> आहार संयोजन </item> 
-    </string-array>  
-
-    <!--Astrology Array--> 
+    </string-array>
     <string-array name="astrology_array"> 
         <item> भविष्यवाणी </item> 
         <item> आज का सुझाव </item> 
@@ -347,4 +328,17 @@
     <string name="about_short"> जुड़े, पढ़े और अनुभव करें! </string>
      <string name="about_long">आध्यतम धारणा नही ज़िंदगी का तरीका है |  हमारे तेज गति, प्रौद्योगिकी केंद्रित जीवन में,  हम सभी को खुश, स्वस्थ और सिद्ध जीवन जीने के लिए दिशा की आवश्यकता है! यह आध्यात्मीकता के प्रति अपना जीवन मोड़ने का समय है!  आध्यात्मीकता आपके आस-पास है औरआध्यात्मिक गुरु भी! Daily Suvichar आपको उनको खोजने और उनका अनुसरण करने के लिए एक मंच प्रदान करता है | हम पूरे भारत में धार्मिक, प्रेरणा, ज्योतिष्, योग, स्वास्थ्य और आहार जैसे विषयों पर आध्यात्मिक विचारों को लेकर आते हैं!
 आप अपने विचारों को अन्य यूज़र्स के साथ बाँट भी सकते हैं और उनके विचार भी पढ़ सखते है! Daily Suvichar आपको जोड़े रखेगा |
-जुड़ें रहे !</string>  </resources> 
+जुड़ें रहे !</string> 
+    <string name="your_feedsss">आपकी फीड्स</string>
+    <string name="see_what">देखें कि आपने क्या लिखा है दैनिक सुवीरार पर अब तक</string>
+    <string name="your_profilee">आपकी रूपरेखा</string>
+    <string name="see_data">डेटा जो आपने हमें प्रदान किया है देखें</string>
+    <string name="homey">घर</string>
+    <string name="guru_list">गुरु सूची</string>
+    <string name="guruey">अन्वेषण</string>
+    <string name="homed">जिन लोगों का आप अनुसरण करते हैं उनके निजीकृत पोस्ट देखें</string>
+    <string name="gurud">
+आध्यात्मिक नेताओं की एक सूची, उनकी प्रोफ़ाइल और उनकी पोस्ट देखें</string>
+    <string name="explored">एक जगह है जहां आप अपनी रुचियों के आधार पर फ़ीड प्राप्त करते हैं</string>
+    <string name="about_ds">के बारे में</string>
+</resources>

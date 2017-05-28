@@ -367,5 +367,16 @@ Spirituality is all around you and so are spiritual gurus! Daily Suvichar gives 
 You can even share your thoughts with other users and see what they have to say! Daily Suvichar will keep you engaged!
 
 Happy Discovering!</string>
+    <string name="your_feedsss">Your Feeds</string>
+    <string name="see_what">See What You Have Posted On Daily Suvichar So Far.</string>
+    <string name="your_profilee">Your Profile</string>
+    <string name="see_data">See Data That You Have Provided Us.</string>
+    <string name="homey">HOME</string>
+    <string name="guru_list">Guru List</string>
+    <string name="guruey">Explore</string>
+    <string name="homed">See The Personalised Posts of Those you Follow.</string>
+    <string name="gurud">See a List of Spiritual Leaders, their Profile and their Posts.</string>
+    <string name="explored">A place where you get the feeds based on your Interests.</string>
+    <string name="about_ds">About</string>
 
 </resources>

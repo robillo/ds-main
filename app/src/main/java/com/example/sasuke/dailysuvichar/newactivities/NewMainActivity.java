@@ -83,21 +83,21 @@ public class NewMainActivity extends AppCompatActivity {
         mPager.setCurrentItem(currentPage);
 
         list = new ArrayList<>();
-        list.add(new Feature("Your Feeds",
-                "See What You Have Posted On Daily Suvichar So Far.",
+        list.add(new Feature(getString(R.string.your_feedsss),
+                getString(R.string.see_what),
                 "https://3.bp.blogspot.com/-FTKj7QUV61w/WJBgEaJclgI/AAAAAAAAAFw/dX-wb54JX-AYiDGPPB1Z3lvS7ZCoUNKBACLcB/s1600/ph6.png", 1));
-        list.add(new Feature("Your Profile",
-                "See Data That You Have Provided Us.",
+        list.add(new Feature(getString(R.string.your_profilee),
+                getString(R.string.see_data),
                 "https://3.bp.blogspot.com/-FTKj7QUV61w/WJBgEaJclgI/AAAAAAAAAFw/dX-wb54JX-AYiDGPPB1Z3lvS7ZCoUNKBACLcB/s1600/ph6.png", 2));
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         recyclerView.setAdapter(new RVAFeature(getApplicationContext(), list));
     }
 
     private void assignStringValues(){
-        names = new String[]{"HOME", "Guru List", "Explore"};
-        descriptions = new String[]{"See The Personalised Posts of Those you Follow.",
-        "See a List of Spiritual Leaders, their Profile and their Posts.",
-        "A place where you get the feeds based on your Interests."};
+        names = new String[]{getString(R.string.homey), getString(R.string.guru_list), getString(R.string.guruey)};
+        descriptions = new String[]{getString(R.string.homed),
+        getString(R.string.gurud),
+        getString(R.string.explored)};
         photoUrls = new String[]{"https://1.bp.blogspot.com/-KOrgmRC8Nj0/WSh6_7z7ryI/AAAAAAAAASc/_O4UwRnmDsAZ2IFzIAh_eKXuVh9gti_CACK4B/s320/yoga2.jpg",
         "https://3.bp.blogspot.com/-O-kG5WpcVa8/WSh-Fh2m0_I/AAAAAAAAAS8/TwAT0D23cx0sQ0oCu_cKkPVL8MdAACtWgCK4B/s320/Buddha%2BSpiritual%2BBuddha%2B%2BAbstract%2B3D%2Band%2BCG%2BHD%2BDesktop%2BWallpaper.jpg",
         "https://1.bp.blogspot.com/-OYwFn64dzV0/WJBfWvYaXaI/AAAAAAAAAFc/1egquqeEF30HrOgarJflAGp8fXqyBeKDQCLcB/s1600/ph4.jpg"};
