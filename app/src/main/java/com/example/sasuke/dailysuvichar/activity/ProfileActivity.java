@@ -370,13 +370,13 @@ public class ProfileActivity extends BaseActivity {
                         .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                Toast.makeText(ProfileActivity.this, "File Uploaded! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ProfileActivity.this, getString(R.string.uploaded), Toast.LENGTH_SHORT).show();
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception exception) {
-                                Toast.makeText(ProfileActivity.this, "Upload Failed. Please Try Again!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ProfileActivity.this, getString(R.string.upload_failed), Toast.LENGTH_SHORT).show();
 
                             }
                         })
@@ -419,13 +419,13 @@ public class ProfileActivity extends BaseActivity {
                         .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                Toast.makeText(ProfileActivity.this, "File Uploaded! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ProfileActivity.this, getString(R.string.upload_failed), Toast.LENGTH_SHORT).show();
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception exception) {
-                                Toast.makeText(ProfileActivity.this, "Upload Failed. Please Try Again!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ProfileActivity.this, getString(R.string.failure), Toast.LENGTH_SHORT).show();
                             }
                         })
                         .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
@@ -628,7 +628,7 @@ public class ProfileActivity extends BaseActivity {
                                 if(mLinearLayout.getVisibility()== View.VISIBLE){
                                     mLinearLayout.setVisibility(View.GONE);
                                     specialization.setVisibility(View.GONE);
-                                    userTypeInput = "STANDARD";
+                                    userTypeInput = getString(R.string.standard_caps);
                                 }
                                 break;
                             }
@@ -637,7 +637,7 @@ public class ProfileActivity extends BaseActivity {
                                 if(mLinearLayout.getVisibility()== View.GONE){
                                     mLinearLayout.setVisibility(View.VISIBLE);
                                     specialization.setVisibility(View.VISIBLE);
-                                    userTypeInput = "GURU";
+                                    userTypeInput = getString(R.string.guru_caps);
                                 }
                                 break;
                             }

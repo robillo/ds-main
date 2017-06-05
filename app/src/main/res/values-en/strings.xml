@@ -57,7 +57,6 @@
     <string name="video">Video</string>
 
     <!--LoginFragment-->
-    <string name="facebook_app_id">298302307256927</string>
     <string name="sign_in_failed">Sign In Failed</string>
     <string name="play_services_error">PLAY SERVICES ERROR</string>
     <string name="authentication_failed">Authentication failed</string>
@@ -351,10 +350,6 @@
     <string name="atleat">Please Choose at least 1 more interests</string>
     <string name="please_three">Please select at least 3 sub interests</string>
     <string name="incomplete">Incomplete Data.</string>
-
-    <string name="lorem">
-        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-    </string>
 
     <string name="about_short">Discover, Read, Follow and Discover again!</string>
 

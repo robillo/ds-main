@@ -49,7 +49,6 @@
     <string name="photo"> छवि </string> 
     <string name="video"> वीडियो </string>  
 
-    <string name="facebook_app_id">298302307256927</string> 
     <string name="sign_in_failed"> साइन अप असफल </string> 
     <string name="play_services_error"> गूगल प्ले सर्विस एरर </string> 
     <string name="authentication_failed"> प्रमाणीकरण असफल </string>  

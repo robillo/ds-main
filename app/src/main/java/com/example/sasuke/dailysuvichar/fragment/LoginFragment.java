@@ -19,6 +19,7 @@ import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.common.ConnectionResult;
@@ -71,6 +72,7 @@ public class LoginFragment extends BaseFragment implements GoogleApiClient.OnCon
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        FacebookSdk.sdkInitialize(getActivity().getApplicationContext());
         mFirebaseAuth = FirebaseAuth.getInstance();
         callbackManager = CallbackManager.Factory.create();
         databaseReference = FirebaseDatabase.getInstance().getReference();
