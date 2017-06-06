@@ -10,7 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
 import com.example.sasuke.dailysuvichar.R;
-import com.example.sasuke.dailysuvichar.activity.SelectActivity;
+import com.example.sasuke.dailysuvichar.activity.SelectStatusActivity;
 import com.example.sasuke.dailysuvichar.activity.SelectPhotoActivity;
 import com.example.sasuke.dailysuvichar.activity.SelectVideoActivity;
 import com.example.sasuke.dailysuvichar.newfragments.AllPhotosFragment;
@@ -93,7 +93,7 @@ public class NewExploreyActivity extends AppCompatActivity implements GooeyMenu.
     public void menuItemClicked(int menuNumber) {
         if(menuNumber==1){
             //UPLOAD STATUS
-            Intent i = new Intent(this, SelectActivity.class);
+            Intent i = new Intent(this, SelectStatusActivity.class);
             i.putExtra("from", 1);
             startActivity(i);
         }

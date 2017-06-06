@@ -3,6 +3,7 @@ package com.example.sasuke.dailysuvichar.models;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 
+import com.google.firebase.database.Exclude;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
@@ -15,31 +16,38 @@ public class Photo {
 
     @NonNull
     private String name;
-    @NonNull
-    private Long size;
-    @NonNull
-    private String language;
-    @NonNull
-    private String encoding;
 
     @NonNull
+    @Exclude
     private StorageReference storageReference;
 
     @NonNull
+    private String type;
+
+    @NonNull
+    public String getType() {
+        return type;
+    }
+
+    public void setType(@NonNull String type) {
+        this.type = type;
+    }
+
+    @NonNull
+    @Exclude
     public StorageReference getStorageReference() {
         return storageReference;
     }
 
+    @Exclude
     public void setStorageReference(@NonNull StorageReference storageReference) {
         this.storageReference = storageReference;
     }
 
-    public Photo(@NonNull String name, @NonNull Long size, @NonNull String language, @NonNull String encoding, @NonNull String bucket, @NonNull String user, @NonNull Long timestamp, @NonNull Integer likes, @NonNull Integer shares, @NonNull ArrayList<Comment> comments, @NonNull String caption, @NonNull String uid, @NonNull ArrayList<String> tags, @NonNull Uri photoURL) {
+    public Photo(@NonNull String type, @NonNull String name, @NonNull String user, @NonNull Long timestamp, @NonNull Integer likes, @NonNull Integer shares, @NonNull ArrayList<Comment> comments, @NonNull String caption, @NonNull String uid, @NonNull ArrayList<String> tags, @NonNull Uri photoURL) {
+
+        this.type = type;
         this.name = name;
-        this.size = size;
-        this.language = language;
-        this.encoding = encoding;
-        this.bucket = bucket;
         this.user = user;
         this.timestamp = timestamp;
         this.likes = likes;
@@ -50,9 +58,6 @@ public class Photo {
         this.tags = tags;
         this.photoURL = photoURL;
     }
-
-    @NonNull
-    private String bucket;
 
     @NonNull
     private String user;
@@ -159,51 +164,48 @@ public class Photo {
         this.tags = tags;
     }
 
-    @NonNull
-    public Long getSize() {
-        return size;
-    }
-
-    public void setSize(@NonNull Long size) {
-        this.size = size;
-    }
-
-    @NonNull
-    public String getLanguage() {
-        return language;
-    }
-
-    public void setLanguage(@NonNull String language) {
-        this.language = language;
-    }
-
-    @NonNull
-    public String getEncoding() {
-        return encoding;
-    }
-
-    public void setEncoding(@NonNull String encoding) {
-        this.encoding = encoding;
-    }
-
-    @NonNull
-    public String getBucket() {
-        return bucket;
-    }
-
-    public void setBucket(@NonNull String bucket) {
-        this.bucket = bucket;
-    }
+//    @NonNull
+//    public Long getSize() {
+//        return size;
+//    }
+//
+//    public void setSize(@NonNull Long size) {
+//        this.size = size;
+//    }
+//
+//    @NonNull
+//    public String getLanguage() {
+//        return language;
+//    }
+//
+//    public void setLanguage(@NonNull String language) {
+//        this.language = language;
+//    }
+//
+//    @NonNull
+//    public String getEncoding() {
+//        return encoding;
+//    }
+//
+//    public void setEncoding(@NonNull String encoding) {
+//        this.encoding = encoding;
+//    }
+//
+//    @NonNull
+//    public String getBucket() {
+//        return bucket;
+//    }
+//
+//    public void setBucket(@NonNull String bucket) {
+//        this.bucket = bucket;
+//    }
 
     public Photo() {
     }
 
-    public Photo(@NonNull int photo) {
-        this.photo = photo;
-    }
-
-    @NonNull
-    private int photo;
+//    public Photo(@NonNull int photo) {
+//        this.photo = photo;
+//    }
 
     @NonNull
     private Uri photoURL;
@@ -217,12 +219,4 @@ public class Photo {
         this.photoURL = photoURL;
     }
 
-    @NonNull
-    public int getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(@NonNull int photo) {
-        this.photo = photo;
-    }
 }

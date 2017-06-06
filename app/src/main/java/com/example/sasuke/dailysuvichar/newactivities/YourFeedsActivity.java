@@ -7,16 +7,11 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.widget.Toast;
 
 import com.example.sasuke.dailysuvichar.R;
-import com.example.sasuke.dailysuvichar.activity.SelectActivity;
-import com.example.sasuke.dailysuvichar.activity.SelectPhotoActivity;
-import com.example.sasuke.dailysuvichar.activity.SelectVideoActivity;
 import com.example.sasuke.dailysuvichar.newfragments.AllPhotosFragment;
 import com.example.sasuke.dailysuvichar.newfragments.AllStatusFragment;
 import com.example.sasuke.dailysuvichar.newfragments.AllVideosFragment;
-import com.example.sasuke.dailysuvichar.utils.GooeyMenu;
 import com.example.sasuke.dailysuvichar.view.adapter.ViewPagerAdapter;
 
 public class YourFeedsActivity extends AppCompatActivity{

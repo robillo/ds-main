@@ -14,9 +14,6 @@ public class Status {
     private String uid;
 
     @NonNull
-    private String DP;
-
-    @NonNull
     public String getUid() {
         return uid;
     }
@@ -83,30 +80,9 @@ public class Status {
     @NonNull
     private ArrayList<String> tags;
 
-    @NonNull
-    public String getDP() {
-        return DP;
-    }
+    public Status(@NonNull String type, @NonNull String uid, @NonNull ArrayList<String> tags, @NonNull String name, @NonNull Long timestamp, @NonNull Integer likes, @NonNull Integer shares, @NonNull ArrayList<Comment> comments, @NonNull String status, @NonNull String user) {
 
-    public void setDP(@NonNull String DP) {
-        this.DP = DP;
-    }
-
-    public Status(@NonNull String uid, @NonNull ArrayList<String> tags, @NonNull String name, @NonNull Long timestamp, @NonNull Integer likes, @NonNull Integer shares, @NonNull ArrayList<Comment> comments, @NonNull String status, @NonNull String user, @NonNull String DP) {
-        this.uid = uid;
-        this.DP = DP;
-        this.tags = tags;
-        this.name = name;
-        this.timestamp = timestamp;
-        this.likes = likes;
-        this.shares = shares;
-        this.comments = comments;
-        this.status = status;
-        this.user = user;
-    }
-
-    public Status(@NonNull String uid, @NonNull ArrayList<String> tags, @NonNull String name, @NonNull Long timestamp, @NonNull Integer likes, @NonNull Integer shares, @NonNull ArrayList<Comment> comments, @NonNull String status, @NonNull String user) {
-
+        this.type = type;
         this.uid = uid;
         this.tags = tags;
         this.name = name;
@@ -129,6 +105,16 @@ public class Status {
 
     @NonNull
     private Integer shares;
+
+    private String type;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     @NonNull
     private ArrayList<Comment> comments;

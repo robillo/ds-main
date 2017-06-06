@@ -3,7 +3,7 @@ package com.example.sasuke.dailysuvichar.view.adapter;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Handler;
-import android.support.v7.widget.RecyclerView;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +17,9 @@ import com.klinker.android.simple_videoview.SimpleVideoView;
 
 import java.util.ArrayList;
 
-public class CustomVideoAdapter  extends RecyclerView.Adapter<CustomVideoVH>  {
+import me.drakeet.multitype.ItemViewBinder;
+
+public class CustomVideoAdapter  extends ItemViewBinder<CustomVideo, CustomVideoVH> {
 
     private Context context, pContext;
     ArrayList<CustomVideo> videos;
@@ -81,7 +83,7 @@ public class CustomVideoAdapter  extends RecyclerView.Adapter<CustomVideoVH>  {
         }
     }
 
-    @Override
+//    @Override
     public CustomVideoVH onCreateViewHolder(ViewGroup parent, int viewType) {
         context = parent.getContext();
         pContext = parent.getContext();
@@ -89,7 +91,7 @@ public class CustomVideoAdapter  extends RecyclerView.Adapter<CustomVideoVH>  {
         return new CustomVideoVH(view);
     }
 
-    @Override
+//    @Override
     public void onBindViewHolder(final CustomVideoVH holder, int position) {
 
         final CustomVideo item = videos.get(position);
@@ -99,7 +101,7 @@ public class CustomVideoAdapter  extends RecyclerView.Adapter<CustomVideoVH>  {
             public void run() {
 
                 if(item.getTimestamp()!=null) {
-                    holder.setPostTime(getTimeAgo(item.getTimestamp()));
+                    holder.setPostTime(getTimeAgo(Math.abs(item.getTimestamp())));
                 }
                 holder.setName(item.getName());
                 if(item.getCaption()!=null){
@@ -176,17 +178,88 @@ public class CustomVideoAdapter  extends RecyclerView.Adapter<CustomVideoVH>  {
 //        });
     }
 
-    @Override
-    public int getItemCount() {
-        if(videos!=null) {
-            return videos.size();
-        }else{
-            return 0;
-        }
-    }
+//    @Override
+//    public int getItemCount() {
+//        if(videos!=null) {
+//            return videos.size();
+//        }else{
+//            return 0;
+//        }
+//    }
 
     public void setItems(ArrayList<CustomVideo> list) {
         this.videos = list;
-        notifyDataSetChanged();
+//        notifyDataSetChanged();
+    }
+
+    @NonNull
+    @Override
+    protected CustomVideoVH onCreateViewHolder(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
+        context = parent.getContext();
+        pContext = parent.getContext();
+        View view = LayoutInflater.from(context).inflate(R.layout.row_video, parent, false);
+        return new CustomVideoVH(view);
+    }
+
+    @Override
+    protected void onBindViewHolder(@NonNull final CustomVideoVH holder, @NonNull final CustomVideo item) {
+
+//        final CustomVideo item = videos.get(position);
+
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+
+                if(item.getTimestamp()!=null) {
+                    holder.setPostTime(getTimeAgo(Math.abs(item.getTimestamp())));
+                }
+                holder.setName(item.getName());
+                if(item.getCaption()!=null){
+                    holder.setCaption(item.getCaption());
+                }
+                if(item.getStorageReference()!=null && context!=null) {
+                    holder.setVideo(item.getStorageReference());
+                }
+//                holder.setImageView();
+            }
+        });
+
+        holder.play.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (holder.videoView != currentlyPlaying) {
+                    releaseVideo();
+//                    holder.imageView.setVisibility(View.INVISIBLE);
+                    holder.videoView.setVisibility(View.VISIBLE);
+//                    if(holder.videoUrl!=null) {
+//                        holder.videoView.start(holder.videoUrl.toString() + ".mp4");
+//                    }
+                    Log.e("URI", " " + item.getVideoURI());
+                    if(item.getVideoURI()!=null){
+                        holder.videoView.start(Uri.parse(item.getVideoURI()));
+                        currentlyPlaying = holder.videoView;
+                    }
+                    else {
+                        Toast.makeText(context, "Sorry. This Video Cannot Be Played", Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+//                    holder.imageView.setVisibility(View.INVISIBLE);
+//                    holder.videoView.setVisibility(View.VISIBLE);
+//                    holder.videoView.start(Uri.parse(item.getVideoURI()));
+                }
+            }
+        });
+        holder.videoView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (holder.videoView.isPlaying())
+                    holder.videoView.pause();
+                else
+                    holder.videoView.play();
+            }
+        });
+        if(item.getUid()!=null) {
+            holder.setStatusDP(item.getUid());
+        }
     }
 }

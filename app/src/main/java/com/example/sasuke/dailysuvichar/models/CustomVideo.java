@@ -2,6 +2,7 @@ package com.example.sasuke.dailysuvichar.models;
 
 import android.support.annotation.NonNull;
 
+import com.google.firebase.database.Exclude;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ public class CustomVideo {
     @NonNull
     private String name;
     @NonNull
+    @Exclude
     private StorageReference storageReference;
     @NonNull
     private String user;
@@ -22,28 +24,44 @@ public class CustomVideo {
 
     }
 
-    public CustomVideo(@NonNull String name, @NonNull StorageReference storageReference, @NonNull String user, @NonNull String videoURI, @NonNull Long timestamp, @NonNull Integer likes, @NonNull Integer shares, @NonNull ArrayList<Comment> comments, @NonNull String caption, @NonNull String uid, @NonNull ArrayList<String> tags) {
-        this.name = name;
-        this.storageReference = storageReference;
-        this.user = user;
-        this.videoURI = videoURI;
-        this.timestamp = timestamp;
-        this.likes = likes;
-        this.shares = shares;
-        this.comments = comments;
-        this.caption = caption;
-        this.uid = uid;
-        this.tags = tags;
+    @NonNull
+    String type;
+
+    @NonNull
+    public String getType() {
+        return type;
     }
 
-    public CustomVideo(@NonNull String name, @NonNull String videoURI, @NonNull Integer likes, @NonNull String caption) {
-        this.name = name;
-        this.videoURI = videoURI;
-        this.likes = likes;
-        this.caption = caption;
+    public void setType(@NonNull String type) {
+        this.type = type;
     }
 
-    public CustomVideo(@NonNull String name, @NonNull String user, @NonNull Long timestamp, @NonNull Integer likes, @NonNull Integer shares, @NonNull ArrayList<Comment> comments, @NonNull String caption, @NonNull String uid, @NonNull ArrayList<String> tags) {
+//    public CustomVideo(@NonNull String type, @NonNull String name, @NonNull StorageReference storageReference, @NonNull String user, @NonNull String videoURI, @NonNull Long timestamp, @NonNull Integer likes, @NonNull Integer shares, @NonNull ArrayList<Comment> comments, @NonNull String caption, @NonNull String uid, @NonNull ArrayList<String> tags) {
+//
+//        this.type = type;
+//        this.name = name;
+//        this.storageReference = storageReference;
+//        this.user = user;
+//        this.videoURI = videoURI;
+//        this.timestamp = timestamp;
+//        this.likes = likes;
+//        this.shares = shares;
+//        this.comments = comments;
+//        this.caption = caption;
+//        this.uid = uid;
+//        this.tags = tags;
+//    }
+//
+//    public CustomVideo(@NonNull String name, @NonNull String videoURI, @NonNull Integer likes, @NonNull String caption) {
+//        this.name = name;
+//        this.videoURI = videoURI;
+//        this.likes = likes;
+//        this.caption = caption;
+//    }
+
+    public CustomVideo(@NonNull String type, @NonNull String name, @NonNull String user, @NonNull Long timestamp, @NonNull Integer likes, @NonNull Integer shares, @NonNull ArrayList<Comment> comments, @NonNull String caption, @NonNull String uid, @NonNull ArrayList<String> tags) {
+
+        this.type = type;
         this.name = name;
         this.user = user;
         this.timestamp = timestamp;
@@ -87,10 +105,12 @@ public class CustomVideo {
     }
 
     @NonNull
+    @Exclude
     public StorageReference getStorageReference() {
         return storageReference;
     }
 
+    @Exclude
     public void setStorageReference(@NonNull StorageReference storageReference) {
         this.storageReference = storageReference;
     }

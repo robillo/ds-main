@@ -38,7 +38,7 @@ public class PhotoItemAdapter extends ItemViewBinder<Photo, PhotoViewHolder> {
             @Override
             public void run() {
                 if(item.getTimestamp()!=null) {
-                    holder.setPostTime(getTimeAgo(item.getTimestamp()));
+                    holder.setPostTime(getTimeAgo(Math.abs(item.getTimestamp())));
                 }
                 holder.setName(item.getName());
                 if(item.getLikes()!=null) {

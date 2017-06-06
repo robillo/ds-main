@@ -142,7 +142,10 @@ public class AllVideosFragment extends Fragment {
         mRvHome.setLayoutManager(mLayoutManager);
 //        mAdapter = new MultiTypeAdapter();
 //        mAdapter.register(CustomVideo.class, new CustomVideoAdapter());
-        mRvHome.setAdapter(customVideoAdapter);
+
+
+
+//        mRvHome.setAdapter(customVideoAdapter);
 
         items = new ArrayList<>();
 
@@ -319,7 +322,7 @@ public class AllVideosFragment extends Fragment {
                                 Collections.reverse(items);
                             }
                             k++;
-                            customVideoAdapter.notifyDataSetChanged();
+//                            customVideoAdapter.notifyDataSetChanged();
                         }
                     }
 
@@ -333,7 +336,7 @@ public class AllVideosFragment extends Fragment {
 
             Log.d(TAG, "fetchStatusFromFirebase: " + items.size());
             setAdapter(items);
-            customVideoAdapter.notifyDataSetChanged();
+//            customVideoAdapter.notifyDataSetChanged();
 //            mAdapter.setItems(items);
 //            mAdapter.notifyDataSetChanged();
         }
@@ -373,7 +376,7 @@ public class AllVideosFragment extends Fragment {
                     }
                     k++;
 
-                    customVideoAdapter.notifyDataSetChanged();
+//                    customVideoAdapter.notifyDataSetChanged();
                 }
             }
 
@@ -386,7 +389,7 @@ public class AllVideosFragment extends Fragment {
 
         Log.d(TAG, "fetchStatusFromFirebase: " + items.size());
         setAdapter(items);
-        customVideoAdapter.notifyDataSetChanged();
+//        customVideoAdapter.notifyDataSetChanged();
 //        mAdapter.setItems(items);
 //        mAdapter.notifyDataSetChanged();
     }
@@ -440,7 +443,7 @@ public class AllVideosFragment extends Fragment {
                         }
 //                            Log.d(TAG, "fetchVideosFromFirebaseExplore: ISDONE "+isDone.size());
 
-                        customVideoAdapter.notifyDataSetChanged();
+//                        customVideoAdapter.notifyDataSetChanged();
 //                            if (mAdapter.getItemCount() > 0) {
 //                                avi.hide();
 //                            }
@@ -478,7 +481,7 @@ public class AllVideosFragment extends Fragment {
 //            avi.hide();
 //        }
         setAdapter(items);
-        customVideoAdapter.notifyDataSetChanged();
+//        customVideoAdapter.notifyDataSetChanged();
     }
 
     private static HashMap<String, Long> sortByComparator(HashMap<String, Long> unsortMap, final boolean order) {
@@ -608,6 +611,6 @@ public class AllVideosFragment extends Fragment {
 //        });
         customVideoAdapter.setItems(videos);
         mRvHome.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mRvHome.setAdapter(customVideoAdapter);
+//        mRvHome.setAdapter(customVideoAdapter);
     }
 }

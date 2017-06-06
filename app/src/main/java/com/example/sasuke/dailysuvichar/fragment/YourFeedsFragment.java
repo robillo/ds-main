@@ -21,7 +21,7 @@ import android.widget.Toast;
 
 import com.cleveroad.pulltorefresh.firework.FireworkyPullToRefreshLayout;
 import com.example.sasuke.dailysuvichar.R;
-import com.example.sasuke.dailysuvichar.activity.SelectActivity;
+import com.example.sasuke.dailysuvichar.activity.SelectStatusActivity;
 import com.example.sasuke.dailysuvichar.activity.SelectPhotoActivity;
 import com.example.sasuke.dailysuvichar.event.DoubleTabEvent;
 import com.example.sasuke.dailysuvichar.models.Photo;
@@ -375,7 +375,7 @@ public class YourFeedsFragment extends BaseFragment {
 
     @OnClick(R.id.tv_status)
     public void intent() {
-        startActivity(new Intent(getActivity(), SelectActivity.class));
+        startActivity(new Intent(getActivity(), SelectStatusActivity.class));
     }
 
     @Override

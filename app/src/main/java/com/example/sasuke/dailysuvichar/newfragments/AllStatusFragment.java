@@ -21,8 +21,13 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.sasuke.dailysuvichar.R;
+import com.example.sasuke.dailysuvichar.models.CustomVideo;
+import com.example.sasuke.dailysuvichar.models.Photo;
 import com.example.sasuke.dailysuvichar.models.Status;
+import com.example.sasuke.dailysuvichar.view.adapter.CustomVideoAdapter;
+import com.example.sasuke.dailysuvichar.view.adapter.PhotoItemAdapter;
 import com.example.sasuke.dailysuvichar.view.adapter.StatusItemAdapter;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -35,13 +40,13 @@ import com.google.firebase.storage.StorageReference;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -71,6 +76,7 @@ public class AllStatusFragment extends Fragment {
     private ArrayList<String> mSelectedSubInterests;
     private ArrayList<Status> statusYouraList, statusHomeaList;
     private StorageReference mStorageReferenceDP;
+    private HashMap<String, ArrayList<String>> mAllInterests;
     private FirebaseAuth mFirebaseAuth;
     private DatabaseReference mUsersDatabase;
     private ArrayList<String> mSelectedGurus;
@@ -138,89 +144,122 @@ public class AllStatusFragment extends Fragment {
         mRvHome.setLayoutManager(mLayoutManager);
         mAdapter = new MultiTypeAdapter();
         mAdapter.register(Status.class, new StatusItemAdapter());
+        mAdapter.register(Photo.class, new PhotoItemAdapter());
+        mAdapter.register(CustomVideo.class, new CustomVideoAdapter());
         mRvHome.setAdapter(mAdapter);
 
+        mAllInterests = new HashMap();
         items = new Items();
+        isDone = new HashMap<>();
 
         //WONT CAUSE NPE DONT WORRY
         if (isOnline()) {
-            if (from.equals("YOUR")) {
-                //SHOW YOUR FEEDS, COPY CODE FROM YOUR FEEDS FRAGMENT
-                Log.e("FROM", "YOUR TO STATUS");
-                isStatusDone = new HashMap<>();
-                statusYouraList = new ArrayList<>();
-                fetchStatusFromFirebaseYour();
-                refresh();
+//            if (from.equals("YOUR")) {
+            //SHOW YOUR FEEDS, COPY CODE FROM YOUR FEEDS FRAGMENT
+            Log.e("FROM", "YOUR TO STATUS");
+//                isStatusDone = new HashMap<>();
+//                statusYouraList = new ArrayList<>();
+//                fetchStatusFromFirebaseYour();
 
-            } else if (from.equals("EXPLORE")) {
-                //SHOW FEEDS ON YOUR INTERESTS
+            mDatabaseReference = FirebaseDatabase.getInstance().getReference("users");
+            Log.e(TAG, uid);
+            Log.e(TAG, mDatabaseReference.toString());
 
-                mDatabaseReference = FirebaseDatabase.getInstance().getReference("users");
-                Log.e(TAG, uid);
-                Log.e(TAG, mDatabaseReference.toString());
-
-                mSelectedSubInterests = new ArrayList<>();
-                isDone = new HashMap<>();
-
-                statusHashMap = new HashMap<>();
-                statusHashMapStore = new HashMap<>();
-
-                refresh();
-
-                mDatabaseReference.child(mFirebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
+            mDatabaseReference.child(mFirebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
 //                Log.d(TAG, "onDataChange: SUBINTS " + dataSnapshot.child("selectedSubInterests"));
 //                Log.d(TAG, "onDataChange: SUBINTS " + dataSnapshot.getChildrenCount());
 //                User user = dataSnapshot.getValue(User.class);
 //                Log.d(TAG, "onDataChange: INTTTT "+dataSnapshot.child("selectedSubInterests").getValue());
-                        if (dataSnapshot.child("mSelectedSubInterests").getValue() != null) {
-                            mSelectedSubInterests.addAll((Collection<? extends String>) dataSnapshot.child("mSelectedSubInterests").getValue());
-                        }
-                        fetchStatusFromFirebaseExplore();
-                        alternateLayout.setVisibility(View.INVISIBLE);
+                    if (dataSnapshot.child("mAllInterests").getValue() != null) {
+//                            mSelectedSubInterests.addAll((Collection<? extends String>) dataSnapshot.child("mSelectedSubInterests").getValue());
+                        mAllInterests.putAll((Map<? extends String, ? extends ArrayList<String>>) dataSnapshot.child("mAllInterests").getValue());
                     }
+                    fetchPostsFromFirebase();
+                    alternateLayout.setVisibility(View.INVISIBLE);
+                }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                    }
-                });
-
-                fetchStatusFromFirebaseExplore();
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                }
+            });
 
 
-                Log.e("FROM", "EXPLORE TO STATUS");
+            fetchPostsFromFirebase();
 
-            } else if (from.equals("HOME")) {
-                //SHOW FEEDS FROM WHO YOU FOLLOW + DS PEOPLE
-                Log.e("FROM", "HOME TO STATUS");
+            refresh();
 
-                mSelectedGurus = new ArrayList<>();
-                isStatusDoneGuru = new HashMap<>();
-                statusHomeaList = new ArrayList<>();
 
-                mDatabaseReferenceGuru = FirebaseDatabase.getInstance().getReference("users");
-
-                    refresh();
-
-                    mDatabaseReferenceGuru.child(mFirebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            if (dataSnapshot.child("following").getValue() != null) {
-                                mSelectedGurus.addAll((Collection<? extends String>) dataSnapshot.child("following").getValue());
-                            }
-                            fetchStatusFromFirebaseGuru();
-                            alternateLayout.setVisibility(View.INVISIBLE);
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-                        }
-                    });
-
-                fetchStatusFromFirebaseGuru();
-
-            }
+//            } else if (from.equals("EXPLORE")) {
+//                //SHOW FEEDS ON YOUR INTERESTS
+//
+//                mDatabaseReference = FirebaseDatabase.getInstance().getReference("users");
+//                Log.e(TAG, uid);
+//                Log.e(TAG, mDatabaseReference.toString());
+//
+//                mSelectedSubInterests = new ArrayList<>();
+//                isDone = new HashMap<>();
+//
+//                statusHashMap = new HashMap<>();
+//                statusHashMapStore = new HashMap<>();
+//
+//                refresh();
+//
+//                mDatabaseReference.child(mFirebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(DataSnapshot dataSnapshot) {
+////                Log.d(TAG, "onDataChange: SUBINTS " + dataSnapshot.child("selectedSubInterests"));
+////                Log.d(TAG, "onDataChange: SUBINTS " + dataSnapshot.getChildrenCount());
+////                User user = dataSnapshot.getValue(User.class);
+////                Log.d(TAG, "onDataChange: INTTTT "+dataSnapshot.child("selectedSubInterests").getValue());
+//                        if (dataSnapshot.child("mSelectedSubInterests").getValue() != null) {
+//                            mSelectedSubInterests.addAll((Collection<? extends String>) dataSnapshot.child("mSelectedSubInterests").getValue());
+//                        }
+//                        fetchStatusFromFirebaseExplore();
+//                        alternateLayout.setVisibility(View.INVISIBLE);
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(DatabaseError databaseError) {
+//                    }
+//                });
+//
+//                fetchStatusFromFirebaseExplore();
+//
+//
+//                Log.e("FROM", "EXPLORE TO STATUS");
+//
+//            } else if (from.equals("HOME")) {
+//                //SHOW FEEDS FROM WHO YOU FOLLOW + DS PEOPLE
+//                Log.e("FROM", "HOME TO STATUS");
+//
+//                mSelectedGurus = new ArrayList<>();
+//                isStatusDoneGuru = new HashMap<>();
+//                statusHomeaList = new ArrayList<>();
+//
+//                mDatabaseReferenceGuru = FirebaseDatabase.getInstance().getReference("users");
+//
+//                    refresh();
+//
+//                    mDatabaseReferenceGuru.child(mFirebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(DataSnapshot dataSnapshot) {
+//                            if (dataSnapshot.child("following").getValue() != null) {
+//                                mSelectedGurus.addAll((Collection<? extends String>) dataSnapshot.child("following").getValue());
+//                            }
+//                            fetchStatusFromFirebaseGuru();
+//                            alternateLayout.setVisibility(View.INVISIBLE);
+//                        }
+//
+//                        @Override
+//                        public void onCancelled(DatabaseError databaseError) {
+//                        }
+//                    });
+//
+//                fetchStatusFromFirebaseGuru();
+//
+//            }
         } else {
             Toast.makeText(getActivity(), getString(R.string.no_inter), Toast.LENGTH_SHORT).show();
         }
@@ -229,14 +268,87 @@ public class AllStatusFragment extends Fragment {
         return v;
     }
 
+    private void fetchPostsFromFirebase() {
+        if (mAllInterests != null && mAllInterests.keySet().size() > 0) {
+            ArrayList<String> interests = new ArrayList<>();
+            interests.addAll(mAllInterests.keySet());
+
+            Log.d(TAG, "fetchPostsFromFirebase: "+interests);
+            mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("allPosts");
+
+            mDatabaseReferencePosts.orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                    mStorageReference = FirebaseStorage.getInstance().getReference("posts").child("images");
+
+                    final StorageReference mStorageReferenceVideo = FirebaseStorage.getInstance().getReference("posts").child("videos");
+
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+
+                        Log.d(TAG, "onDataChange: DATA "+postSnapshot);
+                        Log.d(TAG, "onDataChange: DATA "+postSnapshot.child("type"));
+
+                        if(!isDone.containsKey(postSnapshot.getKey())) {
+
+                            if (postSnapshot.child("type").getValue().equals("status")) {
+                                Log.d(TAG, "onDataChange: DATA troo");
+                                Status statusSnap = postSnapshot.getValue(Status.class);
+                                isDone.put(postSnapshot.getKey(), (long) 1);
+                                items.add(statusSnap);
+                            } else if (postSnapshot.child("type").getValue().equals("photo")) {
+                                Photo photoSnap = postSnapshot.getValue(Photo.class);
+                                photoSnap.setStorageReference(mStorageReference.child(postSnapshot.getKey()));
+                                isDone.put(postSnapshot.getKey(), (long) 1);
+
+                                items.add(photoSnap);
+                            } else if (postSnapshot.child("type").getValue().equals("video")) {
+                                final CustomVideo videoSnap = postSnapshot.getValue(CustomVideo.class);
+                                if (mStorageReferenceVideo.child(postSnapshot.getKey()) != null) {
+                                    isDone.put(postSnapshot.getKey(), (long) 1);
+                                    items.add(videoSnap);
+                                    videoSnap.setStorageReference(mStorageReferenceVideo.child(postSnapshot.getKey()));
+                                    mStorageReferenceVideo.child(postSnapshot.getKey()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                        @Override
+                                        public void onSuccess(Uri uri) {
+                                            videoSnap.setVideoURI(uri.toString());
+                                        }
+                                    });
+                                }
+                            }
+                            mAdapter.notifyDataSetChanged();
+                        }else{
+
+                        }
+
+                    }
+                    mAdapter.notifyDataSetChanged();
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.d(TAG, "onCancelled: " + databaseError.getMessage());
+                }
+            });
+
+            Log.d(TAG, "fetchPostsFromFirebase: " + items.size());
+            mAdapter.setItems(items);
+            mAdapter.notifyDataSetChanged();
+        }else{
+            Log.d(TAG, "fetchPostsFromFirebase: NULL");
+        }
+
+    }
+
 
     private void fetchStatusFromFirebaseGuru() {
 
 //        mLayoutManager.setStackFromEnd(true);
-        if(mSelectedGurus!=null && mSelectedGurus.size()>0) {
+        if (mSelectedGurus != null && mSelectedGurus.size() > 0) {
 
-            for(String guru: mSelectedGurus) {
-                int i=0;
+            for (String guru : mSelectedGurus) {
+                int i = 0;
 
                 mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("users").child(guru).child("posts");
 
@@ -244,7 +356,7 @@ public class AllStatusFragment extends Fragment {
                 mDatabaseReferencePosts.child("status").orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        int k=0;
+                        int k = 0;
 
                         for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                             Status statusSnap = postSnapshot.getValue(Status.class);
@@ -256,7 +368,7 @@ public class AllStatusFragment extends Fragment {
                             }
                             mAdapter.notifyDataSetChanged();
 
-                            if(finalI ==mSelectedGurus.size()-1 && k==dataSnapshot.getChildrenCount()-1){
+                            if (finalI == mSelectedGurus.size() - 1 && k == dataSnapshot.getChildrenCount() - 1) {
                                 Collections.reverse(items);
                             }
                             k++;
@@ -288,7 +400,7 @@ public class AllStatusFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                int k=0;
+                int k = 0;
 
 //                        Log.i(TAG, "onDataChange: "+mUserList.size()+" ");
 
@@ -299,7 +411,7 @@ public class AllStatusFragment extends Fragment {
                         items.add(status);
                         isStatusDone.put(postSnapshot.getKey(), true);
                     }
-                    if(k==dataSnapshot.getChildrenCount()-1){
+                    if (k == dataSnapshot.getChildrenCount() - 1) {
                         Collections.reverse(items);
                     }
                     mAdapter.notifyDataSetChanged();
@@ -332,20 +444,23 @@ public class AllStatusFragment extends Fragment {
                     public void run() {
                         //CALL DATA HERE
                         if (isOnline()) {
-                            if (from.equals("YOUR")) {
-                                //SHOW YOUR FEEDS, COPY CODE FROM YOUR FEEDS FRAGMENT
-                                Log.e("FROM", "YOUR TO PHOTOS");
-                                fetchStatusFromFirebaseYour();
 
-                            } else if (from.equals("EXPLORE")) {
-                                //SHOW FEEDS ON YOUR INTERESTS
-                                Log.e("FROM", "EXPLORE TO PHOTOS");
-                                fetchStatusFromFirebaseExplore();
-                            } else if (from.equals("HOME")) {
-                                //SHOW FEEDS FROM WHO YOU FOLLOW + DS PEOPLE
-                                Log.e("FROM", "HOME TO PHOTOS");
-                                fetchStatusFromFirebaseGuru();
-                            }
+                            fetchPostsFromFirebase();
+
+//                            if (from.equals("YOUR")) {
+//                                //SHOW YOUR FEEDS, COPY CODE FROM YOUR FEEDS FRAGMENT
+//                                Log.e("FROM", "YOUR TO PHOTOS");
+//                                fetchStatusFromFirebaseYour();
+//
+//                            } else if (from.equals("EXPLORE")) {
+//                                //SHOW FEEDS ON YOUR INTERESTS
+//                                Log.e("FROM", "EXPLORE TO PHOTOS");
+//                                fetchStatusFromFirebaseExplore();
+//                            } else if (from.equals("HOME")) {
+//                                //SHOW FEEDS FROM WHO YOU FOLLOW + DS PEOPLE
+//                                Log.e("FROM", "HOME TO PHOTOS");
+//                                fetchStatusFromFirebaseGuru();
+//                            }
 
                         } else {
                             Toast.makeText(getActivity(), getString(R.string.no_inter), Toast.LENGTH_SHORT).show();

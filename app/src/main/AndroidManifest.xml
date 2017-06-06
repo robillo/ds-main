@@ -50,7 +50,7 @@
         <!-- android:configChanges="orientation|screenSize" -->
         <!-- android:hardwareAccelerated="true" /> -->
         <activity
-            android:name=".activity.SelectActivity"
+            android:name=".activity.SelectStatusActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait"/>

@@ -34,7 +34,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class SelectActivity extends BaseActivity {
+public class SelectStatusActivity extends BaseActivity {
 
     private static final String TAG = "SELECT";
     @BindView(R.id.name)
@@ -66,7 +66,7 @@ public class SelectActivity extends BaseActivity {
     private ArrayList<String> interests, subInterests, data, mSelectedItems;
     private Context context;
     private FirebaseUser mFirebaseUser;
-    private DatabaseReference mDatabaseReferenceTag, mDatabaseReferenceUser;
+    private DatabaseReference mDatabaseReferenceTag, mDatabaseReferenceUser, mDatabaseReferenceAllPosts;
 
     private int from = 1;
 
@@ -193,22 +193,25 @@ public class SelectActivity extends BaseActivity {
                 Log.d(TAG, "postStatus: NAMEE "+name);
                 if(name.getText()!="") {
 
-                    status = new Status(mFirebaseUser.getUid(), mSelectedItems, name.getText().toString(), System.currentTimeMillis(),
+                    status = new Status("status",mFirebaseUser.getUid(), interests, name.getText().toString(), -System.currentTimeMillis(),
                             0, 0, null, etStatus.getText().toString(), mFirebaseUser.getEmail());
                 }else{
 
-                    status = new Status(mFirebaseUser.getUid(), mSelectedItems, "Unknown User", System.currentTimeMillis(),
+                    status = new Status("status",mFirebaseUser.getUid(), interests, "Unknown User", -System.currentTimeMillis(),
                             0, 0, null, etStatus.getText().toString(), mFirebaseUser.getEmail());
                 }
 
-                mDatabaseReferenceTag = FirebaseDatabase.getInstance().getReference("tags");
+                mDatabaseReferenceTag = FirebaseDatabase.getInstance().getReference("posts");
+                mDatabaseReferenceAllPosts = FirebaseDatabase.getInstance().getReference("allPosts");
                 String postID = mDatabaseReferenceTag.push().getKey();
-                for(String subInt: mSelectedItems){
-                    mDatabaseReferenceTag.child(subInt.toLowerCase()).child("status").child(postID).setValue(status);
+                for(String interest: interests){
+                    mDatabaseReferenceTag.child(interest.toLowerCase()).child(postID).setValue(status);
                 }
 
+                mDatabaseReferenceAllPosts.child(postID).setValue(status);
+
                 mDatabaseReferenceUser = FirebaseDatabase.getInstance().getReference();
-                mDatabaseReferenceUser.child("users").child(mFirebaseUser.getUid()).child("posts").child("status").push().setValue(status);
+                mDatabaseReferenceUser.child("users").child(mFirebaseUser.getUid()).child("userPosts").child(postID).setValue(status);
 
                 Toast.makeText(context, getString(R.string.success), Toast.LENGTH_SHORT).show();
                 if(from == 1){

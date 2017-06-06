@@ -27,7 +27,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.cleveroad.pulltorefresh.firework.FireworkyPullToRefreshLayout;
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.activity.FullScreenActivity;
-import com.example.sasuke.dailysuvichar.activity.SelectActivity;
+import com.example.sasuke.dailysuvichar.activity.SelectStatusActivity;
 import com.example.sasuke.dailysuvichar.activity.SelectPhotoActivity;
 import com.example.sasuke.dailysuvichar.activity.SelectVideoActivity;
 import com.example.sasuke.dailysuvichar.event.DoubleTabEvent;
@@ -487,7 +487,7 @@ public class HomeFragment extends BaseFragment {
 
     @OnClick(R.id.tv_status)
     public void intent() {
-        startActivity(new Intent(getActivity(), SelectActivity.class));
+        startActivity(new Intent(getActivity(), SelectStatusActivity.class));
     }
 
     @OnClick(R.id.tv_video)

@@ -84,7 +84,7 @@ public class SelectPhotoActivity extends BaseActivity{
     private static final int PICK_IMAGE_REQUEST = 250;
     private Uri filePath;
     private FirebaseUser mFirebaseUser;
-    private DatabaseReference mDatabaseReferenceTag,mDatabaseReferenceUser;
+    private DatabaseReference mDatabaseReferenceTag,mDatabaseReferenceUser,mDatabaseReferenceAllPosts;
     private StorageReference mStorageReference;
     ProgressDialog progressDialog;
     Long size;
@@ -256,7 +256,9 @@ public class SelectPhotoActivity extends BaseActivity{
                     progressDialog.setTitle(getString(R.string.uploadinggg));
                     progressDialog.show();
 
-                    mDatabaseReferenceTag = FirebaseDatabase.getInstance().getReference("tags");
+                    mDatabaseReferenceTag = FirebaseDatabase.getInstance().getReference("posts");
+                    mDatabaseReferenceAllPosts = FirebaseDatabase.getInstance().getReference("allPosts");
+
                     final String postID = mDatabaseReferenceTag.push().getKey();
                     getName();
                     StorageReference riversRef = mStorageReference.child(postID);
@@ -299,25 +301,23 @@ public class SelectPhotoActivity extends BaseActivity{
 
                     Photo photo=null;
                     if(name.getText()!="") {
-                        photo = new Photo(name.getText().toString(), size,
-                                lang, encoding,
-                                bucket, mFirebaseUser.getEmail(),
-                                System.currentTimeMillis(), 0, 0, null, etCaption.getText().toString(),
-                                mFirebaseUser.getUid(), mSelectedItems, downloadUrl);
+                        photo = new Photo("photo",name.getText().toString(), mFirebaseUser.getEmail(),
+                                -System.currentTimeMillis(), 0, 0, null, etCaption.getText().toString(),
+                                mFirebaseUser.getUid(), interests, downloadUrl);
                     }else{
-                        photo = new Photo(getString(R.string.unknown), size,
-                                lang, encoding,
-                                bucket, mFirebaseUser.getEmail(),
-                                System.currentTimeMillis(), 0, 0, null, etCaption.getText().toString(),
-                                mFirebaseUser.getUid(), mSelectedItems, downloadUrl);
+                        photo = new Photo("photo", getString(R.string.unknown), mFirebaseUser.getEmail(),
+                                -System.currentTimeMillis(), 0, 0, null, etCaption.getText().toString(),
+                                mFirebaseUser.getUid(), interests, downloadUrl);
                     }
 
-                    for (String subInt : mSelectedItems) {
-                        mDatabaseReferenceTag.child(subInt.toLowerCase()).child("photo").child(postID).setValue(photo);
+                    for (String interest : interests) {
+                        mDatabaseReferenceTag.child(interest.toLowerCase()).child(postID).setValue(photo);
                     }
+
+                    mDatabaseReferenceAllPosts.child(postID).setValue(photo);
 
                     mDatabaseReferenceUser = FirebaseDatabase.getInstance().getReference();
-                    mDatabaseReferenceUser.child("users").child(mFirebaseUser.getUid()).child("posts").child("photo").child(postID).setValue(photo);
+                    mDatabaseReferenceUser.child("users").child(mFirebaseUser.getUid()).child("userPosts").child(postID).setValue(photo);
 
                     Toast.makeText(this, getString(R.string.success), Toast.LENGTH_SHORT).show();
                     if(from == 1){

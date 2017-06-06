@@ -95,7 +95,7 @@ public class SelectVideoActivity extends BaseActivity {
     private static final int PICK_VIDEO_REQUEST = 250;
     private Uri filePath;
     private FirebaseUser mFirebaseUser;
-    private DatabaseReference mDatabaseReferenceTag, mDatabaseReferenceUser;
+    private DatabaseReference mDatabaseReferenceTag, mDatabaseReferenceUser,mDatabaseReferenceAllPosts;
     private StorageReference mStorageReference;
     ProgressDialog progressDialog;
     Bitmap thumb;
@@ -310,7 +310,9 @@ public class SelectVideoActivity extends BaseActivity {
 
 
 
-                    mDatabaseReferenceTag = FirebaseDatabase.getInstance().getReference("tags");
+                    mDatabaseReferenceTag = FirebaseDatabase.getInstance().getReference("posts");
+                    mDatabaseReferenceAllPosts = FirebaseDatabase.getInstance().getReference("allPosts");
+
                     final String postID = mDatabaseReferenceTag.push().getKey();
                     Log.d(TAG, "uploadToFirebase: "+thumb);
                     if(thumb!=null) {
@@ -373,21 +375,23 @@ public class SelectVideoActivity extends BaseActivity {
                     CustomVideo video = null;
 
                     if (name.getText() != "") {
-                        video = new CustomVideo(name.getText().toString(), mFirebaseUser.getEmail(),
-                                System.currentTimeMillis(), 0, 0, null, etCaption.getText().toString(),
-                                mFirebaseUser.getUid(), mSelectedItems);
+                        video = new CustomVideo("video",name.getText().toString(), mFirebaseUser.getEmail(),
+                                -System.currentTimeMillis(), 0, 0, null, etCaption.getText().toString(),
+                                mFirebaseUser.getUid(), interests);
                     }else{
-                        video = new CustomVideo(getString(R.string.unknown), mFirebaseUser.getEmail(),
-                                System.currentTimeMillis(), 0, 0, null, etCaption.getText().toString(),
-                                mFirebaseUser.getUid(), mSelectedItems);
+                        video = new CustomVideo("video",getString(R.string.unknown), mFirebaseUser.getEmail(),
+                                -System.currentTimeMillis(), 0, 0, null, etCaption.getText().toString(),
+                                mFirebaseUser.getUid(), interests);
                     }
 
-                    for (String subInt : mSelectedItems) {
-                        mDatabaseReferenceTag.child(subInt.toLowerCase()).child("video").child(postID).setValue(video);
+                    for (String interest : interests) {
+                        mDatabaseReferenceTag.child(interest.toLowerCase()).child(postID).setValue(video);
                     }
+
+                    mDatabaseReferenceAllPosts.child(postID).setValue(video);
 
                     mDatabaseReferenceUser = FirebaseDatabase.getInstance().getReference();
-                    mDatabaseReferenceUser.child("users").child(mFirebaseUser.getUid()).child("posts").child("video").child(postID).setValue(video);
+                    mDatabaseReferenceUser.child("users").child(mFirebaseUser.getUid()).child("userPosts").child(postID).setValue(video);
 
                     Toast.makeText(this, R.string.success, Toast.LENGTH_SHORT).show();
                     if(from == 1){

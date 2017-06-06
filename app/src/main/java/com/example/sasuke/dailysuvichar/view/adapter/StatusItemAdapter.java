@@ -37,7 +37,7 @@ public class StatusItemAdapter extends ItemViewBinder<Status, StatusViewHolder> 
             public void run() {
                 holder.setStatus(item.getStatus());
                 if(item.getTimestamp()!=null) {
-                    holder.setPostTime(getTimeAgo(item.getTimestamp()));
+                    holder.setPostTime(getTimeAgo(Math.abs(item.getTimestamp())));
                 }
                 holder.setName(item.getName());
                 if(item.getLikes()!=null) {
