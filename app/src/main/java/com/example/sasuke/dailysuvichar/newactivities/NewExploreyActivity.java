@@ -69,7 +69,6 @@ public class NewExploreyActivity extends AppCompatActivity implements GooeyMenu.
         adapter.addFragment(fragment, getString(R.string.videoss));
 
         viewPager.setAdapter(adapter);
-        viewPager.setAdapter(adapter);
     }
 
     @Override
