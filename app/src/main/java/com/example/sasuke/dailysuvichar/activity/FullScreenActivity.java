@@ -1,6 +1,7 @@
 package com.example.sasuke.dailysuvichar.activity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
@@ -8,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.sasuke.dailysuvichar.R;
@@ -32,6 +34,7 @@ public class FullScreenActivity extends BaseActivity{
 
     private int from = 0;
     private String path = null;
+    private StorageReference gsReference = null;
 
     @BindView(R.id.download)
     TextView download;
@@ -47,8 +50,8 @@ public class FullScreenActivity extends BaseActivity{
         from = getIntent().getIntExtra("from", 0);
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
-        path = getIntent().getStringExtra("path");
-        StorageReference gsReference = storage.getReferenceFromUrl(path);
+        String path = getIntent().getStringExtra("path");
+        gsReference = storage.getReferenceFromUrl(path);
 
         Glide.with(getApplicationContext())
                 .using(new FirebaseImageLoader())
@@ -64,27 +67,30 @@ public class FullScreenActivity extends BaseActivity{
 
     @OnClick(R.id.download)
     public void setDownload(){
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageRef = storage.getReferenceFromUrl(path);
-        StorageReference  islandRef = storageRef.child("file.txt");
 
-        File rootPath = new File(Environment.getExternalStorageDirectory(), "file_name");
+        Toast.makeText(getApplicationContext(), "Downloading image..", Toast.LENGTH_SHORT).show();
+
+        File rootPath = new File(Environment.getExternalStorageDirectory(), "image");
         if(!rootPath.exists()) {
             rootPath.mkdirs();
         }
 
-        final File localFile = new File(rootPath,"imageName.txt");
+        final File localFile = new File(rootPath,"imageName.jpg");
 
-        islandRef.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+        gsReference.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                 Log.e("firebase ",";local tem file created  created " +localFile.toString());
                 //  updateDb(timestamp,localFile.toString(),position);
+//                getApplicationContext().sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://" + Environment.getExternalStorageDirectory())));
+                Toast.makeText(getApplicationContext(), "Image Download Successful", Toast.LENGTH_SHORT).show();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
                 Log.e("firebase ",";local tem file not created  created " +exception.toString());
+
+                Toast.makeText(getApplicationContext(), "Network error.. Please try again later.", Toast.LENGTH_SHORT).show();
             }
         });
     }

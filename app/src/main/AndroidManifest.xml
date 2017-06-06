@@ -67,7 +67,15 @@
         <activity
             android:name=".activity.FullScreenActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait">
+
+            <!--<intent-filter>-->
+                <!---->
+                <!--<protected-broadcast android:name="android.intent.action.MEDIA_MOUNTED" />-->
+
+            <!--</intent-filter>-->
+
+        </activity>
         <activity
             android:name=".activity.ProfileActivity"
             android:theme="@style/AppTheme.NoActionBar"
