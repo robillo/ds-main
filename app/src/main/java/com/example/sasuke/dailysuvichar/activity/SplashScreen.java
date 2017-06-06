@@ -24,10 +24,10 @@ public class SplashScreen extends Activity {
             Log.e("CASE", "LOGIN TOKEN NOT NULL");
 
             if(SharedPrefs.getIsProfileSet()==null){
-                startActivity(NewMainActivity.newIntent(this));
+                startActivity(MainActivity.newIntent(this));
             }
             else {
-                startActivity(NewMainActivity.newIntent(this));
+                startActivity(MainActivity.newIntent(this));
             }
 
         }

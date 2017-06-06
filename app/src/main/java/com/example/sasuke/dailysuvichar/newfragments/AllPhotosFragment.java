@@ -101,10 +101,6 @@ public class AllPhotosFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v=  inflater.inflate(R.layout.fragment_all_photos, container, false);
-        ButterKnife.bind(getActivity());
-
-        Bundle args = getArguments();
-        from = args.getString("from");
 
         mRvHome= (RecyclerView) v.findViewById(R.id.recyclerview);
         mPullToRefresh = (SwipeRefreshLayout) v.findViewById(R.id.swiperefresh);

@@ -65,7 +65,6 @@ public class NewHomeyActivity extends AppCompatActivity implements GooeyMenu.Goo
         adapter.addFragment(fragment, getString(R.string.videoss));
 
         viewPager.setAdapter(adapter);
-        viewPager.setAdapter(adapter);
     }
 
     @Override
