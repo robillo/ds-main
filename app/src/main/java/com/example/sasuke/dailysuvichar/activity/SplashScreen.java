@@ -28,7 +28,7 @@ public class SplashScreen extends Activity {
         }
         else {
             Log.e("CASE", "LOGIN TOKEN AND THEREFORE, ACCESS TOKEN NULL");
-            startActivity(MainActivity.newIntent(this));
+            startActivity(LoginActivity.newIntent(this));
         }
     }
 }
