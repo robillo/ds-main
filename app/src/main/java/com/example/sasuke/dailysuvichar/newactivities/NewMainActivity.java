@@ -50,7 +50,7 @@ public class NewMainActivity extends AppCompatActivity {
 
     boolean doubleBackToExitPressedOnce = false;
     private FragmentTransaction fragmentTransaction;
-    private String from = getString(R.string.title_home);
+    private String from;
 
     @BindView(R.id.conditional)
     LinearLayout conditional;
@@ -175,6 +175,8 @@ public class NewMainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        from = getString(R.string.title_home);
 
         addFragment(getResources().getString(R.string.title_home));
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
