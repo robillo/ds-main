@@ -1,6 +1,7 @@
 package com.example.sasuke.dailysuvichar.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -21,29 +22,16 @@ public class SplashScreen extends Activity {
 //        SharedPrefs.setDefaults();
 
         if (SharedPrefs.getLoginToken() != null) {
-            Log.e("CASE", "LOGIN TOKEN NOT NULL");
-
-            if(SharedPrefs.getIsProfileSet()==null){
+            if (AccessToken.getCurrentAccessToken() != null) {
+                Log.e("CASE", "LOGIN TOKEN NULL, ACCESS TOKEN IS: " + AccessToken.getCurrentAccessToken());
+                startActivity(NewMainActivity.newIntent(this));
+            } else {
+                Log.e("CASE", "LOGIN TOKEN NULL AND ACCESS TOKEN NOT NULL");
                 startActivity(MainActivity.newIntent(this));
             }
-            else {
-                startActivity(MainActivity.newIntent(this));
-            }
-
         }
         else {
-            Log.e("CASE", "LOGIN TOKEN NULL");
-            if (AccessToken.getCurrentAccessToken() != null) {
-                if(SharedPrefs.getIsProfileSet()==null){
-                    startActivity(NewMainActivity.newIntent(this));
-                }
-                else {
-                    startActivity(NewMainActivity.newIntent(this));
-                }
-            } else {
-                Log.e("CASE", "VERY START");
-                startActivity(MainActivity.newIntent(this));
-            }
+           startActivity(MainActivity.newIntent(this));
         }
     }
 }
