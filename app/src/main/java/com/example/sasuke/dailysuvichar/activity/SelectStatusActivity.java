@@ -214,12 +214,12 @@ public class SelectStatusActivity extends BaseActivity {
                 mDatabaseReferenceUser.child("users").child(mFirebaseUser.getUid()).child("userPosts").child(postID).setValue(status);
 
                 Toast.makeText(context, getString(R.string.success), Toast.LENGTH_SHORT).show();
-                if(from == 1){
-                    startActivity(new Intent(this, NewExploreyActivity.class));
-                }
-                else if(from == 2){
-                    startActivity(new Intent(this, NewHomeyActivity.class));
-                }
+//                if(from == 1){
+//                    startActivity(new Intent(this, NewExploreyActivity.class));
+//                }
+//                else if(from == 2){
+//                    startActivity(new Intent(this, NewHomeyActivity.class));
+//                }
                 finish();
             }
         }

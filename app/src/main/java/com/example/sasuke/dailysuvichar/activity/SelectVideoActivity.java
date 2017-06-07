@@ -394,12 +394,12 @@ public class SelectVideoActivity extends BaseActivity {
                     mDatabaseReferenceUser.child("users").child(mFirebaseUser.getUid()).child("userPosts").child(postID).setValue(video);
 
                     Toast.makeText(this, R.string.success, Toast.LENGTH_SHORT).show();
-                    if(from == 1){
-                        startActivity(new Intent(this, NewExploreyActivity.class));
-                    }
-                    else if(from == 2){
-                        startActivity(new Intent(this, NewHomeyActivity.class));
-                    }
+//                    if(from == 1){
+//                        startActivity(new Intent(this, NewExploreyActivity.class));
+//                    }
+//                    else if(from == 2){
+//                        startActivity(new Intent(this, NewHomeyActivity.class));
+//                    }
                     finish();
                 }else{
                     Toast.makeText(this, R.string.caption, Toast.LENGTH_SHORT).show();
