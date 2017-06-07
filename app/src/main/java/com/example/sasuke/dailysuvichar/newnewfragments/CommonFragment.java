@@ -488,11 +488,29 @@ public class CommonFragment extends Fragment {
                             public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
                                 switch (which){
                                     case 0:{
-                                        //FETCH ENGLIH FEEDS
+                                        //FETCH ENGLISH FEEDS
+                                        if(from.equals(getString(R.string.title_home))){
+                                            //FETCH ENGLISH FEEDS FOR HOME
+                                        }
+                                        else if(from.equals(getString(R.string.title_explore))){
+                                            //FETCH ENGLISH FEEDS FOR EXPLORE
+                                        }
+                                        else if(from.equals(getString(R.string.title_your_feeds))){
+                                            //FETCH ENGLISH FEEDS FOR YOUR FEEDS
+                                        }
                                         break;
                                     }
                                     case 1:{
                                         //FETCH HINDI FEEDS
+                                        if(from.equals(getString(R.string.title_home))){
+                                            //FETCH HINDI FEEDS FOR HOME
+                                        }
+                                        else if(from.equals(getString(R.string.title_explore))){
+                                            //FETCH HINDI FEEDS FOR EXPLORE
+                                        }
+                                        else if(from.equals(getString(R.string.title_your_feeds))){
+                                            //FETCH HINDI FEEDS FOR YOUR FEEDS
+                                        }
                                         break;
                                     }
                                 }
