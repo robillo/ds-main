@@ -247,12 +247,13 @@ public class SelectStatusActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        if(from == 1){
-            startActivity(new Intent(this, NewExploreyActivity.class));
-        }
-        else if(from == 2){
-            startActivity(new Intent(this, NewHomeyActivity.class));
-        }
+//        super.onBackPressed();
+//        if(from == 1){
+//            startActivity(new Intent(this, NewExploreyActivity.class));
+//        }
+//        else if(from == 2){
+//            startActivity(new Intent(this, NewHomeyActivity.class));
+//        }
+        finish();
     }
 }

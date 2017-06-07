@@ -68,21 +68,21 @@ public class NewMainActivity extends AppCompatActivity {
     @OnClick(R.id.status_select)
     public void setStatus_select(){
         Intent i = new Intent(this, SelectStatusActivity.class);
-        i.putExtra("page", 2);
+        i.putExtra("page", 1);
         startActivity(i);
     }
 
     @OnClick(R.id.photos_select)
     public void setPhotos_select(){
         Intent i = new Intent(this, SelectPhotoActivity.class);
-        i.putExtra("page", 2);
+        i.putExtra("page", 1);
         startActivity(i);
     }
 
     @OnClick(R.id.videos_select)
     public void setVideos_select(){
         Intent i = new Intent(this, SelectVideoActivity.class);
-        i.putExtra("page", 2);
+        i.putExtra("page", 1);
         startActivity(i);
     }
 
