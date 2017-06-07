@@ -29,6 +29,9 @@ import android.widget.Toast;
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.activity.AboutActivity;
 import com.example.sasuke.dailysuvichar.activity.MainActivity;
+import com.example.sasuke.dailysuvichar.activity.SelectPhotoActivity;
+import com.example.sasuke.dailysuvichar.activity.SelectStatusActivity;
+import com.example.sasuke.dailysuvichar.activity.SelectVideoActivity;
 import com.example.sasuke.dailysuvichar.models.Feature;
 import com.example.sasuke.dailysuvichar.newadapters.RVAFeature;
 import com.example.sasuke.dailysuvichar.newfragments.PagerFragment;
@@ -41,6 +44,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class NewMainActivity extends AppCompatActivity {
 
@@ -54,7 +58,33 @@ public class NewMainActivity extends AppCompatActivity {
     FrameLayout container;
     @BindView(R.id.header)
     TextView header;
+    @BindView(R.id.status_select)
+    TextView status_select;
+    @BindView(R.id.photos_select)
+    TextView photos_select;
+    @BindView(R.id.videos_select)
+    TextView videos_select;
 
+    @OnClick(R.id.status_select)
+    public void setStatus_select(){
+        Intent i = new Intent(this, SelectStatusActivity.class);
+        i.putExtra("page", 2);
+        startActivity(i);
+    }
+
+    @OnClick(R.id.photos_select)
+    public void setPhotos_select(){
+        Intent i = new Intent(this, SelectPhotoActivity.class);
+        i.putExtra("page", 2);
+        startActivity(i);
+    }
+
+    @OnClick(R.id.videos_select)
+    public void setVideos_select(){
+        Intent i = new Intent(this, SelectVideoActivity.class);
+        i.putExtra("page", 2);
+        startActivity(i);
+    }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
