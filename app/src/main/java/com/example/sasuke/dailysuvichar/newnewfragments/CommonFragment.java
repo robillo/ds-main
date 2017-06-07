@@ -1,8 +1,12 @@
 package com.example.sasuke.dailysuvichar.newnewfragments;
 
 
+import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -12,7 +16,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.sasuke.dailysuvichar.R;
+import com.example.sasuke.dailysuvichar.activity.AboutActivity;
+
+import java.util.Locale;
 
 import butterknife.BindView;
 
@@ -66,11 +74,43 @@ public class CommonFragment extends Fragment {
 
         switch (id) {
             case R.id.action_language: {
-
+                new MaterialDialog.Builder(getActivity().getApplicationContext())
+                        .title(R.string.choose_lang)
+                        .items(new String[]{getString(R.string.english_lang), getString(R.string.hindi_lang)})
+                        .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
+                            @Override
+                            public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                                switch (which){
+                                    case 0:{
+                                        Locale l = new Locale("en");
+                                        Locale.setDefault(l);
+                                        Configuration config = new Configuration();
+                                        config.locale = l;
+                                        Resources resources = getResources();
+                                        DisplayMetrics displayMetrics = resources.getDisplayMetrics();
+                                        resources.updateConfiguration(config, displayMetrics);
+                                        break;
+                                    }
+                                    case 1:{
+                                        Locale l = new Locale("hi");
+                                        Locale.setDefault(l);
+                                        Configuration config = new Configuration();
+                                        config.locale = l;
+                                        Resources resources = getResources();
+                                        DisplayMetrics displayMetrics = resources.getDisplayMetrics();
+                                        resources.updateConfiguration(config, displayMetrics);
+                                        break;
+                                    }
+                                }
+                                return true;
+                            }
+                        })
+                        .positiveText(R.string.choose)
+                        .show();
                 break;
             }
             case R.id.about: {
-
+                startActivity(new Intent(getActivity(), AboutActivity.class));
                 break;
             }
         }

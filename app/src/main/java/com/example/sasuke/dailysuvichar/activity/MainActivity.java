@@ -51,7 +51,6 @@ public class MainActivity extends BaseActivity {
 
     @OnClick(R.id.rb_hindi)
     public void selectedHindi() {
-
         Locale l = new Locale("hi");
         Locale.setDefault(l);
         Configuration config = new Configuration();
