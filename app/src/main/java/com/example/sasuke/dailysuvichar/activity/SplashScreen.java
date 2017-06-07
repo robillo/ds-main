@@ -26,12 +26,13 @@ public class SplashScreen extends Activity {
                 Log.e("CASE", "LOGIN TOKEN NULL, ACCESS TOKEN IS: " + AccessToken.getCurrentAccessToken());
                 startActivity(NewMainActivity.newIntent(this));
             } else {
-                Log.e("CASE", "LOGIN TOKEN NULL AND ACCESS TOKEN NOT NULL");
+                Log.e("CASE", "LOGIN TOKEN NOT NULL AND ACCESS TOKEN NULL");
                 startActivity(MainActivity.newIntent(this));
             }
         }
         else {
-           startActivity(MainActivity.newIntent(this));
+            Log.e("CASE", "LOGIN TOKEN AND THEREFORE, ACCESS TOKEN NULL");
+            startActivity(MainActivity.newIntent(this));
         }
     }
 }
