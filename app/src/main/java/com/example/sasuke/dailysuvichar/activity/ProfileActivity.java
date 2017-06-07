@@ -161,6 +161,13 @@ public class ProfileActivity extends BaseActivity {
             Log.d(TAG, "onCreate: yfydfkuggjcgkjjkgc");
             fetchData();
         }
+        else if(code == 0){
+            if(SharedPrefs.getIsProfileSet()!=null){
+                if(SharedPrefs.getIsProfileSet().equals("TRUE")){
+                    startActivity(new Intent(this, ChooseInterestActivity.class));
+                }
+            }
+        }
 
         userCoverPic.setOnClickListener(new View.OnClickListener() {
             @Override
