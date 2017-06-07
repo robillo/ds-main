@@ -21,79 +21,94 @@
         <activity
             android:name=".activity.SplashScreen"
             android:noHistory="true"
-            android:theme="@style/SplashTheme"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.MainActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.LoginActivity"
+        <activity
+            android:name=".activity.MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.LoginActivity"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
                 <data android:scheme="@string/fb_login_protocol_scheme" />
+
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.ChooseInterestActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.SubInterestActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.ChooseInterestActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SubInterestActivity"
+            android:screenOrientation="portrait" />
         <!-- <activity -->
         <!-- android:name=".activity.HomeActivity" -->
         <!-- android:configChanges="orientation|screenSize" -->
         <!-- android:hardwareAccelerated="true" /> -->
         <activity
             android:name=".activity.SelectStatusActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan"
-            android:screenOrientation="portrait"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.SelectPhotoActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan"
-            android:screenOrientation="portrait"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.SelectVideoActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan"
-            android:screenOrientation="portrait"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.FullScreenActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
 
-            <!--<intent-filter>-->
-                <!---->
-                <!--<protected-broadcast android:name="android.intent.action.MEDIA_MOUNTED" />-->
+            <!-- <intent-filter> -->
+            <!--  -->
+            <!-- <protected-broadcast android:name="android.intent.action.MEDIA_MOUNTED" /> -->
 
-            <!--</intent-filter>-->
+
+            <!-- </intent-filter> -->
 
         </activity>
         <activity
             android:name=".activity.ProfileActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.GuruDetailActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".newactivities.NewHomeyActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".newactivities.NewExploreyActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".newactivities.NewGurusActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.GuruDetailActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".newactivities.NewMainActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".newactivities.YourFeedsActivity"
+        <activity
+            android:name=".newactivities.NewHomeyActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.AboutActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".newactivities.NewExploreyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".newactivities.NewGurusActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".newactivities.NewMainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".newactivities.YourFeedsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.AboutActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".newnewactivities.GuruActivity"></activity>
     </application>
 
 </manifest>
