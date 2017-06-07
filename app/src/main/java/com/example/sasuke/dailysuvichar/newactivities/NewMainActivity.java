@@ -50,7 +50,7 @@ public class NewMainActivity extends AppCompatActivity {
 
     boolean doubleBackToExitPressedOnce = false;
     private FragmentTransaction fragmentTransaction;
-    private String from = "HOME";
+    private String from = getString(R.string.title_home);
 
     @BindView(R.id.conditional)
     LinearLayout conditional;

@@ -82,23 +82,11 @@ public class CommonFragment extends Fragment {
                             public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
                                 switch (which){
                                     case 0:{
-                                        Locale l = new Locale("en");
-                                        Locale.setDefault(l);
-                                        Configuration config = new Configuration();
-                                        config.locale = l;
-                                        Resources resources = getResources();
-                                        DisplayMetrics displayMetrics = resources.getDisplayMetrics();
-                                        resources.updateConfiguration(config, displayMetrics);
+                                        //FETCH ENGLIH FEEDS
                                         break;
                                     }
                                     case 1:{
-                                        Locale l = new Locale("hi");
-                                        Locale.setDefault(l);
-                                        Configuration config = new Configuration();
-                                        config.locale = l;
-                                        Resources resources = getResources();
-                                        DisplayMetrics displayMetrics = resources.getDisplayMetrics();
-                                        resources.updateConfiguration(config, displayMetrics);
+                                        //FETCH HINDI FEEDS
                                         break;
                                     }
                                 }
