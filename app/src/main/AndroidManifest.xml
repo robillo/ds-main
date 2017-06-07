@@ -59,17 +59,20 @@
             android:name=".activity.SelectStatusActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"
+            android:parentActivityName=".newactivities.NewMainActivity"/>
         <activity
             android:name=".activity.SelectPhotoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"
+            android:parentActivityName=".newactivities.NewMainActivity" />
         <activity
             android:name=".activity.SelectVideoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"
+            android:parentActivityName=".newactivities.NewMainActivity"/>
         <activity
             android:name=".activity.FullScreenActivity"
             android:screenOrientation="portrait"
