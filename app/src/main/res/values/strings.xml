@@ -388,4 +388,9 @@ Happy Discovering!</string>
     <string name="title_your_feeds">YOUR FEEDS</string>
     <string name="title_profile">PROFILE</string>
     <string name="choose_lang">Choose Language of your Feed:</string>
+    <string name="home_header">Daily Suvichar : Home</string>
+    <string name="guru_header">Daily Suvichar : Guru List</string>
+    <string name="explore_header">Daily Suvichar : Explore</string>
+    <string name="your_feeds_header">Daily Suvichar : Your Feeds</string>
+    <string name="profile_header">Daily Suvichar : Profile</string>
 </resources>

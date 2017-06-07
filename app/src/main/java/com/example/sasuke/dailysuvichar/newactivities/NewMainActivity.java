@@ -94,33 +94,33 @@ public class NewMainActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_home:{
                     from = getString(R.string.title_home);
-                    header.setText("Daily Suvichar : Home");
+                    header.setText(R.string.home_header);
                     addFragment(from);
                     showConditional();
                     return true;
                 }
                 case R.id.navigation_guru:{
-                    header.setText("Daily Suvichar : Guru List");
+                    header.setText(R.string.guru_header);
                     addGuruFragment();
                     hideConditional();
                     return true;
                 }
                 case R.id.navigation_explore:{
-                    header.setText("Daily Suvichar : Explore");
+                    header.setText(R.string.explore_header);
                     from = getString(R.string.title_explore);
                     addFragment(from);
                     showConditional();
                     return true;
                 }
                 case R.id.navigation_your_feeds:{
-                    header.setText("Daily Suvichar : Your Feeds");
+                    header.setText(R.string.your_feeds_header);
                     from = getString(R.string.title_your_feeds);
                     addFragment(from);
                     showConditional();
                     return true;
                 }
                 case R.id.navigation_profile:{
-                    header.setText("Daily Suvichar : Profile");
+                    header.setText(R.string.profile_header);
                     hideConditional();
                     return true;
                 }
