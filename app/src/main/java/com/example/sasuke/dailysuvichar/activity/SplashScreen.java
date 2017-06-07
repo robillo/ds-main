@@ -9,10 +9,6 @@ import com.example.sasuke.dailysuvichar.newactivities.NewMainActivity;
 import com.example.sasuke.dailysuvichar.utils.SharedPrefs;
 import com.facebook.AccessToken;
 
-/**0
- * Created by Sasuke on 4/27/2017.
- */
-
 public class SplashScreen extends Activity {
 
     @Override

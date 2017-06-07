@@ -29,12 +29,14 @@ import android.widget.Toast;
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.activity.AboutActivity;
 import com.example.sasuke.dailysuvichar.activity.MainActivity;
+import com.example.sasuke.dailysuvichar.activity.ProfileActivity;
 import com.example.sasuke.dailysuvichar.activity.SelectPhotoActivity;
 import com.example.sasuke.dailysuvichar.activity.SelectStatusActivity;
 import com.example.sasuke.dailysuvichar.activity.SelectVideoActivity;
 import com.example.sasuke.dailysuvichar.models.Feature;
 import com.example.sasuke.dailysuvichar.newadapters.RVAFeature;
 import com.example.sasuke.dailysuvichar.newfragments.PagerFragment;
+import com.example.sasuke.dailysuvichar.newnewactivities.GuruActivity;
 import com.example.sasuke.dailysuvichar.newnewfragments.CommonFragment;
 import com.example.sasuke.dailysuvichar.newnewfragments.GuruFragment;
 import com.example.sasuke.dailysuvichar.utils.ZoomOutPageTransformer;
@@ -100,9 +102,16 @@ public class NewMainActivity extends AppCompatActivity {
                     return true;
                 }
                 case R.id.navigation_guru:{
-                    header.setText(R.string.guru_header);
-                    addGuruFragment();
+//                    header.setText(R.string.guru_header);
+//                    addGuruFragment();
                     hideConditional();
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            startActivity(new Intent(NewMainActivity.this, GuruActivity.class));
+                        }
+                    }, 200);
                     return true;
                 }
                 case R.id.navigation_explore:{
@@ -120,8 +129,17 @@ public class NewMainActivity extends AppCompatActivity {
                     return true;
                 }
                 case R.id.navigation_profile:{
-                    header.setText(R.string.profile_header);
+//                    header.setText(R.string.profile_header);
                     hideConditional();
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            Intent i = new Intent(NewMainActivity.this, ProfileActivity.class);
+                            i.putExtra("fromHome", 1);
+                            startActivity(i);
+                        }
+                    }, 200);
                     return true;
                 }
             }
