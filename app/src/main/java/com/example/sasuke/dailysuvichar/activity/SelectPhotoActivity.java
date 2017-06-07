@@ -18,13 +18,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.models.Photo;
-import com.example.sasuke.dailysuvichar.newactivities.NewHomeyActivity;
-import com.example.sasuke.dailysuvichar.newactivities.NewExploreyActivity;
 import com.example.sasuke.dailysuvichar.view.RVTags;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -75,6 +74,8 @@ public class SelectPhotoActivity extends BaseActivity{
     RecyclerView recyclerView;
     @BindView(R.id.etCaption)
     EditText etCaption;
+    @BindView(R.id.switch_lang)
+    Switch switch_lang;
 
 
     private ArrayList<String> interests, subInterests, data, mSelectedItems;
@@ -301,13 +302,25 @@ public class SelectPhotoActivity extends BaseActivity{
 
                     Photo photo=null;
                     if(name.getText()!="") {
-                        photo = new Photo("photo",name.getText().toString(), mFirebaseUser.getEmail(),
-                                -System.currentTimeMillis(), 0, 0, null, etCaption.getText().toString(),
-                                mFirebaseUser.getUid(), interests, downloadUrl);
+                        if(!switch_lang.isChecked()) {
+                            photo = new Photo("photo", name.getText().toString(), mFirebaseUser.getEmail(),
+                                    -System.currentTimeMillis(), 0, 0, null, etCaption.getText().toString(),
+                                    mFirebaseUser.getUid(), interests, downloadUrl, "english");
+                        }else{
+                            photo = new Photo("photo", name.getText().toString(), mFirebaseUser.getEmail(),
+                                    -System.currentTimeMillis(), 0, 0, null, etCaption.getText().toString(),
+                                    mFirebaseUser.getUid(), interests, downloadUrl, "hindi");
+                        }
                     }else{
-                        photo = new Photo("photo", getString(R.string.unknown), mFirebaseUser.getEmail(),
-                                -System.currentTimeMillis(), 0, 0, null, etCaption.getText().toString(),
-                                mFirebaseUser.getUid(), interests, downloadUrl);
+                        if(!switch_lang.isChecked()) {
+                            photo = new Photo("photo", getString(R.string.unknown), mFirebaseUser.getEmail(),
+                                    -System.currentTimeMillis(), 0, 0, null, etCaption.getText().toString(),
+                                    mFirebaseUser.getUid(), interests, downloadUrl, "english");
+                        }else{
+                            photo = new Photo("photo", getString(R.string.unknown), mFirebaseUser.getEmail(),
+                                    -System.currentTimeMillis(), 0, 0, null, etCaption.getText().toString(),
+                                    mFirebaseUser.getUid(), interests, downloadUrl, "hindi");
+                        }
                     }
 
                     for (String interest : interests) {
@@ -376,4 +389,5 @@ public class SelectPhotoActivity extends BaseActivity{
 //        }
         finish();
     }
+
 }

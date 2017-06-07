@@ -19,6 +19,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -85,7 +86,8 @@ public class SelectVideoActivity extends BaseActivity {
     RecyclerView recyclerView;
     @BindView(R.id.etCaption)
     EditText etCaption;
-
+    @BindView(R.id.switch_lang)
+    Switch switch_lang;
 
     private ArrayList<String> interests, subInterests, data, mSelectedItems;
     private Context context;
@@ -375,13 +377,25 @@ public class SelectVideoActivity extends BaseActivity {
                     CustomVideo video = null;
 
                     if (name.getText() != "") {
-                        video = new CustomVideo("video",name.getText().toString(), mFirebaseUser.getEmail(),
-                                -System.currentTimeMillis(), 0, 0, null, etCaption.getText().toString(),
-                                mFirebaseUser.getUid(), interests);
+                        if(!switch_lang.isChecked()) {
+                            video = new CustomVideo("video", name.getText().toString(), mFirebaseUser.getEmail(),
+                                    -System.currentTimeMillis(), 0, 0, null, etCaption.getText().toString(),
+                                    mFirebaseUser.getUid(), interests,"english");
+                        }else{
+                            video = new CustomVideo("video", name.getText().toString(), mFirebaseUser.getEmail(),
+                                    -System.currentTimeMillis(), 0, 0, null, etCaption.getText().toString(),
+                                    mFirebaseUser.getUid(), interests,"hindi");
+                        }
                     }else{
-                        video = new CustomVideo("video",getString(R.string.unknown), mFirebaseUser.getEmail(),
-                                -System.currentTimeMillis(), 0, 0, null, etCaption.getText().toString(),
-                                mFirebaseUser.getUid(), interests);
+                        if(!switch_lang.isChecked()) {
+                            video = new CustomVideo("video", getString(R.string.unknown), mFirebaseUser.getEmail(),
+                                    -System.currentTimeMillis(), 0, 0, null, etCaption.getText().toString(),
+                                    mFirebaseUser.getUid(), interests,"english");
+                        }else{
+                            video = new CustomVideo("video", getString(R.string.unknown), mFirebaseUser.getEmail(),
+                                    -System.currentTimeMillis(), 0, 0, null, etCaption.getText().toString(),
+                                    mFirebaseUser.getUid(), interests,"hindi");
+                        }
                     }
 
                     for (String interest : interests) {

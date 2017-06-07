@@ -73,6 +73,18 @@ public class Status {
 
     }
 
+    @NonNull
+    private String language;
+
+    @NonNull
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(@NonNull String language) {
+        this.language = language;
+    }
+
     public void setTags(@NonNull ArrayList<String> tags) {
         this.tags = tags;
     }
@@ -80,7 +92,9 @@ public class Status {
     @NonNull
     private ArrayList<String> tags;
 
-    public Status(@NonNull String type, @NonNull String uid, @NonNull ArrayList<String> tags, @NonNull String name, @NonNull Long timestamp, @NonNull Integer likes, @NonNull Integer shares, @NonNull ArrayList<Comment> comments, @NonNull String status, @NonNull String user) {
+    public Status(@NonNull String type, @NonNull String uid, @NonNull ArrayList<String> tags,
+                  @NonNull String name, @NonNull Long timestamp, @NonNull Integer likes, @NonNull Integer shares,
+                  @NonNull ArrayList<Comment> comments, @NonNull String status, @NonNull String user, @NonNull String language) {
 
         this.type = type;
         this.uid = uid;
@@ -92,6 +106,7 @@ public class Status {
         this.comments = comments;
         this.status = status;
         this.user = user;
+        this.language = language;
     }
 
     @NonNull

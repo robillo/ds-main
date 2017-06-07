@@ -3,25 +3,32 @@ package com.example.sasuke.dailysuvichar.view;
 import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
+import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.sasuke.dailysuvichar.R;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.klinker.android.simple_videoview.SimpleVideoView;
+
+import java.io.File;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,14 +48,16 @@ public class CustomVideoVH extends RecyclerView.ViewHolder{
     @BindView(R.id.image)
     public
     ImageView imageView;
+    @BindView(R.id.download_button)
+    public TextView download;
     @BindView(R.id.iv_profile_dp)
     public ImageView mPhotoDP;
     @BindView(R.id.play_button)
     public TextView play;
     @BindView(R.id.video_view)
     public SimpleVideoView videoView;
-//    @BindView(R.id.caption)
-//    TextView tvCaption;
+    @BindView(R.id.caption)
+    TextView tvCaption;
     @BindView(R.id.tv_user_name)
     TextView mTvUserName;
     @BindView(R.id.tv_post_time)
@@ -79,7 +88,7 @@ public class CustomVideoVH extends RecyclerView.ViewHolder{
     }
     public void setCaption(String caption){
         if(caption!=null && caption.length()>0) {
-//            tvCaption.setText(caption);
+            tvCaption.setText(caption);
         }
     }
 
@@ -143,6 +152,35 @@ public class CustomVideoVH extends RecyclerView.ViewHolder{
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Log.e("GLIDINGGGGGG", "CANCELLED");
+            }
+        });
+    }
+
+//    @OnClick(R.id.download_button)
+    public void setDownload(StorageReference ref, final Context context){
+        Toast.makeText(context, "Downloading video..", Toast.LENGTH_SHORT).show();
+
+        File rootPath = new File(Environment.getExternalStorageDirectory(), "video");
+        if(!rootPath.exists()) {
+            rootPath.mkdirs();
+        }
+
+        final File localFile = new File(rootPath,"videoName.mp4");
+
+        ref.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                Log.e("firebase ",";local tem file created  created " +localFile.toString());
+                //  updateDb(timestamp,localFile.toString(),position);
+//                getApplicationContext().sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://" + Environment.getExternalStorageDirectory())));
+                Toast.makeText(context, "Video Download Successful", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Log.e("firebase ",";local tem file not created  created " +exception.toString());
+
+                Toast.makeText(context, "Network error. Please try again later.", Toast.LENGTH_SHORT).show();
             }
         });
     }

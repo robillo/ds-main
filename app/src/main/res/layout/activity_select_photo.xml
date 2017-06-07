@@ -82,9 +82,10 @@
                 android:padding="5sp"/>
 
             <Switch
+                android:id="@+id/switch_lang"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="5sp"/>
+                android:padding="5sp" />
 
             <TextView
                 android:layout_width="wrap_content"

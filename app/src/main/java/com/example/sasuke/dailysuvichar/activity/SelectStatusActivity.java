@@ -1,7 +1,6 @@
 package com.example.sasuke.dailysuvichar.activity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
@@ -12,13 +11,12 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.models.Status;
-import com.example.sasuke.dailysuvichar.newactivities.NewHomeyActivity;
-import com.example.sasuke.dailysuvichar.newactivities.NewExploreyActivity;
 import com.example.sasuke.dailysuvichar.view.RVTags;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -61,6 +59,8 @@ public class SelectStatusActivity extends BaseActivity {
     RecyclerView recyclerView;
     @BindView(R.id.etStatus)
     EditText etStatus;
+    @BindView(R.id.switch_lang)
+    Switch switch_lang;
 
 
     private ArrayList<String> interests, subInterests, data, mSelectedItems;
@@ -193,12 +193,22 @@ public class SelectStatusActivity extends BaseActivity {
                 Log.d(TAG, "postStatus: NAMEE "+name);
                 if(name.getText()!="") {
 
-                    status = new Status("status",mFirebaseUser.getUid(), interests, name.getText().toString(), -System.currentTimeMillis(),
-                            0, 0, null, etStatus.getText().toString(), mFirebaseUser.getEmail());
+                    if(!switch_lang.isChecked()) {
+                        status = new Status("status", mFirebaseUser.getUid(), interests, name.getText().toString(), -System.currentTimeMillis(),
+                                0, 0, null, etStatus.getText().toString(), mFirebaseUser.getEmail(), "english");
+                    }else{
+                        status = new Status("status", mFirebaseUser.getUid(), interests, name.getText().toString(), -System.currentTimeMillis(),
+                                0, 0, null, etStatus.getText().toString(), mFirebaseUser.getEmail(),"hindi");
+                    }
                 }else{
 
-                    status = new Status("status",mFirebaseUser.getUid(), interests, "Unknown User", -System.currentTimeMillis(),
-                            0, 0, null, etStatus.getText().toString(), mFirebaseUser.getEmail());
+                    if(!switch_lang.isChecked()) {
+                        status = new Status("status", mFirebaseUser.getUid(), interests, "Unknown User", -System.currentTimeMillis(),
+                                0, 0, null, etStatus.getText().toString(), mFirebaseUser.getEmail(),"english");
+                    }else{
+                        status = new Status("status", mFirebaseUser.getUid(), interests, "Unknown User", -System.currentTimeMillis(),
+                                0, 0, null, etStatus.getText().toString(), mFirebaseUser.getEmail(),"hindi");
+                    }
                 }
 
                 mDatabaseReferenceTag = FirebaseDatabase.getInstance().getReference("posts");

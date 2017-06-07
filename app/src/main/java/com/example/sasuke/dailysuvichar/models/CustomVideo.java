@@ -59,7 +59,9 @@ public class CustomVideo {
 //        this.caption = caption;
 //    }
 
-    public CustomVideo(@NonNull String type, @NonNull String name, @NonNull String user, @NonNull Long timestamp, @NonNull Integer likes, @NonNull Integer shares, @NonNull ArrayList<Comment> comments, @NonNull String caption, @NonNull String uid, @NonNull ArrayList<String> tags) {
+    public CustomVideo(@NonNull String type, @NonNull String name, @NonNull String user, @NonNull Long timestamp,
+                       @NonNull Integer likes, @NonNull Integer shares, @NonNull ArrayList<Comment> comments,
+                       @NonNull String caption, @NonNull String uid, @NonNull ArrayList<String> tags, @NonNull String language) {
 
         this.type = type;
         this.name = name;
@@ -71,6 +73,19 @@ public class CustomVideo {
         this.caption = caption;
         this.uid = uid;
         this.tags = tags;
+        this.language = language;
+    }
+
+    @NonNull
+    private String language;
+
+    @NonNull
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(@NonNull String language) {
+        this.language = language;
     }
 
     @NonNull

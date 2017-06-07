@@ -44,7 +44,22 @@ public class Photo {
         this.storageReference = storageReference;
     }
 
-    public Photo(@NonNull String type, @NonNull String name, @NonNull String user, @NonNull Long timestamp, @NonNull Integer likes, @NonNull Integer shares, @NonNull ArrayList<Comment> comments, @NonNull String caption, @NonNull String uid, @NonNull ArrayList<String> tags, @NonNull Uri photoURL) {
+    @NonNull
+    private String language;
+
+    @NonNull
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(@NonNull String language) {
+        this.language = language;
+    }
+
+    public Photo(@NonNull String type, @NonNull String name, @NonNull String user, @NonNull Long timestamp,
+                 @NonNull Integer likes, @NonNull Integer shares, @NonNull ArrayList<Comment> comments,
+                 @NonNull String caption, @NonNull String uid, @NonNull ArrayList<String> tags,
+                 @NonNull Uri photoURL, @NonNull String language) {
 
         this.type = type;
         this.name = name;
@@ -57,6 +72,7 @@ public class Photo {
         this.uid = uid;
         this.tags = tags;
         this.photoURL = photoURL;
+        this.language = language;
     }
 
     @NonNull

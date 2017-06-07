@@ -152,6 +152,13 @@ public class CustomVideoAdapter  extends ItemViewBinder<CustomVideo, CustomVideo
             holder.setStatusDP(item.getUid());
         }
 
+        holder.download.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.setDownload(item.getStorageReference(), context);
+            }
+        });
+
 //        holder.videoView.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
