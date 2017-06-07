@@ -4,12 +4,14 @@
 
     <item
         android:id="@+id/action_sort"
-        android:icon="@drawable/ic_sort"
+        android:icon="@drawable/ic_sort_white_24dp"
         android:title="Sort"
+        android:orderInCategory="100"
         app:showAsAction="ifRoom"/>
+
     <item
         android:id="@+id/about"
-        android:orderInCategory="100"
-        android:title="@string/about_ds"
+        android:orderInCategory="101"
+        android:title="About DS"
         app:showAsAction="never" />
 </menu>

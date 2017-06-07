@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="Home" />
+
+    <item
+        android:id="@+id/navigation_guru"
+        android:icon="@drawable/ic_nature_people_black_24dp"
+        android:title="Guru List" />
+
+    <item
+        android:id="@+id/navigation_explore"
+        android:icon="@drawable/ic_donut_large_black_24dp"
+        android:title="@string/explore" />
+
+    <item
+        android:id="@+id/navigation_your_feeds"
+        android:icon="@drawable/ic_face_black_24dp"
+        android:title="@string/your_feeds" />
+
+    <item
+        android:id="@+id/navigation_profile"
+        android:icon="@drawable/ic_insert_emoticon_black_24dp"
+        android:title="@string/profile" />
+
+</menu>
+

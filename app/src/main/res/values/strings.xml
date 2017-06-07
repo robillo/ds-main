@@ -381,4 +381,10 @@ Happy Discovering!</string>
     <string name="cancelled">FACEBOOK ON CANCEL</string>
     <string name="authfailed">AUTHENTICATION FAILED</string>
     <string name="authsuccess">AUTHENTICATION SUCCESSFUL</string>
+
+    <string name="title_home">HOME</string>
+    <string name="title_guru">GURU</string>
+    <string name="title_explore">EXPLORE</string>
+    <string name="title_your_feeds">YOUR FEEDS</string>
+    <string name="title_profile">PROFILE</string>
 </resources>

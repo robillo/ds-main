@@ -1,109 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:orientation="vertical">
 
-    <LinearLayout
+    <android.support.design.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+        <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-            <TextView
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
                 android:gravity="center"
-                android:text="@string/daily_suvichar"
-                android:textColor="#FFF"
-                android:fontFamily="cursive"
-                android:textSize="20sp"
-                android:layout_weight="1"
-                android:id="@+id/textView"
-                android:textStyle="normal|bold" />
-        </android.support.v7.widget.Toolbar>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="0sp"
-                android:layout_weight="1">
-
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/colorPrimary"
-                    android:elevation="@dimen/app_bar_elevation">
-
-                    <android.support.v4.widget.Space
-                        android:layout_width="match_parent"
-                        android:layout_height="60sp"/>
-
-                </FrameLayout>
-
-                <android.support.v4.view.ViewPager
-                    android:elevation="@dimen/app_bar_elevation"
-                    xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:id="@+id/pager"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="30sp"
-                    android:paddingLeft="9sp"
-                    android:paddingRight="9sp"
-                    android:paddingBottom="9sp"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dots_height"
-                    android:id="@+id/layoutDots"
-                    android:orientation="horizontal"
-                    android:gravity="bottom|center_horizontal"
-                    android:layout_marginBottom="@dimen/dots_margin_bottom"
-                    android:layout_alignParentBottom="true"/>
-
-            </RelativeLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0sp"
-                android:orientation="vertical"
-                android:layout_weight="1">
+                app:layout_scrollFlags="scroll|enterAlways"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/other_features"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:padding="4sp"
-                    android:fontFamily="sans-serif-smallcaps"
-                    android:textSize="15sp"
-                    android:textColor="@color/colorBlackShade"/>
+                    android:layout_height="match_parent"
+                    android:text="Daily Suvichar : Home"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textSize="20sp"
+                    android:id="@+id/header"
+                    android:textColor="#FFFFFF"
+                    android:gravity="start|center_vertical"/>
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+            </android.support.v7.widget.Toolbar>
 
-                </android.support.v7.widget.RecyclerView>
+        </android.support.design.widget.AppBarLayout>
 
-            </LinearLayout>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="90sp"
+            android:layout_marginTop="?attr/actionBarSize"
+            android:id="@+id/fragment_container">
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40sp"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="50sp"
+            android:background="@color/colorPrimaryDark"
+            android:orientation="horizontal"
+            android:id="@+id/conditional">
+
+            <TextView
+                android:layout_width="0sp"
+                android:layout_height="match_parent"
+                android:text="Share Status"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textColor="@color/colorWhiteShade"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:layout_width="0sp"
+                android:layout_height="match_parent"
+                android:text="Share Photo"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textColor="@color/colorWhiteShade"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:layout_width="0sp"
+                android:layout_height="match_parent"
+                android:text="Share Video"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textColor="@color/colorWhiteShade"
+                android:layout_weight="1"/>
 
         </LinearLayout>
 
-    </LinearLayout>
+        <android.support.design.widget.BottomNavigationView
+            android:id="@+id/navigation"
+            android:layout_width="match_parent"
+            android:layout_height="50sp"
+            android:layout_gravity="bottom"
+            android:background="?android:attr/windowBackground"
+            app:menu="@menu/navigation" />
 
-</android.support.design.widget.CoordinatorLayout>
+    </android.support.design.widget.CoordinatorLayout>
+
+</LinearLayout>

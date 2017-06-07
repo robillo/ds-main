@@ -3,9 +3,12 @@ package com.example.sasuke.dailysuvichar.newactivities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -16,7 +19,9 @@ import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,25 +32,104 @@ import com.example.sasuke.dailysuvichar.activity.MainActivity;
 import com.example.sasuke.dailysuvichar.models.Feature;
 import com.example.sasuke.dailysuvichar.newadapters.RVAFeature;
 import com.example.sasuke.dailysuvichar.newfragments.PagerFragment;
+import com.example.sasuke.dailysuvichar.newnewfragments.CommonFragment;
+import com.example.sasuke.dailysuvichar.newnewfragments.GuruFragment;
 import com.example.sasuke.dailysuvichar.utils.ZoomOutPageTransformer;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class NewMainActivity extends AppCompatActivity {
 
     boolean doubleBackToExitPressedOnce = false;
-    private LinearLayout dotsLayout;
-    private TextView[] dots;
-    private int intent_page;
-    private int[] layouts;
-    private RecyclerView recyclerView;
-    private List<Feature> list;
-    private String[] names, descriptions, photoUrls;
-    private static final int NUM_PAGES = 3;
-    private ViewPager mPager;
-    private PagerAdapter mPagerAdapter;
-    private int currentPage = 0;
+    private FragmentTransaction fragmentTransaction;
+    private String from = "HOME";
+
+    @BindView(R.id.conditional)
+    LinearLayout conditional;
+    @BindView(R.id.fragment_container)
+    FrameLayout container;
+    @BindView(R.id.header)
+    TextView header;
+
+
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.navigation_home:{
+                    from = getString(R.string.title_home);
+                    header.setText("Daily Suvichar : Home");
+                    addFragment(from);
+                    showConditional();
+                    return true;
+                }
+                case R.id.navigation_guru:{
+                    header.setText("Daily Suvichar : Guru List");
+                    addGuruFragment();
+                    hideConditional();
+                    return true;
+                }
+                case R.id.navigation_explore:{
+                    header.setText("Daily Suvichar : Explore");
+                    from = getString(R.string.title_explore);
+                    addFragment(from);
+                    showConditional();
+                    return true;
+                }
+                case R.id.navigation_your_feeds:{
+                    header.setText("Daily Suvichar : Your Feeds");
+                    from = getString(R.string.title_your_feeds);
+                    addFragment(from);
+                    showConditional();
+                    return true;
+                }
+                case R.id.navigation_profile:{
+                    header.setText("Daily Suvichar : Profile");
+                    hideConditional();
+                    return true;
+                }
+            }
+            return false;
+        }
+
+    };
+
+    private void hideConditional(){
+        if(conditional.getVisibility()== View.VISIBLE){
+            conditional.setVisibility(View.INVISIBLE);
+        }
+    }
+    private void showConditional(){
+        if(conditional.getVisibility()== View.INVISIBLE){
+            conditional.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void addFragment(String from){
+        CommonFragment commonFragment = new CommonFragment();
+        Bundle args = new Bundle();
+        args.putString("from", from);
+        commonFragment.setArguments(args);
+
+        fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.container, commonFragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
+
+    private void addGuruFragment(){
+        GuruFragment guruFragment = new GuruFragment();
+        fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.container, guruFragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
 
     public static Intent newIntent(Context context) {
         return new Intent(context, NewMainActivity.class);
@@ -56,72 +140,16 @@ public class NewMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_main);
 
+        ButterKnife.bind(this);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        Intent i = getIntent();
-        currentPage = i.getIntExtra("pageNumber", 0);
-
-        assignStringValues();
-
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        mPager = (ViewPager) findViewById(R.id.pager);
-        dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
-        layouts = new int[]{
-                R.layout.fragment_pager,
-                R.layout.fragment_pager,
-                R.layout.fragment_pager};
-        addBottomDots(0);
-
-        mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
-        mPager.setAdapter(mPagerAdapter);
-        mPager.setClipToPadding(false);
-        mPager.setPageTransformer(true, new ZoomOutPageTransformer());
-        mPager.addOnPageChangeListener(viewPagerPageChangeListener);
-
-        mPager.setCurrentItem(currentPage);
-
-        list = new ArrayList<>();
-        list.add(new Feature(getString(R.string.your_feedsss),
-                getString(R.string.see_what),
-                "https://3.bp.blogspot.com/-FTKj7QUV61w/WJBgEaJclgI/AAAAAAAAAFw/dX-wb54JX-AYiDGPPB1Z3lvS7ZCoUNKBACLcB/s1600/ph6.png", 1));
-        list.add(new Feature(getString(R.string.your_profilee),
-                getString(R.string.see_data),
-                "https://3.bp.blogspot.com/-FTKj7QUV61w/WJBgEaJclgI/AAAAAAAAAFw/dX-wb54JX-AYiDGPPB1Z3lvS7ZCoUNKBACLcB/s1600/ph6.png", 2));
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        recyclerView.setAdapter(new RVAFeature(getApplicationContext(), list));
+        addFragment(getResources().getString(R.string.title_home));
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
-
-    private void assignStringValues(){
-        names = new String[]{getString(R.string.homey), getString(R.string.guru_list), getString(R.string.guruey)};
-        descriptions = new String[]{getString(R.string.homed),
-        getString(R.string.gurud),
-        getString(R.string.explored)};
-        photoUrls = new String[]{"https://1.bp.blogspot.com/-KOrgmRC8Nj0/WSh6_7z7ryI/AAAAAAAAASc/_O4UwRnmDsAZ2IFzIAh_eKXuVh9gti_CACK4B/s320/yoga2.jpg",
-        "https://3.bp.blogspot.com/-O-kG5WpcVa8/WSh-Fh2m0_I/AAAAAAAAAS8/TwAT0D23cx0sQ0oCu_cKkPVL8MdAACtWgCK4B/s320/Buddha%2BSpiritual%2BBuddha%2B%2BAbstract%2B3D%2Band%2BCG%2BHD%2BDesktop%2BWallpaper.jpg",
-        "https://1.bp.blogspot.com/-OYwFn64dzV0/WJBfWvYaXaI/AAAAAAAAAFc/1egquqeEF30HrOgarJflAGp8fXqyBeKDQCLcB/s1600/ph4.jpg"};
-    }
-
-    private void addBottomDots(int currentPage) {
-        dots = new TextView[layouts.length];
-
-        int[] colorsActive = getResources().getIntArray(R.array.array_dot_active);
-        int[] colorsInactive = getResources().getIntArray(R.array.array_dot_inactive);
-
-        dotsLayout.removeAllViews();
-        for (int i = 0; i < dots.length; i++) {
-            dots[i] = new TextView(this);
-            dots[i].setText(Html.fromHtml("&#8226;"));
-            dots[i].setTextSize(35);
-            dots[i].setTextColor(colorsInactive[currentPage]);
-            dotsLayout.addView(dots[i]);
-        }
-
-        if (dots.length > 0)
-            dots[currentPage].setTextColor(colorsActive[currentPage]);
-    }
-
 
     @Override
     public void onBackPressed() {
@@ -140,111 +168,5 @@ public class NewMainActivity extends AppCompatActivity {
                 doubleBackToExitPressedOnce=false;
             }
         }, 2000);
-    }
-
-    private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
-        public ScreenSlidePagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-
-            switch (position){
-                case 0:{
-                    return assignFragment(0);
-                }
-                case 1:{
-                    return assignFragment(1);
-                }
-                case 2:{
-                    return assignFragment(2);
-                }
-                case 3:{
-                    return assignFragment(3);
-                }
-                default:{
-                    return assignFragment(0);
-                }
-            }
-        }
-
-        @Override
-        public int getCount() {
-            return NUM_PAGES;
-        }
-
-        @Override
-        public Object instantiateItem(ViewGroup container, int position) {
-            return super.instantiateItem(container, position);
-        }
-
-        @Override
-        public float getPageWidth(int position) {
-            return 1.0f;
-        }
-
-    }
-
-    private Fragment assignFragment(int position){
-        Fragment fragment = new PagerFragment();
-        Bundle args = new Bundle();
-        args.putString("level", names[position]);
-        args.putString("levelHeader", descriptions[position]);
-        args.putString("photoUrl", photoUrls[position]);
-        args.putInt("levelNumber", position + 1);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    //  viewpager change listener
-    ViewPager.OnPageChangeListener viewPagerPageChangeListener = new ViewPager.OnPageChangeListener() {
-
-        @Override
-        public void onPageSelected(int position) {
-
-            addBottomDots(position);
-
-            // changing the next button text 'NEXT' / 'GOT IT'
-            if (position == layouts.length - 1) {
-                // last page. make button text to GOT IT
-                //btnNext.setText(getString(R.string.start));
-                //btnSkip.setVisibility(View.GONE);
-            } else {
-                // still pages are left
-                //btnNext.setText(getString(R.string.next));
-                //btnSkip.setVisibility(View.VISIBLE);
-            }
-        }
-
-        @Override
-        public void onPageScrolled(int arg0, float arg1, int arg2) {
-
-        }
-
-        @Override
-        public void onPageScrollStateChanged(int arg0) {
-
-        }
-    };
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.new_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        switch (id) {
-            case R.id.about: {
-                startActivity(new Intent(this, AboutActivity.class));
-                break;
-            }
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }
