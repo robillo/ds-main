@@ -145,7 +145,7 @@
                 android:fontFamily="sans-serif-smallcaps"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="@string/ayurveda_"
+                android:text="@string/ayurvedaa"
                 android:id="@+id/ayurveda"
                 android:textColor="@color/black"
                 android:background="?attr/selectableItemBackground"/>
@@ -168,7 +168,7 @@
                 android:fontFamily="sans-serif-smallcaps"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="@string/astrology_"
+                android:text="@string/astrologyy"
                 android:id="@+id/astrology"
                 android:textColor="@color/black"
                 android:background="?attr/selectableItemBackground"/>
