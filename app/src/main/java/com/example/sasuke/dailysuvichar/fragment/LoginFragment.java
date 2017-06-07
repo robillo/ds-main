@@ -77,6 +77,12 @@ public class LoginFragment extends BaseFragment implements GoogleApiClient.OnCon
         callbackManager = CallbackManager.Factory.create();
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
+//        if(SharedPrefs.getIsLoggedIn()!=null){
+//            if(SharedPrefs.getIsLoggedIn().equals("TRUE")){
+//                startActivity(new Intent(getActivity(), ProfileActivity.class));
+//            }
+//        }
+
 //        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
 //                .requestIdToken(getString(R.string.default_web_client_id))
 //                .requestEmail().build();

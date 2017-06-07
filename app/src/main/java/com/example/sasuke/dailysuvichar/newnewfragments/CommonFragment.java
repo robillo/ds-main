@@ -480,7 +480,7 @@ public class CommonFragment extends Fragment {
 
         switch (id) {
             case R.id.action_language: {
-                new MaterialDialog.Builder(getActivity().getApplicationContext())
+                new MaterialDialog.Builder(getActivity())
                         .title(R.string.choose_lang)
                         .items(new String[]{getString(R.string.english_lang), getString(R.string.hindi_lang)})
                         .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
