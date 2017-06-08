@@ -42,6 +42,10 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -70,13 +74,18 @@ public class GuruDetailActivity extends BaseActivity{
     Button follow;
     private boolean isFollowing = false;
     private String uid;
+    private HashMap<String,Long> isDone;
     private DatabaseReference mDatabaseReference, mDatabaseReferencePosts;
     private StorageReference mStorageReference;
     private FirebaseUser mFirebaseUser;
     private LinearLayoutManager mLayoutManager;
     Items items;
+    private static ArrayList following;
+
     private MultiTypeAdapter mAdapter;
     CustomVideoAdapter customVideoAdapter;
+    private DatabaseReference mDatabaseReferenceUsers;
+
 
 
     @Override
@@ -86,16 +95,33 @@ public class GuruDetailActivity extends BaseActivity{
         ButterKnife.bind(this);
 
         context = getApplicationContext();
-
+        isDone=new HashMap<>();
         mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        mDatabaseReferenceUsers = FirebaseDatabase.getInstance().getReference("users").child(mFirebaseUser.getUid());
         mStorageReference = FirebaseStorage.getInstance().getReference("profile").child("user");
         mDatabaseReference = FirebaseDatabase.getInstance().getReference("users");
 
         Intent i = getIntent();
         isFollowing = i.getBooleanExtra("isfollowing", false);
         uid = i.getStringExtra("uid");
+        following=new ArrayList<>();
 
-        setFollowing(isFollowing);
+        mDatabaseReferenceUsers.child("following").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue() != null) {
+                    following.addAll((Collection) dataSnapshot.getValue());
+                }
+                Log.d(TAG, "onDataChange: "+following);
+                setFollowing(following.contains(uid));
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
+        setFollowing(following.contains(uid));
         if(dp!=null) {
 //            ViewTarget.setTagId(R.id.glide_tag);
 
@@ -140,8 +166,6 @@ public class GuruDetailActivity extends BaseActivity{
         items = new Items();
 
         fetchStatusFromFirebase();
-        fetchPhotosFromFirebase();
-//        fetchVideosFromFirebase();
 
         if(ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 5);
@@ -157,6 +181,9 @@ public class GuruDetailActivity extends BaseActivity{
                     }
                     if (dataSnapshot.child("bio").getValue() != null) {
                         bio.setText(dataSnapshot.child("bio").getValue().toString());
+                    }
+                    if(dataSnapshot.child("specialization").getValue()!=null){
+                        spec.setText(dataSnapshot.child("specialization").getValue().toString());
                     }
 
                 }
@@ -326,51 +353,53 @@ public class GuruDetailActivity extends BaseActivity{
         }
     }
 
-    private void fetchPhotosFromFirebase() {
-
-        if (uid != null) {
-            mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("users").child(uid).child("posts");
-            mStorageReference = FirebaseStorage.getInstance().getReference("posts").child("images");
-
-            mDatabaseReferencePosts.child("photo").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-
-                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                        Photo photoSnap = postSnapshot.getValue(Photo.class);
-                        photoSnap.setStorageReference(mStorageReference.child(postSnapshot.getKey()));
-
-                        items.add(photoSnap);
-                        mAdapter.notifyDataSetChanged();
-                    }
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    Log.d(TAG, "onCancelled: " + databaseError.getMessage());
-                }
-            });
-
-
-            Log.d(TAG, "fetchStatusFromFirebase: " + items.size());
-            mAdapter.setItems(items);
-            mAdapter.notifyDataSetChanged();
-        }
-    }
 
     private void fetchStatusFromFirebase() {
 
         if (uid != null) {
 
-            mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("users").child(uid).child("posts");
-            mDatabaseReferencePosts.child("status").addValueEventListener(new ValueEventListener() {
+            final StorageReference mStorageReferenceVideo = FirebaseStorage.getInstance().getReference("posts").child("videos");
+
+            mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("users").child(uid).child("userPosts");
+
+            Log.d(TAG, "fetchStatusFromFirebase: URLL " + mDatabaseReferencePosts);
+            mDatabaseReferencePosts.orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
 
-
                     for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                        Status status = postSnapshot.getValue(Status.class);
-                        items.add(status);
+
+                        mStorageReference = FirebaseStorage.getInstance().getReference("posts").child("images");
+
+                        if (!isDone.containsKey(postSnapshot.getKey())) {
+
+                            if (postSnapshot.child("type").getValue().equals("status")) {
+                                Log.d(TAG, "onDataChange: DATA troo");
+                                Status statusSnap = postSnapshot.getValue(Status.class);
+                                isDone.put(postSnapshot.getKey(), (long) 1);
+                                items.add(statusSnap);
+                            } else if (postSnapshot.child("type").getValue().equals("photo")) {
+                                Photo photoSnap = postSnapshot.getValue(Photo.class);
+                                photoSnap.setStorageReference(mStorageReference.child(postSnapshot.getKey()));
+                                isDone.put(postSnapshot.getKey(), (long) 1);
+
+                                items.add(photoSnap);
+                            } else if (postSnapshot.child("type").getValue().equals("video")) {
+                                final CustomVideo videoSnap = postSnapshot.getValue(CustomVideo.class);
+                                if (mStorageReferenceVideo.child(postSnapshot.getKey()) != null) {
+                                    isDone.put(postSnapshot.getKey(), (long) 1);
+                                    items.add(videoSnap);
+                                    videoSnap.setStorageReference(mStorageReferenceVideo.child(postSnapshot.getKey()));
+                                    mStorageReferenceVideo.child(postSnapshot.getKey()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                        @Override
+                                        public void onSuccess(Uri uri) {
+                                            videoSnap.setVideoURI(uri.toString());
+                                        }
+                                    });
+                                }
+                            }
+                            mAdapter.notifyDataSetChanged();
+                        }
                         mAdapter.notifyDataSetChanged();
                     }
                 }
@@ -380,7 +409,6 @@ public class GuruDetailActivity extends BaseActivity{
                     Log.d(TAG, "onCancelled: " + databaseError.getMessage());
                 }
             });
-
 
             Log.d(TAG, "fetchStatusFromFirebase: " + items.size());
             mAdapter.setItems(items);
