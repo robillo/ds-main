@@ -156,7 +156,7 @@ public class CommonFragment extends Fragment {
 
         items = new Items();
 
-        if(isOnline()) {
+        if (isOnline()) {
             if (from.equals(getString(R.string.title_home))) {
                 Log.e("FROM", from);
 
@@ -165,22 +165,22 @@ public class CommonFragment extends Fragment {
 
                 mDatabaseReferenceGuru = FirebaseDatabase.getInstance().getReference("users");
 
-                    refresh();
+                refresh();
 
-                    mDatabaseReferenceGuru.child(mFirebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            if (dataSnapshot.child("following").getValue() != null) {
-                                mSelectedGurus.addAll((Collection<? extends String>) dataSnapshot.child("following").getValue());
-                            }
-                            fetchGuruPostsFromFirebase();
-                            alternateLayout.setVisibility(View.INVISIBLE);
+                mDatabaseReferenceGuru.child(mFirebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.child("following").getValue() != null) {
+                            mSelectedGurus.addAll((Collection<? extends String>) dataSnapshot.child("following").getValue());
                         }
+                        fetchGuruPostsFromFirebase();
+                        alternateLayout.setVisibility(View.INVISIBLE);
+                    }
 
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-                        }
-                    });
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
 
                 fetchGuruPostsFromFirebase();
 
@@ -226,7 +226,7 @@ public class CommonFragment extends Fragment {
 
                 refresh();
             }
-        }else{
+        } else {
             Toast.makeText(getActivity(), "No Internet Connection", Toast.LENGTH_SHORT).show();
         }
 
@@ -362,7 +362,7 @@ public class CommonFragment extends Fragment {
             ArrayList<String> interests = new ArrayList<>();
             interests.addAll(mAllInterests.keySet());
 
-            Log.d(TAG, "fetchExplorePostsFromFirebase: "+interests);
+            Log.d(TAG, "fetchExplorePostsFromFirebase: " + interests);
             mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("allPosts");
 
             mDatabaseReferencePosts.orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
@@ -375,10 +375,10 @@ public class CommonFragment extends Fragment {
 
                     for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
 
-                        Log.d(TAG, "onDataChange: DATA "+postSnapshot);
-                        Log.d(TAG, "onDataChange: DATA "+postSnapshot.child("type"));
+                        Log.d(TAG, "onDataChange: DATA " + postSnapshot);
+                        Log.d(TAG, "onDataChange: DATA " + postSnapshot.child("type"));
 
-                        if(!isDone.containsKey(postSnapshot.getKey())) {
+                        if (!isDone.containsKey(postSnapshot.getKey())) {
 
                             if (postSnapshot.child("type").getValue().equals("status")) {
                                 Log.d(TAG, "onDataChange: DATA troo");
@@ -406,7 +406,7 @@ public class CommonFragment extends Fragment {
                                 }
                             }
                             mAdapter.notifyDataSetChanged();
-                        }else{
+                        } else {
 
                         }
 
@@ -424,7 +424,7 @@ public class CommonFragment extends Fragment {
             Log.d(TAG, "fetchExplorePostsFromFirebase: " + items.size());
             mAdapter.setItems(items);
             mAdapter.notifyDataSetChanged();
-        }else{
+        } else {
             Log.d(TAG, "fetchExplorePostsFromFirebase: NULL");
         }
 
@@ -442,7 +442,7 @@ public class CommonFragment extends Fragment {
                         //CALL DATA HERE
                         if (isOnline()) {
 
-                            if(lang==2) {
+                            if (lang == 2) {
 
                                 if (from.equals(getString(R.string.title_home))) {
                                     Log.e("FROM", from);
@@ -459,8 +459,7 @@ public class CommonFragment extends Fragment {
 
                                     fetchYourPostsFromFirebase();
                                 }
-                            }
-                            else if(lang==1){
+                            } else if (lang == 1) {
 
                                 if (from.equals(getString(R.string.title_home))) {
                                     Log.e("FROM", from);
@@ -477,8 +476,7 @@ public class CommonFragment extends Fragment {
 
                                     fetchYourPostsFromFirebaseHindi();
                                 }
-                            }
-                            else if(lang==0){
+                            } else if (lang == 0) {
 
                                 if (from.equals(getString(R.string.title_home))) {
                                     Log.e("FROM", from);
@@ -519,7 +517,7 @@ public class CommonFragment extends Fragment {
         mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("users").child(mFirebaseUser.getUid()).child("userPosts");
 
         Log.d(TAG, "fetchStatusFromFirebase: URLL " + mDatabaseReferencePosts);
-        mDatabaseReferencePosts.orderByChild("language").equalTo("english").orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
+        mDatabaseReferencePosts.orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -527,74 +525,9 @@ public class CommonFragment extends Fragment {
 
                     mStorageReference = FirebaseStorage.getInstance().getReference("posts").child("images");
 
-                    if (!isDone.containsKey(postSnapshot.getKey())) {
+                    if(postSnapshot.child("language").exists()&&postSnapshot.child("language").getValue().equals("english")){
 
-                        if (postSnapshot.child("type").getValue().equals("status")) {
-                            Log.d(TAG, "onDataChange: DATA troo");
-                            Status statusSnap = postSnapshot.getValue(Status.class);
-                            isDone.put(postSnapshot.getKey(), (long) 1);
-                            items.add(statusSnap);
-                        } else if (postSnapshot.child("type").getValue().equals("photo")) {
-                            Photo photoSnap = postSnapshot.getValue(Photo.class);
-                            photoSnap.setStorageReference(mStorageReference.child(postSnapshot.getKey()));
-                            isDone.put(postSnapshot.getKey(), (long) 1);
-
-                            items.add(photoSnap);
-                        } else if (postSnapshot.child("type").getValue().equals("video")) {
-                            final CustomVideo videoSnap = postSnapshot.getValue(CustomVideo.class);
-                            if (mStorageReferenceVideo.child(postSnapshot.getKey()) != null) {
-                                isDone.put(postSnapshot.getKey(), (long) 1);
-                                items.add(videoSnap);
-                                videoSnap.setStorageReference(mStorageReferenceVideo.child(postSnapshot.getKey()));
-                                mStorageReferenceVideo.child(postSnapshot.getKey()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                    @Override
-                                    public void onSuccess(Uri uri) {
-                                        videoSnap.setVideoURI(uri.toString());
-                                    }
-                                });
-                            }
-                        }
-                        mAdapter.notifyDataSetChanged();
-                    }
-                    mAdapter.notifyDataSetChanged();
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.d(TAG, "onCancelled: " + databaseError.getMessage());
-            }
-        });
-
-        Log.d(TAG, "fetchStatusFromFirebase: " + items.size());
-        mAdapter.setItems(items);
-        mAdapter.notifyDataSetChanged();
-
-    }
-
-    private void fetchExplorePostsFromFirebaseEnglish() {
-
-        if (mAllInterests != null && mAllInterests.keySet().size() > 0) {
-            ArrayList<String> interests = new ArrayList<>();
-            interests.addAll(mAllInterests.keySet());
-
-            Log.d(TAG, "fetchExplorePostsFromFirebase: "+interests);
-            mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("allPosts");
-
-            mDatabaseReferencePosts.orderByChild("language").equalTo("english").orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-
-                    mStorageReference = FirebaseStorage.getInstance().getReference("posts").child("images");
-
-                    final StorageReference mStorageReferenceVideo = FirebaseStorage.getInstance().getReference("posts").child("videos");
-
-                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-
-                        Log.d(TAG, "onDataChange: DATA "+postSnapshot);
-                        Log.d(TAG, "onDataChange: DATA "+postSnapshot.child("type"));
-
-                        if(!isDone.containsKey(postSnapshot.getKey())) {
+                        if (!isDone.containsKey(postSnapshot.getKey())) {
 
                             if (postSnapshot.child("type").getValue().equals("status")) {
                                 Log.d(TAG, "onDataChange: DATA troo");
@@ -622,47 +555,47 @@ public class CommonFragment extends Fragment {
                                 }
                             }
                             mAdapter.notifyDataSetChanged();
-                        }else{
-
                         }
-
                     }
                     mAdapter.notifyDataSetChanged();
-
                 }
+            }
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    Log.d(TAG, "onCancelled: " + databaseError.getMessage());
-                }
-            });
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d(TAG, "onCancelled: " + databaseError.getMessage());
+            }
+        });
 
-            Log.d(TAG, "fetchExplorePostsFromFirebase: " + items.size());
-            mAdapter.setItems(items);
-            mAdapter.notifyDataSetChanged();
-        }else{
-            Log.d(TAG, "fetchExplorePostsFromFirebase: NULL");
-        }
+        Log.d(TAG, "fetchStatusFromFirebase: " + items.size());
+        mAdapter.setItems(items);
+        mAdapter.notifyDataSetChanged();
 
     }
 
-    private void fetchGuruPostsFromFirebaseEnglish() {
+    private void fetchExplorePostsFromFirebaseEnglish() {
 
-        final StorageReference mStorageReferenceVideo = FirebaseStorage.getInstance().getReference("posts").child("videos");
+        if (mAllInterests != null && mAllInterests.keySet().size() > 0) {
+            ArrayList<String> interests = new ArrayList<>();
+            interests.addAll(mAllInterests.keySet());
 
-        if (mSelectedGurus != null && mSelectedGurus.size() > 0) {
+            Log.d(TAG, "fetchExplorePostsFromFirebase: " + interests);
+            mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("allPosts");
 
-            for (String guru : mSelectedGurus) {
+            mDatabaseReferencePosts.orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
 
-                mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("users").child(guru).child("userPosts");
+                    mStorageReference = FirebaseStorage.getInstance().getReference("posts").child("images");
 
-                mDatabaseReferencePosts.orderByChild("language").equalTo("english").orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
+                    final StorageReference mStorageReferenceVideo = FirebaseStorage.getInstance().getReference("posts").child("videos");
 
-                        mStorageReference = FirebaseStorage.getInstance().getReference("posts").child("images");
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
 
-                        for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        Log.d(TAG, "onDataChange: DATA " + postSnapshot);
+                        Log.d(TAG, "onDataChange: DATA " + postSnapshot.child("type"));
+
+                        if(postSnapshot.child("language").exists()&&postSnapshot.child("language").getValue().equals("english")){
 
                             if (!isDone.containsKey(postSnapshot.getKey())) {
 
@@ -692,6 +625,80 @@ public class CommonFragment extends Fragment {
                                     }
                                 }
                                 mAdapter.notifyDataSetChanged();
+                            }
+                        } else {
+
+                        }
+
+                    }
+                    mAdapter.notifyDataSetChanged();
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.d(TAG, "onCancelled: " + databaseError.getMessage());
+                }
+            });
+
+            Log.d(TAG, "fetchExplorePostsFromFirebase: " + items.size());
+            mAdapter.setItems(items);
+            mAdapter.notifyDataSetChanged();
+        } else {
+            Log.d(TAG, "fetchExplorePostsFromFirebase: NULL");
+        }
+
+    }
+
+    private void fetchGuruPostsFromFirebaseEnglish() {
+
+        final StorageReference mStorageReferenceVideo = FirebaseStorage.getInstance().getReference("posts").child("videos");
+
+        if (mSelectedGurus != null && mSelectedGurus.size() > 0) {
+
+            for (String guru : mSelectedGurus) {
+
+                mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("users").child(guru).child("userPosts");
+
+                mDatabaseReferencePosts.orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                        mStorageReference = FirebaseStorage.getInstance().getReference("posts").child("images");
+
+                        for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+
+                            if(postSnapshot.child("language").exists()&&postSnapshot.child("language").getValue().equals("english")){
+
+                                if (!isDone.containsKey(postSnapshot.getKey())) {
+
+                                    if (postSnapshot.child("type").getValue().equals("status")) {
+                                        Log.d(TAG, "onDataChange: DATA troo");
+                                        Status statusSnap = postSnapshot.getValue(Status.class);
+                                        isDone.put(postSnapshot.getKey(), (long) 1);
+                                        items.add(statusSnap);
+                                    } else if (postSnapshot.child("type").getValue().equals("photo")) {
+                                        Photo photoSnap = postSnapshot.getValue(Photo.class);
+                                        photoSnap.setStorageReference(mStorageReference.child(postSnapshot.getKey()));
+                                        isDone.put(postSnapshot.getKey(), (long) 1);
+
+                                        items.add(photoSnap);
+                                    } else if (postSnapshot.child("type").getValue().equals("video")) {
+                                        final CustomVideo videoSnap = postSnapshot.getValue(CustomVideo.class);
+                                        if (mStorageReferenceVideo.child(postSnapshot.getKey()) != null) {
+                                            isDone.put(postSnapshot.getKey(), (long) 1);
+                                            items.add(videoSnap);
+                                            videoSnap.setStorageReference(mStorageReferenceVideo.child(postSnapshot.getKey()));
+                                            mStorageReferenceVideo.child(postSnapshot.getKey()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                                @Override
+                                                public void onSuccess(Uri uri) {
+                                                    videoSnap.setVideoURI(uri.toString());
+                                                }
+                                            });
+                                        }
+                                    }
+                                    mAdapter.notifyDataSetChanged();
+                                }
                             }
                             mAdapter.notifyDataSetChanged();
                         }
@@ -719,86 +726,21 @@ public class CommonFragment extends Fragment {
         mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("users").child(mFirebaseUser.getUid()).child("userPosts");
 
         Log.d(TAG, "fetchStatusFromFirebase: URLL " + mDatabaseReferencePosts);
-        mDatabaseReferencePosts.orderByChild("language").equalTo("hindi").addValueEventListener(new ValueEventListener() {
+        mDatabaseReferencePosts.orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.d(TAG, "onDataChange: LEN "+dataSnapshot.exists());
-                Log.d(TAG, "onDataChange: LEN "+dataSnapshot.getChildrenCount());
+                Log.d(TAG, "onDataChange: LEN " + dataSnapshot.exists());
+                Log.d(TAG, "onDataChange: LEN " + dataSnapshot.getChildrenCount());
 
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
 
                     mStorageReference = FirebaseStorage.getInstance().getReference("posts").child("images");
 
-                    if (!isDone.containsKey(postSnapshot.getKey())) {
+                    if(postSnapshot.child("language").exists()&&postSnapshot.child("language").getValue().equals("hindi")){
 
-                        Log.d(TAG, "onDataChangeYOUR: "+postSnapshot.getValue());
+                        if (!isDone.containsKey(postSnapshot.getKey())) {
 
-                        if (postSnapshot.child("type").getValue().equals("status")) {
-                            Log.d(TAG, "onDataChange: DATA troo");
-                            Status statusSnap = postSnapshot.getValue(Status.class);
-                            isDone.put(postSnapshot.getKey(), (long) 1);
-                            items.add(statusSnap);
-                        } else if (postSnapshot.child("type").getValue().equals("photo")) {
-                            Photo photoSnap = postSnapshot.getValue(Photo.class);
-                            photoSnap.setStorageReference(mStorageReference.child(postSnapshot.getKey()));
-                            isDone.put(postSnapshot.getKey(), (long) 1);
-
-                            items.add(photoSnap);
-                        } else if (postSnapshot.child("type").getValue().equals("video")) {
-                            final CustomVideo videoSnap = postSnapshot.getValue(CustomVideo.class);
-                            if (mStorageReferenceVideo.child(postSnapshot.getKey()) != null) {
-                                isDone.put(postSnapshot.getKey(), (long) 1);
-                                items.add(videoSnap);
-                                videoSnap.setStorageReference(mStorageReferenceVideo.child(postSnapshot.getKey()));
-                                mStorageReferenceVideo.child(postSnapshot.getKey()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                    @Override
-                                    public void onSuccess(Uri uri) {
-                                        videoSnap.setVideoURI(uri.toString());
-                                    }
-                                });
-                            }
-                        }
-                        mAdapter.notifyDataSetChanged();
-                    }
-                    mAdapter.notifyDataSetChanged();
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.d(TAG, "onCancelled: " + databaseError.getMessage());
-            }
-        });
-
-        Log.d(TAG, "fetchStatusFromFirebase: " + items.size());
-        mAdapter.setItems(items);
-        mAdapter.notifyDataSetChanged();
-
-    }
-
-    private void fetchExplorePostsFromFirebaseHindi() {
-
-        if (mAllInterests != null && mAllInterests.keySet().size() > 0) {
-            ArrayList<String> interests = new ArrayList<>();
-            interests.addAll(mAllInterests.keySet());
-
-            Log.d(TAG, "fetchExplorePostsFromFirebase: "+interests);
-            mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("allPosts");
-
-            mDatabaseReferencePosts.orderByChild("language").equalTo("hindi").orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-
-                    mStorageReference = FirebaseStorage.getInstance().getReference("posts").child("images");
-
-                    final StorageReference mStorageReferenceVideo = FirebaseStorage.getInstance().getReference("posts").child("videos");
-
-                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-
-                        Log.d(TAG, "onDataChange: DATA "+postSnapshot);
-                        Log.d(TAG, "onDataChange: DATA "+postSnapshot.child("type"));
-
-                        if(!isDone.containsKey(postSnapshot.getKey())) {
+                            Log.d(TAG, "onDataChangeYOUR: " + postSnapshot.getValue());
 
                             if (postSnapshot.child("type").getValue().equals("status")) {
                                 Log.d(TAG, "onDataChange: DATA troo");
@@ -826,48 +768,47 @@ public class CommonFragment extends Fragment {
                                 }
                             }
                             mAdapter.notifyDataSetChanged();
-                        }else{
-
                         }
-
                     }
                     mAdapter.notifyDataSetChanged();
-
                 }
+            }
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    Log.d(TAG, "onCancelled: " + databaseError.getMessage());
-                }
-            });
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d(TAG, "onCancelled: " + databaseError.getMessage());
+            }
+        });
 
-            Log.d(TAG, "fetchExplorePostsFromFirebase: " + items.size());
-            mAdapter.setItems(items);
-            mAdapter.notifyDataSetChanged();
-        }else{
-            Log.d(TAG, "fetchExplorePostsFromFirebase: NULL");
-        }
+        Log.d(TAG, "fetchStatusFromFirebase: " + items.size());
+        mAdapter.setItems(items);
+        mAdapter.notifyDataSetChanged();
 
     }
 
-    private void fetchGuruPostsFromFirebaseHindi() {
+    private void fetchExplorePostsFromFirebaseHindi() {
 
+        if (mAllInterests != null && mAllInterests.keySet().size() > 0) {
+            ArrayList<String> interests = new ArrayList<>();
+            interests.addAll(mAllInterests.keySet());
 
-        final StorageReference mStorageReferenceVideo = FirebaseStorage.getInstance().getReference("posts").child("videos");
+            Log.d(TAG, "fetchExplorePostsFromFirebase: " + interests);
+            mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("allPosts");
 
-        if (mSelectedGurus != null && mSelectedGurus.size() > 0) {
+            mDatabaseReferencePosts.orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
 
-            for (String guru : mSelectedGurus) {
+                    mStorageReference = FirebaseStorage.getInstance().getReference("posts").child("images");
 
-                mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("users").child(guru).child("userPosts");
+                    final StorageReference mStorageReferenceVideo = FirebaseStorage.getInstance().getReference("posts").child("videos");
 
-                mDatabaseReferencePosts.orderByChild("language").equalTo("hindi").orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
 
-                        mStorageReference = FirebaseStorage.getInstance().getReference("posts").child("images");
+                        Log.d(TAG, "onDataChange: DATA " + postSnapshot);
+                        Log.d(TAG, "onDataChange: DATA " + postSnapshot.child("type"));
 
-                        for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        if(postSnapshot.child("language").exists()&&postSnapshot.child("language").getValue().equals("hindi")){
 
                             if (!isDone.containsKey(postSnapshot.getKey())) {
 
@@ -897,6 +838,80 @@ public class CommonFragment extends Fragment {
                                     }
                                 }
                                 mAdapter.notifyDataSetChanged();
+                            }
+                        } else {
+
+                        }
+
+                    }
+                    mAdapter.notifyDataSetChanged();
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.d(TAG, "onCancelled: " + databaseError.getMessage());
+                }
+            });
+
+            Log.d(TAG, "fetchExplorePostsFromFirebase: " + items.size());
+            mAdapter.setItems(items);
+            mAdapter.notifyDataSetChanged();
+        } else {
+            Log.d(TAG, "fetchExplorePostsFromFirebase: NULL");
+        }
+
+    }
+
+    private void fetchGuruPostsFromFirebaseHindi() {
+
+
+        final StorageReference mStorageReferenceVideo = FirebaseStorage.getInstance().getReference("posts").child("videos");
+
+        if (mSelectedGurus != null && mSelectedGurus.size() > 0) {
+
+            for (String guru : mSelectedGurus) {
+
+                mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("users").child(guru).child("userPosts");
+
+                mDatabaseReferencePosts.orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                        mStorageReference = FirebaseStorage.getInstance().getReference("posts").child("images");
+
+                        for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+
+                            if (postSnapshot.child("language").exists() && postSnapshot.child("language").getValue().equals("hindi")) {
+                                if (!isDone.containsKey(postSnapshot.getKey())) {
+
+                                    if (postSnapshot.child("type").getValue().equals("status")) {
+                                        Log.d(TAG, "onDataChange: DATA troo");
+                                        Status statusSnap = postSnapshot.getValue(Status.class);
+                                        isDone.put(postSnapshot.getKey(), (long) 1);
+                                        items.add(statusSnap);
+                                    } else if (postSnapshot.child("type").getValue().equals("photo")) {
+                                        Photo photoSnap = postSnapshot.getValue(Photo.class);
+                                        photoSnap.setStorageReference(mStorageReference.child(postSnapshot.getKey()));
+                                        isDone.put(postSnapshot.getKey(), (long) 1);
+
+                                        items.add(photoSnap);
+                                    } else if (postSnapshot.child("type").getValue().equals("video")) {
+                                        final CustomVideo videoSnap = postSnapshot.getValue(CustomVideo.class);
+                                        if (mStorageReferenceVideo.child(postSnapshot.getKey()) != null) {
+                                            isDone.put(postSnapshot.getKey(), (long) 1);
+                                            items.add(videoSnap);
+                                            videoSnap.setStorageReference(mStorageReferenceVideo.child(postSnapshot.getKey()));
+                                            mStorageReferenceVideo.child(postSnapshot.getKey()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                                @Override
+                                                public void onSuccess(Uri uri) {
+                                                    videoSnap.setVideoURI(uri.toString());
+                                                }
+                                            });
+                                        }
+                                    }
+                                    mAdapter.notifyDataSetChanged();
+                                }
                             }
                             mAdapter.notifyDataSetChanged();
                         }
@@ -936,13 +951,16 @@ public class CommonFragment extends Fragment {
             case R.id.action_language: {
                 new MaterialDialog.Builder(getActivity())
                         .title(R.string.choose_lang)
-                        .items(new String[]{getString(R.string.english_lang), getString(R.string.hindi_lang),getString(R.string.both_lang)})
+                        .items(new String[]{getString(R.string.english_lang), getString(R.string.hindi_lang), getString(R.string.both_lang)})
                         .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
                             @Override
                             public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                                switch (which){
-                                    case 0:{
-                                        lang=0;
+
+                                from = getArguments().getString("from");
+
+                                switch (which) {
+                                    case 0: {
+                                        lang = 0;
 
                                         isDone.clear();
                                         items.clear();
@@ -953,48 +971,44 @@ public class CommonFragment extends Fragment {
                                         items = new Items();
 
                                         //FETCH ENGLISH FEEDS
-                                        if(from.equals(getString(R.string.title_home))){
+                                        if (from.equals(getString(R.string.title_home))) {
                                             //FETCH ENGLISH FEEDS FOR HOME
                                             fetchGuruPostsFromFirebaseEnglish();
-                                        }
-                                        else if(from.equals(getString(R.string.title_explore))){
+                                        } else if (from.equals(getString(R.string.title_explore))) {
                                             //FETCH ENGLISH FEEDS FOR EXPLORE
                                             fetchExplorePostsFromFirebaseEnglish();
-                                        }
-                                        else if(from.equals(getString(R.string.title_your_feeds))){
+                                        } else if (from.equals(getString(R.string.title_your_feeds))) {
                                             //FETCH ENGLISH FEEDS FOR YOUR FEEDS
                                             fetchYourPostsFromFirebaseEnglish();
                                         }
                                         break;
                                     }
-                                    case 1:{
-                                        lang=1;
+                                    case 1: {
+                                        lang = 1;
                                         isDone.clear();
                                         items.clear();
 
-                                        Log.d(TAG, "onSelection: FROM "+from);
+                                        Log.d(TAG, "onSelection: FROM " + from);
 
 //                                        mRvHome.getRecycledViewPool().clear();
                                         mAdapter.notifyDataSetChanged();
                                         isDone = new HashMap<String, Long>();
                                         items = new Items();
                                         //FETCH HINDI FEEDS
-                                        if(from.equals(getString(R.string.title_home))){
+                                        if (from.equals(getString(R.string.title_home))) {
                                             //FETCH HINDI FEEDS FOR HOME
                                             fetchGuruPostsFromFirebaseHindi();
-                                        }
-                                        else if(from.equals(getString(R.string.title_explore))){
+                                        } else if (from.equals(getString(R.string.title_explore))) {
                                             //FETCH HINDI FEEDS FOR EXPLORE
                                             fetchExplorePostsFromFirebaseHindi();
-                                        }
-                                        else if(from.equals(getString(R.string.title_your_feeds))){
+                                        } else if (from.equals(getString(R.string.title_your_feeds))) {
                                             //FETCH HINDI FEEDS FOR YOUR FEEDS
                                             fetchYourPostsFromFirebaseHindi();
                                         }
                                         break;
                                     }
-                                    case 2:{
-                                        lang=2;
+                                    case 2: {
+                                        lang = 2;
                                         isDone.clear();
                                         items.clear();
 
@@ -1003,15 +1017,13 @@ public class CommonFragment extends Fragment {
                                         isDone = new HashMap<String, Long>();
                                         items = new Items();
                                         //FETCH BOTH LANG FEEDS
-                                        if(from.equals(getString(R.string.title_home))){
+                                        if (from.equals(getString(R.string.title_home))) {
                                             //FETCH BOTH LANG FEEDS FOR HOME
                                             fetchGuruPostsFromFirebase();
-                                        }
-                                        else if(from.equals(getString(R.string.title_explore))){
+                                        } else if (from.equals(getString(R.string.title_explore))) {
                                             //FETCH BOTH LANG FEEDS FOR EXPLORE
                                             fetchExplorePostsFromFirebase();
-                                        }
-                                        else if(from.equals(getString(R.string.title_your_feeds))){
+                                        } else if (from.equals(getString(R.string.title_your_feeds))) {
                                             //FETCH BOTH LANG FEEDS FOR YOUR FEEDS
                                             fetchYourPostsFromFirebase();
                                         }
