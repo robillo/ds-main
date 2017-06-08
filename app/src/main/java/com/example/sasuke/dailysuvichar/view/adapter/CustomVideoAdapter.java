@@ -252,13 +252,8 @@ public class CustomVideoAdapter  extends ItemViewBinder<CustomVideo, CustomVideo
                             Toast.makeText(context, "Sorry. This Video Cannot Be Played", Toast.LENGTH_SHORT).show();
                         }
                     }
-                    else {
-                        holder.videoView.play();
-                    }
                 }
                 else {
-                    holder.play.setText(pContext.getString(R.string.play));
-                    holder.videoView.pause();
                 }
             }
         });
