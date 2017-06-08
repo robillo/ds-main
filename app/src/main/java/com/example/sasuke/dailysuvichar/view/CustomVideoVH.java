@@ -41,6 +41,7 @@ import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 import static com.facebook.login.widget.ProfilePictureView.TAG;
 
@@ -57,11 +58,12 @@ public class CustomVideoVH extends RecyclerView.ViewHolder {
     @BindView(R.id.image)
     public ImageView imageView;
     @BindView(R.id.iv_profile_dp)
-    public ImageView mPhotoDP;
+    ImageView mPhotoDP;
     @BindView(R.id.play_button)
     public TextView play;
 
-    public TextView download;
+    @BindView(R.id.download_button)
+    TextView download;
 
     @BindView(R.id.video_view)
     public SimpleVideoView videoView;
@@ -87,7 +89,6 @@ public class CustomVideoVH extends RecyclerView.ViewHolder {
         super(itemView);
         ButterKnife.bind(this, itemView);
         context = itemView.getContext();
-        download = (TextView) itemView.findViewById(R.id.download_button);
         mUsersDatabase = FirebaseDatabase.getInstance().getReference("users");
         mStorageReferenceDP = FirebaseStorage.getInstance().getReference("profile").child("user").child("dp");
 
