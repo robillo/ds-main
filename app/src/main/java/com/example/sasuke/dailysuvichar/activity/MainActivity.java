@@ -10,6 +10,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.example.sasuke.dailysuvichar.R;
+import com.example.sasuke.dailysuvichar.utils.SharedPrefs;
 
 import java.util.Locale;
 
@@ -36,6 +37,12 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        if(SharedPrefs.getIsLanguageSet()!=null){
+            if(SharedPrefs.getIsLanguageSet().equals("TRUE")){
+                startActivity(new Intent(this, LoginActivity.class));
+            }
+        }
     }
 
     @OnClick(R.id.rb_eng)
@@ -62,6 +69,7 @@ public class MainActivity extends BaseActivity {
 
     @OnClick(R.id.btn_next)
     public void openLoginActivity() {
+        SharedPrefs.setIsLanguageSet("TRUE");
         startActivity(LoginActivity.newIntent(this));
     }
 }

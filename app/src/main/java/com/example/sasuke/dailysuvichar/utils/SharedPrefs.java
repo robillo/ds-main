@@ -14,6 +14,7 @@ public class SharedPrefs {
     private static final String IS_PROFILE_SET = "true_or_false_profile";
     private static final String IS_INTERESTS_SELECTED = "true_or_false_interest";
     private static final String IS_SUBINTERESTS_SELECTED = "true_or_false_subinterest";
+    private static  final String IS_LANGUAGE_SET = "true_or_false_languageset";
 
 //    public static void setDefaults(){
 //        if(getIsLoggedIn()==null){
@@ -29,6 +30,12 @@ public class SharedPrefs {
 //            setIsInterestsSelected("FALSE");
 //        }
 //    }
+
+    public static void setIsLanguageSet(String token){
+        SharedPreferences.Editor editor = getPrefrences().edit();
+        editor.putString(IS_LANGUAGE_SET, token);
+        editor.apply();
+    }
 
     public static void setIsLoggedIn(String token){
         SharedPreferences.Editor editor = getPrefrences().edit();
@@ -56,6 +63,10 @@ public class SharedPrefs {
 
     public static String getIsLoggedIn() {
         return getPrefrences().getString(IS_LOGGED_IN, null);
+    }
+
+    public static String getIsLanguageSet() {
+        return getPrefrences().getString(IS_LANGUAGE_SET, null);
     }
 
     public static String getIsProfileSet() {
