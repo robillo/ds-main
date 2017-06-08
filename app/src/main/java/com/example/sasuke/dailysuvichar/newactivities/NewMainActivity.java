@@ -2,47 +2,28 @@ package com.example.sasuke.dailysuvichar.newactivities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.sasuke.dailysuvichar.R;
-import com.example.sasuke.dailysuvichar.activity.AboutActivity;
-import com.example.sasuke.dailysuvichar.activity.MainActivity;
 import com.example.sasuke.dailysuvichar.activity.ProfileActivity;
 import com.example.sasuke.dailysuvichar.activity.SelectPhotoActivity;
 import com.example.sasuke.dailysuvichar.activity.SelectStatusActivity;
 import com.example.sasuke.dailysuvichar.activity.SelectVideoActivity;
-import com.example.sasuke.dailysuvichar.models.Feature;
-import com.example.sasuke.dailysuvichar.newadapters.RVAFeature;
-import com.example.sasuke.dailysuvichar.newfragments.PagerFragment;
 import com.example.sasuke.dailysuvichar.newnewactivities.GuruActivity;
 import com.example.sasuke.dailysuvichar.newnewfragments.CommonFragment;
 import com.example.sasuke.dailysuvichar.newnewfragments.GuruFragment;
-import com.example.sasuke.dailysuvichar.utils.ZoomOutPageTransformer;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

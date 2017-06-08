@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.models.Guru;
-import com.example.sasuke.dailysuvichar.newactivities.NewGurusActivity;
+import com.example.sasuke.dailysuvichar.newnewactivities.GuruActivity;
 import com.example.sasuke.dailysuvichar.view.VHGurus;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -155,7 +155,7 @@ public class RVGuruAdapter extends RecyclerView.Adapter<VHGurus> {
                     isFollowing.set(position, true);
                     holder.follow.setText(context.getString(R.string.following_caps));
                     holder.follow.setBackgroundColor(context.getResources().getColor(R.color.green));
-                    NewGurusActivity.setFollowing(item.getFollowers(), item.getUid(),true,item.getGuruUid());
+                    GuruActivity.setFollowing(item.getFollowers(), item.getUid(),true,item.getGuruUid());
 //                    holder.setFollowersCount(item.getFollowersCount());
 
                 }
@@ -163,8 +163,18 @@ public class RVGuruAdapter extends RecyclerView.Adapter<VHGurus> {
                     isFollowing.set(position, false);
                     holder.follow.setText(context.getString(R.string.follow_caps));
                     holder.follow.setBackgroundColor(context.getResources().getColor(R.color.colorAccent));
-                    NewGurusActivity.setFollowing(item.getFollowers(),item.getUid(),false,item.getGuruUid());
+                    GuruActivity.setFollowing(item.getFollowers(),item.getUid(),false,item.getGuruUid());
 //                    holder.setFollowersCount(item.getFollowersCount());
+                }else if(holder.follow.getText().equals(context.getString(R.string.following_caps))){
+                    isFollowing.set(position, false);
+                    holder.follow.setText(context.getString(R.string.follow_caps));
+                    holder.follow.setBackgroundColor(context.getResources().getColor(R.color.colorAccent));
+                    GuruActivity.setFollowing(item.getFollowers(),item.getUid(),false,item.getGuruUid());
+                }else{
+                    isFollowing.set(position, true);
+                    holder.follow.setText(context.getString(R.string.following_caps));
+                    holder.follow.setBackgroundColor(context.getResources().getColor(R.color.green));
+                    GuruActivity.setFollowing(item.getFollowers(), item.getUid(),true,item.getGuruUid());
                 }
             }
         });

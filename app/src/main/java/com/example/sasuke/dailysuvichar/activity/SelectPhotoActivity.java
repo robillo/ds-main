@@ -105,7 +105,7 @@ public class SelectPhotoActivity extends BaseActivity{
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setNavigationIcon(R.drawable.ic_clear_black_24dp);
+//        toolbar.setNavigationIcon(R.drawable.ic_clear_black_24dp);
 
         mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         getName();

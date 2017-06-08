@@ -80,7 +80,7 @@ public class CommonFragment extends Fragment {
     private ArrayList<String> mSelectedSubInterests;
     private ArrayList<Status> statusYouraList, statusHomeaList;
     private StorageReference mStorageReferenceDP;
-    private HashMap<String, ArrayList<String>> mAllInterests;
+    private HashMap mAllInterests;
     private FirebaseAuth mFirebaseAuth;
     private DatabaseReference mUsersDatabase;
     private ArrayList<String> mSelectedGurus;
@@ -99,7 +99,7 @@ public class CommonFragment extends Fragment {
     private String from = "HOME";
     private HashMap<String, Boolean> isStatusDone, isStatusDoneGuru;
 
-    @BindView(R.id.recyclerview)
+    @BindView(R.id.recyclerview_common)
     RecyclerView mRvHome;
 
 
@@ -118,9 +118,9 @@ public class CommonFragment extends Fragment {
 
         String from = getArguments().getString("from");
 
-        mRvHome = (RecyclerView) v.findViewById(R.id.recyclerview);
-        mPullToRefresh = (SwipeRefreshLayout) v.findViewById(R.id.swiperefresh);
-        alternateLayout = (LinearLayout) v.findViewById(R.id.alternate_layout);
+        mRvHome = (RecyclerView) v.findViewById(R.id.recyclerview_common);
+        mPullToRefresh = (SwipeRefreshLayout) v.findViewById(R.id.swiperefresh_common);
+        alternateLayout = (LinearLayout) v.findViewById(R.id.alternate_layout_common);
         mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         mStorageReference = FirebaseStorage.getInstance().getReference();
 
@@ -152,7 +152,6 @@ public class CommonFragment extends Fragment {
         mAdapter.register(CustomVideo.class, new CustomVideoAdapter());
         mRvHome.setAdapter(mAdapter);
 
-        mAllInterests = new HashMap();
         items = new Items();
 
         if(isOnline()) {
@@ -183,10 +182,10 @@ public class CommonFragment extends Fragment {
 
 //                fetchGuruPostsFromFirebase();
 
-
             } else if (from.equals(getString(R.string.title_explore))) {
 
                 isDone = new HashMap<>();
+                mAllInterests = new HashMap();
 
                 Log.e("FROM", from);
 
