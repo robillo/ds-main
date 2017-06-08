@@ -22,13 +22,13 @@
         android:background="@color/black" />
 
     <TextView
+        android:id="@+id/caption"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/caption"
-        android:fontFamily="serif-monospace"
-        android:textColor="@color/black"
+        android:fontFamily="sans-serif"
+        android:padding="5sp"
         android:text="Caption Text Will Go Here."
-        android:padding="5sp"/>
+        android:textColor="@color/black" />
 
     <ImageView
         android:layout_width="match_parent"

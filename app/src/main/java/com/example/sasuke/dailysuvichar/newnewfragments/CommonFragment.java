@@ -62,9 +62,9 @@ import me.drakeet.multitype.MultiTypeAdapter;
 public class CommonFragment extends Fragment {
 
 
-    @BindView(R.id.swiperefresh)
+    @BindView(R.id.swiperefresh_common)
     SwipeRefreshLayout mPullToRefresh;
-    @BindView(R.id.alternate_layout)
+    @BindView(R.id.alternate_layout_common)
     LinearLayout alternateLayout;
 
     private MultiTypeAdapter mAdapter;
@@ -306,6 +306,8 @@ public class CommonFragment extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+
+                    mStorageReference = FirebaseStorage.getInstance().getReference("posts").child("images");
 
                     if (!isDone.containsKey(postSnapshot.getKey())) {
 

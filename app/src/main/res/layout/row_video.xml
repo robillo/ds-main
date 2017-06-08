@@ -14,6 +14,15 @@
         <include layout="@layout/notification_header" />
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/caption"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif"
+        android:padding="5sp"
+        android:text="Caption Text Will Go Here."
+        android:textColor="@color/black" />
+
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="0.5dp"

@@ -26,8 +26,6 @@ import android.widget.Toast;
 
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.models.CustomVideo;
-import com.example.sasuke.dailysuvichar.newactivities.NewExploreyActivity;
-import com.example.sasuke.dailysuvichar.newactivities.NewHomeyActivity;
 import com.example.sasuke.dailysuvichar.view.RVTags;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -118,7 +116,7 @@ public class SelectVideoActivity extends BaseActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        toolbar.setNavigationIcon(R.drawable.ic_clear_black_24dp);
+        toolbar.setNavigationIcon(R.drawable.ic_clear_black_24dp);
 
         mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         getName();
