@@ -111,11 +111,12 @@ public class CommonFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_common, container, false);
         ButterKnife.bind(getActivity());
+        View v = inflater.inflate(R.layout.fragment_common, container, false);
 
         setHasOptionsMenu(true);
 
+        Toast.makeText(getActivity(), "COMMON FRAGMENT", Toast.LENGTH_SHORT).show();
         String from = getArguments().getString("from");
 
         mRvHome = (RecyclerView) v.findViewById(R.id.recyclerview_common);

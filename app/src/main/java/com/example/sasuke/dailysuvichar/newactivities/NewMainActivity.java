@@ -32,13 +32,10 @@ import butterknife.OnClick;
 public class NewMainActivity extends AppCompatActivity {
 
     boolean doubleBackToExitPressedOnce = false;
-    private FragmentTransaction fragmentTransaction;
     private String from;
 
     @BindView(R.id.conditional)
     LinearLayout conditional;
-    @BindView(R.id.fragment_container)
-    FrameLayout container;
     @BindView(R.id.header)
     TextView header;
     @BindView(R.id.status_select)
@@ -141,21 +138,27 @@ public class NewMainActivity extends AppCompatActivity {
     }
 
     private void addFragment(String from){
+
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+
         CommonFragment commonFragment = new CommonFragment();
         Bundle args = new Bundle();
         args.putString("from", from);
         commonFragment.setArguments(args);
 
-        fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.container, commonFragment);
+        fragmentTransaction.replace(R.id.fragment_container_new_main, commonFragment);
 //        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
+
+        Toast.makeText(getApplicationContext(), "FRAGMENT COMMITED", Toast.LENGTH_SHORT).show();
     }
 
     private void addGuruFragment(){
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+
         GuruFragment guruFragment = new GuruFragment();
-        fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.container, guruFragment);
+
+        fragmentTransaction.replace(R.id.fragment_container_new_main, guruFragment);
 //        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }

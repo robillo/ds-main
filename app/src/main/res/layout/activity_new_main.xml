@@ -46,7 +46,7 @@
             android:layout_height="match_parent"
             android:layout_marginBottom="90sp"
             android:layout_marginTop="?attr/actionBarSize"
-            android:id="@+id/fragment_container">
+            android:id="@+id/fragment_container_new_main">
 
         </FrameLayout>
 
