@@ -154,15 +154,6 @@ public class GuruDetailActivity extends BaseActivity{
 //        mAdapter.register(CustomVideo.class, new CustomVideoAdapter());
         mRvHome.setAdapter(mAdapter);
 
-        customVideoAdapter = new CustomVideoAdapter();
-        mRvHome.setOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                customVideoAdapter.releaseVideo();
-            }
-        });
-
         items = new Items();
 
         fetchStatusFromFirebase();
