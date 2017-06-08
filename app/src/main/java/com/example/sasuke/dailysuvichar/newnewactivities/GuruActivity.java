@@ -48,10 +48,10 @@ import static com.bumptech.glide.gifdecoder.GifHeaderParser.TAG;
 
 public class GuruActivity extends AppCompatActivity {
 
-    private RVGuruAdapter mRvGuruAdapter;
+    private static RVGuruAdapter mRvGuruAdapter;
     private StaggeredGridLayoutManager staggeredGridLayoutManager;
     private GridLayoutManager gridLayoutManager;
-    private ArrayList<Guru> guruList;
+    private static ArrayList<Guru> guruList;
     private String MOTIVATION_GURU = "Motivation Guru";
     private String AYURVEDA_GURU = "Ayurveda Guru";
     private String YOGA_GURU = "Yoga Guru";
@@ -62,7 +62,7 @@ public class GuruActivity extends AppCompatActivity {
     private static FirebaseUser mFirebaseUser;
     private LinearLayoutManager mLayoutManager;
     Items items;
-    HashMap<String, Integer> guruMap;
+    static HashMap<String, Integer> guruMap;
     private MultiTypeAdapter mAdapter;
     private static ArrayList<String> following;
     private static HashMap<String, Boolean> followingMap;
@@ -178,6 +178,8 @@ public class GuruActivity extends AppCompatActivity {
             guruFollowers.add(mFirebaseUser.getUid());
             mDatabaseReferenceGuru.child(guruUid).child("followersCount").setValue(guruFollowers.size());
             mDatabaseReferenceGuru.child(guruUid).child("followers").setValue(guruFollowers);
+
+
         } else {
             following.remove(uid);
             guruFollowers.remove(mFirebaseUser.getUid());
@@ -187,6 +189,7 @@ public class GuruActivity extends AppCompatActivity {
             mDatabaseReferenceGuru.child(guruUid).child("followersCount").setValue(guruFollowers.size());
             mDatabaseReferenceUser.child("following").setValue(following);
             mDatabaseReferenceGuru.child(guruUid).child("followers").setValue(guruFollowers);
+
         }
 
     }

@@ -294,7 +294,6 @@ public class CustomVideoVH extends RecyclerView.ViewHolder {
                 Log.d(TAG, "downloadVideo: NULLURL");
             }
         }
-
     }
 
     private String generateRandomName(){
