@@ -138,11 +138,11 @@ public class CommonFragment extends Fragment {
 
         Log.e(TAG, uid);
 
-        slide_down = AnimationUtils.loadAnimation(getContext(), R.anim.slide_down);
-        slide_up = AnimationUtils.loadAnimation(getContext(), R.anim.slide_up);
+        slide_down = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_down);
+        slide_up = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_up);
 //        customVideoAdapter = new CustomVideoAdapter();
 
-        mLayoutManager = new LinearLayoutManager(getContext());
+        mLayoutManager = new LinearLayoutManager(getActivity());
         mLayoutManager.setItemPrefetchEnabled(true);
         mLayoutManager.setInitialPrefetchItemCount(10);
         mRvHome.setLayoutManager(mLayoutManager);
@@ -171,7 +171,7 @@ public class CommonFragment extends Fragment {
                             if (dataSnapshot.child("following").getValue() != null) {
                                 mSelectedGurus.addAll((Collection<? extends String>) dataSnapshot.child("following").getValue());
                             }
-//                            fetchGuruPostsFromFirebase();
+                            fetchGuruPostsFromFirebase();
                             alternateLayout.setVisibility(View.INVISIBLE);
                         }
 
@@ -180,7 +180,9 @@ public class CommonFragment extends Fragment {
                         }
                     });
 
-//                fetchGuruPostsFromFirebase();
+                fetchGuruPostsFromFirebase();
+
+                refresh();
 
             } else if (from.equals(getString(R.string.title_explore))) {
 
@@ -216,8 +218,11 @@ public class CommonFragment extends Fragment {
             } else if (from.equals(getString(R.string.title_your_feeds))) {
                 Log.e("FROM", from);
                 isDone = new HashMap<>();
+                alternateLayout.setVisibility(View.INVISIBLE);
 
                 fetchYourPostsFromFirebase();
+
+                refresh();
             }
         }else{
             Toast.makeText(getActivity(), "No Internet Connection", Toast.LENGTH_SHORT).show();
@@ -234,7 +239,7 @@ public class CommonFragment extends Fragment {
 
             for (String guru : mSelectedGurus) {
 
-                mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("users").child(guru).child("posts");
+                mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("users").child(guru).child("userPosts");
 
                 mDatabaseReferencePosts.orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
                     @Override
@@ -434,7 +439,7 @@ public class CommonFragment extends Fragment {
                             if (from.equals(getString(R.string.title_home))) {
                                 Log.e("FROM", from);
 
-//                                fetchGuruPostsFromFirebase();
+                                fetchGuruPostsFromFirebase();
                             } else if (from.equals(getString(R.string.title_explore))) {
 
                                 Log.e("FROM", from);
