@@ -41,6 +41,7 @@ import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 import static com.facebook.login.widget.ProfilePictureView.TAG;
 
@@ -55,14 +56,15 @@ public class CustomVideoVH extends RecyclerView.ViewHolder {
             "https://firebasestorage.googleapis.com/v0/b/dailysuvichar-708d4.appspot.com/o/posts%2Fvideos%2F-KkM_JU-RlzvykGl9HUc?alt=media&token=95994318-8a65-402a-a8cb-f8c91c0dba6a.mp4";
 
     @BindView(R.id.image)
-    public
-    ImageView imageView;
-    @BindView(R.id.download_button)
-    public TextView download;
+    public ImageView imageView;
     @BindView(R.id.iv_profile_dp)
-    public ImageView mPhotoDP;
+    ImageView mPhotoDP;
     @BindView(R.id.play_button)
     public TextView play;
+
+    @BindView(R.id.download_button)
+    TextView download;
+
     @BindView(R.id.video_view)
     public SimpleVideoView videoView;
     @BindView(R.id.caption)
