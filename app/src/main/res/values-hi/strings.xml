@@ -233,6 +233,8 @@
     <string name="preference"> अपनी भाषा सेट करें </string> 
     <string name="english_lang"> अँग्रेज़ी </string> 
     <string name="hindi_lang"> हिन्दी </string> 
+    <string name="pause">pause</string>
+    <string name="download_video">Download</string>
     <string name="choose"> यह चुनें </string> 
     <string name="usertype"> यूज़र टाइप </string> 
     <string name="standard"> स्टॅंडर्ड यूज़र </string> 

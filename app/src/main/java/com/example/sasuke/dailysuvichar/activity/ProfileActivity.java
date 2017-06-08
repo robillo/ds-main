@@ -196,7 +196,7 @@ public class ProfileActivity extends BaseActivity {
         });
 
         if(code == 1){
-            setNotEditable();
+//            setNotEditable();
         }
     }
 
@@ -848,7 +848,8 @@ public class ProfileActivity extends BaseActivity {
     }
 
     private boolean checkValidate(String type){
-        boolean flag = true;
+        boolean flagFromLogin = true;
+        boolean flagFromHome = false;
         boolean[] check;
         if(type.equals(getString(R.string.standard_caps))){
             //VALIDATE FOR STANDARD USER
@@ -895,7 +896,14 @@ public class ProfileActivity extends BaseActivity {
             }
             for(int i=0; i<10; i++){
                 if(!check[i]){
-                    flag = false;
+                    flagFromLogin = false;
+                }
+            }
+            //Check flagFromHome
+            for(int i=0; i<10; i++){
+                if(check[i]){
+                    flagFromHome = true;
+                    break;
                 }
             }
         }
@@ -954,18 +962,31 @@ public class ProfileActivity extends BaseActivity {
                 check[12] = true;
                 Log.e("LOG", special);
             }
+            //check flagFromLogin
             for(int i=0; i<13; i++){
                 if(!check[i]){
-                    flag = false;
+                    flagFromLogin = false;
+                }
+            }
+            //Check flagFromHome
+            for(int i=0; i<13; i++){
+                if(check[i]){
+                    flagFromHome = true;
+                    break;
                 }
             }
         }
         else {
-            flag = false;
+            flagFromLogin = false;
+            flagFromHome = false;
         }
-
-        Log.e("FLAG IS", String.valueOf(flag));
-        return flag;
+        Log.e("FLAG IS", String.valueOf(flagFromLogin));
+        if(code == 1){
+            return flagFromHome;
+        }
+        else {
+            return flagFromLogin;
+        }
     }
 
 //    private void writetoFirebaseAsStandard(){
