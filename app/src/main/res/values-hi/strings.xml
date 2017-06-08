@@ -346,4 +346,17 @@
     <string name="cancelled">प्रमाणीकरण विफल </string>
     <string name="authfailed">प्रमाणीकरण विफल होना</string>
     <string name="authsuccess">प्रमाणीकरण सफलता</string>
+
+    <string name="title_home">HOME</string>
+    <string name="title_guru">GURU</string>
+    <string name="title_explore">EXPLORE</string>
+    <string name="title_your_feeds">YOUR FEEDS</string>
+    <string name="title_profile">PROFILE</string>
+    <string name="choose_lang">Choose Language of your Feed:</string>
+    <string name="home_header">Daily Suvichar : Home</string>
+    <string name="guru_header">Daily Suvichar : Guru List</string>
+    <string name="explore_header">Daily Suvichar : Explore</string>
+    <string name="your_feeds_header">Daily Suvichar : Your Feeds</string>
+    <string name="profile_header">Daily Suvichar : Profile</string>
+    <string name="both_lang">Both</string>
 </resources>
