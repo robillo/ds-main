@@ -149,8 +149,6 @@ public class NewMainActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.fragment_container_new_main, commonFragment);
 //        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
-
-        Toast.makeText(getApplicationContext(), "FRAGMENT COMMITED", Toast.LENGTH_SHORT).show();
     }
 
     private void addGuruFragment(){
@@ -188,7 +186,8 @@ public class NewMainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if (doubleBackToExitPressedOnce) {
-            finish();
+//            finish();
+            moveTaskToBack(true);
             return;
         }
 

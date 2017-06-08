@@ -116,7 +116,6 @@ public class CommonFragment extends Fragment {
 
         setHasOptionsMenu(true);
 
-        Toast.makeText(getActivity(), "COMMON FRAGMENT", Toast.LENGTH_SHORT).show();
         String from = getArguments().getString("from");
 
         mRvHome = (RecyclerView) v.findViewById(R.id.recyclerview_common);
