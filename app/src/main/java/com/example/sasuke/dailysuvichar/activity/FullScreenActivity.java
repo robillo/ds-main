@@ -118,7 +118,7 @@ public class FullScreenActivity extends BaseActivity{
 //
 //        Toast.makeText(getApplicationContext(), "Downloading image..", Toast.LENGTH_SHORT).show();
 //
-        File rootPath = new File(Environment.getExternalStorageDirectory(), "image");
+        File rootPath = new File(Environment.getExternalStorageDirectory(), "dailysuvichar");
         if(!rootPath.exists()) {
             rootPath.mkdirs();
         }
