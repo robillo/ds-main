@@ -245,6 +245,8 @@ public class CommonFragment extends Fragment {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
+                        mStorageReference = FirebaseStorage.getInstance().getReference("posts").child("images");
+
                         for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
 
                             if (!isDone.containsKey(postSnapshot.getKey())) {
