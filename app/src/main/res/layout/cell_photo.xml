@@ -1,67 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="5sp"
-    android:background="@color/white"
-    android:orientation="vertical">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardElevation="5sp"
+    android:layout_margin="8sp">
 
-    <LinearLayout
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="12dp">
-
-        <include layout="@layout/notification_header" />
-
-    </LinearLayout>
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:layout_marginTop="2dp"
-        android:background="@color/black" />
-
-    <TextView
-        android:id="@+id/caption"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif"
-        android:padding="5sp"
-        android:text="Caption Text Will Go Here."
-        android:textColor="@color/black" />
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:layout_marginTop="2dp"
-        android:background="@color/black" />
-
-    <ImageView
-        android:id="@+id/photo"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:scaleType="fitXY" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="12dp">
-
-        <!--<include layout="@layout/cell_like_comment" />-->
-    </LinearLayout>
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/black" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="4dp"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_marginBottom="5sp"
         android:orientation="vertical">
 
-        <!--<include layout="@layout/button_like_comment" />-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp">
 
+            <include layout="@layout/notification_header" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="2dp"
+            android:background="@color/black" />
+
+        <TextView
+            android:id="@+id/caption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:padding="5sp"
+            android:text="Caption Text Will Go Here."
+            android:textColor="@color/black" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="2dp"
+            android:background="@color/black" />
+
+        <ImageView
+            android:id="@+id/photo"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:scaleType="fitXY" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp">
+
+            <!--<include layout="@layout/cell_like_comment" />-->
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/black" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            android:orientation="vertical">
+
+            <!--<include layout="@layout/button_like_comment" />-->
+
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+
+</android.support.v7.widget.CardView>
