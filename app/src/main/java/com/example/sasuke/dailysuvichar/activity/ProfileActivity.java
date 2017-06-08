@@ -819,27 +819,43 @@ public class ProfileActivity extends BaseActivity {
     @OnClick(R.id.btnSave)
     public void save(){
         if(userType.getText().equals(getString(R.string.standard_caps))){
-            //PUSH STANDARD USER DATA
-            if(checkValidate(getString(R.string.standard_caps))){
-//                writetoFirebaseAsStandard();
-                writetoFirebase();
-                SharedPrefs.setIsProfileSet("TRUE");
-                startActivity(new Intent(this, ChooseInterestActivity.class));
+            if(code==1){
+                if(checkValidate(getString(R.string.standard_caps))){
+                    writetoFirebase();
+                }
+                else {
+                    Toast.makeText(getApplicationContext(), R.string.make_changes, Toast.LENGTH_SHORT).show();
+                }
             }
             else {
-                Toast.makeText(getApplicationContext(), R.string.please, Toast.LENGTH_SHORT).show();
+                if(checkValidate(getString(R.string.standard_caps))){
+                    writetoFirebase();
+                    SharedPrefs.setIsProfileSet("TRUE");
+                    startActivity(new Intent(this, ChooseInterestActivity.class));
+                }
+                else {
+                    Toast.makeText(getApplicationContext(), R.string.please, Toast.LENGTH_SHORT).show();
+                }
             }
         }
         else if(userType.getText().equals(getString(R.string.guru_caps))){
-            //PUSH GURU USER DATA FIRST AS USER, THEN AS GURU
-            if(checkValidate(getString(R.string.guru_caps))){
-//                writetoFirebaseAsGuru();
-                writetoFirebase();
-                SharedPrefs.setIsProfileSet("TRUE");
-                startActivity(new Intent(this, ChooseInterestActivity.class));
+            if(code==1){
+                if(checkValidate(getString(R.string.guru_caps))){
+                    writetoFirebase();
+                }
+                else {
+                    Toast.makeText(getApplicationContext(), R.string.make_changes, Toast.LENGTH_SHORT).show();
+                }
             }
             else {
-                Toast.makeText(getApplicationContext(), getString(R.string.please), Toast.LENGTH_SHORT).show();
+                if(checkValidate(getString(R.string.guru_caps))){
+                    writetoFirebase();
+                    SharedPrefs.setIsProfileSet("TRUE");
+                    startActivity(new Intent(this, ChooseInterestActivity.class));
+                }
+                else {
+                    Toast.makeText(getApplicationContext(), R.string.please, Toast.LENGTH_SHORT).show();
+                }
             }
         }
         else {
