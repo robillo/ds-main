@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,7 +51,7 @@ import static com.facebook.login.widget.ProfilePictureView.TAG;
  */
 
 
-public class CustomVideoVH extends RecyclerView.ViewHolder {
+public class CustomVideoVH extends RecyclerView.ViewHolder implements View.OnClickListener{
 
     private static final String SAMPLE_VIDEO =
             "https://firebasestorage.googleapis.com/v0/b/dailysuvichar-708d4.appspot.com/o/posts%2Fvideos%2F-KkM_JU-RlzvykGl9HUc?alt=media&token=95994318-8a65-402a-a8cb-f8c91c0dba6a.mp4";
@@ -60,10 +61,12 @@ public class CustomVideoVH extends RecyclerView.ViewHolder {
     @BindView(R.id.iv_profile_dp)
     ImageView mPhotoDP;
     @BindView(R.id.play_button)
-    public TextView play;
+    public Button play;
 
-    @BindView(R.id.download_button)
-    TextView download;
+//    @BindView(R.id.download_button)
+//    public Button download;
+
+    Button downloadButton;
 
     @BindView(R.id.video_view)
     public SimpleVideoView videoView;
@@ -89,6 +92,8 @@ public class CustomVideoVH extends RecyclerView.ViewHolder {
         super(itemView);
         ButterKnife.bind(this, itemView);
         context = itemView.getContext();
+        downloadButton = (Button) itemView.findViewById(R.id.download_button);
+        downloadButton.setOnClickListener(this);
         mUsersDatabase = FirebaseDatabase.getInstance().getReference("users");
         mStorageReferenceDP = FirebaseStorage.getInstance().getReference("profile").child("user").child("dp");
 
@@ -307,4 +312,13 @@ public class CustomVideoVH extends RecyclerView.ViewHolder {
         return sb.toString();
     }
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.download_button:{
+                Toast.makeText(context, "DOWNLOAD CLICKED", Toast.LENGTH_SHORT).show();
+                break;
+            }
+        }
+    }
 }

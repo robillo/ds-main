@@ -96,17 +96,6 @@ public class CustomVideoAdapter  extends ItemViewBinder<CustomVideo, CustomVideo
 
         final CustomVideo item = videos.get(position);
 
-//        Log.e("PRE DOWNLOAD?", "YES");
-//        holder.download.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Log.e("CLICKED?", "YES");
-//                Toast.makeText(pContext, "TESTING", Toast.LENGTH_SHORT).show();
-//                holder.downloadVideo(item.getStorageReference());
-//            }
-//        });
-//        Log.e("POST DOWNLOAD?", "YES");
-
         new Handler().post(new Runnable() {
             @Override
             public void run() {
@@ -159,6 +148,17 @@ public class CustomVideoAdapter  extends ItemViewBinder<CustomVideo, CustomVideo
                     holder.videoView.play();
             }
         });
+
+//                Log.e("PRE DOWNLOAD?", "YES");
+//        holder.download.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Log.e("CLICKED?", "YES");
+//                Toast.makeText(pContext, "TESTING", Toast.LENGTH_SHORT).show();
+//                holder.downloadVideo(item.getStorageReference());
+//            }
+//        });
+//        Log.e("POST DOWNLOAD?", "YES");
 
         if(item.getUid()!=null) {
             holder.setStatusDP(item.getUid());
