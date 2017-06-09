@@ -6,9 +6,11 @@ import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.models.Status;
+import com.example.sasuke.dailysuvichar.utils.ItemClickListener;
 import com.example.sasuke.dailysuvichar.view.StatusViewHolder;
 
 import me.drakeet.multitype.ItemViewBinder;
@@ -54,6 +56,32 @@ public class StatusItemAdapter extends ItemViewBinder<Status, StatusViewHolder> 
 
             }
         });
+
+        holder.setClickListener(new ItemClickListener() {
+            @Override
+            public void onClick(View v, int position, Boolean isLongClick) {
+                if(!isLongClick){
+                    switch (v.getId()){
+                        case R.id.ll_lc:{
+                            if(holder.likeButton.isLiked()){
+                                holder.likeButton.setLiked(false);
+                                // DECREASE HOLDER.COUNT BY ONE IN ADAPTER
+                                // DECREASE HOLDER COUNT IN FIREBASE FOR THIS POST
+                                // REMOVE UID OF THIS USER FROM THIS POST
+                            }
+                            else {
+                                holder.likeButton.setLiked(true);
+                                // INCREASE HOLDER.COUNT BY ONE IN ADAPTER
+                                // INCREASE HOLDER COUNT IN FIREBASE FOR THIS POST
+                                // ADD UID OF THIS USER FROM THIS POST
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+        });
+
 //        holder.comment.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
