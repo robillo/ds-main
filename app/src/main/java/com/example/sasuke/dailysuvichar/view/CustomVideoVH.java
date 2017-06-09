@@ -14,12 +14,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.gifdecoder.GifHeaderParser;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.utils.ItemClickListener;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,6 +32,7 @@ import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.klinker.android.simple_videoview.SimpleVideoView;
+import com.like.LikeButton;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -39,11 +43,11 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 import static com.facebook.login.widget.ProfilePictureView.TAG;
 
@@ -61,11 +65,17 @@ public class CustomVideoVH extends RecyclerView.ViewHolder implements View.OnCli
     public ImageView imageView;
     @BindView(R.id.iv_profile_dp)
     ImageView mPhotoDP;
+    @BindView(R.id.like_button)
+    public LikeButton likeButton;
+    @BindView(R.id.tv_likes_count)
+    TextView tvLikes;
     @BindView(R.id.play_button)
     public Button play;
 
 //    @BindView(R.id.download_button)
 //    public Button download;
+    private DatabaseReference mDBrefLikes;
+    private FirebaseUser mFirebaseUser;
 
     Button downloadButton;
 
@@ -99,8 +109,9 @@ public class CustomVideoVH extends RecyclerView.ViewHolder implements View.OnCli
         itemView.setOnClickListener(this);
         downloadButton = (Button) itemView.findViewById(R.id.download_button);
         downloadButton.setOnClickListener(this);
+        mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         mUsersDatabase = FirebaseDatabase.getInstance().getReference("users");
-        mStorageReferenceDP = FirebaseStorage.getInstance().getReference("profile").child("user").child("dp");
+        mDBrefLikes = FirebaseDatabase.getInstance().getReference("allPosts");        mStorageReferenceDP = FirebaseStorage.getInstance().getReference("profile").child("user").child("dp");
 
     }
 
@@ -330,5 +341,119 @@ public class CustomVideoVH extends RecyclerView.ViewHolder implements View.OnCli
 //            }
 //        }
         clickListener.onClick(view, getAdapterPosition(),false);
+    }
+
+
+    public void setLikedUser(String uid, final boolean liked, ArrayList<String> likedUsers) {
+
+        Log.d(GifHeaderParser.TAG, "setLikedUser: ");
+
+
+//        final ArrayList<String> finalLikedUsers1 = likedUsers;
+//        mDBrefLikes.child(uid).child("likes").runTransaction(new Transaction.Handler() {
+//            @Override
+//            public Transaction.Result doTransaction(MutableData mutableData) {
+//                if (mutableData != null) {
+//                    int likes = mutableData.getValue(Integer.class);
+//
+//                    Log.d(TAG, "doTransaction: " + finalLikedUsers1);
+//                    if (liked) {
+//                        if (!finalLikedUsers1.contains(mFirebaseUser.getUid())) {
+//                            likes++;
+////                            likedUsers.add(mFirebaseUser.getUid());
+//                        }
+//                    }else{
+//                        Log.d(TAG, "doTransaction: 2 " + finalLikedUsers1);
+//
+//                        if (finalLikedUsers1.contains(mFirebaseUser.getUid())) {
+//                            likes--;
+////                            likedUsers.remove(mFirebaseUser.getUid());
+//                        }
+//                    }
+//                    Log.d(TAG, "doTransaction: " + finalLikedUsers1);
+//                mutableData.setValue(finalLikedUsers1);
+//            }
+//                return Transaction.success(mutableData);
+//
+//            }
+//
+//
+//            @Override
+//            public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
+//
+//                if (liked) {
+//                    likeButton.setLiked(true);
+//                } else {
+//                    likeButton.setLiked(false);
+//                }
+//                Log.d(TAG, "onComplete: " + b);
+//            }
+//        });
+
+//        mUsersDatabase.child(mFirebaseUser.getUid()).child("userPosts").child(uid).child("likes").runTransaction(new Transaction.Handler() {
+//            @Override
+//            public Transaction.Result doTransaction(MutableData mutableData) {
+//                if (mutableData != null) {
+//                    int likes = mutableData.getValue(Integer.class);
+//                    if (liked) {
+////                        if(finalLikedUsers.contains(mFirebaseUser.getUid())) {
+////                            return Transaction.success(mutableData);
+////                        }else {
+//                            likes++;
+////                        }
+//                    } else if (!liked && likes > 0) {
+//                        likes--;
+//                    }
+//                    mutableData.setValue(likes);
+//                }
+//                return Transaction.success(mutableData);
+//            }
+//
+//            @Override
+//            public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
+//
+////                if(liked){
+////                    likeButton.setLiked(true);
+////                }else{
+////                    likeButton.setLiked(false);
+////                }
+//                Log.d(TAG, "onComplete: " + b);
+//            }
+//        });
+
+        if(liked) {
+            if(likedUsers==null){
+                likedUsers=new ArrayList<>();
+            }
+            if(!likedUsers.contains(mFirebaseUser.getUid())) {
+                likedUsers.add(mFirebaseUser.getUid());
+                mDBrefLikes.child(uid).child("likedUsers").setValue(likedUsers);
+                mUsersDatabase.child(mFirebaseUser.getUid()).child("userPosts").child(uid).child("likedUsers").setValue(likedUsers);
+            }
+        }else if(!liked){
+
+            Log.d(GifHeaderParser.TAG, "setLikedUser: likedusers "+likedUsers);
+            if(likedUsers==null){
+//                likedUsers.remove(mFirebaseUser.getUid());
+                return;
+            }else {
+                if(likedUsers.contains(mFirebaseUser.getUid())) {
+                    likedUsers.remove(mFirebaseUser.getUid());
+                    mDBrefLikes.child(uid).child("likedUsers").setValue(likedUsers);
+                    mUsersDatabase.child(mFirebaseUser.getUid()).child("userPosts").child(uid).child("likedUsers").setValue(likedUsers);
+                }
+            }
+        }
+    }
+
+    public Boolean containsLikedUser(ArrayList<String> likedUsers) {
+        if (likedUsers != null) {
+            return likedUsers.contains(mFirebaseUser.getUid());
+        }
+        return false;
+    }
+
+    public void setLikes(int likes) {
+        tvLikes.setText(String.valueOf(likes)+" like this");
     }
 }

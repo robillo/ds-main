@@ -47,9 +47,7 @@ public class StatusItemAdapter extends ItemViewBinder<Status, StatusViewHolder> 
                 }
                 holder.setName(item.getName());
                 if(item.getLikedUsers()==null) {
-                    if (item.getLikes() != null) {
-                        holder.setLikes(item.getLikes());
-                    }
+                        holder.setLikes(0);
                 }else{
                     holder.setLikes(item.getLikedUsers().size());
                 }
@@ -61,8 +59,6 @@ public class StatusItemAdapter extends ItemViewBinder<Status, StatusViewHolder> 
                 if(item.getUid()!=null) {
                     holder.setStatusDP(item.getUid());
                 }
-
-
             }
         });
 

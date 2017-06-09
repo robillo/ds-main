@@ -125,8 +125,6 @@ public class Status {
 
     private String type;
 
-    @Exclude
-    private String postUid;
 
     public String getPostUid() {
         return postUid;
@@ -167,6 +165,10 @@ public class Status {
 
     @NonNull
     ArrayList<String> likedUsers;
+
+
+    @Exclude
+    private String postUid;
 
     @NonNull
     public ArrayList<String> getLikedUsers() {

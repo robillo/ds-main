@@ -76,6 +76,29 @@ public class Photo {
     }
 
     @NonNull
+    ArrayList<String> likedUsers;
+
+    @Exclude
+    private String postUid;
+
+    @NonNull
+    public ArrayList<String> getLikedUsers() {
+        return likedUsers;
+    }
+
+    public void setLikedUsers(@NonNull ArrayList<String> likedUsers) {
+        this.likedUsers = likedUsers;
+    }
+
+    public String getPostUid() {
+        return postUid;
+    }
+
+    public void setPostUid(String postUid) {
+        this.postUid = postUid;
+    }
+
+    @NonNull
     private String user;
 
     @NonNull

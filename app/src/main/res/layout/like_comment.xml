@@ -34,7 +34,7 @@
         android:layout_margin="5sp"
         android:fontFamily="monospace"
         android:gravity="end"
-        android:text="21 like this"
+        android:text="0 like this"
         android:textColor="@color/black"
         android:textSize="13sp" />
 

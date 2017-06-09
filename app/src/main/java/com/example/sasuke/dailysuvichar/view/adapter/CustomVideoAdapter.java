@@ -20,6 +20,8 @@ import java.util.ArrayList;
 
 import me.drakeet.multitype.ItemViewBinder;
 
+import static com.facebook.login.widget.ProfilePictureView.TAG;
+
 public class CustomVideoAdapter  extends ItemViewBinder<CustomVideo, CustomVideoVH> {
 
     private Context context, pContext;
@@ -100,6 +102,12 @@ public class CustomVideoAdapter  extends ItemViewBinder<CustomVideo, CustomVideo
         new Handler().post(new Runnable() {
             @Override
             public void run() {
+
+                if(item.getLikedUsers()==null) {
+                    holder.setLikes(0);
+                }else{
+                    holder.setLikes(item.getLikedUsers().size());
+                }
 
                 if(item.getTimestamp()!=null) {
                     holder.setPostTime(getTimeAgo(Math.abs(item.getTimestamp())));
@@ -234,6 +242,40 @@ public class CustomVideoAdapter  extends ItemViewBinder<CustomVideo, CustomVideo
                     holder.setVideo(item.getStorageReference());
                 }
 //                holder.setImageView();
+            }
+        });
+
+        if (holder.containsLikedUser(item.getLikedUsers())) {
+            holder.likeButton.setLiked(true);
+        }
+        holder.likeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(holder.likeButton.isLiked()){
+                    holder.likeButton.setLiked(false);
+                    Log.d(TAG, "onClick: UNLIKE");
+
+                    if(item.getPostUid()!=null) {
+
+                        holder.setLikedUser(item.getPostUid(), false, item.getLikedUsers());
+                    }
+
+                    // DECREASE HOLDER.COUNT BY ONE IN ADAPTER
+                    // DECREASE HOLDER COUNT IN FIREBASE FOR THIS POST
+                    // REMOVE UID OF THIS USER FROM THIS POST
+                }
+                else {
+                    holder.likeButton.setLiked(true);
+                    Log.d(TAG, "onClick: LIKE");
+
+                    if(item.getPostUid()!=null) {
+
+                        holder.setLikedUser(item.getPostUid(), true, item.getLikedUsers());
+                    }
+                    // INCREASE HOLDER.COUNT BY ONE IN ADAPTER
+                    // INCREASE HOLDER COUNT IN FIREBASE FOR THIS POST
+                    // ADD UID OF THIS USER FROM THIS POST
+                }
             }
         });
 

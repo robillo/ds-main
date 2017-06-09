@@ -263,6 +263,7 @@ public class CommonFragment extends Fragment {
                                     items.add(statusSnap);
                                 } else if (postSnapshot.child("type").getValue().equals("photo")) {
                                     Photo photoSnap = postSnapshot.getValue(Photo.class);
+                                    photoSnap.setPostUid(postSnapshot.getKey());
                                     photoSnap.setStorageReference(mStorageReference.child(postSnapshot.getKey()));
                                     isDone.put(postSnapshot.getKey(), (long) 1);
 
@@ -270,6 +271,7 @@ public class CommonFragment extends Fragment {
                                 } else if (postSnapshot.child("type").getValue().equals("video")) {
                                     final CustomVideo videoSnap = postSnapshot.getValue(CustomVideo.class);
                                     if (mStorageReferenceVideo.child(postSnapshot.getKey()) != null) {
+                                        videoSnap.setPostUid(postSnapshot.getKey());
                                         isDone.put(postSnapshot.getKey(), (long) 1);
                                         items.add(videoSnap);
                                         videoSnap.setStorageReference(mStorageReferenceVideo.child(postSnapshot.getKey()));
@@ -326,6 +328,7 @@ public class CommonFragment extends Fragment {
                             items.add(statusSnap);
                         } else if (postSnapshot.child("type").getValue().equals("photo")) {
                             Photo photoSnap = postSnapshot.getValue(Photo.class);
+                            photoSnap.setPostUid(postSnapshot.getKey());
                             photoSnap.setStorageReference(mStorageReference.child(postSnapshot.getKey()));
                             isDone.put(postSnapshot.getKey(), (long) 1);
 
@@ -333,6 +336,7 @@ public class CommonFragment extends Fragment {
                         } else if (postSnapshot.child("type").getValue().equals("video")) {
                             final CustomVideo videoSnap = postSnapshot.getValue(CustomVideo.class);
                             if (mStorageReferenceVideo.child(postSnapshot.getKey()) != null) {
+                                videoSnap.setPostUid(postSnapshot.getKey());
                                 isDone.put(postSnapshot.getKey(), (long) 1);
                                 items.add(videoSnap);
                                 videoSnap.setStorageReference(mStorageReferenceVideo.child(postSnapshot.getKey()));
@@ -393,6 +397,7 @@ public class CommonFragment extends Fragment {
                                     items.add(statusSnap);
                                 } else if (postSnapshot.child("type").getValue().equals("photo")) {
                                     Photo photoSnap = postSnapshot.getValue(Photo.class);
+                                    photoSnap.setPostUid(postSnapshot.getKey());
                                     photoSnap.setStorageReference(mStorageReference.child(postSnapshot.getKey()));
                                     isDone.put(postSnapshot.getKey(), (long) 1);
 
@@ -400,6 +405,7 @@ public class CommonFragment extends Fragment {
                                 } else if (postSnapshot.child("type").getValue().equals("video")) {
                                     final CustomVideo videoSnap = postSnapshot.getValue(CustomVideo.class);
                                     if (mStorageReferenceVideo.child(postSnapshot.getKey()) != null) {
+                                        videoSnap.setPostUid(postSnapshot.getKey());
                                         isDone.put(postSnapshot.getKey(), (long) 1);
                                         items.add(videoSnap);
                                         videoSnap.setStorageReference(mStorageReferenceVideo.child(postSnapshot.getKey()));
@@ -544,6 +550,7 @@ public class CommonFragment extends Fragment {
                                 items.add(statusSnap);
                             } else if (postSnapshot.child("type").getValue().equals("photo")) {
                                 Photo photoSnap = postSnapshot.getValue(Photo.class);
+                                photoSnap.setPostUid(postSnapshot.getKey());
                                 photoSnap.setStorageReference(mStorageReference.child(postSnapshot.getKey()));
                                 isDone.put(postSnapshot.getKey(), (long) 1);
 
@@ -551,6 +558,7 @@ public class CommonFragment extends Fragment {
                             } else if (postSnapshot.child("type").getValue().equals("video")) {
                                 final CustomVideo videoSnap = postSnapshot.getValue(CustomVideo.class);
                                 if (mStorageReferenceVideo.child(postSnapshot.getKey()) != null) {
+                                    videoSnap.setPostUid(postSnapshot.getKey());
                                     isDone.put(postSnapshot.getKey(), (long) 1);
                                     items.add(videoSnap);
                                     videoSnap.setStorageReference(mStorageReferenceVideo.child(postSnapshot.getKey()));
@@ -618,6 +626,7 @@ public class CommonFragment extends Fragment {
                                         items.add(statusSnap);
                                     } else if (postSnapshot.child("type").getValue().equals("photo")) {
                                         Photo photoSnap = postSnapshot.getValue(Photo.class);
+                                        photoSnap.setPostUid(postSnapshot.getKey());
                                         photoSnap.setStorageReference(mStorageReference.child(postSnapshot.getKey()));
                                         isDone.put(postSnapshot.getKey(), (long) 1);
 
@@ -625,6 +634,7 @@ public class CommonFragment extends Fragment {
                                     } else if (postSnapshot.child("type").getValue().equals("video")) {
                                         final CustomVideo videoSnap = postSnapshot.getValue(CustomVideo.class);
                                         if (mStorageReferenceVideo.child(postSnapshot.getKey()) != null) {
+                                            videoSnap.setPostUid(postSnapshot.getKey());
                                             isDone.put(postSnapshot.getKey(), (long) 1);
                                             items.add(videoSnap);
                                             videoSnap.setStorageReference(mStorageReferenceVideo.child(postSnapshot.getKey()));
@@ -694,6 +704,7 @@ public class CommonFragment extends Fragment {
                                         items.add(statusSnap);
                                     } else if (postSnapshot.child("type").getValue().equals("photo")) {
                                         Photo photoSnap = postSnapshot.getValue(Photo.class);
+                                        photoSnap.setPostUid(postSnapshot.getKey());
                                         photoSnap.setStorageReference(mStorageReference.child(postSnapshot.getKey()));
                                         isDone.put(postSnapshot.getKey(), (long) 1);
 
@@ -701,6 +712,7 @@ public class CommonFragment extends Fragment {
                                     } else if (postSnapshot.child("type").getValue().equals("video")) {
                                         final CustomVideo videoSnap = postSnapshot.getValue(CustomVideo.class);
                                         if (mStorageReferenceVideo.child(postSnapshot.getKey()) != null) {
+                                            videoSnap.setPostUid(postSnapshot.getKey());
                                             isDone.put(postSnapshot.getKey(), (long) 1);
                                             items.add(videoSnap);
                                             videoSnap.setStorageReference(mStorageReferenceVideo.child(postSnapshot.getKey()));
@@ -766,6 +778,7 @@ public class CommonFragment extends Fragment {
                                 items.add(statusSnap);
                             } else if (postSnapshot.child("type").getValue().equals("photo")) {
                                 Photo photoSnap = postSnapshot.getValue(Photo.class);
+                                photoSnap.setPostUid(postSnapshot.getKey());
                                 photoSnap.setStorageReference(mStorageReference.child(postSnapshot.getKey()));
                                 isDone.put(postSnapshot.getKey(), (long) 1);
 
@@ -773,6 +786,7 @@ public class CommonFragment extends Fragment {
                             } else if (postSnapshot.child("type").getValue().equals("video")) {
                                 final CustomVideo videoSnap = postSnapshot.getValue(CustomVideo.class);
                                 if (mStorageReferenceVideo.child(postSnapshot.getKey()) != null) {
+                                    videoSnap.setPostUid(postSnapshot.getKey());
                                     isDone.put(postSnapshot.getKey(), (long) 1);
                                     items.add(videoSnap);
                                     videoSnap.setStorageReference(mStorageReferenceVideo.child(postSnapshot.getKey()));
@@ -840,6 +854,7 @@ public class CommonFragment extends Fragment {
                                         items.add(statusSnap);
                                     } else if (postSnapshot.child("type").getValue().equals("photo")) {
                                         Photo photoSnap = postSnapshot.getValue(Photo.class);
+                                        photoSnap.setPostUid(postSnapshot.getKey());
                                         photoSnap.setStorageReference(mStorageReference.child(postSnapshot.getKey()));
                                         isDone.put(postSnapshot.getKey(), (long) 1);
 
@@ -847,6 +862,7 @@ public class CommonFragment extends Fragment {
                                     } else if (postSnapshot.child("type").getValue().equals("video")) {
                                         final CustomVideo videoSnap = postSnapshot.getValue(CustomVideo.class);
                                         if (mStorageReferenceVideo.child(postSnapshot.getKey()) != null) {
+                                            videoSnap.setPostUid(postSnapshot.getKey());
                                             isDone.put(postSnapshot.getKey(), (long) 1);
                                             items.add(videoSnap);
                                             videoSnap.setStorageReference(mStorageReferenceVideo.child(postSnapshot.getKey()));
@@ -916,6 +932,7 @@ public class CommonFragment extends Fragment {
                                         items.add(statusSnap);
                                     } else if (postSnapshot.child("type").getValue().equals("photo")) {
                                         Photo photoSnap = postSnapshot.getValue(Photo.class);
+                                        photoSnap.setPostUid(postSnapshot.getKey());
                                         photoSnap.setStorageReference(mStorageReference.child(postSnapshot.getKey()));
                                         isDone.put(postSnapshot.getKey(), (long) 1);
 
@@ -923,6 +940,7 @@ public class CommonFragment extends Fragment {
                                     } else if (postSnapshot.child("type").getValue().equals("video")) {
                                         final CustomVideo videoSnap = postSnapshot.getValue(CustomVideo.class);
                                         if (mStorageReferenceVideo.child(postSnapshot.getKey()) != null) {
+                                            videoSnap.setPostUid(postSnapshot.getKey());
                                             isDone.put(postSnapshot.getKey(), (long) 1);
                                             items.add(videoSnap);
                                             videoSnap.setStorageReference(mStorageReferenceVideo.child(postSnapshot.getKey()));

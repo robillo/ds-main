@@ -10,10 +10,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.gifdecoder.GifHeaderParser;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.activity.FullScreenActivity;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -21,6 +24,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.like.LikeButton;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,6 +46,12 @@ public class PhotoViewHolder extends RecyclerView.ViewHolder {
     TextView mTvPostTime;
     @BindView(R.id.iv_profile_dp)
     public ImageView mPhotoDP;
+    private DatabaseReference mDBrefLikes;
+    private FirebaseUser mFirebaseUser;
+    @BindView(R.id.tv_likes_count)
+    TextView tvLikes;
+    @BindView(R.id.like_button)
+    public LikeButton likeButton;
 //    @BindView(R.id.tv_likes)
 //    TextView tvLikes;
 //    @BindView(R.id.tv_comments)
@@ -66,7 +78,9 @@ public class PhotoViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
         ButterKnife.bind(this, itemView);
         context = itemView.getContext();
+        mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         mUsersDatabase = FirebaseDatabase.getInstance().getReference("users");
+        mDBrefLikes = FirebaseDatabase.getInstance().getReference("allPosts");
         mStorageReferenceDP = FirebaseStorage.getInstance().getReference("profile").child("user").child("dp");
 //        mBtnLike.setOnLikeListener(new OnLikeListener() {
 //            @Override
@@ -141,9 +155,6 @@ public class PhotoViewHolder extends RecyclerView.ViewHolder {
             mTvPostTime.setText(postTime);
         }
     }
-    public void setLikes(int likes){
-//        tvLikes.setText(String.valueOf(likes)+" likes");
-    }
     public void setComments(int comments){
 //        tvComments.setText(String.valueOf(comments)+" comments");
     }
@@ -160,4 +171,118 @@ public class PhotoViewHolder extends RecyclerView.ViewHolder {
         Log.e("Storage Reference", storageReference.toString());
         context.startActivity(i);
     }
+
+    public void setLikedUser(String uid, final boolean liked, ArrayList<String> likedUsers) {
+
+        Log.d(GifHeaderParser.TAG, "setLikedUser: ");
+
+
+//        final ArrayList<String> finalLikedUsers1 = likedUsers;
+//        mDBrefLikes.child(uid).child("likes").runTransaction(new Transaction.Handler() {
+//            @Override
+//            public Transaction.Result doTransaction(MutableData mutableData) {
+//                if (mutableData != null) {
+//                    int likes = mutableData.getValue(Integer.class);
+//
+//                    Log.d(TAG, "doTransaction: " + finalLikedUsers1);
+//                    if (liked) {
+//                        if (!finalLikedUsers1.contains(mFirebaseUser.getUid())) {
+//                            likes++;
+////                            likedUsers.add(mFirebaseUser.getUid());
+//                        }
+//                    }else{
+//                        Log.d(TAG, "doTransaction: 2 " + finalLikedUsers1);
+//
+//                        if (finalLikedUsers1.contains(mFirebaseUser.getUid())) {
+//                            likes--;
+////                            likedUsers.remove(mFirebaseUser.getUid());
+//                        }
+//                    }
+//                    Log.d(TAG, "doTransaction: " + finalLikedUsers1);
+//                mutableData.setValue(finalLikedUsers1);
+//            }
+//                return Transaction.success(mutableData);
+//
+//            }
+//
+//
+//            @Override
+//            public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
+//
+//                if (liked) {
+//                    likeButton.setLiked(true);
+//                } else {
+//                    likeButton.setLiked(false);
+//                }
+//                Log.d(TAG, "onComplete: " + b);
+//            }
+//        });
+
+//        mUsersDatabase.child(mFirebaseUser.getUid()).child("userPosts").child(uid).child("likes").runTransaction(new Transaction.Handler() {
+//            @Override
+//            public Transaction.Result doTransaction(MutableData mutableData) {
+//                if (mutableData != null) {
+//                    int likes = mutableData.getValue(Integer.class);
+//                    if (liked) {
+////                        if(finalLikedUsers.contains(mFirebaseUser.getUid())) {
+////                            return Transaction.success(mutableData);
+////                        }else {
+//                            likes++;
+////                        }
+//                    } else if (!liked && likes > 0) {
+//                        likes--;
+//                    }
+//                    mutableData.setValue(likes);
+//                }
+//                return Transaction.success(mutableData);
+//            }
+//
+//            @Override
+//            public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
+//
+////                if(liked){
+////                    likeButton.setLiked(true);
+////                }else{
+////                    likeButton.setLiked(false);
+////                }
+//                Log.d(TAG, "onComplete: " + b);
+//            }
+//        });
+
+        if(liked) {
+            if(likedUsers==null){
+                likedUsers=new ArrayList<>();
+            }
+            if(!likedUsers.contains(mFirebaseUser.getUid())) {
+                likedUsers.add(mFirebaseUser.getUid());
+                mDBrefLikes.child(uid).child("likedUsers").setValue(likedUsers);
+                mUsersDatabase.child(mFirebaseUser.getUid()).child("userPosts").child(uid).child("likedUsers").setValue(likedUsers);
+            }
+        }else if(!liked){
+
+            Log.d(GifHeaderParser.TAG, "setLikedUser: likedusers "+likedUsers);
+            if(likedUsers==null){
+//                likedUsers.remove(mFirebaseUser.getUid());
+                return;
+            }else {
+                if(likedUsers.contains(mFirebaseUser.getUid())) {
+                    likedUsers.remove(mFirebaseUser.getUid());
+                    mDBrefLikes.child(uid).child("likedUsers").setValue(likedUsers);
+                    mUsersDatabase.child(mFirebaseUser.getUid()).child("userPosts").child(uid).child("likedUsers").setValue(likedUsers);
+                }
+            }
+        }
+    }
+
+    public Boolean containsLikedUser(ArrayList<String> likedUsers) {
+        if (likedUsers != null) {
+            return likedUsers.contains(mFirebaseUser.getUid());
+        }
+        return false;
+    }
+
+    public void setLikes(int likes) {
+        tvLikes.setText(String.valueOf(likes)+" like this");
+    }
+
 }
