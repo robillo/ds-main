@@ -54,7 +54,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<View_Holder>{
         }
         holder.setClickListener(new ItemClickListener() {
             @Override
-            public void onCLick(View v, int position, Boolean isLongClick) {
+            public void onClick(View v, int position, Boolean isLongClick) {
                 if(!isLongClick){
                     if(!mSelectedItems.contains(holder.header.getText().toString()) && !list.get(position).getSelected()){
                         mSelectedItems.add(holder.header.getText().toString());

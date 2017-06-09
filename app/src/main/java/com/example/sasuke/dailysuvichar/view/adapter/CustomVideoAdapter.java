@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.models.CustomVideo;
+import com.example.sasuke.dailysuvichar.utils.ItemClickListener;
 import com.example.sasuke.dailysuvichar.view.CustomVideoVH;
 import com.klinker.android.simple_videoview.SimpleVideoView;
 
@@ -236,32 +237,49 @@ public class CustomVideoAdapter  extends ItemViewBinder<CustomVideo, CustomVideo
             }
         });
 
-        holder.play.setOnClickListener(new View.OnClickListener() {
+        holder.setClickListener(new ItemClickListener() {
             @Override
-            public void onClick(View view) {
-                if(holder.play.getText().equals(pContext.getString(R.string.play))){
-                    if (holder.videoView != currentlyPlaying) {
-                        releaseVideo();
-//                    holder.imageView.setVisibility(View.INVISIBLE);
-                        holder.videoView.setVisibility(View.VISIBLE);
-//                    if(holder.videoUrl!=null) {
-//                        holder.videoView.start(holder.videoUrl.toString() + ".mp4");
-//                    }
-                        Log.e("URI", " " + item.getVideoURI());
-                        if(item.getVideoURI()!=null){
-                            holder.videoView.start(Uri.parse(item.getVideoURI()));
-                            currentlyPlaying = holder.videoView;
-                            holder.play.setText(pContext.getString(R.string.pause));
+            public void onClick(View v, int position, Boolean isLongClick) {
+                if(!isLongClick){
+                    switch (v.getId()){
+                        case R.id.download_button:{
+                            Toast.makeText(pContext, "DOWNLOAD CLICKED IN ADAPTER", Toast.LENGTH_SHORT).show();
+                            break;
                         }
-                        else {
-                            Toast.makeText(context, "Sorry. This Video Cannot Be Played", Toast.LENGTH_SHORT).show();
+                        case R.id.play_button:{
+                            Toast.makeText(pContext, "PLAY CLICKED IN ADAPTER", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }
-                else {
-                }
             }
         });
+
+//        holder.play.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if(holder.play.getText().equals(pContext.getString(R.string.play))){
+//                    if (holder.videoView != currentlyPlaying) {
+//                        releaseVideo();
+////                    holder.imageView.setVisibility(View.INVISIBLE);
+//                        holder.videoView.setVisibility(View.VISIBLE);
+////                    if(holder.videoUrl!=null) {
+////                        holder.videoView.start(holder.videoUrl.toString() + ".mp4");
+////                    }
+//                        Log.e("URI", " " + item.getVideoURI());
+//                        if(item.getVideoURI()!=null){
+//                            holder.videoView.start(Uri.parse(item.getVideoURI()));
+//                            currentlyPlaying = holder.videoView;
+//                            holder.play.setText(pContext.getString(R.string.pause));
+//                        }
+//                        else {
+//                            Toast.makeText(context, "Sorry. This Video Cannot Be Played", Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
+//                }
+//                else {
+//                }
+//            }
+//        });
         holder.videoView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

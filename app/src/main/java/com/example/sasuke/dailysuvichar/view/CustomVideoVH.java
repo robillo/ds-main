@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.sasuke.dailysuvichar.R;
+import com.example.sasuke.dailysuvichar.utils.ItemClickListener;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -68,6 +69,8 @@ public class CustomVideoVH extends RecyclerView.ViewHolder implements View.OnCli
 
     Button downloadButton;
 
+    private ItemClickListener clickListener;
+
     @BindView(R.id.video_view)
     public SimpleVideoView videoView;
     @BindView(R.id.caption)
@@ -92,6 +95,8 @@ public class CustomVideoVH extends RecyclerView.ViewHolder implements View.OnCli
         super(itemView);
         ButterKnife.bind(this, itemView);
         context = itemView.getContext();
+        itemView.setTag(itemView);
+        itemView.setOnClickListener(this);
         downloadButton = (Button) itemView.findViewById(R.id.download_button);
         downloadButton.setOnClickListener(this);
         mUsersDatabase = FirebaseDatabase.getInstance().getReference("users");
@@ -312,13 +317,18 @@ public class CustomVideoVH extends RecyclerView.ViewHolder implements View.OnCli
         return sb.toString();
     }
 
+    public void setClickListener(ItemClickListener itemClickListener){
+        this.clickListener = itemClickListener;
+    }
+
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.download_button:{
-                Toast.makeText(context, "DOWNLOAD CLICKED", Toast.LENGTH_SHORT).show();
-                break;
-            }
-        }
+//        switch (view.getId()){
+//            case R.id.download_button:{
+//                Toast.makeText(context, "DOWNLOAD CLICKED", Toast.LENGTH_SHORT).show();
+//                break;
+//            }
+//        }
+        clickListener.onClick(view, getAdapterPosition(),false);
     }
 }
