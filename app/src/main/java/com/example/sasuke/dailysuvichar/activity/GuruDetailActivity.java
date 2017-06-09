@@ -151,7 +151,7 @@ public class GuruDetailActivity extends BaseActivity{
         mAdapter.register(Status.class, new StatusItemAdapter());
         mAdapter.register(Photo.class, new PhotoItemAdapter());
         mAdapter.register(Video.class, new VideoItemAdapter(this));
-//        mAdapter.register(CustomVideo.class, new CustomVideoAdapter());
+        mAdapter.register(CustomVideo.class, new CustomVideoAdapter());
         mRvHome.setAdapter(mAdapter);
 
         items = new Items();
