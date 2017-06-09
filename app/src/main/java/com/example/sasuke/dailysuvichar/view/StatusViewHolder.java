@@ -41,7 +41,7 @@ public class StatusViewHolder extends RecyclerView.ViewHolder {
     TextView mTvPostTime;
     @BindView(R.id.tv_likes_count)
     TextView tvLikes;
-//    @BindView(R.id.tv_comments)
+    //    @BindView(R.id.tv_comments)
 //    TextView tvComments;
     @BindView(R.id.status)
     TextView mTvStatus;
@@ -165,7 +165,7 @@ public class StatusViewHolder extends RecyclerView.ViewHolder {
         this.clickListener = itemClickListener;
     }
 
-    public void setLikedUser(String uid, final boolean liked, ArrayList<String> likedUsers) {
+    public void setLikedUser(String authorUid, String uid, final boolean liked, ArrayList<String> likedUsers) {
 
         Log.d(TAG, "setLikedUser: ");
 
@@ -242,28 +242,34 @@ public class StatusViewHolder extends RecyclerView.ViewHolder {
 //            }
 //        });
 
-        if(liked) {
-            if(likedUsers==null){
-                likedUsers=new ArrayList<>();
+        if (liked) {
+            if (likedUsers == null) {
+                likedUsers = new ArrayList<>();
             }
-            if(!likedUsers.contains(mFirebaseUser.getUid())) {
+            if (!likedUsers.contains(mFirebaseUser.getUid())) {
                 likedUsers.add(mFirebaseUser.getUid());
                 mDBrefLikes.child(uid).child("likedUsers").setValue(likedUsers);
-                mUsersDatabase.child(mFirebaseUser.getUid()).child("userPosts").child(uid).child("likedUsers").setValue(likedUsers);
+                mUsersDatabase.child(authorUid).child("userPosts").child(uid).child("likedUsers").setValue(likedUsers);
             }
-        }else if(!liked){
+        } else if (!liked) {
 
-            Log.d(TAG, "setLikedUser: likedusers "+likedUsers);
-            if(likedUsers==null){
+            Log.d(TAG, "setLikedUser: likedusers " + likedUsers);
+            if (likedUsers == null) {
 //                likedUsers.remove(mFirebaseUser.getUid());
                 return;
-            }else {
-                if(likedUsers.contains(mFirebaseUser.getUid())) {
+            } else {
+                if (likedUsers.contains(mFirebaseUser.getUid())) {
                     likedUsers.remove(mFirebaseUser.getUid());
                     mDBrefLikes.child(uid).child("likedUsers").setValue(likedUsers);
-                    mUsersDatabase.child(mFirebaseUser.getUid()).child("userPosts").child(uid).child("likedUsers").setValue(likedUsers);
+                    mUsersDatabase.child(authorUid).child("userPosts").child(uid).child("likedUsers").setValue(likedUsers);
                 }
             }
+        }
+
+        if (liked) {
+            likeButton.setLiked(true);
+        } else {
+            likeButton.setLiked(false);
         }
     }
 
@@ -275,7 +281,7 @@ public class StatusViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void setLikes(int likes) {
-        tvLikes.setText(String.valueOf(likes)+" like this");
+        tvLikes.setText(String.valueOf(likes) + " like this");
     }
 
 }

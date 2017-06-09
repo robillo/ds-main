@@ -173,7 +173,7 @@ public class PhotoViewHolder extends RecyclerView.ViewHolder {
         context.startActivity(i);
     }
 
-    public void setLikedUser(String uid, final boolean liked, ArrayList<String> likedUsers) {
+    public void setLikedUser(String authorUid,String uid, final boolean liked, ArrayList<String> likedUsers) {
 
         Log.d(GifHeaderParser.TAG, "setLikedUser: ");
 
@@ -257,7 +257,7 @@ public class PhotoViewHolder extends RecyclerView.ViewHolder {
             if(!likedUsers.contains(mFirebaseUser.getUid())) {
                 likedUsers.add(mFirebaseUser.getUid());
                 mDBrefLikes.child(uid).child("likedUsers").setValue(likedUsers);
-                mUsersDatabase.child(mFirebaseUser.getUid()).child("userPosts").child(uid).child("likedUsers").setValue(likedUsers);
+                mUsersDatabase.child(authorUid).child("userPosts").child(uid).child("likedUsers").setValue(likedUsers);
             }
         }else if(!liked){
 
@@ -269,9 +269,15 @@ public class PhotoViewHolder extends RecyclerView.ViewHolder {
                 if(likedUsers.contains(mFirebaseUser.getUid())) {
                     likedUsers.remove(mFirebaseUser.getUid());
                     mDBrefLikes.child(uid).child("likedUsers").setValue(likedUsers);
-                    mUsersDatabase.child(mFirebaseUser.getUid()).child("userPosts").child(uid).child("likedUsers").setValue(likedUsers);
+                    mUsersDatabase.child(authorUid).child("userPosts").child(uid).child("likedUsers").setValue(likedUsers);
                 }
             }
+        }
+
+        if (liked) {
+            likeButton.setLiked(true);
+        } else {
+            likeButton.setLiked(false);
         }
     }
 

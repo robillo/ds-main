@@ -257,7 +257,7 @@ public class CustomVideoAdapter  extends ItemViewBinder<CustomVideo, CustomVideo
 
                     if(item.getPostUid()!=null) {
 
-                        holder.setLikedUser(item.getPostUid(), false, item.getLikedUsers());
+                        holder.setLikedUser(item.getUid(),item.getPostUid(), false, item.getLikedUsers());
                     }
 
                     // DECREASE HOLDER.COUNT BY ONE IN ADAPTER
@@ -270,7 +270,7 @@ public class CustomVideoAdapter  extends ItemViewBinder<CustomVideo, CustomVideo
 
                     if(item.getPostUid()!=null) {
 
-                        holder.setLikedUser(item.getPostUid(), true, item.getLikedUsers());
+                        holder.setLikedUser(item.getUid(),item.getPostUid(), true, item.getLikedUsers());
                     }
                     // INCREASE HOLDER.COUNT BY ONE IN ADAPTER
                     // INCREASE HOLDER COUNT IN FIREBASE FOR THIS POST
