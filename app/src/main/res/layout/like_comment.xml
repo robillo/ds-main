@@ -11,42 +11,31 @@
     <com.like.LikeButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:icon_type="thumb"
-        app:circle_start_color="@color/colorPrimary"
-        app:like_drawable="@drawable/thumb_on"
-        app:unlike_drawable="@drawable/thumb_off"
-        app:dots_primary_color="@color/colorAccent"
-        app:dots_secondary_color="@color/colorPrimary"
-        app:circle_end_color="@color/colorAccent"
+        app:icon_type="heart"
+        app:circle_start_color="@color/colorAccent"
+        app:like_drawable="@drawable/heart_on"
+        app:unlike_drawable="@drawable/heart_off"
+        app:dots_primary_color="@color/colorPrimary"
+        app:dots_secondary_color="@color/colorAccent"
+        app:circle_end_color="@color/colorPrimary"
         android:layout_margin="3sp"
         app:icon_size="20sp"
-        app:liked="true"
+        app:liked="false"
         android:id="@+id/like_button"
         android:layout_gravity="center_vertical"
         app:anim_scale_factor="2"
-        app:is_enabled="false" />
+        app:is_enabled="true" />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Like Post"
-        android:textSize="15sp"
-        android:layout_margin="5sp"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:id="@+id/like_count"
-        android:layout_gravity="center_vertical"
-        android:fontFamily="sans-serif-smallcaps"/>
-
-    <TextView
+        android:id="@+id/tv_likes_count"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Count: 15"
-        android:gravity="end"
-        android:textSize="15sp"
-        android:layout_margin="5sp"
-        android:textColor="@color/black"
         android:layout_gravity="center_vertical"
-        android:fontFamily="serif-monospace"/>
+        android:layout_margin="5sp"
+        android:fontFamily="monospace"
+        android:gravity="end"
+        android:text="21 like this"
+        android:textColor="@color/black"
+        android:textSize="13sp" />
 
 </LinearLayout>
