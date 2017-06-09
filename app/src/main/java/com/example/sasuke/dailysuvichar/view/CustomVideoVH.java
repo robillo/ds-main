@@ -2,6 +2,7 @@ package com.example.sasuke.dailysuvichar.view;
 
 import android.app.Activity;
 import android.content.Context;
+import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Environment;
 import android.support.annotation.NonNull;
@@ -49,6 +50,7 @@ import java.util.Random;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.facebook.FacebookSdk.getApplicationContext;
 import static com.facebook.login.widget.ProfilePictureView.TAG;
 
 /**
@@ -72,8 +74,8 @@ public class CustomVideoVH extends RecyclerView.ViewHolder implements View.OnCli
     @BindView(R.id.play_button)
     public Button play;
 
-//    @BindView(R.id.download_button)
-//    public Button download;
+    @BindView(R.id.download_button)
+    public Button download;
     private DatabaseReference mDBrefLikes;
     private FirebaseUser mFirebaseUser;
 
@@ -83,6 +85,8 @@ public class CustomVideoVH extends RecyclerView.ViewHolder implements View.OnCli
 
     @BindView(R.id.video_view)
     public SimpleVideoView videoView;
+    private String internalStoragePath;
+
     @BindView(R.id.caption)
     TextView tvCaption;
     @BindView(R.id.tv_user_name)
@@ -201,18 +205,20 @@ public class CustomVideoVH extends RecyclerView.ViewHolder implements View.OnCli
 
     public void setDownload(StorageReference ref, final Context context) {
         Toast.makeText(context, "Downloading video..", Toast.LENGTH_SHORT).show();
-
-        File rootPath = new File(Environment.getExternalStorageDirectory(), "video");
+        File rootPath = new File(Environment.getExternalStorageDirectory(), "dailysuvichar");
         if (!rootPath.exists()) {
             rootPath.mkdirs();
         }
 
-        final File localFile = new File(rootPath, "videoName.mp4");
 
-        ref.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+        final File file = new File(rootPath, generateRandomName() + ".mp4");
+
+        ref.getFile(file).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                Log.e("firebase ", ";local tem file created  created " + localFile.toString());
+                Log.e("firebase ", ";local tem file created  created " + file.toString());
+                scanGallery(getApplicationContext(), file.toString());
+
                 //  updateDb(timestamp,localFile.toString(),position);
 //                getApplicationContext().sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://" + Environment.getExternalStorageDirectory())));
                 Toast.makeText(context, "Video Download Successful", Toast.LENGTH_SHORT).show();
@@ -327,6 +333,21 @@ public class CustomVideoVH extends RecyclerView.ViewHolder implements View.OnCli
         }
         return sb.toString();
     }
+    private void scanGallery(final Context cntx, String path) {
+        try {
+            MediaScannerConnection.scanFile(cntx, new String[] { path },null, new MediaScannerConnection.OnScanCompletedListener() {
+                public void onScanCompleted(String path, Uri uri) {
+                    //unimplemeted method
+                    Log.e("PATH IS", path);
+                    internalStoragePath = path;
+                    Toast.makeText(getApplicationContext(), "PATH IS" + internalStoragePath, Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public void setClickListener(ItemClickListener itemClickListener){
         this.clickListener = itemClickListener;

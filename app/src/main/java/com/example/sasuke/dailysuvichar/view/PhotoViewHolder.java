@@ -121,6 +121,7 @@ public class PhotoViewHolder extends RecyclerView.ViewHolder {
         }
     }
 
+
     public void setStatusDP(final String UID){
         mUsersDatabase.child(UID).addValueEventListener(new ValueEventListener() {
             @Override

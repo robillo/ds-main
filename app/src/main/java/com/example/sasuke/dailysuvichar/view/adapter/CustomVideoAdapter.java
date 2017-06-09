@@ -322,6 +322,15 @@ public class CustomVideoAdapter  extends ItemViewBinder<CustomVideo, CustomVideo
 //                }
 //            }
 //        });
+
+        holder.download.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("CLICKED?", "YES");
+//                Toast.makeText(pContext, "TESTING", Toast.LENGTH_SHORT).show();
+                holder.setDownload(item.getStorageReference(),context);
+            }
+        });
         holder.videoView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
