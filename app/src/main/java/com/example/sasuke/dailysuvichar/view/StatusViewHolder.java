@@ -21,8 +21,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.MutableData;
-import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -171,67 +169,51 @@ public class StatusViewHolder extends RecyclerView.ViewHolder {
         this.clickListener = itemClickListener;
     }
 
-    public void setLikedUser(String uid, final boolean liked, final ArrayList<String> likedUsers) {
+    public void setLikedUser(String uid, final boolean liked, ArrayList<String> likedUsers) {
 
         Log.d(TAG, "setLikedUser: ");
 
 
-        final ArrayList<String> finalLikedUsers = likedUsers;
-        mDBrefLikes.child(uid).runTransaction(new Transaction.Handler() {
-            @Override
-            public Transaction.Result doTransaction(MutableData mutableData) {
-                if (mutableData != null) {
-                    int likes = mutableData.child("likes").getValue(Integer.class);
-                    ArrayList<String> likedList = mutableData.child("likedUsers").getValue(ArrayList.class);
-
-                    if (mutableData.child("likedUsers") == null) {
-                        ArrayList<String> likedUsers = new ArrayList<String>();
-                        Log.d(TAG, "doTransaction: null");
-                        if (liked) {
-                            likes++;
-                            likedList.add(mFirebaseUser.getUid());
-                        }
-                        mutableData.child("likedUsers").setValue(likedUsers);
-                    } else {
-                        Log.d(TAG, "doTransaction: " + likedList);
-                        if (liked) {
-                            if (!likedList.contains(mFirebaseUser.getUid())) {
-                                likes++;
-                                likedList.add(mFirebaseUser.getUid());
-                            }
-                        } else if (!liked && likes > 0) {
-                            if (likedList.contains(mFirebaseUser.getUid())) {
-                                likes--;
-                                likedList.remove(mFirebaseUser.getUid());
-                            }
-                        }
-                        mutableData.child("likedUsers").setValue(likedUsers);
-
-                    }
-//                    if (liked) {
-////                        if(finalLikedUsers.contains(mFirebaseUser.getUid())) {
-////                            return Transaction.success(mutableData);
-////                        }
+//        final ArrayList<String> finalLikedUsers1 = likedUsers;
+//        mDBrefLikes.child(uid).child("likes").runTransaction(new Transaction.Handler() {
+//            @Override
+//            public Transaction.Result doTransaction(MutableData mutableData) {
+//                if (mutableData != null) {
+//                    int likes = mutableData.getValue(Integer.class);
 //
-//                    } else if (!liked && likes > 0) {
-////                        likes--;
+//                    Log.d(TAG, "doTransaction: " + finalLikedUsers1);
+//                    if (liked) {
+//                        if (!finalLikedUsers1.contains(mFirebaseUser.getUid())) {
+//                            likes++;
+////                            likedUsers.add(mFirebaseUser.getUid());
+//                        }
+//                    }else{
+//                        Log.d(TAG, "doTransaction: 2 " + finalLikedUsers1);
+//
+//                        if (finalLikedUsers1.contains(mFirebaseUser.getUid())) {
+//                            likes--;
+////                            likedUsers.remove(mFirebaseUser.getUid());
+//                        }
 //                    }
-                    mutableData.child("likes").setValue(likes);
-                }
-                return Transaction.success(mutableData);
-            }
-
-            @Override
-            public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
-
-                if (liked) {
-                    likeButton.setLiked(true);
-                } else {
-                    likeButton.setLiked(false);
-                }
-                Log.d(TAG, "onComplete: " + b);
-            }
-        });
+//                    Log.d(TAG, "doTransaction: " + finalLikedUsers1);
+//                mutableData.setValue(finalLikedUsers1);
+//            }
+//                return Transaction.success(mutableData);
+//
+//            }
+//
+//
+//            @Override
+//            public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
+//
+//                if (liked) {
+//                    likeButton.setLiked(true);
+//                } else {
+//                    likeButton.setLiked(false);
+//                }
+//                Log.d(TAG, "onComplete: " + b);
+//            }
+//        });
 
 //        mUsersDatabase.child(mFirebaseUser.getUid()).child("userPosts").child(uid).child("likes").runTransaction(new Transaction.Handler() {
 //            @Override
@@ -264,27 +246,29 @@ public class StatusViewHolder extends RecyclerView.ViewHolder {
 //            }
 //        });
 
-//        if(liked) {
-//            if(likedUsers==null){
-//                likedUsers=new ArrayList<>();
-//            }
-//            if(!likedUsers.contains(mFirebaseUser.getUid())) {
-//                likedUsers.add(mFirebaseUser.getUid());
-//                mDBrefLikes.child(uid).child("likedUsers").setValue(likedUsers);
-//                mUsersDatabase.child(mFirebaseUser.getUid()).child("userPosts").child(uid).child("likedUsers").setValue(likedUsers);
-//            }
-//        }else if(!liked){
-//
-//            if(likedUsers==null){
-//                return;
-//            }else {
-//                if( likedUsers.contains(mFirebaseUser.getUid())) {
-//                    likedUsers.remove(mFirebaseUser.getUid());
-//                    mDBrefLikes.child(uid).child("likedUsers").setValue(likedUsers);
-//                    mUsersDatabase.child(mFirebaseUser.getUid()).child("userPosts").child(uid).child("likedUsers").setValue(likedUsers);
-//                }
-//            }
-//        }
+        if(liked) {
+            if(likedUsers==null){
+                likedUsers=new ArrayList<>();
+            }
+            if(!likedUsers.contains(mFirebaseUser.getUid())) {
+                likedUsers.add(mFirebaseUser.getUid());
+                mDBrefLikes.child(uid).child("likedUsers").setValue(likedUsers);
+                mUsersDatabase.child(mFirebaseUser.getUid()).child("userPosts").child(uid).child("likedUsers").setValue(likedUsers);
+            }
+        }else if(!liked){
+
+            Log.d(TAG, "setLikedUser: likedusers "+likedUsers);
+            if(likedUsers==null){
+//                likedUsers.remove(mFirebaseUser.getUid());
+                return;
+            }else {
+                if(likedUsers.contains(mFirebaseUser.getUid())) {
+                    likedUsers.remove(mFirebaseUser.getUid());
+                    mDBrefLikes.child(uid).child("likedUsers").setValue(likedUsers);
+                    mUsersDatabase.child(mFirebaseUser.getUid()).child("userPosts").child(uid).child("likedUsers").setValue(likedUsers);
+                }
+            }
+        }
     }
 
     public Boolean containsLikedUser(ArrayList<String> likedUsers) {
