@@ -2,6 +2,8 @@ package com.example.sasuke.dailysuvichar.models;
 
 import android.support.annotation.NonNull;
 
+import com.google.firebase.database.Exclude;
+
 import java.util.ArrayList;
 
 /**
@@ -123,6 +125,17 @@ public class Status {
 
     private String type;
 
+    @Exclude
+    private String postUid;
+
+    public String getPostUid() {
+        return postUid;
+    }
+
+    public void setPostUid(String postUid) {
+        this.postUid = postUid;
+    }
+
     public String getType() {
         return type;
     }
@@ -151,6 +164,18 @@ public class Status {
 
     @NonNull
     private String user;
+
+    @NonNull
+    ArrayList<String> likedUsers;
+
+    @NonNull
+    public ArrayList<String> getLikedUsers() {
+        return likedUsers;
+    }
+
+    public void setLikedUsers(@NonNull ArrayList<String> likedUsers) {
+        this.likedUsers = likedUsers;
+    }
 
     @NonNull
     public String getUser() {

@@ -257,6 +257,8 @@ public class CommonFragment extends Fragment {
                                 if (postSnapshot.child("type").getValue().equals("status")) {
                                     Log.d(TAG, "onDataChange: DATA troo");
                                     Status statusSnap = postSnapshot.getValue(Status.class);
+                                    statusSnap.setPostUid(postSnapshot.getKey());
+
                                     isDone.put(postSnapshot.getKey(), (long) 1);
                                     items.add(statusSnap);
                                 } else if (postSnapshot.child("type").getValue().equals("photo")) {
@@ -318,6 +320,8 @@ public class CommonFragment extends Fragment {
                         if (postSnapshot.child("type").getValue().equals("status")) {
                             Log.d(TAG, "onDataChange: DATA troo");
                             Status statusSnap = postSnapshot.getValue(Status.class);
+                            statusSnap.setPostUid(postSnapshot.getKey());
+
                             isDone.put(postSnapshot.getKey(), (long) 1);
                             items.add(statusSnap);
                         } else if (postSnapshot.child("type").getValue().equals("photo")) {
@@ -384,6 +388,7 @@ public class CommonFragment extends Fragment {
                                 if (postSnapshot.child("type").getValue().equals("status")) {
                                     Log.d(TAG, "onDataChange: DATA troo");
                                     Status statusSnap = postSnapshot.getValue(Status.class);
+                                    statusSnap.setPostUid(postSnapshot.getKey());
                                     isDone.put(postSnapshot.getKey(), (long) 1);
                                     items.add(statusSnap);
                                 } else if (postSnapshot.child("type").getValue().equals("photo")) {
@@ -534,6 +539,7 @@ public class CommonFragment extends Fragment {
                             if (postSnapshot.child("type").getValue().equals("status")) {
                                 Log.d(TAG, "onDataChange: DATA troo");
                                 Status statusSnap = postSnapshot.getValue(Status.class);
+                                statusSnap.setPostUid(postSnapshot.getKey());
                                 isDone.put(postSnapshot.getKey(), (long) 1);
                                 items.add(statusSnap);
                             } else if (postSnapshot.child("type").getValue().equals("photo")) {
@@ -607,6 +613,7 @@ public class CommonFragment extends Fragment {
                                     if (postSnapshot.child("type").getValue().equals("status")) {
                                         Log.d(TAG, "onDataChange: DATA troo");
                                         Status statusSnap = postSnapshot.getValue(Status.class);
+                                        statusSnap.setPostUid(postSnapshot.getKey());
                                         isDone.put(postSnapshot.getKey(), (long) 1);
                                         items.add(statusSnap);
                                     } else if (postSnapshot.child("type").getValue().equals("photo")) {
@@ -681,6 +688,8 @@ public class CommonFragment extends Fragment {
                                     if (postSnapshot.child("type").getValue().equals("status")) {
                                         Log.d(TAG, "onDataChange: DATA troo");
                                         Status statusSnap = postSnapshot.getValue(Status.class);
+                                        statusSnap.setPostUid(postSnapshot.getKey());
+
                                         isDone.put(postSnapshot.getKey(), (long) 1);
                                         items.add(statusSnap);
                                     } else if (postSnapshot.child("type").getValue().equals("photo")) {
@@ -751,6 +760,8 @@ public class CommonFragment extends Fragment {
                             if (postSnapshot.child("type").getValue().equals("status")) {
                                 Log.d(TAG, "onDataChange: DATA troo");
                                 Status statusSnap = postSnapshot.getValue(Status.class);
+                                statusSnap.setPostUid(postSnapshot.getKey());
+
                                 isDone.put(postSnapshot.getKey(), (long) 1);
                                 items.add(statusSnap);
                             } else if (postSnapshot.child("type").getValue().equals("photo")) {
@@ -823,6 +834,8 @@ public class CommonFragment extends Fragment {
                                     if (postSnapshot.child("type").getValue().equals("status")) {
                                         Log.d(TAG, "onDataChange: DATA troo");
                                         Status statusSnap = postSnapshot.getValue(Status.class);
+                                        statusSnap.setPostUid(postSnapshot.getKey());
+
                                         isDone.put(postSnapshot.getKey(), (long) 1);
                                         items.add(statusSnap);
                                     } else if (postSnapshot.child("type").getValue().equals("photo")) {
@@ -897,6 +910,8 @@ public class CommonFragment extends Fragment {
                                     if (postSnapshot.child("type").getValue().equals("status")) {
                                         Log.d(TAG, "onDataChange: DATA troo");
                                         Status statusSnap = postSnapshot.getValue(Status.class);
+                                        statusSnap.setPostUid(postSnapshot.getKey());
+
                                         isDone.put(postSnapshot.getKey(), (long) 1);
                                         items.add(statusSnap);
                                     } else if (postSnapshot.child("type").getValue().equals("photo")) {

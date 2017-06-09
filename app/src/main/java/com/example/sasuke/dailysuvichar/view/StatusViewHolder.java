@@ -15,31 +15,39 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.utils.ItemClickListener;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.like.LikeButton;
 
+import java.util.ArrayList;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class StatusViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+import static com.bumptech.glide.gifdecoder.GifHeaderParser.TAG;
+
+public class StatusViewHolder extends RecyclerView.ViewHolder {
 
     @BindView(R.id.tv_user_name)
     TextView mTvUserName;
     @BindView(R.id.tv_post_time)
     TextView mTvPostTime;
-//    @BindView(R.id.tv_likes)
+    //    @BindView(R.id.tv_likes)
 //    TextView tvLikes;
 //    @BindView(R.id.tv_comments)
 //    TextView tvComments;
     @BindView(R.id.status)
     TextView mTvStatus;
-//    @BindView(R.id.button_like)
+    //    @BindView(R.id.button_like)
 //    public LikeButton mBtnLike;
 //    @BindView(R.id.comment)
 //    public LinearLayout comment;
@@ -48,7 +56,8 @@ public class StatusViewHolder extends RecyclerView.ViewHolder implements View.On
 
     private Context context;
     private StorageReference mStorageReferenceDP;
-    private DatabaseReference mUsersDatabase;
+    private DatabaseReference mUsersDatabase, mDBrefLikes;
+    private FirebaseUser mFirebaseUser;
 
 //    @BindView(R.id.tv_like)
 //    TextView tv_like;
@@ -61,6 +70,7 @@ public class StatusViewHolder extends RecyclerView.ViewHolder implements View.On
 
     public LinearLayout llLikeComment;
     public TextView likeCount;
+    @BindView(R.id.like_button)
     public LikeButton likeButton;
     private ItemClickListener clickListener;
 
@@ -70,8 +80,10 @@ public class StatusViewHolder extends RecyclerView.ViewHolder implements View.On
         ButterKnife.bind(this, itemView);
         context = itemView.getContext();
         itemView.setTag(itemView);
-        itemView.setOnClickListener(this);
+//        itemView.setOnClickListener(this);
+        mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         mUsersDatabase = FirebaseDatabase.getInstance().getReference("users");
+        mDBrefLikes = FirebaseDatabase.getInstance().getReference("allPosts");
         mStorageReferenceDP = FirebaseStorage.getInstance().getReference("profile").child("user").child("dp");
 //        mBtnLike.setOnLikeListener(new OnLikeListener() {
 //            @Override
@@ -96,25 +108,27 @@ public class StatusViewHolder extends RecyclerView.ViewHolder implements View.On
 //            }
 //        });
     }
-    public void setName(String name){
-        if(name!=null && name.length()>0){
+
+    public void setName(String name) {
+        if (name != null && name.length() > 0) {
             mTvUserName.setText(name);
         }
     }
-    public void setPostTime(String postTime){
-        if(mTvPostTime!=null && mTvPostTime.length()>0){
+
+    public void setPostTime(String postTime) {
+        if (mTvPostTime != null && mTvPostTime.length() > 0) {
             mTvPostTime.setText(postTime);
         }
     }
 
-    public void setStatusDP(final String UID){
+    public void setStatusDP(final String UID) {
         mUsersDatabase.child(UID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot.child("photoUrl").getValue()!=null) {
+                if (dataSnapshot.child("photoUrl").getValue() != null) {
                     Activity a = (Activity) context;
-                    if(context!=null&&!a.isDestroyed()) {
-                        Log.e("GLIDE","YES ");
+                    if (context != null && !a.isDestroyed()) {
+                        Log.e("GLIDE", "YES ");
                         Glide.with(context).
                                 using(new FirebaseImageLoader())
                                 .load(mStorageReferenceDP.child(UID))
@@ -123,11 +137,11 @@ public class StatusViewHolder extends RecyclerView.ViewHolder implements View.On
                                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                                 .into(mStatusDP);
                     }
-                }
-                else {
+                } else {
                     Log.e("PHOTOURL", "NULL");
                 }
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Log.e("GLIDINGGGGGG", "CANCELLED");
@@ -139,20 +153,145 @@ public class StatusViewHolder extends RecyclerView.ViewHolder implements View.On
         if (status != null && status.length() > 0)
             mTvStatus.setText(status);
     }
-    public void setLikes(int likes){
+
+    public void setLikes(int likes) {
 //        tvLikes.setText(String.valueOf(likes)+" likes");
     }
-    public void setComments(int comments){
+
+    public void setComments(int comments) {
 //        tvComments.setText(String.valueOf(comments)+" comments");
     }
 
-    @Override
-    public void onClick(View view) {
-        clickListener.onClick(view, getAdapterPosition(),false);
+//    @Override
+//    public void onClick(View view) {
+//        clickListener.onClick(view, getAdapterPosition(), false);
+//    }
+
+    public void setClickListener(ItemClickListener itemClickListener) {
+        this.clickListener = itemClickListener;
     }
 
-    public void setClickListener(ItemClickListener itemClickListener){
-        this.clickListener = itemClickListener;
+    public void setLikedUser(String uid, final boolean liked, final ArrayList<String> likedUsers) {
+
+        Log.d(TAG, "setLikedUser: ");
+
+
+        final ArrayList<String> finalLikedUsers = likedUsers;
+        mDBrefLikes.child(uid).runTransaction(new Transaction.Handler() {
+            @Override
+            public Transaction.Result doTransaction(MutableData mutableData) {
+                if (mutableData != null) {
+                    int likes = mutableData.child("likes").getValue(Integer.class);
+                    ArrayList<String> likedList = mutableData.child("likedUsers").getValue(ArrayList.class);
+
+                    if (mutableData.child("likedUsers") == null) {
+                        ArrayList<String> likedUsers = new ArrayList<String>();
+                        Log.d(TAG, "doTransaction: null");
+                        if (liked) {
+                            likes++;
+                            likedList.add(mFirebaseUser.getUid());
+                        }
+                        mutableData.child("likedUsers").setValue(likedUsers);
+                    } else {
+                        Log.d(TAG, "doTransaction: " + likedList);
+                        if (liked) {
+                            if (!likedList.contains(mFirebaseUser.getUid())) {
+                                likes++;
+                                likedList.add(mFirebaseUser.getUid());
+                            }
+                        } else if (!liked && likes > 0) {
+                            if (likedList.contains(mFirebaseUser.getUid())) {
+                                likes--;
+                                likedList.remove(mFirebaseUser.getUid());
+                            }
+                        }
+                        mutableData.child("likedUsers").setValue(likedUsers);
+
+                    }
+//                    if (liked) {
+////                        if(finalLikedUsers.contains(mFirebaseUser.getUid())) {
+////                            return Transaction.success(mutableData);
+////                        }
+//
+//                    } else if (!liked && likes > 0) {
+////                        likes--;
+//                    }
+                    mutableData.child("likes").setValue(likes);
+                }
+                return Transaction.success(mutableData);
+            }
+
+            @Override
+            public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
+
+                if (liked) {
+                    likeButton.setLiked(true);
+                } else {
+                    likeButton.setLiked(false);
+                }
+                Log.d(TAG, "onComplete: " + b);
+            }
+        });
+
+//        mUsersDatabase.child(mFirebaseUser.getUid()).child("userPosts").child(uid).child("likes").runTransaction(new Transaction.Handler() {
+//            @Override
+//            public Transaction.Result doTransaction(MutableData mutableData) {
+//                if (mutableData != null) {
+//                    int likes = mutableData.getValue(Integer.class);
+//                    if (liked) {
+////                        if(finalLikedUsers.contains(mFirebaseUser.getUid())) {
+////                            return Transaction.success(mutableData);
+////                        }else {
+//                            likes++;
+////                        }
+//                    } else if (!liked && likes > 0) {
+//                        likes--;
+//                    }
+//                    mutableData.setValue(likes);
+//                }
+//                return Transaction.success(mutableData);
+//            }
+//
+//            @Override
+//            public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
+//
+////                if(liked){
+////                    likeButton.setLiked(true);
+////                }else{
+////                    likeButton.setLiked(false);
+////                }
+//                Log.d(TAG, "onComplete: " + b);
+//            }
+//        });
+
+//        if(liked) {
+//            if(likedUsers==null){
+//                likedUsers=new ArrayList<>();
+//            }
+//            if(!likedUsers.contains(mFirebaseUser.getUid())) {
+//                likedUsers.add(mFirebaseUser.getUid());
+//                mDBrefLikes.child(uid).child("likedUsers").setValue(likedUsers);
+//                mUsersDatabase.child(mFirebaseUser.getUid()).child("userPosts").child(uid).child("likedUsers").setValue(likedUsers);
+//            }
+//        }else if(!liked){
+//
+//            if(likedUsers==null){
+//                return;
+//            }else {
+//                if( likedUsers.contains(mFirebaseUser.getUid())) {
+//                    likedUsers.remove(mFirebaseUser.getUid());
+//                    mDBrefLikes.child(uid).child("likedUsers").setValue(likedUsers);
+//                    mUsersDatabase.child(mFirebaseUser.getUid()).child("userPosts").child(uid).child("likedUsers").setValue(likedUsers);
+//                }
+//            }
+//        }
+    }
+
+    public Boolean containsLikedUser(ArrayList<String> likedUsers) {
+        if (likedUsers != null) {
+            return likedUsers.contains(mFirebaseUser.getUid());
+        }
+        return false;
     }
 }
 

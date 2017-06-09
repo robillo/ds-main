@@ -3,19 +3,23 @@ package com.example.sasuke.dailysuvichar.view.adapter;
 import android.content.Context;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.models.Status;
-import com.example.sasuke.dailysuvichar.utils.ItemClickListener;
 import com.example.sasuke.dailysuvichar.view.StatusViewHolder;
+
+import java.util.ArrayList;
 
 import me.drakeet.multitype.ItemViewBinder;
 
+import static com.facebook.login.widget.ProfilePictureView.TAG;
+
 public class StatusItemAdapter extends ItemViewBinder<Status, StatusViewHolder> {
+    private ArrayList<String> mLikedItems = new ArrayList<>();
 
     private Context pContext;
 
@@ -42,8 +46,12 @@ public class StatusItemAdapter extends ItemViewBinder<Status, StatusViewHolder> 
                     holder.setPostTime(getTimeAgo(Math.abs(item.getTimestamp())));
                 }
                 holder.setName(item.getName());
-                if(item.getLikes()!=null) {
-                    holder.setLikes(item.getLikes());
+                if(item.getLikedUsers()==null) {
+                    if (item.getLikes() != null) {
+                        holder.setLikes(item.getLikes());
+                    }
+                }else{
+                    holder.setLikes(item.getLikedUsers().size());
                 }
                 if(item.getComments()!=null) {
                     holder.setComments(item.getComments().size());
@@ -54,33 +62,76 @@ public class StatusItemAdapter extends ItemViewBinder<Status, StatusViewHolder> 
                     holder.setStatusDP(item.getUid());
                 }
 
+
             }
         });
 
-        holder.setClickListener(new ItemClickListener() {
+        if (holder.containsLikedUser(item.getLikedUsers())) {
+            holder.likeButton.setLiked(true);
+        }
+        holder.likeButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v, int position, Boolean isLongClick) {
-                if(!isLongClick){
-                    switch (v.getId()){
-                        case R.id.ll_lc:{
-                            if(holder.likeButton.isLiked()){
-                                holder.likeButton.setLiked(false);
-                                // DECREASE HOLDER.COUNT BY ONE IN ADAPTER
-                                // DECREASE HOLDER COUNT IN FIREBASE FOR THIS POST
-                                // REMOVE UID OF THIS USER FROM THIS POST
-                            }
-                            else {
-                                holder.likeButton.setLiked(true);
-                                // INCREASE HOLDER.COUNT BY ONE IN ADAPTER
-                                // INCREASE HOLDER COUNT IN FIREBASE FOR THIS POST
-                                // ADD UID OF THIS USER FROM THIS POST
-                            }
-                            break;
-                        }
+            public void onClick(View v) {
+                if(holder.likeButton.isLiked()){
+                    holder.likeButton.setLiked(false);
+                    Log.d(TAG, "onClick: UNLIKE");
+
+                    if(item.getPostUid()!=null) {
+
+                        holder.setLikedUser(item.getPostUid(), false, item.getLikedUsers());
                     }
+
+                    // DECREASE HOLDER.COUNT BY ONE IN ADAPTER
+                    // DECREASE HOLDER COUNT IN FIREBASE FOR THIS POST
+                    // REMOVE UID OF THIS USER FROM THIS POST
+                }
+                else {
+                    holder.likeButton.setLiked(true);
+                    Log.d(TAG, "onClick: LIKE");
+
+                    if(item.getPostUid()!=null) {
+
+                        holder.setLikedUser(item.getPostUid(), true, item.getLikedUsers());
+                    }
+                    // INCREASE HOLDER.COUNT BY ONE IN ADAPTER
+                    // INCREASE HOLDER COUNT IN FIREBASE FOR THIS POST
+                    // ADD UID OF THIS USER FROM THIS POST
                 }
             }
         });
+
+//        holder.setClickListener(new ItemClickListener() {
+//            @Override
+//            public void onClick(View v, int position, Boolean isLongClick) {
+//                if(!isLongClick){
+//                    switch (v.getId()){
+//                        case R.id.like_button:{
+//                            if(holder.likeButton.isLiked()){
+//                                holder.likeButton.setLiked(false);
+//                                Log.d(TAG, "onClick: UNLIKE");
+//
+//                                holder.setLikedUser(item.getUid(), false, item.getLikedUsers());
+//
+//                                // DECREASE HOLDER.COUNT BY ONE IN ADAPTER
+//                                // DECREASE HOLDER COUNT IN FIREBASE FOR THIS POST
+//                                // REMOVE UID OF THIS USER FROM THIS POST
+//                            }
+//                            else {
+//                                holder.likeButton.setLiked(true);
+//                                Log.d(TAG, "onClick: LIKE");
+//
+//                                holder.setLikedUser(item.getUid(), true, item.getLikedUsers());
+//
+//                                // INCREASE HOLDER.COUNT BY ONE IN ADAPTER
+//                                // INCREASE HOLDER COUNT IN FIREBASE FOR THIS POST
+//                                // ADD UID OF THIS USER FROM THIS POST
+//                            }
+//                            break;
+//                        }
+//                    }
+//                }
+//            }
+//        });
 
 //        holder.comment.setOnClickListener(new View.OnClickListener() {
 //            @Override
