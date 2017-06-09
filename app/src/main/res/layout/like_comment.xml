@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
+    android:id="@+id/ll_lc"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_horizontal"
@@ -20,6 +21,7 @@
         android:layout_margin="3sp"
         app:icon_size="20sp"
         app:liked="true"
+        android:id="@+id/like_button"
         android:layout_gravity="center_vertical"
         app:anim_scale_factor="2"
         app:is_enabled="false" />
@@ -32,6 +34,7 @@
         android:layout_margin="5sp"
         android:textColor="@color/black"
         android:textStyle="bold"
+        android:id="@+id/like_count"
         android:layout_gravity="center_vertical"
         android:fontFamily="sans-serif-smallcaps"/>
 

@@ -7,11 +7,13 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.sasuke.dailysuvichar.R;
+import com.example.sasuke.dailysuvichar.utils.ItemClickListener;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,11 +22,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.like.LikeButton;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class StatusViewHolder extends RecyclerView.ViewHolder {
+public class StatusViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
     @BindView(R.id.tv_user_name)
     TextView mTvUserName;
@@ -56,10 +59,18 @@ public class StatusViewHolder extends RecyclerView.ViewHolder {
 //    @BindView(R.id.post_comment)
 //    public Button postComment;
 
+    public LinearLayout llLikeComment;
+    public TextView likeCount;
+    public LikeButton likeButton;
+    private ItemClickListener clickListener;
+
+
     public StatusViewHolder(@NonNull View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
         context = itemView.getContext();
+        itemView.setTag(itemView);
+        itemView.setOnClickListener(this);
         mUsersDatabase = FirebaseDatabase.getInstance().getReference("users");
         mStorageReferenceDP = FirebaseStorage.getInstance().getReference("profile").child("user").child("dp");
 //        mBtnLike.setOnLikeListener(new OnLikeListener() {
@@ -133,6 +144,15 @@ public class StatusViewHolder extends RecyclerView.ViewHolder {
     }
     public void setComments(int comments){
 //        tvComments.setText(String.valueOf(comments)+" comments");
+    }
+
+    @Override
+    public void onClick(View view) {
+        clickListener.onClick(view, getAdapterPosition(),false);
+    }
+
+    public void setClickListener(ItemClickListener itemClickListener){
+        this.clickListener = itemClickListener;
     }
 }
 
