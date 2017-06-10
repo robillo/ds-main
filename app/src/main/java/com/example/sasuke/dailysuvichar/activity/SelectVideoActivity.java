@@ -11,24 +11,20 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.VideoView;
 
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.models.CustomVideo;
-import com.example.sasuke.dailysuvichar.view.RVTags;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -488,28 +484,47 @@ public class SelectVideoActivity extends BaseActivity {
 
     @OnClick(R.id.play_button)
     public void setPlay(){
-        if(play.getText().equals(getString(R.string.pause))){
-            play.setText(getString(R.string.play));
-            showNHide.setVisibility(View.VISIBLE);
+        play.setVisibility(View.INVISIBLE);
+        mVideoView.setVisibility(View.VISIBLE);
+        showNHide.setVisibility(View.INVISIBLE);
 
-            if(mVideoView == currentlyPlaying){
-                mVideoView.pause();
+        if (mVideoView.isPlaying()) {
+            mVideoView.pause();
+        } else {
+            if (mVideoView != currentlyPlaying) {
+                releaseVideo();
+                mVideoView.start(Uri.parse(String.valueOf(filePath)));
+                currentlyPlaying = mVideoView;
+            }else {
+                mVideoView.setVisibility(View.VISIBLE);
+//                    if(holder.videoUrl!=null) {
+//                        holder.videoView.start(holder.videoUrl.toString() + ".mp4");
+//                    }
+                mVideoView.play();
             }
         }
-
-        else if(play.getText().equals(getString(R.string.play))){
-            play.setText(getString(R.string.pause));
-            showNHide.setVisibility(View.INVISIBLE);
-
-            if (mVideoView != currentlyPlaying) {
-                mVideoView.play();
-                }
-                else {
-                    Toast.makeText(context, "Sorry. This Video Cannot Be Played", Toast.LENGTH_SHORT).show();
-                }
-            }
-            else {
-                mVideoView.play();
-            }
+//        if(play.getText().equals(getString(R.string.pause))){
+//            play.setText(getString(R.string.play));
+//            showNHide.setVisibility(View.VISIBLE);
+//
+//            if(mVideoView == currentlyPlaying){
+//                mVideoView.pause();
+//            }
+//        }
+//
+//        else if(play.getText().equals(getString(R.string.play))){
+//            play.setText(getString(R.string.pause));
+//            showNHide.setVisibility(View.INVISIBLE);
+//
+//            if (mVideoView != currentlyPlaying) {
+//                mVideoView.play();
+//                }
+//                else {
+//                    Toast.makeText(context, "Sorry. This Video Cannot Be Played", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//            else {
+//                mVideoView.play();
+//            }
         }
 }

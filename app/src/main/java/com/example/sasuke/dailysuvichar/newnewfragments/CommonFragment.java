@@ -104,6 +104,7 @@ public class CommonFragment extends Fragment {
     RecyclerView mRvHome;
 
     private int lang = 2;
+    boolean bool = true;
 
 
     public CommonFragment() {
@@ -194,26 +195,29 @@ public class CommonFragment extends Fragment {
 
                 Log.e("FROM", from);
 
-                mDatabaseReference = FirebaseDatabase.getInstance().getReference("users");
-                Log.e(TAG, uid);
-                Log.e(TAG, mDatabaseReference.toString());
+//                if(bool) {
 
-                mDatabaseReference.child(mFirebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.child("mAllInterests").getValue() != null) {
+                    mDatabaseReference = FirebaseDatabase.getInstance().getReference("users");
+                    Log.e(TAG, uid);
+                    Log.e(TAG, mDatabaseReference.toString());
+                    bool = false;
+
+                    mDatabaseReference.child(mFirebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.child("mAllInterests").getValue() != null) {
 //                            mSelectedSubInterests.addAll((Collection<? extends String>) dataSnapshot.child("mSelectedSubInterests").getValue());
-                            mAllInterests.putAll((Map<? extends String, ? extends ArrayList<String>>) dataSnapshot.child("mAllInterests").getValue());
+                                mAllInterests.putAll((Map<? extends String, ? extends ArrayList<String>>) dataSnapshot.child("mAllInterests").getValue());
+                            }
+                            fetchExplorePostsFromFirebase();
+                            alternateLayout.setVisibility(View.INVISIBLE);
                         }
-                        fetchExplorePostsFromFirebase();
-                        alternateLayout.setVisibility(View.INVISIBLE);
-                    }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                    }
-                });
-
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                        }
+                    });
+//                }
                 fetchExplorePostsFromFirebase();
 
                 refresh();
