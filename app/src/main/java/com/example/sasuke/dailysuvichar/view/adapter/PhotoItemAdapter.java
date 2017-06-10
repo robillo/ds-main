@@ -101,29 +101,6 @@ public class PhotoItemAdapter extends ItemViewBinder<Photo, PhotoViewHolder> {
                 }
             }
         });
-//        holder.comment.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                new MaterialDialog.Builder(pContext)
-//                        .title("Post Comment")
-//                        .content(item.getCaption())
-//                        .inputType(InputType.TYPE_CLASS_TEXT)
-//                        .input("Enter the comment...", "", new MaterialDialog.InputCallback() {
-//                            @Override
-//                            public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
-//                                // Do something
-//                                Toast.makeText(pContext, input, Toast.LENGTH_SHORT).show();
-//                            }
-//                        }).show();
-//            }
-//        });
-
-//        final ImagePopup imagePopup = new ImagePopup(context);
-//        imagePopup.setBackgroundColor(Color.BLACK);
-//        imagePopup.setWindowWidth(Resources.getSystem().getDisplayMetrics().widthPixels);
-//        imagePopup.setWindowHeight(Resources.getSystem().getDisplayMetrics().heightPixels);
-//        imagePopup.setHideCloseIcon(true);
-//        imagePopup.setImageOnClickClose(true);
 
         holder.mIvPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,20 +108,6 @@ public class PhotoItemAdapter extends ItemViewBinder<Photo, PhotoViewHolder> {
                 holder.fullScreenIntent();
             }
         });
-
-//        holder.mBtnLike.setOnLikeListener(new OnLikeListener() {
-//            @Override
-//            public void liked(LikeButton likeButton) {
-//                likeButton.setLiked(true);
-//                HomeFragment.onLikeClicked("photo", true);
-//            }
-//
-//            @Override
-//            public void unLiked(LikeButton likeButton) {
-//                likeButton.setLiked(false);
-//                HomeFragment.onLikeClicked("photo",false);
-//            }
-//        });
     }
 
     public static String getTimeAgo(long time) {

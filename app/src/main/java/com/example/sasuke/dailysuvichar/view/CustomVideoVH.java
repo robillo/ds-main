@@ -53,11 +53,6 @@ import butterknife.ButterKnife;
 import static com.facebook.FacebookSdk.getApplicationContext;
 import static com.facebook.login.widget.ProfilePictureView.TAG;
 
-/**
- * Created by rishabhshukla on 15/05/17.
- */
-
-
 public class CustomVideoVH extends RecyclerView.ViewHolder implements View.OnClickListener{
 
     private static final String SAMPLE_VIDEO =
@@ -72,14 +67,14 @@ public class CustomVideoVH extends RecyclerView.ViewHolder implements View.OnCli
     @BindView(R.id.tv_likes_count)
     TextView tvLikes;
     @BindView(R.id.play_button)
-    public Button play;
+    public TextView play;
 
     @BindView(R.id.download_button)
-    public Button download;
+    public TextView download;
     private DatabaseReference mDBrefLikes;
     private FirebaseUser mFirebaseUser;
 
-    Button downloadButton;
+//    TextView downloadButton;
 
     private ItemClickListener clickListener;
 
@@ -109,15 +104,26 @@ public class CustomVideoVH extends RecyclerView.ViewHolder implements View.OnCli
         super(itemView);
         ButterKnife.bind(this, itemView);
         context = itemView.getContext();
-        itemView.setTag(itemView);
-        itemView.setOnClickListener(this);
-        downloadButton = (Button) itemView.findViewById(R.id.download_button);
-        downloadButton.setOnClickListener(this);
+//        downloadButton = (TextView) itemView.findViewById(R.id.download_button);
         mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         mUsersDatabase = FirebaseDatabase.getInstance().getReference("users");
         mDBrefLikes = FirebaseDatabase.getInstance().getReference("allPosts");
         mStorageReferenceDP = FirebaseStorage.getInstance().getReference("profile").child("user").child("dp");
+        itemView.setTag(itemView);
+        itemView.setOnClickListener(this);
+        play.setOnClickListener(this);
+        download.setOnClickListener(this);
+        videoView.setOnClickListener(this);
 
+    }
+
+    public void setClickListener(ItemClickListener itemClickListener){
+        this.clickListener = itemClickListener;
+    }
+
+    @Override
+    public void onClick(View view) {
+        clickListener.onClick(view, getAdapterPosition(), false);
     }
 
     public void setName(String name) {
@@ -348,23 +354,6 @@ public class CustomVideoVH extends RecyclerView.ViewHolder implements View.OnCli
             e.printStackTrace();
         }
     }
-
-
-    public void setClickListener(ItemClickListener itemClickListener){
-        this.clickListener = itemClickListener;
-    }
-
-    @Override
-    public void onClick(View view) {
-//        switch (view.getId()){
-//            case R.id.download_button:{
-//                Toast.makeText(context, "DOWNLOAD CLICKED", Toast.LENGTH_SHORT).show();
-//                break;
-//            }
-//        }
-        clickListener.onClick(view, getAdapterPosition(),false);
-    }
-
 
     public void setLikedUser(String authorUid, String uid, final boolean liked, ArrayList<String> likedUsers) {
 

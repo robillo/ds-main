@@ -29,7 +29,7 @@
         android:layout_height="match_parent"
         android:gravity="bottom">
 
-        <Button
+        <TextView
             android:id="@+id/play_button"
             android:layout_width="0dp"
             android:layout_weight="1"
@@ -41,11 +41,10 @@
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:clickable="true"
             android:paddingBottom="12dp"
             android:paddingTop="12dp"/>
 
-        <Button
+        <TextView
             android:id="@+id/download_button"
             android:layout_width="0dp"
             android:layout_weight="1"
@@ -55,7 +54,6 @@
             android:textAllCaps="true"
             android:gravity="center"
             android:textColor="@color/white"
-            android:clickable="true"
             android:textSize="18sp"
             android:textStyle="bold"
             android:paddingBottom="12dp"
