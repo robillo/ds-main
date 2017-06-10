@@ -200,72 +200,6 @@ public class ProfileActivity extends BaseActivity {
         }
     }
 
-    public void setNotEditable(){
-        saveButton.setVisibility(View.INVISIBLE);
-        saveButton.setClickable(false);
-        name.setClickable(false);
-        userName.setClickable(false);
-        language.setClickable(false);
-        userType.setClickable(false);
-        DOB.setClickable(false);
-        gender.setClickable(false);
-        userProfilePic.setClickable(false);
-        userCoverPic.setClickable(false);
-        bio.setClickable(false);
-        age.setClickable(false);
-    }
-
-//
-//    private void loadDP(String token){
-//        String url = "https://graph.facebook.com/me/picture?type=large&method=GET&access_token=" + token;
-//        Log.e("URL", url);
-//        Glide.with(this)
-//                .load(url)
-//                .fitCenter()
-//                .into(userProfilePic);
-//    }
-//
-//    private void loadCOVER(String token){
-//        String url = "https://graph.facebook.com/me/picture?fields=cover&access_token=" + token;
-//
-//        final String[] coverPhoto = {null};
-//        new GraphRequest(
-//                AccessToken.getCurrentAccessToken(),
-//                "/+me+?fields=cover",
-//                null,
-//                HttpMethod.GET,
-//                new GraphRequest.Callback()
-//                {
-//                    public void onCompleted(GraphResponse response)
-//                    {
-//                        try
-//                        {
-//                            JSONObject jsonObject = response.getJSONObject();
-//                            if(jsonObject==null)
-//                                return;
-//                            JSONObject JOSource = jsonObject.getJSONObject("cover");
-//                            coverPhoto[0] = JOSource.getString("source");
-//
-//                            Log.e("COVER", " " + coverPhoto[0]);
-//
-//                            if(coverPhoto[0]!=null){
-//                                Glide.with(getApplicationContext())
-//                                        .load(coverPhoto[0])
-//                                        .fitCenter()
-//                                        .into(userCoverPic);
-//                            }
-//
-//                        }
-//                        catch (JSONException e)
-//                        {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                }
-//        ).executeAsync();
-//    }
-
-
     private void fetchData() {
 
         mUsersDatabase.child(mFirebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
@@ -295,22 +229,6 @@ public class ProfileActivity extends BaseActivity {
                     language.setText(dataSnapshot.child("preferredLang").getValue().toString());
                 }
                 if(dataSnapshot.child("photoUrl").getValue()!=null) {
-//                    String[] filePathColumn = { MediaStore.Images.Media.DATA };
-//
-//                    Cursor cursor = getContentResolver().query(Uri.parse(dataSnapshot.child("photoUrl").getValue().toString()),
-//                            filePathColumn, null, null, null);
-//                    cursor.moveToFirst();
-//
-//                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-//                    String picturePath = cursor.getString(columnIndex);
-//                    cursor.close();
-//
-//                    Glide.with(ProfileActivity.this)
-//                            .load(picturePath)
-//                            .crossFade()
-//                            .centerCrop()
-//                            .into(userProfilePic);
-
 
                     Glide.with(ProfileActivity.this).
                             using(new FirebaseImageLoader())
@@ -320,21 +238,6 @@ public class ProfileActivity extends BaseActivity {
                             .into(userProfilePic);
                 }
                 if(dataSnapshot.child("coverUrl").getValue()!=null) {
-//                    String[] filePathColumn = { MediaStore.Images.Media.DATA };
-//
-//                    Cursor cursor = getContentResolver().query(Uri.parse(dataSnapshot.child("coverUrl").getValue().toString()),
-//                            filePathColumn, null, null, null);
-//                    cursor.moveToFirst();
-//
-//                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-//                    String picturePath = cursor.getString(columnIndex);
-//                    cursor.close();
-//
-//                    Glide.with(ProfileActivity.this)
-//                            .load(picturePath)
-//                            .crossFade()
-//                            .centerCrop()
-//                            .into(userCoverPic);
 
                     Glide.with(ProfileActivity.this).
                             using(new FirebaseImageLoader())
@@ -371,7 +274,6 @@ public class ProfileActivity extends BaseActivity {
                     .crossFade()
                     .centerCrop()
                     .into(userProfilePic);
-
             Log.e("REQUEST AFTER", picturePath);
 
             String dpPathDB = null;
@@ -395,6 +297,7 @@ public class ProfileActivity extends BaseActivity {
                         .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+
                             }
                         });
 
@@ -443,6 +346,7 @@ public class ProfileActivity extends BaseActivity {
                         .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+
                             }
                         });
             }
@@ -822,6 +726,8 @@ public class ProfileActivity extends BaseActivity {
             if(code==1){
                 if(checkValidate(getString(R.string.standard_caps))){
                     writetoFirebase();
+                    finish();
+                    Toast.makeText(getApplicationContext(), "Profile Saved", Toast.LENGTH_SHORT).show();
                 }
                 else {
                     Toast.makeText(getApplicationContext(), R.string.make_changes, Toast.LENGTH_SHORT).show();
@@ -842,6 +748,8 @@ public class ProfileActivity extends BaseActivity {
             if(code==1){
                 if(checkValidate(getString(R.string.guru_caps))){
                     writetoFirebase();
+                    finish();
+                    Toast.makeText(getApplicationContext(), "Profile Saved", Toast.LENGTH_SHORT).show();
                 }
                 else {
                     Toast.makeText(getApplicationContext(), R.string.make_changes, Toast.LENGTH_SHORT).show();

@@ -10,10 +10,6 @@ import com.example.sasuke.dailysuvichar.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * Created by Sasuke on 4/26/2017.
- */
-
 public class SubInterestViewHolder extends RecyclerView.ViewHolder {
 
     @BindView(R.id.tv_sub_interest)
