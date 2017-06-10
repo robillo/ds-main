@@ -20,9 +20,11 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridLayout;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.models.CustomVideo;
@@ -57,7 +59,7 @@ public class SelectVideoActivity extends BaseActivity {
 
     @BindView(R.id.name)
     TextView name;
-    @BindView(R.id.vidView)
+    @BindView(R.id.video_view)
     SimpleVideoView mVideoView;
     @BindView(R.id.diet)
     TextView diet;
@@ -83,6 +85,10 @@ public class SelectVideoActivity extends BaseActivity {
     EditText etCaption;
     @BindView(R.id.switch_lang)
     Switch switch_lang;
+    @BindView(R.id.play_button)
+    TextView play;
+    @BindView(R.id.shownhide)
+    ImageView showNHide;
 
     private ArrayList<String> interests, data, mSelectedItems;
     private Context context;
@@ -477,13 +483,33 @@ public class SelectVideoActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-//        super.onBackPressed();
-//        if(from == 1){
-//            startActivity(new Intent(this, NewExploreyActivity.class));
-//        }
-//        else if(from == 2){
-//            startActivity(new Intent(this, NewHomeyActivity.class));
-//        }
         finish();
     }
+
+    @OnClick(R.id.play_button)
+    public void setPlay(){
+        if(play.getText().equals(getString(R.string.pause))){
+            play.setText(getString(R.string.play));
+            showNHide.setVisibility(View.VISIBLE);
+
+            if(mVideoView == currentlyPlaying){
+                mVideoView.pause();
+            }
+        }
+
+        else if(play.getText().equals(getString(R.string.play))){
+            play.setText(getString(R.string.pause));
+            showNHide.setVisibility(View.INVISIBLE);
+
+            if (mVideoView != currentlyPlaying) {
+                mVideoView.play();
+                }
+                else {
+                    Toast.makeText(context, "Sorry. This Video Cannot Be Played", Toast.LENGTH_SHORT).show();
+                }
+            }
+            else {
+                mVideoView.play();
+            }
+        }
 }
