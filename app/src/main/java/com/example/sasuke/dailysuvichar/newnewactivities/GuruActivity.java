@@ -20,6 +20,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.sasuke.dailysuvichar.R;
+import com.example.sasuke.dailysuvichar.activity.AboutActivity;
 import com.example.sasuke.dailysuvichar.models.Guru;
 import com.example.sasuke.dailysuvichar.newactivities.NewMainActivity;
 import com.example.sasuke.dailysuvichar.view.adapter.RVGuruAdapter;
@@ -99,11 +100,9 @@ public class GuruActivity extends AppCompatActivity {
         mRvGuruAdapter = new RVGuruAdapter(this, guruList);
 
         if (isOnline()) {
-
             mDatabaseReference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-
                     for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
 
                         Guru guru = postSnapshot.getValue(Guru.class);
@@ -123,7 +122,6 @@ public class GuruActivity extends AppCompatActivity {
                         mRvGuruAdapter.notifyDataSetChanged();
                     }
                 }
-
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
                 }
@@ -210,7 +208,7 @@ public class GuruActivity extends AppCompatActivity {
                 break;
             }
             case R.id.about: {
-
+                startActivity(new Intent(this, AboutActivity.class));
                 break;
             }
         }
