@@ -120,16 +120,46 @@
             android:layout_weight="6"
             android:orientation="vertical">
 
-            <com.klinker.android.simple_videoview.SimpleVideoView
-                android:id="@+id/vidView"
-                android:layout_height="0sp"
-                android:layout_weight="5"
+            <FrameLayout android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:background="@color/black"
-                app:loop="true"
-                app:stopSystemAudio="false"
-                app:muted="false"
-                app:showSpinner="false"/>
+                android:layout_height="0sp"
+                android:layout_weight="5">
+
+                <com.klinker.android.simple_videoview.SimpleVideoView
+                    android:id="@+id/video_view"
+                    android:visibility="visible"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/black"
+                    app:loop="true"
+                    app:stopSystemAudio="false"
+                    app:muted="false"
+                    app:showSpinner="false"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_launcher"
+                    android:background="@color/transparent"
+                    android:layout_gravity="center"
+                    android:id="@+id/shownhide"/>
+
+                <TextView
+                    android:id="@+id/play_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="center"
+                    android:layout_gravity="center|bottom"
+                    android:paddingBottom="12dp"
+                    android:paddingTop="12dp"
+                    android:text="@string/play"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+            </FrameLayout>
 
             <EditText
                 android:id="@+id/etCaption"
