@@ -283,18 +283,12 @@ public class CustomVideoAdapter  extends ItemViewBinder<CustomVideo, CustomVideo
             @Override
             public void onClick(View v, int position, Boolean isLongClick) {
                 if(!isLongClick){
-                    Toast.makeText(pContext, "SOMETHING CLICKED", Toast.LENGTH_SHORT).show();
-                    Log.e("ROBILLO", "onClick:" + v.getId());
                     switch (v.getId()){
                         case R.id.download_button:{
-                            Log.e(TAG, "onClick:" + v.getId());
-                            Toast.makeText(pContext, "DOWNLOAD CLICKED", Toast.LENGTH_SHORT).show();
                             holder.setDownload(item.getStorageReference(),context);
                             break;
                         }
                         case R.id.play_button:{
-                            Log.e(TAG, "onClick:" + v.getId());
-                            Toast.makeText(pContext, "PLAY CLICKED", Toast.LENGTH_SHORT).show();
                             if(holder.play.getText().equals(pContext.getString(R.string.play))){
                                 if (holder.videoView != currentlyPlaying) {
                                     releaseVideo();
@@ -316,8 +310,6 @@ public class CustomVideoAdapter  extends ItemViewBinder<CustomVideo, CustomVideo
                             break;
                         }
                         case R.id.video_view:{
-                            Log.e(TAG, "onClick:" + v.getId());
-                            Toast.makeText(pContext, "VV CLICKED", Toast.LENGTH_SHORT).show();
                             if (holder.videoView.isPlaying())
                                 holder.videoView.pause();
                             else
