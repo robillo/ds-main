@@ -1100,7 +1100,7 @@ public class CommonFragment extends Fragment {
                 new MaterialDialog.Builder(getActivity())
                         .title(R.string.sort_by)
                         .items(new String[]{getString(R.string.most_recent),getString(R.string.popularity)})
-                        .itemsCallbackSingleChoice(0, new MaterialDialog.ListCallbackSingleChoice() {
+                        .itemsCallbackSingleChoice(sort, new MaterialDialog.ListCallbackSingleChoice() {
                             @Override
                             public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
 
