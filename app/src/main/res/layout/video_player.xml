@@ -16,6 +16,14 @@
         app:muted="false"
         app:showSpinner="false"/>
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_launcher"
+        android:background="@color/transparent"
+        android:layout_gravity="center"
+        android:id="@+id/shownhide"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

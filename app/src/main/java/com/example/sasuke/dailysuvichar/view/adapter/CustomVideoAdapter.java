@@ -291,6 +291,7 @@ public class CustomVideoAdapter  extends ItemViewBinder<CustomVideo, CustomVideo
                         case R.id.play_button:{
                             if(holder.play.getText().equals(pContext.getString(R.string.pause))){
                                 holder.play.setText(pContext.getString(R.string.play));
+                                holder.showNHide.setVisibility(View.VISIBLE);
 
                                 if(holder.videoView == currentlyPlaying){
                                     holder.videoView.pause();
@@ -299,6 +300,7 @@ public class CustomVideoAdapter  extends ItemViewBinder<CustomVideo, CustomVideo
 
                             else if(holder.play.getText().equals(pContext.getString(R.string.play))){
                                 holder.play.setText(pContext.getString(R.string.pause));
+                                holder.showNHide.setVisibility(View.INVISIBLE);
 
                                 if (holder.videoView != currentlyPlaying) {
                                     releaseVideo();
