@@ -289,23 +289,32 @@ public class CustomVideoAdapter  extends ItemViewBinder<CustomVideo, CustomVideo
                             break;
                         }
                         case R.id.play_button:{
-                            if(holder.play.getText().equals(pContext.getString(R.string.play))){
+                            if(holder.play.getText().equals(pContext.getString(R.string.pause))){
+                                holder.play.setText(pContext.getString(R.string.play));
+
+                                if(holder.videoView == currentlyPlaying){
+                                    holder.videoView.pause();
+                                }
+                            }
+
+                            else if(holder.play.getText().equals(pContext.getString(R.string.play))){
+                                holder.play.setText(pContext.getString(R.string.pause));
+
                                 if (holder.videoView != currentlyPlaying) {
                                     releaseVideo();
-                                    holder.videoView.setVisibility(View.VISIBLE);
                                     Log.e("URI", " " + item.getVideoURI());
                                     if(item.getVideoURI()!=null){
                                         holder.videoView.start(Uri.parse(item.getVideoURI()));
+//                                        holder.videoView.play();
                                         currentlyPlaying = holder.videoView;
-                                        holder.play.setText(pContext.getString(R.string.pause));
                                     }
                                     else {
                                         Toast.makeText(context, "Sorry. This Video Cannot Be Played", Toast.LENGTH_SHORT).show();
                                     }
                                 }
-                            }
-                            else {
-
+                                else {
+                                    holder.videoView.play();
+                                }
                             }
                             break;
                         }
