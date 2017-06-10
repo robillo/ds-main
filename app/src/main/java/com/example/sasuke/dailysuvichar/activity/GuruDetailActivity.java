@@ -26,6 +26,7 @@ import com.example.sasuke.dailysuvichar.models.CustomVideo;
 import com.example.sasuke.dailysuvichar.models.Photo;
 import com.example.sasuke.dailysuvichar.models.Status;
 import com.example.sasuke.dailysuvichar.models.Video;
+import com.example.sasuke.dailysuvichar.newnewactivities.GuruActivity;
 import com.example.sasuke.dailysuvichar.view.adapter.CustomVideoAdapter;
 import com.example.sasuke.dailysuvichar.view.adapter.PhotoItemAdapter;
 import com.example.sasuke.dailysuvichar.view.adapter.StatusItemAdapter;
@@ -444,13 +445,17 @@ public class GuruDetailActivity extends BaseActivity{
 
     @Override
     public void onPause() {
-
         if (customVideoAdapter != null) {
             customVideoAdapter.releaseVideo();
         }
-
         super.onPause();
     }
 
-
+    @Override
+    public void onBackPressed() {
+//        Intent i = new Intent(this, GuruActivity.class);
+//        i.putExtra("uid_from_intent", uid);
+//        startActivity(i);
+        finish();
+    }
 }
