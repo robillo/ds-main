@@ -52,10 +52,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-/**
- * Created by rishabhshukla on 14/05/17.
- */
-
 public class SelectVideoActivity extends BaseActivity {
 
 
@@ -77,8 +73,8 @@ public class SelectVideoActivity extends BaseActivity {
     TextView ayurveda;
     @BindView(R.id.astrology)
     TextView astrology;
-    @BindView(R.id.next)
-    Button next;
+//    @BindView(R.id.next)
+//    Button next;
     @BindView(R.id.grid)
     GridLayout grid;
     @BindView(R.id.recyclerview)
@@ -88,7 +84,7 @@ public class SelectVideoActivity extends BaseActivity {
     @BindView(R.id.switch_lang)
     Switch switch_lang;
 
-    private ArrayList<String> interests, subInterests, data, mSelectedItems;
+    private ArrayList<String> interests, data, mSelectedItems;
     private Context context;
     private SimpleVideoView currentlyPlaying;
 
@@ -130,7 +126,7 @@ public class SelectVideoActivity extends BaseActivity {
 
         context = getApplicationContext();
         interests = new ArrayList<>();
-        subInterests = new ArrayList<>();
+//        subInterests = new ArrayList<>();
         mSelectedItems = new ArrayList<>();
 
     }
@@ -170,53 +166,53 @@ public class SelectVideoActivity extends BaseActivity {
         setAptBG(getString(R.string.astrologyy), astrology);
     }
 
-    @OnClick(R.id.next)
-    public void nextIsSubinterests() {
-        if (interests.size() < 1) {
-            Toast.makeText(context, getString(R.string.pluese), Toast.LENGTH_SHORT).show();
-        } else {
-            if (interests.contains(getString(R.string.diett))) {
-                String[] temp = getResources().getStringArray(R.array.diet_array);
-                addToSubinterests(temp);
-            }
-            if (interests.contains(getString(R.string.yogaa))) {
-                String[] temp = getResources().getStringArray(R.array.yoga_array);
-                addToSubinterests(temp);
-            }
-            if (interests.contains(getString(R.string.healthh))) {
-                String[] temp = getResources().getStringArray(R.array.health_array);
-                addToSubinterests(temp);
-            }
-            if (interests.contains(getString(R.string.religionn))) {
-                String[] temp = getResources().getStringArray(R.array.religion_array);
-                addToSubinterests(temp);
-            }
-            if (interests.contains(getString(R.string.motivationn))) {
-                String[] temp = getResources().getStringArray(R.array.motivation_array);
-                addToSubinterests(temp);
-            }
-            if (interests.contains(getString(R.string.ayurvedaa))) {
-                String[] temp = getResources().getStringArray(R.array.ayurveda_array);
-                addToSubinterests(temp);
-            }
-            if (interests.contains(getString(R.string.astrologyy))) {
-                String[] temp = getResources().getStringArray(R.array.astrology_array);
-                addToSubinterests(temp);
-            }
-            grid.setVisibility(View.GONE);
-            recyclerView.setVisibility(View.VISIBLE);
-            recyclerView.setLayoutManager(new GridLayoutManager(context, 3));
-//            data = fillWithData();
-            recyclerView.setAdapter(new RVTags(context, subInterests, mSelectedItems));
-//            submit.setVisibility(View.VISIBLE);
-        }
-    }
-
-    private void addToSubinterests(String[] temp) {
-        for (String s : temp) {
-            subInterests.add(s);
-        }
-    }
+//    @OnClick(R.id.next)
+//    public void nextIsSubinterests() {
+//        if (interests.size() < 1) {
+//            Toast.makeText(context, getString(R.string.pluese), Toast.LENGTH_SHORT).show();
+//        } else {
+//            if (interests.contains(getString(R.string.diett))) {
+//                String[] temp = getResources().getStringArray(R.array.diet_array);
+//                addToSubinterests(temp);
+//            }
+//            if (interests.contains(getString(R.string.yogaa))) {
+//                String[] temp = getResources().getStringArray(R.array.yoga_array);
+//                addToSubinterests(temp);
+//            }
+//            if (interests.contains(getString(R.string.healthh))) {
+//                String[] temp = getResources().getStringArray(R.array.health_array);
+//                addToSubinterests(temp);
+//            }
+//            if (interests.contains(getString(R.string.religionn))) {
+//                String[] temp = getResources().getStringArray(R.array.religion_array);
+//                addToSubinterests(temp);
+//            }
+//            if (interests.contains(getString(R.string.motivationn))) {
+//                String[] temp = getResources().getStringArray(R.array.motivation_array);
+//                addToSubinterests(temp);
+//            }
+//            if (interests.contains(getString(R.string.ayurvedaa))) {
+//                String[] temp = getResources().getStringArray(R.array.ayurveda_array);
+//                addToSubinterests(temp);
+//            }
+//            if (interests.contains(getString(R.string.astrologyy))) {
+//                String[] temp = getResources().getStringArray(R.array.astrology_array);
+//                addToSubinterests(temp);
+//            }
+//            grid.setVisibility(View.GONE);
+//            recyclerView.setVisibility(View.VISIBLE);
+//            recyclerView.setLayoutManager(new GridLayoutManager(context, 3));
+////            data = fillWithData();
+//            recyclerView.setAdapter(new RVTags(context, subInterests, mSelectedItems));
+////            submit.setVisibility(View.VISIBLE);
+//        }
+//    }
+//
+//    private void addToSubinterests(String[] temp) {
+//        for (String s : temp) {
+//            subInterests.add(s);
+//        }
+//    }
 
     private void setAptBG(String temp, TextView view) {
         if (interests.contains(temp)) {
@@ -305,7 +301,7 @@ public class SelectVideoActivity extends BaseActivity {
     }
 
     private void uploadToFirebase() {
-        if (mSelectedItems.size() < 1) {
+        if (interests.size() < 1) {
             Toast.makeText(context, R.string.please_atleast, Toast.LENGTH_SHORT).show();
         } else {
             if (filePath != null) {

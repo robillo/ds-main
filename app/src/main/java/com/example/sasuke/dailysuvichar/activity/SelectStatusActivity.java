@@ -52,8 +52,8 @@ public class SelectStatusActivity extends BaseActivity {
     TextView ayurveda;
     @BindView(R.id.astrology)
     TextView astrology;
-    @BindView(R.id.next)
-    Button next;
+//    @BindView(R.id.next)
+//    Button next;
     @BindView(R.id.grid)
     GridLayout grid;
     @BindView(R.id.recyclerview)
@@ -64,7 +64,7 @@ public class SelectStatusActivity extends BaseActivity {
     Switch switch_lang;
 
 
-    private ArrayList<String> interests, subInterests, data, mSelectedItems;
+    private ArrayList<String> interests, data, mSelectedItems;
     private Context context;
     private FirebaseUser mFirebaseUser;
     private DatabaseReference mDatabaseReferenceTag, mDatabaseReferenceUser, mDatabaseReferenceAllPosts;
@@ -88,7 +88,7 @@ public class SelectStatusActivity extends BaseActivity {
         from = getIntent().getIntExtra("from", 1);
         context = getApplicationContext();
         interests = new ArrayList<>();
-        subInterests = new ArrayList<>();
+//        subInterests = new ArrayList<>();
         mSelectedItems = new ArrayList<>();
     }
 
@@ -127,54 +127,54 @@ public class SelectStatusActivity extends BaseActivity {
         setAptBG(getString(R.string.astrologyy), astrology);
     }
 
-    @OnClick(R.id.next)
-    public void nextIsSubinterests() {
-        if (interests.size() < 1) {
-            Toast.makeText(context, R.string.pluese, Toast.LENGTH_SHORT).show();
-        } else {
-            if (interests.contains(getString(R.string.diett))) {
-                String[] temp = getResources().getStringArray(R.array.diet_array);
-                addToSubinterests(temp);
-            }
-            if (interests.contains(getString(R.string.yogaa))) {
-                String[] temp = getResources().getStringArray(R.array.yoga_array);
-                addToSubinterests(temp);
-            }
-            if (interests.contains(getString(R.string.healthh))) {
-                String[] temp = getResources().getStringArray(R.array.health_array);
-                addToSubinterests(temp);
-            }
-            if (interests.contains(getString(R.string.religionn))) {
-                String[] temp = getResources().getStringArray(R.array.religion_array);
-                addToSubinterests(temp);
-            }
-            if (interests.contains(getString(R.string.motivationn))) {
-                String[] temp = getResources().getStringArray(R.array.motivation_array);
-                addToSubinterests(temp);
-            }
-            if (interests.contains(getString(R.string.ayurvedaa))) {
-                String[] temp = getResources().getStringArray(R.array.ayurveda_array);
-                addToSubinterests(temp);
-            }
-            if (interests.contains(getString(R.string.astrologyy))) {
-                String[] temp = getResources().getStringArray(R.array.astrology_array);
-                addToSubinterests(temp);
-            }
-            grid.setVisibility(View.GONE);
-            recyclerView.setVisibility(View.VISIBLE);
-            recyclerView.setLayoutManager(new GridLayoutManager(context, 3));
-//            data = fillWithData();
-            subInterests.add(getString(R.string.others));
-            recyclerView.setAdapter(new RVTags(context, subInterests, mSelectedItems));
-//            submit.setVisibility(View.VISIBLE);
-        }
-    }
+//    @OnClick(R.id.next)
+//    public void nextIsSubinterests() {
+////        if (interests.size() < 1) {
+////            Toast.makeText(context, R.string.pluese, Toast.LENGTH_SHORT).show();
+////        } else {
+////            if (interests.contains(getString(R.string.diett))) {
+////                String[] temp = getResources().getStringArray(R.array.diet_array);
+////                addToSubinterests(temp);
+////            }
+////            if (interests.contains(getString(R.string.yogaa))) {
+////                String[] temp = getResources().getStringArray(R.array.yoga_array);
+////                addToSubinterests(temp);
+////            }
+////            if (interests.contains(getString(R.string.healthh))) {
+////                String[] temp = getResources().getStringArray(R.array.health_array);
+////                addToSubinterests(temp);
+////            }
+////            if (interests.contains(getString(R.string.religionn))) {
+////                String[] temp = getResources().getStringArray(R.array.religion_array);
+////                addToSubinterests(temp);
+////            }
+////            if (interests.contains(getString(R.string.motivationn))) {
+////                String[] temp = getResources().getStringArray(R.array.motivation_array);
+////                addToSubinterests(temp);
+////            }
+////            if (interests.contains(getString(R.string.ayurvedaa))) {
+////                String[] temp = getResources().getStringArray(R.array.ayurveda_array);
+////                addToSubinterests(temp);
+////            }
+////            if (interests.contains(getString(R.string.astrologyy))) {
+////                String[] temp = getResources().getStringArray(R.array.astrology_array);
+////                addToSubinterests(temp);
+////            }
+////            grid.setVisibility(View.GONE);
+////            recyclerView.setVisibility(View.VISIBLE);
+////            recyclerView.setLayoutManager(new GridLayoutManager(context, 3));
+//////            data = fillWithData();
+////            subInterests.add(getString(R.string.others));
+////            recyclerView.setAdapter(new RVTags(context, subInterests, mSelectedItems));
+//////            submit.setVisibility(View.VISIBLE);
+////        }
+//    }
 
-    private void addToSubinterests(String[] temp) {
-        for (String s : temp) {
-            subInterests.add(s);
-        }
-    }
+//    private void addToSubinterests(String[] temp) {
+//        for (String s : temp) {
+//            subInterests.add(s);
+//        }
+//    }
 
     private void setAptBG(String temp, TextView view) {
         if (interests.contains(temp)) {
@@ -190,7 +190,7 @@ public class SelectStatusActivity extends BaseActivity {
 
     @OnClick(R.id.btnPostStatus)
     public void postStatus() {
-        if (mSelectedItems.size() < 1) {
+        if (interests.size() < 1) {
             Toast.makeText(context, R.string.pleeease, Toast.LENGTH_SHORT).show();
         } else {
             if (etStatus.getText().length() >= 1) {
@@ -231,12 +231,6 @@ public class SelectStatusActivity extends BaseActivity {
                 mDatabaseReferenceUser.child("users").child(mFirebaseUser.getUid()).child("userPosts").child(postID).setValue(status);
 
                 Toast.makeText(context, getString(R.string.success), Toast.LENGTH_SHORT).show();
-//                if(from == 1){
-//                    startActivity(new Intent(this, NewExploreyActivity.class));
-//                }
-//                else if(from == 2){
-//                    startActivity(new Intent(this, NewHomeyActivity.class));
-//                }
                 finish();
             }
         }
@@ -244,7 +238,6 @@ public class SelectStatusActivity extends BaseActivity {
     }
 
     public void getName(){
-
         DatabaseReference ref =FirebaseDatabase.getInstance().getReference().child("users").child(mFirebaseUser.getUid());
         ref.addValueEventListener(new ValueEventListener() {
             @Override
@@ -264,13 +257,6 @@ public class SelectStatusActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-//        super.onBackPressed();
-//        if(from == 1){
-//            startActivity(new Intent(this, NewExploreyActivity.class));
-//        }
-//        else if(from == 2){
-//            startActivity(new Intent(this, NewHomeyActivity.class));
-//        }
         finish();
     }
 }

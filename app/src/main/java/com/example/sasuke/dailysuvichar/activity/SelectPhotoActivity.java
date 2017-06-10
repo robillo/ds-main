@@ -67,8 +67,8 @@ public class SelectPhotoActivity extends BaseActivity{
     TextView ayurveda;
     @BindView(R.id.astrology)
     TextView astrology;
-    @BindView(R.id.next)
-    Button next;
+//    @BindView(R.id.next)
+//    Button next;
     @BindView(R.id.grid)
     GridLayout grid;
     @BindView(R.id.recyclerview)
@@ -79,7 +79,7 @@ public class SelectPhotoActivity extends BaseActivity{
     Switch switch_lang;
 
 
-    private ArrayList<String> interests, subInterests, data, mSelectedItems;
+    private ArrayList<String> interests, data, mSelectedItems;
     private Context context;
 
     private static final String TAG = "PHOTO_POST";
@@ -122,7 +122,7 @@ public class SelectPhotoActivity extends BaseActivity{
 
         context = getApplicationContext();
         interests = new ArrayList<>();
-        subInterests = new ArrayList<>();
+//        subInterests = new ArrayList<>();
         mSelectedItems = new ArrayList<>();
 
     }
@@ -162,53 +162,53 @@ public class SelectPhotoActivity extends BaseActivity{
         setAptBG(getString(R.string.astrologyy), astrology);
     }
 
-    @OnClick(R.id.next)
-    public void nextIsSubinterests() {
-        if (interests.size() < 1) {
-            Toast.makeText(context, R.string.categ_inter, Toast.LENGTH_SHORT).show();
-        } else {
-            if (interests.contains(getString(R.string.diett))) {
-                String[] temp = getResources().getStringArray(R.array.diet_array);
-                addToSubinterests(temp);
-            }
-            if (interests.contains(getString(R.string.yogaa))) {
-                String[] temp = getResources().getStringArray(R.array.yoga_array);
-                addToSubinterests(temp);
-            }
-            if (interests.contains(getString(R.string.healthh))) {
-                String[] temp = getResources().getStringArray(R.array.health_array);
-                addToSubinterests(temp);
-            }
-            if (interests.contains(getString(R.string.religionn))) {
-                String[] temp = getResources().getStringArray(R.array.religion_array);
-                addToSubinterests(temp);
-            }
-            if (interests.contains(getString(R.string.motivationn))) {
-                String[] temp = getResources().getStringArray(R.array.motivation_array);
-                addToSubinterests(temp);
-            }
-            if (interests.contains(getString(R.string.ayurvedaa))) {
-                String[] temp = getResources().getStringArray(R.array.ayurveda_array);
-                addToSubinterests(temp);
-            }
-            if (interests.contains(getString(R.string.astrologyy))) {
-                String[] temp = getResources().getStringArray(R.array.astrology_array);
-                addToSubinterests(temp);
-            }
-            grid.setVisibility(View.GONE);
-            recyclerView.setVisibility(View.VISIBLE);
-            recyclerView.setLayoutManager(new GridLayoutManager(context, 3));
-//            data = fillWithData();
-            recyclerView.setAdapter(new RVTags(context, subInterests, mSelectedItems));
-//            submit.setVisibility(View.VISIBLE);
-        }
-    }
+//    @OnClick(R.id.next)
+//    public void nextIsSubinterests() {
+//        if (interests.size() < 1) {
+//            Toast.makeText(context, R.string.categ_inter, Toast.LENGTH_SHORT).show();
+//        } else {
+//            if (interests.contains(getString(R.string.diett))) {
+//                String[] temp = getResources().getStringArray(R.array.diet_array);
+//                addToSubinterests(temp);
+//            }
+//            if (interests.contains(getString(R.string.yogaa))) {
+//                String[] temp = getResources().getStringArray(R.array.yoga_array);
+//                addToSubinterests(temp);
+//            }
+//            if (interests.contains(getString(R.string.healthh))) {
+//                String[] temp = getResources().getStringArray(R.array.health_array);
+//                addToSubinterests(temp);
+//            }
+//            if (interests.contains(getString(R.string.religionn))) {
+//                String[] temp = getResources().getStringArray(R.array.religion_array);
+//                addToSubinterests(temp);
+//            }
+//            if (interests.contains(getString(R.string.motivationn))) {
+//                String[] temp = getResources().getStringArray(R.array.motivation_array);
+//                addToSubinterests(temp);
+//            }
+//            if (interests.contains(getString(R.string.ayurvedaa))) {
+//                String[] temp = getResources().getStringArray(R.array.ayurveda_array);
+//                addToSubinterests(temp);
+//            }
+//            if (interests.contains(getString(R.string.astrologyy))) {
+//                String[] temp = getResources().getStringArray(R.array.astrology_array);
+//                addToSubinterests(temp);
+//            }
+//            grid.setVisibility(View.GONE);
+//            recyclerView.setVisibility(View.VISIBLE);
+//            recyclerView.setLayoutManager(new GridLayoutManager(context, 3));
+////            data = fillWithData();
+//            recyclerView.setAdapter(new RVTags(context, subInterests, mSelectedItems));
+////            submit.setVisibility(View.VISIBLE);
+//        }
+//    }
 
-    private void addToSubinterests(String[] temp) {
-        for (String s : temp) {
-            subInterests.add(s);
-        }
-    }
+//    private void addToSubinterests(String[] temp) {
+//        for (String s : temp) {
+//            subInterests.add(s);
+//        }
+//    }
 
     private void setAptBG(String temp, TextView view) {
         if (interests.contains(temp)) {
@@ -254,7 +254,7 @@ public class SelectPhotoActivity extends BaseActivity{
     }
 
     private void uploadToFirebase() {
-        if (mSelectedItems.size() < 1) {
+        if (interests.size() < 1) {
             Toast.makeText(context, R.string.please__, Toast.LENGTH_SHORT).show();
         } else {
             if (filePath != null) {
