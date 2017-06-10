@@ -1083,6 +1083,10 @@ public class CommonFragment extends Fragment {
                 startActivity(new Intent(getActivity(), AboutActivity.class));
                 break;
             }
+            case R.id.action_sort:{
+
+                break;
+            }
         }
 
         return super.onOptionsItemSelected(item);

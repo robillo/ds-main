@@ -310,10 +310,10 @@ public class CustomVideoAdapter  extends ItemViewBinder<CustomVideo, CustomVideo
                             break;
                         }
                         case R.id.video_view:{
-                            if (holder.videoView.isPlaying())
-                                holder.videoView.pause();
-                            else
-                                holder.videoView.play();
+//                            if (holder.videoView.isPlaying())
+//                                holder.videoView.pause();
+//                            else
+//                                holder.videoView.play();
                         }
                     }
                 }
