@@ -397,4 +397,6 @@ Happy Discovering!</string>
     <string name="profile_header">Daily Suvichar : Profile</string>
     <string name="both_lang">Both</string>
     <string name="make_changes">Please make atleast one change.</string>
+    <string name="successfully">Profile Updated Successfully.</string>
+    <string name="shortly">Please Wait.. Image Will be updated shortly..</string>
 </resources>

@@ -196,12 +196,11 @@ public class ProfileActivity extends BaseActivity {
         });
 
         if(code == 1){
-//            setNotEditable();
+//            saveButton.setVisibility(View.INVISIBLE);
         }
     }
 
     private void fetchData() {
-
         mUsersDatabase.child(mFirebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -249,6 +248,7 @@ public class ProfileActivity extends BaseActivity {
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
+
             }
         });
     }
@@ -278,6 +278,7 @@ public class ProfileActivity extends BaseActivity {
 
             String dpPathDB = null;
             if(dpPath!=null){
+                Toast.makeText(getApplicationContext(), R.string.shortly, Toast.LENGTH_SHORT).show();
                 dpPathDB = String.valueOf(dpPath);
                 StorageReference riversRef = mStorageReferenceDP.child(mFirebaseUser.getUid());
                 riversRef.putFile(dpPath)
@@ -285,6 +286,7 @@ public class ProfileActivity extends BaseActivity {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                 Toast.makeText(ProfileActivity.this, getString(R.string.uploaded), Toast.LENGTH_SHORT).show();
+//                                fetchData();
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
@@ -327,6 +329,7 @@ public class ProfileActivity extends BaseActivity {
 
             String coverPathDB=null;
             if(coverPath!=null){
+                Toast.makeText(getApplicationContext(), R.string.shortly, Toast.LENGTH_SHORT).show();
                 coverPathDB = String.valueOf(coverPath);
 
                 StorageReference riversRef = mStorageReferenceCover.child(mFirebaseUser.getUid());
@@ -334,7 +337,8 @@ public class ProfileActivity extends BaseActivity {
                         .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                Toast.makeText(ProfileActivity.this, getString(R.string.upload_failed), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ProfileActivity.this, getString(R.string.uploaded), Toast.LENGTH_SHORT).show();
+//                                fetchData();
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
@@ -375,13 +379,14 @@ public class ProfileActivity extends BaseActivity {
 
 
             if(govPath!=null){
-
+                Toast.makeText(getApplicationContext(), R.string.shortly, Toast.LENGTH_SHORT).show();
                 StorageReference riversRef = mStorageReferenceGovID.child(mFirebaseUser.getUid());
                 riversRef.putFile(govPath)
                         .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                Toast.makeText(ProfileActivity.this, "File Uploaded! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ProfileActivity.this, R.string.file_uploaded, Toast.LENGTH_SHORT).show();
+//                                fetchData();
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
@@ -418,13 +423,14 @@ public class ProfileActivity extends BaseActivity {
                     .into(specID);
 
             if(specPath!=null){
-
+                Toast.makeText(getApplicationContext(), R.string.shortly, Toast.LENGTH_SHORT).show();
                 StorageReference riversRef = mStorageReferenceSpecID.child(mFirebaseUser.getUid());
                 riversRef.putFile(specPath)
                         .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                 Toast.makeText(ProfileActivity.this, R.string.file_uploaded, Toast.LENGTH_SHORT).show();
+//                                fetchData();
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
@@ -727,7 +733,7 @@ public class ProfileActivity extends BaseActivity {
                 if(checkValidate(getString(R.string.standard_caps))){
                     writetoFirebase();
                     finish();
-                    Toast.makeText(getApplicationContext(), "Profile Saved", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), R.string.successfully, Toast.LENGTH_SHORT).show();
                 }
                 else {
                     Toast.makeText(getApplicationContext(), R.string.make_changes, Toast.LENGTH_SHORT).show();
@@ -749,7 +755,7 @@ public class ProfileActivity extends BaseActivity {
                 if(checkValidate(getString(R.string.guru_caps))){
                     writetoFirebase();
                     finish();
-                    Toast.makeText(getApplicationContext(), "Profile Saved", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), R.string.successfully, Toast.LENGTH_SHORT).show();
                 }
                 else {
                     Toast.makeText(getApplicationContext(), R.string.make_changes, Toast.LENGTH_SHORT).show();
