@@ -558,6 +558,15 @@ public class ProfileActivity extends BaseActivity {
                                     mLinearLayout.setVisibility(View.GONE);
                                     specialization.setVisibility(View.GONE);
                                     userTypeInput = getString(R.string.standard_caps);
+                                    if(notSelected.contains(getString(R.string.ns_specid))){
+                                        notSelected.remove(getString(R.string.ns_specid));
+                                    }
+                                    if(notSelected.contains(getString(R.string.ns_govid))){
+                                        notSelected.remove(getString(R.string.ns_govid));
+                                    }
+                                    if(notSelected.contains(getString(R.string.ns_special))){
+                                        notSelected.remove(getString(R.string.ns_special));
+                                    }
                                 }
                                 break;
                             }
@@ -1076,14 +1085,21 @@ public class ProfileActivity extends BaseActivity {
             }
             else {
                 if(!notSelected.contains(getString(R.string.ns_specid))){
-                    notSelected.add(getString(R.string.ns_age));
+                    notSelected.add(getString(R.string.ns_specid));
                 }
             }
-            if(!special.equals(getString(R.string.ns_special))){
-                check[12] = true;
-                Log.e("LOG", special);
-                if(notSelected.contains(getString(R.string.ns_special))){
-                    notSelected.remove(getString(R.string.ns_special));
+            if(special!=null){
+                if(!special.equals(getString(R.string.ns_special))){
+                    check[12] = true;
+                    Log.e("LOG", special);
+                    if(notSelected.contains(getString(R.string.ns_special))){
+                        notSelected.remove(getString(R.string.ns_special));
+                    }
+                }
+                else {
+                    if(!notSelected.contains(getString(R.string.ns_special))){
+                        notSelected.add(getString(R.string.ns_special));
+                    }
                 }
             }
             else {
@@ -1117,81 +1133,6 @@ public class ProfileActivity extends BaseActivity {
             return flagFromLogin;
         }
     }
-
-//    private void writetoFirebaseAsStandard(){
-//        if(name.getText()!="(Full Name: Not Selected)"){
-//
-//        }
-//        if(userName.getText()!="Username: Not Selected"){
-//
-//        }
-//        if(dpPath!=null){
-//
-//        }
-//        if(coverPath!=null){
-//
-//        }
-//        if(bio.getText()!="Short Description/Bio. : Not Selected"){
-//
-//        }
-//        if(language.getText()!="Language: Not Selelcted"){
-//
-//        }
-//        if(userType.getText()!="User Type: Not Selected"){
-//
-//        }
-//        if(DOB.getText()!="Date Of Birth: Not Selected"){
-//
-//        }
-//        if(gender.getText()!="Gender: Not Selected"){
-//
-//        }
-//        if(age.getText()!="Age: Select DOB to evaluate"){
-//
-//        }
-//    }
-//
-//    private void writetoFirebaseAsGuru(){
-//        if(name.getText()!="(Full Name: Not Selected)"){
-//
-//        }
-//        if(userName.getText()!="Username: Not Selected"){
-//
-//        }
-//        if(dpPath!=null){
-//
-//        }
-//        if(coverPath!=null){
-//
-//        }
-//        if(bio.getText()!="Short Description/Bio. : Not Selected"){
-//
-//        }
-//        if(language.getText()!="Language: Not Selelcted"){
-//
-//        }
-//        if(userType.getText()!="User Type: Not Selected"){
-//
-//        }
-//        if(DOB.getText()!="Date Of Birth: Not Selected"){
-//
-//        }
-//        if(gender.getText()!="Gender: Not Selected"){
-//
-//        }
-//        if(age.getText()!="Age: Select DOB to evaluate"){
-//
-//        }
-//        if(govPath!=null){
-//
-//        }
-//        if(specPath!=null){
-//
-//        }
-//        if(special!=null){
-//
-//        }
-//    }
 
     private void writetoFirebase() {
 
