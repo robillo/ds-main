@@ -24,14 +24,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.like.LikeButton;
-
-import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static com.bumptech.glide.gifdecoder.GifHeaderParser.TAG;
 
 public class StatusViewHolder extends RecyclerView.ViewHolder {
 
@@ -39,8 +34,8 @@ public class StatusViewHolder extends RecyclerView.ViewHolder {
     TextView mTvUserName;
     @BindView(R.id.tv_post_time)
     TextView mTvPostTime;
-    @BindView(R.id.tv_likes_count)
-    TextView tvLikes;
+//    @BindView(R.id.tv_likes_count)
+//    TextView tvLikes;
     //    @BindView(R.id.tv_comments)
 //    TextView tvComments;
     @BindView(R.id.status)
@@ -68,8 +63,8 @@ public class StatusViewHolder extends RecyclerView.ViewHolder {
 
     public LinearLayout llLikeComment;
     public TextView likeCount;
-    @BindView(R.id.like_button)
-    public LikeButton likeButton;
+//    @BindView(R.id.like_button)
+//    public LikeButton likeButton;
     private ItemClickListener clickListener;
 
 
@@ -165,124 +160,124 @@ public class StatusViewHolder extends RecyclerView.ViewHolder {
         this.clickListener = itemClickListener;
     }
 
-    public void setLikedUser(String authorUid, String uid, final boolean liked, ArrayList<String> likedUsers) {
-
-        Log.d(TAG, "setLikedUser: ");
-
-
-//        final ArrayList<String> finalLikedUsers1 = likedUsers;
-//        mDBrefLikes.child(uid).child("likes").runTransaction(new Transaction.Handler() {
-//            @Override
-//            public Transaction.Result doTransaction(MutableData mutableData) {
-//                if (mutableData != null) {
-//                    int likes = mutableData.getValue(Integer.class);
+//    public void setLikedUser(String authorUid, String uid, final boolean liked, ArrayList<String> likedUsers) {
 //
-//                    Log.d(TAG, "doTransaction: " + finalLikedUsers1);
-//                    if (liked) {
-//                        if (!finalLikedUsers1.contains(mFirebaseUser.getUid())) {
-//                            likes++;
-////                            likedUsers.add(mFirebaseUser.getUid());
-//                        }
-//                    }else{
-//                        Log.d(TAG, "doTransaction: 2 " + finalLikedUsers1);
-//
-//                        if (finalLikedUsers1.contains(mFirebaseUser.getUid())) {
-//                            likes--;
-////                            likedUsers.remove(mFirebaseUser.getUid());
-//                        }
-//                    }
-//                    Log.d(TAG, "doTransaction: " + finalLikedUsers1);
-//                mutableData.setValue(finalLikedUsers1);
-//            }
-//                return Transaction.success(mutableData);
-//
-//            }
+//        Log.d(TAG, "setLikedUser: ");
 //
 //
-//            @Override
-//            public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
-//
-//                if (liked) {
-//                    likeButton.setLiked(true);
-//                } else {
-//                    likeButton.setLiked(false);
-//                }
-//                Log.d(TAG, "onComplete: " + b);
-//            }
-//        });
-
-//        mUsersDatabase.child(mFirebaseUser.getUid()).child("userPosts").child(uid).child("likes").runTransaction(new Transaction.Handler() {
-//            @Override
-//            public Transaction.Result doTransaction(MutableData mutableData) {
-//                if (mutableData != null) {
-//                    int likes = mutableData.getValue(Integer.class);
-//                    if (liked) {
-////                        if(finalLikedUsers.contains(mFirebaseUser.getUid())) {
-////                            return Transaction.success(mutableData);
-////                        }else {
-//                            likes++;
+////        final ArrayList<String> finalLikedUsers1 = likedUsers;
+////        mDBrefLikes.child(uid).child("likes").runTransaction(new Transaction.Handler() {
+////            @Override
+////            public Transaction.Result doTransaction(MutableData mutableData) {
+////                if (mutableData != null) {
+////                    int likes = mutableData.getValue(Integer.class);
+////
+////                    Log.d(TAG, "doTransaction: " + finalLikedUsers1);
+////                    if (liked) {
+////                        if (!finalLikedUsers1.contains(mFirebaseUser.getUid())) {
+////                            likes++;
+//////                            likedUsers.add(mFirebaseUser.getUid());
 ////                        }
-//                    } else if (!liked && likes > 0) {
-//                        likes--;
-//                    }
-//                    mutableData.setValue(likes);
-//                }
-//                return Transaction.success(mutableData);
-//            }
-//
-//            @Override
-//            public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
-//
-////                if(liked){
+////                    }else{
+////                        Log.d(TAG, "doTransaction: 2 " + finalLikedUsers1);
+////
+////                        if (finalLikedUsers1.contains(mFirebaseUser.getUid())) {
+////                            likes--;
+//////                            likedUsers.remove(mFirebaseUser.getUid());
+////                        }
+////                    }
+////                    Log.d(TAG, "doTransaction: " + finalLikedUsers1);
+////                mutableData.setValue(finalLikedUsers1);
+////            }
+////                return Transaction.success(mutableData);
+////
+////            }
+////
+////
+////            @Override
+////            public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
+////
+////                if (liked) {
 ////                    likeButton.setLiked(true);
-////                }else{
+////                } else {
 ////                    likeButton.setLiked(false);
 ////                }
-//                Log.d(TAG, "onComplete: " + b);
+////                Log.d(TAG, "onComplete: " + b);
+////            }
+////        });
+//
+////        mUsersDatabase.child(mFirebaseUser.getUid()).child("userPosts").child(uid).child("likes").runTransaction(new Transaction.Handler() {
+////            @Override
+////            public Transaction.Result doTransaction(MutableData mutableData) {
+////                if (mutableData != null) {
+////                    int likes = mutableData.getValue(Integer.class);
+////                    if (liked) {
+//////                        if(finalLikedUsers.contains(mFirebaseUser.getUid())) {
+//////                            return Transaction.success(mutableData);
+//////                        }else {
+////                            likes++;
+//////                        }
+////                    } else if (!liked && likes > 0) {
+////                        likes--;
+////                    }
+////                    mutableData.setValue(likes);
+////                }
+////                return Transaction.success(mutableData);
+////            }
+////
+////            @Override
+////            public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
+////
+//////                if(liked){
+//////                    likeButton.setLiked(true);
+//////                }else{
+//////                    likeButton.setLiked(false);
+//////                }
+////                Log.d(TAG, "onComplete: " + b);
+////            }
+////        });
+//
+//        if (liked) {
+//            if (likedUsers == null) {
+//                likedUsers = new ArrayList<>();
 //            }
-//        });
+//            if (!likedUsers.contains(mFirebaseUser.getUid())) {
+//                likedUsers.add(mFirebaseUser.getUid());
+//                mDBrefLikes.child(uid).child("likedUsers").setValue(likedUsers);
+//                mUsersDatabase.child(authorUid).child("userPosts").child(uid).child("likedUsers").setValue(likedUsers);
+//            }
+//        } else if (!liked) {
+//
+//            Log.d(TAG, "setLikedUser: likedusers " + likedUsers);
+//            if (likedUsers == null) {
+////                likedUsers.remove(mFirebaseUser.getUid());
+//                return;
+//            } else {
+//                if (likedUsers.contains(mFirebaseUser.getUid())) {
+//                    likedUsers.remove(mFirebaseUser.getUid());
+//                    mDBrefLikes.child(uid).child("likedUsers").setValue(likedUsers);
+//                    mUsersDatabase.child(authorUid).child("userPosts").child(uid).child("likedUsers").setValue(likedUsers);
+//                }
+//            }
+//        }
+//
+//        if (liked) {
+//            likeButton.setLiked(true);
+//        } else {
+//            likeButton.setLiked(false);
+//        }
+//    }
 
-        if (liked) {
-            if (likedUsers == null) {
-                likedUsers = new ArrayList<>();
-            }
-            if (!likedUsers.contains(mFirebaseUser.getUid())) {
-                likedUsers.add(mFirebaseUser.getUid());
-                mDBrefLikes.child(uid).child("likedUsers").setValue(likedUsers);
-                mUsersDatabase.child(authorUid).child("userPosts").child(uid).child("likedUsers").setValue(likedUsers);
-            }
-        } else if (!liked) {
-
-            Log.d(TAG, "setLikedUser: likedusers " + likedUsers);
-            if (likedUsers == null) {
-//                likedUsers.remove(mFirebaseUser.getUid());
-                return;
-            } else {
-                if (likedUsers.contains(mFirebaseUser.getUid())) {
-                    likedUsers.remove(mFirebaseUser.getUid());
-                    mDBrefLikes.child(uid).child("likedUsers").setValue(likedUsers);
-                    mUsersDatabase.child(authorUid).child("userPosts").child(uid).child("likedUsers").setValue(likedUsers);
-                }
-            }
-        }
-
-        if (liked) {
-            likeButton.setLiked(true);
-        } else {
-            likeButton.setLiked(false);
-        }
-    }
-
-    public Boolean containsLikedUser(ArrayList<String> likedUsers) {
-        if (likedUsers != null) {
-            return likedUsers.contains(mFirebaseUser.getUid());
-        }
-        return false;
-    }
-
-    public void setLikes(int likes) {
-        tvLikes.setText(String.valueOf(likes) + " like this");
-    }
+//    public Boolean containsLikedUser(ArrayList<String> likedUsers) {
+//        if (likedUsers != null) {
+//            return likedUsers.contains(mFirebaseUser.getUid());
+//        }
+//        return false;
+//    }
+//
+//    public void setLikes(int likes) {
+//        tvLikes.setText(String.valueOf(likes) + " like this");
+//    }
 
 }
 

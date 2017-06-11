@@ -3,7 +3,6 @@ package com.example.sasuke.dailysuvichar.view.adapter;
 import android.content.Context;
 import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +14,6 @@ import com.example.sasuke.dailysuvichar.view.StatusViewHolder;
 import java.util.ArrayList;
 
 import me.drakeet.multitype.ItemViewBinder;
-
-import static com.facebook.login.widget.ProfilePictureView.TAG;
 
 public class StatusItemAdapter extends ItemViewBinder<Status, StatusViewHolder> {
     private ArrayList<String> mLikedItems = new ArrayList<>();
@@ -46,11 +43,11 @@ public class StatusItemAdapter extends ItemViewBinder<Status, StatusViewHolder> 
                     holder.setPostTime(getTimeAgo(Math.abs(item.getTimestamp())));
                 }
                 holder.setName(item.getName());
-                if(item.getLikedUsers()==null) {
-                        holder.setLikes(0);
-                }else{
-                    holder.setLikes(item.getLikedUsers().size());
-                }
+//                if(item.getLikedUsers()==null) {
+//                        holder.setLikes(0);
+//                }else{
+//                    holder.setLikes(item.getLikedUsers().size());
+//                }
                 if(item.getComments()!=null) {
                     holder.setComments(item.getComments().size());
                 }else{
@@ -62,39 +59,39 @@ public class StatusItemAdapter extends ItemViewBinder<Status, StatusViewHolder> 
             }
         });
 
-        if (holder.containsLikedUser(item.getLikedUsers())) {
-            holder.likeButton.setLiked(true);
-        }
-        holder.likeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(holder.likeButton.isLiked()){
-                    holder.likeButton.setLiked(false);
-                    Log.d(TAG, "onClick: UNLIKE");
-
-                    if(item.getPostUid()!=null) {
-
-                        holder.setLikedUser(item.getUid(),item.getPostUid(), false, item.getLikedUsers());
-                    }
-
-                    // DECREASE HOLDER.COUNT BY ONE IN ADAPTER
-                    // DECREASE HOLDER COUNT IN FIREBASE FOR THIS POST
-                    // REMOVE UID OF THIS USER FROM THIS POST
-                }
-                else {
-                    holder.likeButton.setLiked(true);
-                    Log.d(TAG, "onClick: LIKE");
-
-                    if(item.getPostUid()!=null) {
-
-                        holder.setLikedUser(item.getUid(),item.getPostUid(), true, item.getLikedUsers());
-                    }
-                    // INCREASE HOLDER.COUNT BY ONE IN ADAPTER
-                    // INCREASE HOLDER COUNT IN FIREBASE FOR THIS POST
-                    // ADD UID OF THIS USER FROM THIS POST
-                }
-            }
-        });
+//        if (holder.containsLikedUser(item.getLikedUsers())) {
+//            holder.likeButton.setLiked(true);
+//        }
+//        holder.likeButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if(holder.likeButton.isLiked()){
+//                    holder.likeButton.setLiked(false);
+//                    Log.d(TAG, "onClick: UNLIKE");
+//
+//                    if(item.getPostUid()!=null) {
+//
+//                        holder.setLikedUser(item.getUid(),item.getPostUid(), false, item.getLikedUsers());
+//                    }
+//
+//                    // DECREASE HOLDER.COUNT BY ONE IN ADAPTER
+//                    // DECREASE HOLDER COUNT IN FIREBASE FOR THIS POST
+//                    // REMOVE UID OF THIS USER FROM THIS POST
+//                }
+//                else {
+//                    holder.likeButton.setLiked(true);
+//                    Log.d(TAG, "onClick: LIKE");
+//
+//                    if(item.getPostUid()!=null) {
+//
+//                        holder.setLikedUser(item.getUid(),item.getPostUid(), true, item.getLikedUsers());
+//                    }
+//                    // INCREASE HOLDER.COUNT BY ONE IN ADAPTER
+//                    // INCREASE HOLDER COUNT IN FIREBASE FOR THIS POST
+//                    // ADD UID OF THIS USER FROM THIS POST
+//                }
+//            }
+//        });
 
 //        holder.setClickListener(new ItemClickListener() {
 //            @Override
