@@ -1095,72 +1095,72 @@ public class CommonFragment extends Fragment {
                 startActivity(new Intent(getActivity(), AboutActivity.class));
                 break;
             }
-            case R.id.action_sort:{
-
-                new MaterialDialog.Builder(getActivity())
-                        .title(R.string.sort_by)
-                        .items(new String[]{getString(R.string.most_recent),getString(R.string.popularity)})
-                        .itemsCallbackSingleChoice(sort, new MaterialDialog.ListCallbackSingleChoice() {
-                            @Override
-                            public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-
-                                from = getArguments().getString("from");
-
-                                switch (which) {
-                                    case 0: {
-                                        sort = 0;
-
-                                        sortBy = "timestamp";
-
-                                        isDone.clear();
-                                        items.clear();
-
-//                                        mRvHome.getRecycledViewPool().clear();
-                                        mAdapter.notifyDataSetChanged();
-                                        isDone = new HashMap<String, Long>();
-                                        items = new Items();
-
-                                        if (from.equals(getString(R.string.title_home))) {
-                                            fetchGuruPostsFromFirebase(sortBy);
-                                        } else if (from.equals(getString(R.string.title_explore))) {
-                                            fetchExplorePostsFromFirebase(sortBy);
-                                        } else if (from.equals(getString(R.string.title_your_feeds))) {
-                                            fetchYourPostsFromFirebase(sortBy);
-                                        }
-                                        break;
-                                    }
-                                    case 1: {
-                                        sort = 1;
-                                        sortBy = "likes";
-                                        isDone.clear();
-                                        items.clear();
-
-                                        Log.d(TAG, "onSelection: FROM " + from);
-
-//                                        mRvHome.getRecycledViewPool().clear();
-                                        mAdapter.notifyDataSetChanged();
-                                        isDone = new HashMap<String, Long>();
-                                        items = new Items();
-
-                                        if (from.equals(getString(R.string.title_home))) {
-                                            fetchGuruPostsFromFirebase(sortBy);
-                                        } else if (from.equals(getString(R.string.title_explore))) {
-                                            fetchExplorePostsFromFirebase(sortBy);
-                                        } else if (from.equals(getString(R.string.title_your_feeds))) {
-                                            fetchYourPostsFromFirebase(sortBy);
-                                        }
-                                        break;
-                                    }
-
-                                }
-                                return true;
-                            }
-                        })
-                        .positiveText(R.string.choose)
-                        .show();
-
-                break;
-            }
+//            case R.id.action_sort:{
+//
+//                new MaterialDialog.Builder(getActivity())
+//                        .title(R.string.sort_by)
+//                        .items(new String[]{getString(R.string.most_recent),getString(R.string.popularity)})
+//                        .itemsCallbackSingleChoice(sort, new MaterialDialog.ListCallbackSingleChoice() {
+//                            @Override
+//                            public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+//
+//                                from = getArguments().getString("from");
+//
+//                                switch (which) {
+//                                    case 0: {
+//                                        sort = 0;
+//
+//                                        sortBy = "timestamp";
+//
+//                                        isDone.clear();
+//                                        items.clear();
+//
+////                                        mRvHome.getRecycledViewPool().clear();
+//                                        mAdapter.notifyDataSetChanged();
+//                                        isDone = new HashMap<String, Long>();
+//                                        items = new Items();
+//
+//                                        if (from.equals(getString(R.string.title_home))) {
+//                                            fetchGuruPostsFromFirebase(sortBy);
+//                                        } else if (from.equals(getString(R.string.title_explore))) {
+//                                            fetchExplorePostsFromFirebase(sortBy);
+//                                        } else if (from.equals(getString(R.string.title_your_feeds))) {
+//                                            fetchYourPostsFromFirebase(sortBy);
+//                                        }
+//                                        break;
+//                                    }
+//                                    case 1: {
+//                                        sort = 1;
+//                                        sortBy = "likes";
+//                                        isDone.clear();
+//                                        items.clear();
+//
+//                                        Log.d(TAG, "onSelection: FROM " + from);
+//
+////                                        mRvHome.getRecycledViewPool().clear();
+//                                        mAdapter.notifyDataSetChanged();
+//                                        isDone = new HashMap<String, Long>();
+//                                        items = new Items();
+//
+//                                        if (from.equals(getString(R.string.title_home))) {
+//                                            fetchGuruPostsFromFirebase(sortBy);
+//                                        } else if (from.equals(getString(R.string.title_explore))) {
+//                                            fetchExplorePostsFromFirebase(sortBy);
+//                                        } else if (from.equals(getString(R.string.title_your_feeds))) {
+//                                            fetchYourPostsFromFirebase(sortBy);
+//                                        }
+//                                        break;
+//                                    }
+//
+//                                }
+//                                return true;
+//                            }
+//                        })
+//                        .positiveText(R.string.choose)
+//                        .show();
+//
+//                break;
+//            }
         }
 
         return super.onOptionsItemSelected(item);
