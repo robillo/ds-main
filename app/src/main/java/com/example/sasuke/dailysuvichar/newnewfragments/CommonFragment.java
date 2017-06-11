@@ -104,6 +104,9 @@ public class CommonFragment extends Fragment {
     RecyclerView mRvHome;
 
     private int lang = 2;
+    private int sort = 0;
+    private String sortBy = "timestamp";
+    boolean bool = true;
 
 
     public CommonFragment() {
@@ -118,6 +121,12 @@ public class CommonFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_common, container, false);
 
         setHasOptionsMenu(true);
+
+        if(sort==0){
+            sortBy="timestamp";
+        }else{
+            sortBy="likes";
+        }
 
         String from = getArguments().getString("from");
 
@@ -174,7 +183,7 @@ public class CommonFragment extends Fragment {
                         if (dataSnapshot.child("following").getValue() != null) {
                             mSelectedGurus.addAll((Collection<? extends String>) dataSnapshot.child("following").getValue());
                         }
-                        fetchGuruPostsFromFirebase();
+                        fetchGuruPostsFromFirebase(sortBy);
                         alternateLayout.setVisibility(View.INVISIBLE);
                     }
 
@@ -183,7 +192,7 @@ public class CommonFragment extends Fragment {
                     }
                 });
 
-                fetchGuruPostsFromFirebase();
+                fetchGuruPostsFromFirebase(sortBy);
 
                 refresh();
 
@@ -194,27 +203,30 @@ public class CommonFragment extends Fragment {
 
                 Log.e("FROM", from);
 
-                mDatabaseReference = FirebaseDatabase.getInstance().getReference("users");
-                Log.e(TAG, uid);
-                Log.e(TAG, mDatabaseReference.toString());
+//                if(bool) {
 
-                mDatabaseReference.child(mFirebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.child("mAllInterests").getValue() != null) {
+                    mDatabaseReference = FirebaseDatabase.getInstance().getReference("users");
+                    Log.e(TAG, uid);
+                    Log.e(TAG, mDatabaseReference.toString());
+                    bool = false;
+
+                    mDatabaseReference.child(mFirebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.child("mAllInterests").getValue() != null) {
 //                            mSelectedSubInterests.addAll((Collection<? extends String>) dataSnapshot.child("mSelectedSubInterests").getValue());
-                            mAllInterests.putAll((Map<? extends String, ? extends ArrayList<String>>) dataSnapshot.child("mAllInterests").getValue());
+                                mAllInterests.putAll((Map<? extends String, ? extends ArrayList<String>>) dataSnapshot.child("mAllInterests").getValue());
+                            }
+                            fetchExplorePostsFromFirebase(sortBy);
+                            alternateLayout.setVisibility(View.INVISIBLE);
                         }
-                        fetchExplorePostsFromFirebase();
-                        alternateLayout.setVisibility(View.INVISIBLE);
-                    }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                    }
-                });
-
-                fetchExplorePostsFromFirebase();
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                        }
+                    });
+//                }
+                fetchExplorePostsFromFirebase(sortBy);
 
                 refresh();
 
@@ -223,7 +235,7 @@ public class CommonFragment extends Fragment {
                 isDone = new HashMap<>();
                 alternateLayout.setVisibility(View.INVISIBLE);
 
-                fetchYourPostsFromFirebase();
+                fetchYourPostsFromFirebase(sortBy);
 
                 refresh();
             }
@@ -234,7 +246,7 @@ public class CommonFragment extends Fragment {
         return v;
     }
 
-    private void fetchGuruPostsFromFirebase() {
+    private void fetchGuruPostsFromFirebase(String sortOption) {
 
         final StorageReference mStorageReferenceVideo = FirebaseStorage.getInstance().getReference("posts").child("videos");
 
@@ -244,7 +256,7 @@ public class CommonFragment extends Fragment {
 
                 mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("users").child(guru).child("userPosts");
 
-                mDatabaseReferencePosts.orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
+                mDatabaseReferencePosts.orderByChild(sortOption).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -302,14 +314,14 @@ public class CommonFragment extends Fragment {
         }
     }
 
-    private void fetchYourPostsFromFirebase() {
+    private void fetchYourPostsFromFirebase(String sortOption) {
 
         final StorageReference mStorageReferenceVideo = FirebaseStorage.getInstance().getReference("posts").child("videos");
 
         mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("users").child(mFirebaseUser.getUid()).child("userPosts");
 
         Log.d(TAG, "fetchStatusFromFirebase: URLL " + mDatabaseReferencePosts);
-        mDatabaseReferencePosts.orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
+        mDatabaseReferencePosts.orderByChild(sortOption).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -366,7 +378,7 @@ public class CommonFragment extends Fragment {
     }
 
 
-    private void fetchExplorePostsFromFirebase() {
+    private void fetchExplorePostsFromFirebase(String sortOption) {
         if (mAllInterests != null && mAllInterests.keySet().size() > 0) {
             final ArrayList<String> interests = new ArrayList<>();
             interests.addAll(mAllInterests.keySet());
@@ -374,7 +386,7 @@ public class CommonFragment extends Fragment {
             Log.d(TAG, "fetchExplorePostsFromFirebase: " + interests);
             mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("allPosts");
 
-            mDatabaseReferencePosts.orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
+            mDatabaseReferencePosts.orderByChild(sortOption).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -460,51 +472,51 @@ public class CommonFragment extends Fragment {
                                 if (from.equals(getString(R.string.title_home))) {
                                     Log.e("FROM", from);
 
-                                    fetchGuruPostsFromFirebase();
+                                    fetchGuruPostsFromFirebase(sortBy);
                                 } else if (from.equals(getString(R.string.title_explore))) {
 
                                     Log.e("FROM", from);
 
-                                    fetchExplorePostsFromFirebase();
+                                    fetchExplorePostsFromFirebase(sortBy);
 
                                 } else if (from.equals(getString(R.string.title_your_feeds))) {
                                     Log.e("FROM", from);
 
-                                    fetchYourPostsFromFirebase();
+                                    fetchYourPostsFromFirebase(sortBy);
                                 }
                             } else if (lang == 1) {
 
                                 if (from.equals(getString(R.string.title_home))) {
                                     Log.e("FROM", from);
 
-                                    fetchGuruPostsFromFirebaseHindi();
+                                    fetchGuruPostsFromFirebaseHindi(sortBy);
                                 } else if (from.equals(getString(R.string.title_explore))) {
 
                                     Log.e("FROM", from);
 
-                                    fetchExplorePostsFromFirebaseHindi();
+                                    fetchExplorePostsFromFirebaseHindi(sortBy);
 
                                 } else if (from.equals(getString(R.string.title_your_feeds))) {
                                     Log.e("FROM", from);
 
-                                    fetchYourPostsFromFirebaseHindi();
+                                    fetchYourPostsFromFirebaseHindi(sortBy);
                                 }
                             } else if (lang == 0) {
 
                                 if (from.equals(getString(R.string.title_home))) {
                                     Log.e("FROM", from);
 
-                                    fetchGuruPostsFromFirebaseEnglish();
+                                    fetchGuruPostsFromFirebaseEnglish(sortBy);
                                 } else if (from.equals(getString(R.string.title_explore))) {
 
                                     Log.e("FROM", from);
 
-                                    fetchExplorePostsFromFirebaseEnglish();
+                                    fetchExplorePostsFromFirebaseEnglish(sortBy);
 
                                 } else if (from.equals(getString(R.string.title_your_feeds))) {
                                     Log.e("FROM", from);
 
-                                    fetchYourPostsFromFirebaseEnglish();
+                                    fetchYourPostsFromFirebaseEnglish(sortBy);
                                 }
                             }
                         } else {
@@ -522,7 +534,7 @@ public class CommonFragment extends Fragment {
         });
     }
 
-    private void fetchYourPostsFromFirebaseEnglish() {
+    private void fetchYourPostsFromFirebaseEnglish(String sortOption) {
 
 
         final StorageReference mStorageReferenceVideo = FirebaseStorage.getInstance().getReference("posts").child("videos");
@@ -530,7 +542,7 @@ public class CommonFragment extends Fragment {
         mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("users").child(mFirebaseUser.getUid()).child("userPosts");
 
         Log.d(TAG, "fetchStatusFromFirebase: URLL " + mDatabaseReferencePosts);
-        mDatabaseReferencePosts.orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
+        mDatabaseReferencePosts.orderByChild(sortOption).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -589,7 +601,7 @@ public class CommonFragment extends Fragment {
 
     }
 
-    private void fetchExplorePostsFromFirebaseEnglish() {
+    private void fetchExplorePostsFromFirebaseEnglish(String sortOption) {
 
         if (mAllInterests != null && mAllInterests.keySet().size() > 0) {
             final ArrayList<String> interests = new ArrayList<>();
@@ -598,7 +610,7 @@ public class CommonFragment extends Fragment {
             Log.d(TAG, "fetchExplorePostsFromFirebase: " + interests);
             mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("allPosts");
 
-            mDatabaseReferencePosts.orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
+            mDatabaseReferencePosts.orderByChild(sortOption).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -673,7 +685,7 @@ public class CommonFragment extends Fragment {
 
     }
 
-    private void fetchGuruPostsFromFirebaseEnglish() {
+    private void fetchGuruPostsFromFirebaseEnglish(String sortOption) {
 
         final StorageReference mStorageReferenceVideo = FirebaseStorage.getInstance().getReference("posts").child("videos");
 
@@ -683,7 +695,7 @@ public class CommonFragment extends Fragment {
 
                 mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("users").child(guru).child("userPosts");
 
-                mDatabaseReferencePosts.orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
+                mDatabaseReferencePosts.orderByChild(sortOption).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -744,7 +756,7 @@ public class CommonFragment extends Fragment {
         }
     }
 
-    private void fetchYourPostsFromFirebaseHindi() {
+    private void fetchYourPostsFromFirebaseHindi(String sortOption) {
 
         Log.d(TAG, "fetchYourPostsFromFirebaseHindi: HUEHUE");
 
@@ -753,7 +765,7 @@ public class CommonFragment extends Fragment {
         mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("users").child(mFirebaseUser.getUid()).child("userPosts");
 
         Log.d(TAG, "fetchStatusFromFirebase: URLL " + mDatabaseReferencePosts);
-        mDatabaseReferencePosts.orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
+        mDatabaseReferencePosts.orderByChild(sortOption).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Log.d(TAG, "onDataChange: LEN " + dataSnapshot.exists());
@@ -817,7 +829,7 @@ public class CommonFragment extends Fragment {
 
     }
 
-    private void fetchExplorePostsFromFirebaseHindi() {
+    private void fetchExplorePostsFromFirebaseHindi(String sortOption) {
 
         if (mAllInterests != null && mAllInterests.keySet().size() > 0) {
             final ArrayList<String> interests = new ArrayList<>();
@@ -826,7 +838,7 @@ public class CommonFragment extends Fragment {
             Log.d(TAG, "fetchExplorePostsFromFirebase: " + interests);
             mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("allPosts");
 
-            mDatabaseReferencePosts.orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
+            mDatabaseReferencePosts.orderByChild(sortOption).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -901,7 +913,7 @@ public class CommonFragment extends Fragment {
 
     }
 
-    private void fetchGuruPostsFromFirebaseHindi() {
+    private void fetchGuruPostsFromFirebaseHindi(String sortOption) {
 
 
         final StorageReference mStorageReferenceVideo = FirebaseStorage.getInstance().getReference("posts").child("videos");
@@ -912,7 +924,7 @@ public class CommonFragment extends Fragment {
 
                 mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("users").child(guru).child("userPosts");
 
-                mDatabaseReferencePosts.orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
+                mDatabaseReferencePosts.orderByChild(sortOption).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -1015,13 +1027,13 @@ public class CommonFragment extends Fragment {
                                         //FETCH ENGLISH FEEDS
                                         if (from.equals(getString(R.string.title_home))) {
                                             //FETCH ENGLISH FEEDS FOR HOME
-                                            fetchGuruPostsFromFirebaseEnglish();
+                                            fetchGuruPostsFromFirebaseEnglish(sortBy);
                                         } else if (from.equals(getString(R.string.title_explore))) {
                                             //FETCH ENGLISH FEEDS FOR EXPLORE
-                                            fetchExplorePostsFromFirebaseEnglish();
+                                            fetchExplorePostsFromFirebaseEnglish(sortBy);
                                         } else if (from.equals(getString(R.string.title_your_feeds))) {
                                             //FETCH ENGLISH FEEDS FOR YOUR FEEDS
-                                            fetchYourPostsFromFirebaseEnglish();
+                                            fetchYourPostsFromFirebaseEnglish(sortBy);
                                         }
                                         break;
                                     }
@@ -1039,13 +1051,13 @@ public class CommonFragment extends Fragment {
                                         //FETCH HINDI FEEDS
                                         if (from.equals(getString(R.string.title_home))) {
                                             //FETCH HINDI FEEDS FOR HOME
-                                            fetchGuruPostsFromFirebaseHindi();
+                                            fetchGuruPostsFromFirebaseHindi(sortBy);
                                         } else if (from.equals(getString(R.string.title_explore))) {
                                             //FETCH HINDI FEEDS FOR EXPLORE
-                                            fetchExplorePostsFromFirebaseHindi();
+                                            fetchExplorePostsFromFirebaseHindi(sortBy);
                                         } else if (from.equals(getString(R.string.title_your_feeds))) {
                                             //FETCH HINDI FEEDS FOR YOUR FEEDS
-                                            fetchYourPostsFromFirebaseHindi();
+                                            fetchYourPostsFromFirebaseHindi(sortBy);
                                         }
                                         break;
                                     }
@@ -1061,13 +1073,13 @@ public class CommonFragment extends Fragment {
                                         //FETCH BOTH LANG FEEDS
                                         if (from.equals(getString(R.string.title_home))) {
                                             //FETCH BOTH LANG FEEDS FOR HOME
-                                            fetchGuruPostsFromFirebase();
+                                            fetchGuruPostsFromFirebase(sortBy);
                                         } else if (from.equals(getString(R.string.title_explore))) {
                                             //FETCH BOTH LANG FEEDS FOR EXPLORE
-                                            fetchExplorePostsFromFirebase();
+                                            fetchExplorePostsFromFirebase(sortBy);
                                         } else if (from.equals(getString(R.string.title_your_feeds))) {
                                             //FETCH BOTH LANG FEEDS FOR YOUR FEEDS
-                                            fetchYourPostsFromFirebase();
+                                            fetchYourPostsFromFirebase(sortBy);
                                         }
                                         break;
                                     }
@@ -1084,6 +1096,68 @@ public class CommonFragment extends Fragment {
                 break;
             }
             case R.id.action_sort:{
+
+                new MaterialDialog.Builder(getActivity())
+                        .title(R.string.sort_by)
+                        .items(new String[]{getString(R.string.most_recent),getString(R.string.popularity)})
+                        .itemsCallbackSingleChoice(sort, new MaterialDialog.ListCallbackSingleChoice() {
+                            @Override
+                            public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+
+                                from = getArguments().getString("from");
+
+                                switch (which) {
+                                    case 0: {
+                                        sort = 0;
+
+                                        sortBy = "timestamp";
+
+                                        isDone.clear();
+                                        items.clear();
+
+//                                        mRvHome.getRecycledViewPool().clear();
+                                        mAdapter.notifyDataSetChanged();
+                                        isDone = new HashMap<String, Long>();
+                                        items = new Items();
+
+                                        if (from.equals(getString(R.string.title_home))) {
+                                            fetchGuruPostsFromFirebase(sortBy);
+                                        } else if (from.equals(getString(R.string.title_explore))) {
+                                            fetchExplorePostsFromFirebase(sortBy);
+                                        } else if (from.equals(getString(R.string.title_your_feeds))) {
+                                            fetchYourPostsFromFirebase(sortBy);
+                                        }
+                                        break;
+                                    }
+                                    case 1: {
+                                        sort = 1;
+                                        sortBy = "likes";
+                                        isDone.clear();
+                                        items.clear();
+
+                                        Log.d(TAG, "onSelection: FROM " + from);
+
+//                                        mRvHome.getRecycledViewPool().clear();
+                                        mAdapter.notifyDataSetChanged();
+                                        isDone = new HashMap<String, Long>();
+                                        items = new Items();
+
+                                        if (from.equals(getString(R.string.title_home))) {
+                                            fetchGuruPostsFromFirebase(sortBy);
+                                        } else if (from.equals(getString(R.string.title_explore))) {
+                                            fetchExplorePostsFromFirebase(sortBy);
+                                        } else if (from.equals(getString(R.string.title_your_feeds))) {
+                                            fetchYourPostsFromFirebase(sortBy);
+                                        }
+                                        break;
+                                    }
+
+                                }
+                                return true;
+                            }
+                        })
+                        .positiveText(R.string.choose)
+                        .show();
 
                 break;
             }

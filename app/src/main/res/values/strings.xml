@@ -399,4 +399,7 @@ Happy Discovering!</string>
     <string name="make_changes">Please make atleast one change.</string>
     <string name="successfully">Profile Updated Successfully.</string>
     <string name="shortly">Please Wait.. Image Will be updated shortly..</string>
+    <string name="sort_by">Sort by:</string>
+    <string name="popularity">Popularity</string>
+    <string name="most_recent">Most Recent</string>
 </resources>
