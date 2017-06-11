@@ -285,7 +285,7 @@ public class ProfileActivity extends BaseActivity {
 
             String dpPathDB = null;
             if(dpPath!=null){
-                Toast.makeText(getApplicationContext(), R.string.shortly, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(), R.string.shortly, Toast.LENGTH_SHORT).show();
                 dpPathDB = String.valueOf(dpPath);
                 StorageReference riversRef = mStorageReferenceDP.child(mFirebaseUser.getUid());
                 riversRef.putFile(dpPath)
@@ -336,7 +336,7 @@ public class ProfileActivity extends BaseActivity {
 
             String coverPathDB=null;
             if(coverPath!=null){
-                Toast.makeText(getApplicationContext(), R.string.shortly, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(), R.string.shortly, Toast.LENGTH_SHORT).show();
                 coverPathDB = String.valueOf(coverPath);
 
                 StorageReference riversRef = mStorageReferenceCover.child(mFirebaseUser.getUid());
@@ -386,7 +386,7 @@ public class ProfileActivity extends BaseActivity {
 
 
             if(govPath!=null){
-                Toast.makeText(getApplicationContext(), R.string.shortly, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(), R.string.shortly, Toast.LENGTH_SHORT).show();
                 StorageReference riversRef = mStorageReferenceGovID.child(mFirebaseUser.getUid());
                 riversRef.putFile(govPath)
                         .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -430,7 +430,7 @@ public class ProfileActivity extends BaseActivity {
                     .into(specID);
 
             if(specPath!=null){
-                Toast.makeText(getApplicationContext(), R.string.shortly, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(), R.string.shortly, Toast.LENGTH_SHORT).show();
                 StorageReference riversRef = mStorageReferenceSpecID.child(mFirebaseUser.getUid());
                 riversRef.putFile(specPath)
                         .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
