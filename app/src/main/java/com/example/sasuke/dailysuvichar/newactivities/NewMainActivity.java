@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -28,6 +29,7 @@ import com.example.sasuke.dailysuvichar.newnewfragments.GuruFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt;
 
 public class NewMainActivity extends AppCompatActivity {
 
@@ -181,6 +183,93 @@ public class NewMainActivity extends AppCompatActivity {
         addFragment(getResources().getString(R.string.title_home));
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        MaterialTapTargetPrompt prompt1 = new MaterialTapTargetPrompt.Builder(this)
+                .setTarget(findViewById(R.id.navigation_home))
+                .setPrimaryText("ROBILLO")
+                .setSecondaryText("IS TESTING FOR PROMPT")
+                .setOnHidePromptListener(new MaterialTapTargetPrompt.OnHidePromptListener() {
+                    @Override
+                    public void onHidePrompt(MotionEvent event, boolean tappedTarget) {
+                        new MaterialTapTargetPrompt.Builder(NewMainActivity.this)
+                                .setTarget(findViewById(R.id.navigation_explore))
+                                .setPrimaryText("ROBILLO")
+                                .setSecondaryText("IS TESTING FOR PROMPT")
+                                .setOnHidePromptListener(new MaterialTapTargetPrompt.OnHidePromptListener() {
+                                    @Override
+                                    public void onHidePrompt(MotionEvent event, boolean tappedTarget) {
+                                        new MaterialTapTargetPrompt.Builder(NewMainActivity.this)
+                                                .setTarget(findViewById(R.id.navigation_guru))
+                                                .setPrimaryText("ROBILLO")
+                                                .setSecondaryText("IS TESTING FOR PROMPT")
+                                                .setOnHidePromptListener(new MaterialTapTargetPrompt.OnHidePromptListener() {
+                                                    @Override
+                                                    public void onHidePrompt(MotionEvent event, boolean tappedTarget) {
+                                                        new MaterialTapTargetPrompt.Builder(NewMainActivity.this)
+                                                                .setTarget(findViewById(R.id.navigation_your_feeds))
+                                                                .setPrimaryText("ROBILLO")
+                                                                .setSecondaryText("IS TESTING FOR PROMPT")
+                                                                .setOnHidePromptListener(new MaterialTapTargetPrompt.OnHidePromptListener() {
+                                                                    @Override
+                                                                    public void onHidePrompt(MotionEvent event, boolean tappedTarget) {
+                                                                        new MaterialTapTargetPrompt.Builder(NewMainActivity.this)
+                                                                                .setTarget(findViewById(R.id.navigation_profile))
+                                                                                .setPrimaryText("ROBILLO")
+                                                                                .setSecondaryText("IS TESTING FOR PROMPT")
+                                                                                .setOnHidePromptListener(new MaterialTapTargetPrompt.OnHidePromptListener() {
+                                                                                    @Override
+                                                                                    public void onHidePrompt(MotionEvent event, boolean tappedTarget) {
+                                                                                        new MaterialTapTargetPrompt.Builder(NewMainActivity.this)
+                                                                                                .setTarget(findViewById(R.id.action_language))
+                                                                                                .setPrimaryText("ROBILLO")
+                                                                                                .setSecondaryText("IS TESTING FOR PROMPT")
+                                                                                                .setOnHidePromptListener(new MaterialTapTargetPrompt.OnHidePromptListener() {
+                                                                                                    @Override
+                                                                                                    public void onHidePrompt(MotionEvent event, boolean tappedTarget) {
+
+                                                                                                    }
+
+                                                                                                    @Override
+                                                                                                    public void onHidePromptComplete() {
+
+                                                                                                    }
+                                                                                                }).show();
+                                                                                    }
+
+                                                                                    @Override
+                                                                                    public void onHidePromptComplete() {
+
+                                                                                    }
+                                                                                }).show();
+                                                                    }
+
+                                                                    @Override
+                                                                    public void onHidePromptComplete() {
+
+                                                                    }
+                                                                }).show();
+
+                                                    }
+
+                                                    @Override
+                                                    public void onHidePromptComplete() {
+
+                                                    }
+                                                }).show();
+                                    }
+
+                                    @Override
+                                    public void onHidePromptComplete() {
+
+                                    }
+                                }).show();
+                    }
+
+                    @Override
+                    public void onHidePromptComplete() {
+
+                    }
+                }).show();
     }
 
     @Override

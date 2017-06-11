@@ -91,5 +91,6 @@ dependencies {
     compile 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-beta4'
     compile 'com.android.support:support-v4:25.3.1'
+    compile 'uk.co.samuelwall:material-tap-target-prompt:1.10.0'
 }
 apply plugin: 'com.google.gms.google-services'
