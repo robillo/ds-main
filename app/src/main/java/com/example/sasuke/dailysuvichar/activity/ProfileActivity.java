@@ -46,6 +46,9 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -97,6 +100,8 @@ public class ProfileActivity extends BaseActivity {
     @BindView(R.id.btnSave)
     Button saveButton;
 
+    private List<String> notSelected;
+
     public static Intent newIntent(Context context) {
         return new Intent(context, ProfileActivity.class);
     }
@@ -106,6 +111,8 @@ public class ProfileActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         ButterKnife.bind(this);
+
+        notSelected = new ArrayList<>();
 
         code = getIntent().getIntExtra("fromHome", 0);
 
@@ -788,41 +795,71 @@ public class ProfileActivity extends BaseActivity {
                 check[0] = true;
                 Log.e("LOG", name.getText().toString());
             }
+            else {
+                notSelected.add(getString(R.string.ns_fullname));
+            }
             if(!userName.getText().equals(getString(R.string.ns_username))){
                 check[1] = true;
                 Log.e("LOG", userName.getText().toString());
+            }
+            else {
+                notSelected.add(getString(R.string.ns_username));
             }
             if(dpPath!=null){
                 check[2] = true;
                 Log.e("LOG", dpPath.toString());
             }
+            else {
+                notSelected.add(getString(R.string.ns_dp));
+            }
             if(coverPath!=null){
                 check[3] = true;
                 Log.e("LOG", coverPath.toString());
+            }
+            else {
+                notSelected.add(getString(R.string.ns_cover));
             }
             if(!bio.getText().equals(getString(R.string.ns_shortdesc))){
                 check[4] = true;
                 Log.e("LOG", bio.getText().toString());
             }
+            else {
+                notSelected.add(getString(R.string.ns_shortdesc));
+            }
             if(!language.getText().equals(getString(R.string.ns_lang))){
                 check[5] = true;
                 Log.e("LOG", language.getText().toString());
+            }
+            else {
+                notSelected.add(getString(R.string.ns_lang));
             }
             if(!userType.getText().equals(getString(R.string.ns_usertype))){
                 check[6] = true;
                 Log.e("LOG", userType.getText().toString());
             }
+            else {
+                notSelected.add(getString(R.string.ns_usertype));
+            }
             if(!DOB.getText().equals(getString(R.string.ns_dob))){
                 check[7] = true;
                 Log.e("LOG", DOB.getText().toString());
+            }
+            else {
+                notSelected.add(getString(R.string.ns_dob));
             }
             if(!gender.getText().equals(getString(R.string.ns_gender))){
                 check[8] = true;
                 Log.e("LOG", gender.getText().toString());
             }
+            else {
+                notSelected.add(getString(R.string.ns_gender));
+            }
             if(!age.getText().equals(getString(R.string.ns_age))){
                 check[9] = true;
                 Log.e("LOG", age.getText().toString());
+            }
+            else {
+                notSelected.add(getString(R.string.ns_age));
             }
             for(int i=0; i<10; i++){
                 if(!check[i]){
@@ -844,53 +881,92 @@ public class ProfileActivity extends BaseActivity {
                 check[0] = true;
                 Log.e("LOG", name.getText().toString());
             }
+            else {
+                notSelected.add(getString(R.string.ns_fullname));
+            }
             if(!userName.getText().equals(getString(R.string.ns_username))){
                 check[1] = true;
                 Log.e("LOG", userName.getText().toString());
+            }
+            else {
+                notSelected.add(getString(R.string.ns_username));
             }
             if(dpPath!=null){
                 check[2] = true;
                 Log.e("LOG", dpPath.toString());
             }
+            else {
+                notSelected.add(getString(R.string.ns_dp));
+            }
             if(coverPath!=null){
                 check[3] = true;
                 Log.e("LOG", coverPath.toString());
+            }
+            else {
+                notSelected.add(getString(R.string.ns_cover));
             }
             if(!bio.getText().equals(getString(R.string.ns_shortdesc))){
                 check[4] = true;
                 Log.e("LOG", bio.getText().toString());
             }
+            else {
+                notSelected.add(getString(R.string.ns_shortdesc));
+            }
             if(!language.getText().equals(getString(R.string.ns_lang))){
                 check[5] = true;
                 Log.e("LOG", language.getText().toString());
+            }
+            else {
+                notSelected.add(getString(R.string.ns_lang));
             }
             if(!userType.getText().equals(getString(R.string.ns_usertype))){
                 check[6] = true;
                 Log.e("LOG", userType.getText().toString());
             }
+            else {
+                notSelected.add(getString(R.string.ns_usertype));
+            }
             if(!DOB.getText().equals(getString(R.string.ns_dob))){
                 check[7] = true;
                 Log.e("LOG", DOB.getText().toString());
+            }
+            else {
+                notSelected.add(getString(R.string.ns_dob));
             }
             if(!gender.getText().equals(getString(R.string.ns_gender))){
                 check[8] = true;
                 Log.e("LOG", gender.getText().toString());
             }
+            else {
+                notSelected.add(getString(R.string.ns_gender));
+            }
             if(!age.getText().equals(getString(R.string.ns_age))){
                 check[9] = true;
                 Log.e("LOG", age.getText().toString());
+            }
+            else {
+                notSelected.add(getString(R.string.ns_age));
             }
             if(govPath!=null){
                 check[10] = true;
                 Log.e("LOG", govPath.toString());
             }
+            else {
+                notSelected.add(getString(R.string.ns_govid));
+            }
             if(specPath!=null){
                 check[11] = true;
                 Log.e("LOG", specPath.toString());
             }
+            else {
+                notSelected.add(getString(R.string.ns_specid));
+            }
             if(!special.equals(getString(R.string.ns_special))){
                 check[12] = true;
                 Log.e("LOG", special);
+            }
+            else {
+                notSelected.add(getString(R.string.ns_special));
             }
             //check flagFromLogin
             for(int i=0; i<13; i++){

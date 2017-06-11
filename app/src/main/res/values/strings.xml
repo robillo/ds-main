@@ -402,4 +402,8 @@ Happy Discovering!</string>
     <string name="sort_by">Sort by:</string>
     <string name="popularity">Popularity</string>
     <string name="most_recent">Most Recent</string>
+    <string name="ns_dp">DP not selected</string>
+    <string name="ns_cover">Cover not selected</string>
+    <string name="ns_govid">GOV ID not selected</string>
+    <string name="ns_specid">Specialization ID not selected</string>
 </resources>
