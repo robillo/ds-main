@@ -280,7 +280,7 @@
     <string name="set_spec">Set Your Specialization:</string>
     <string name="descc">Spiritual Skill You Majorly Specialize In.</string>
     <string name="please_correct">Please Enter Correct Date Of Birth</string>
-    <string name="please">PLEASE ENTER FULL DETAILS</string>
+    <string name="please">PLEASE ENTER FULL DETAILS:</string>
     <string name="please_user">PLEASE SELECT USER TYPE</string>
     <string name="ns_fullname">(Full Name: Not Selected)</string>
     <string name="ns_username">Username: Not Selected</string>
