@@ -3,21 +3,17 @@ package com.example.sasuke.dailysuvichar.activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
-import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -25,10 +21,8 @@ import android.widget.Toast;
 
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.models.CustomVideo;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -97,7 +91,6 @@ public class SelectVideoActivity extends BaseActivity {
     private DatabaseReference mDatabaseReferenceTag, mDatabaseReferenceUser,mDatabaseReferenceAllPosts;
     private StorageReference mStorageReference;
     ProgressDialog progressDialog;
-    Bitmap thumb;
     Long size;
     String bucket, encoding, lang;
     Uri downloadUrl;
@@ -254,14 +247,6 @@ public class SelectVideoActivity extends BaseActivity {
                 Log.e("selected video path", "null");
                 finish();
             } else {
-                thumb = ThumbnailUtils.createVideoThumbnail(getPath(filePath), MediaStore.Images.Thumbnails.MINI_KIND);
-//                String tmb = getThumbnailPath(th);
-                Log.d(TAG, "onActivityResult: TMB "+thumb);
-//                MediaMetadataRetriever mmr = new MediaMetadataRetriever();
-//                mmr.setDataSource(data.getDataString());
-//                thumb = mmr.getFrameAtTime();
-//                mmr.release();
-
 
                 mVideoView.setVisibility(View.VISIBLE);
                 Log.e("selectedVideoPath", filePath.getPath());
@@ -318,26 +303,7 @@ public class SelectVideoActivity extends BaseActivity {
                     mDatabaseReferenceAllPosts = FirebaseDatabase.getInstance().getReference("allPosts");
 
                     final String postID = mDatabaseReferenceTag.push().getKey();
-                    Log.d(TAG, "uploadToFirebase: "+thumb);
-                    if(thumb!=null) {
-                        StorageReference storageReferenceImage = FirebaseStorage.getInstance().getReference("thumbnails").child(postID);
-                        storageReferenceImage.putFile(getImageUri(this, thumb)).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                            @Override
-                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-                            }
-                        }).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-
-                            }
-                        });
-                    }
                     getName();
                     StorageReference riversRef = mStorageReference.child(postID);
                     riversRef.putFile(filePath)
@@ -466,15 +432,6 @@ public class SelectVideoActivity extends BaseActivity {
         }
         mVideoView.release();
         super.onDestroy();
-    }
-
-    public String getPath(Uri uri) {
-        String[] projection = { MediaStore.Images.Media.DATA };
-        Cursor cursor = this.managedQuery(uri, projection, null, null, null);
-        int column_index = cursor
-                .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-        cursor.moveToFirst();
-        return cursor.getString(column_index);
     }
 
     @Override

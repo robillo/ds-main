@@ -72,6 +72,8 @@ public class GuruDetailActivity extends BaseActivity{
     TextView spec;
     @BindView(R.id.follow)
     Button follow;
+    private String guruUid;
+    private ArrayList<String> guruFollowers;
     private boolean isFollowing = false;
     private String uid;
     private HashMap<String,Long> isDone;
@@ -85,8 +87,7 @@ public class GuruDetailActivity extends BaseActivity{
     private MultiTypeAdapter mAdapter;
     CustomVideoAdapter customVideoAdapter;
     private ArrayList<String> followers;
-    private DatabaseReference mDatabaseReferenceUsers;
-
+    private DatabaseReference mDatabaseReferenceUsers, mGuruRef;
 
 
     @Override
@@ -132,6 +133,32 @@ public class GuruDetailActivity extends BaseActivity{
 //            public void onCancelled(DatabaseError databaseError) {
 //            }
 //        });
+
+        guruUid = null;
+        guruFollowers=new ArrayList<>();
+
+        mGuruRef = FirebaseDatabase.getInstance().getReference("gurus").child("official");
+        mGuruRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d(TAG, "onDataChange: "+dataSnapshot);
+                guruUid = dataSnapshot.getKey();
+                Log.d(TAG, "onDataChange: key "+dataSnapshot.getKey());
+                Log.d(TAG, "onDataChange: spec "+dataSnapshot.child("specialization").getValue());
+                Log.d(TAG, "onDataChange: follow "+dataSnapshot.child("followers").getValue());
+                if(dataSnapshot.child("specialization").getValue()!=null) {
+                    Log.d(TAG, "onDataChange: hohoho");
+                    spec.setText(dataSnapshot.child("specialization").getValue().toString());
+                }
+                if(dataSnapshot.child("followers").getValue()!=null) {
+                    guruFollowers.addAll((Collection<? extends String>) dataSnapshot.child("followers").getValue());
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         mDatabaseReferenceUsers.child("following").addValueEventListener(new ValueEventListener() {
             @Override
@@ -364,12 +391,14 @@ public class GuruDetailActivity extends BaseActivity{
         if(follow.getText().equals(getString(R.string.follow_caps))){
             follow.setText(getString(R.string.following_caps));
             follow.setBackgroundColor(getResources().getColor(R.color.green));
+            setFollower(true);
 //            GuruActivity.setFollowing(followers, mFirebaseUser.getUid(),true,uid);
 
         }
         else {
             follow.setText(getString(R.string.follow_caps));
             follow.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+            setFollower(false);
 //            GuruActivity.setFollowing(followers, mFirebaseUser.getUid(),false,uid);
 
         }
@@ -435,6 +464,31 @@ public class GuruDetailActivity extends BaseActivity{
             Log.d(TAG, "fetchStatusFromFirebase: " + items.size());
             mAdapter.setItems(items);
             mAdapter.notifyDataSetChanged();
+        }
+    }
+
+    private void setFollower(boolean follow){
+
+        Log.d(TAG, "setFollower: "+guruUid);
+        Log.d(TAG, "setFollower: "+guruFollowers);
+        if(follow && guruUid!=null){
+            if(!guruFollowers.contains(mFirebaseUser.getUid())) {
+                guruFollowers.add(mFirebaseUser.getUid());
+                mGuruRef.child(guruUid).child("followers").setValue(guruFollowers);
+            }
+            if(!following.contains(guruUid)){
+                following.add(guruUid);
+                mDatabaseReferenceUsers.child("following").setValue(following);
+            }
+        }else if(!follow && guruUid!=null){
+            if(guruFollowers.contains(mFirebaseUser.getUid())){
+                guruFollowers.remove(mFirebaseUser.getUid());
+                mGuruRef.child(guruUid).child("followers").setValue(guruFollowers);
+            }
+            if(following.contains(guruUid)){
+                following.remove(guruUid);
+                mDatabaseReferenceUsers.child("following").setValue(following);
+            }
         }
     }
 
