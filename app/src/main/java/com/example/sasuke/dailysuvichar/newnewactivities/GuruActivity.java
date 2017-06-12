@@ -103,6 +103,8 @@ public class GuruActivity extends AppCompatActivity {
 
         following = new ArrayList<>();
         following.add(GURU_UID_USER);
+//        mDatabaseReferenceUser.child("following").setValue(following);
+
 //        guruFollowers= new ArrayList<>();
         guruList = new ArrayList<>();
         guruMap = new HashMap<>();
@@ -113,10 +115,15 @@ public class GuruActivity extends AppCompatActivity {
             mDatabaseReference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
+
+                    Log.d(TAG, "onDataChange: "+dataSnapshot.getChildrenCount());
+
                     for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
 
                         if(!Objects.equals(postSnapshot.getKey(), GURU_UID)) {
                             Guru guru = postSnapshot.getValue(Guru.class);
+                            Log.d(TAG, "onDataChange: "+guru.getUid());
+
                             guru.setGuruUid(postSnapshot.getKey());
                             guru.setStorageReference(mStorageReference.child(guru.getUid()));
                             if (guruMap.containsKey(postSnapshot.getKey())) {

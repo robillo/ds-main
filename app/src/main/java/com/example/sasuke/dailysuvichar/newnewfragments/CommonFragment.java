@@ -310,17 +310,25 @@ public class CommonFragment extends Fragment {
 //                }
 //            });
 
+            if(mSelectedGurus.contains("KKdovrQ6nla0E6Npx7nEzmcm3Bh2F")){
+                mSelectedGurus.add("KKdovrQ6nla0E6Npx7nEzmcm3Bh2");
+            }
             for (String guru : mSelectedGurus) {
 
+                Log.d(TAG, "fetchGuruPostsFromFirebase: OOOO"+mSelectedGurus);
                 mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("users").child(guru).child("userPosts");
 
                 mDatabaseReferencePosts.orderByChild(sortOption).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
+                        Log.d(TAG, "onDataChange: OOOO "+dataSnapshot.getChildrenCount());
+
                         mStorageReference = FirebaseStorage.getInstance().getReference("posts").child("images");
 
                         for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+
+                            Log.d(TAG, "onDataChange: "+dataSnapshot.getKey());
 
                             if (!isDone.containsKey(postSnapshot.getKey())) {
 
@@ -328,6 +336,7 @@ public class CommonFragment extends Fragment {
                                     Log.d(TAG, "onDataChange: DATA troo");
                                     Status statusSnap = postSnapshot.getValue(Status.class);
                                     statusSnap.setPostUid(postSnapshot.getKey());
+                                    Log.d(TAG, "onDataChange: OOO "+statusSnap.getUid());
 
                                     isDone.put(postSnapshot.getKey(), (long) 1);
                                     items.add(statusSnap);
@@ -819,6 +828,10 @@ public class CommonFragment extends Fragment {
 //                }
 //            });
 
+            if(mSelectedGurus.contains("KKdovrQ6nla0E6Npx7nEzmcm3Bh2F")){
+                mSelectedGurus.add("KKdovrQ6nla0E6Npx7nEzmcm3Bh2");
+            }
+
             for (String guru : mSelectedGurus) {
 
                 mDatabaseReferencePosts = FirebaseDatabase.getInstance().getReference("users").child(guru).child("userPosts");
@@ -1111,6 +1124,10 @@ public class CommonFragment extends Fragment {
 //                    Log.d(TAG, "onCancelled: " + databaseError.getMessage());
 //                }
 //            });
+
+            if(mSelectedGurus.contains("KKdovrQ6nla0E6Npx7nEzmcm3Bh2F")){
+                mSelectedGurus.add("KKdovrQ6nla0E6Npx7nEzmcm3Bh2");
+            }
 
             for (String guru : mSelectedGurus) {
 
