@@ -122,8 +122,8 @@ android:fitsSystemWindows="true">
         <EditText
             android:id="@+id/etStatus"
             android:layout_width="match_parent"
-            android:layout_height="0sp"
-            android:layout_weight="6"
+            android:layout_height="wrap_content"
+            android:minHeight="50sp"
             android:fontFamily="sans-serif"
             android:gravity="top|left"
             android:hint="@string/write_something"
