@@ -97,6 +97,7 @@ public class GuruActivity extends AppCompatActivity {
         rv.setLayoutManager(gridLayoutManager);
 
         following = new ArrayList<>();
+        following.add(GURU_UID_USER);
 //        guruFollowers= new ArrayList<>();
         guruList = new ArrayList<>();
         guruMap = new HashMap<>();
