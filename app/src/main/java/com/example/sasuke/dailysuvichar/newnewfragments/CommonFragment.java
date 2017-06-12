@@ -63,6 +63,7 @@ import me.drakeet.multitype.MultiTypeAdapter;
 public class CommonFragment extends Fragment {
 
 
+    private static final String GURU_UID_USER = "KKdovrQ6nla0E6Npx7nEzmcm3Bh2";
     @BindView(R.id.swiperefresh_common)
     SwipeRefreshLayout mPullToRefresh;
     @BindView(R.id.alternate_layout_common)
@@ -184,6 +185,7 @@ public class CommonFragment extends Fragment {
                             mSelectedGurus.addAll((Collection<? extends String>) dataSnapshot.child("following").getValue());
                         }
                         fetchGuruPostsFromFirebase(sortBy);
+                        Log.d(TAG, "onDataChange: SELGURU "+mSelectedGurus);
                         alternateLayout.setVisibility(View.INVISIBLE);
                     }
 
@@ -250,7 +252,62 @@ public class CommonFragment extends Fragment {
 
         final StorageReference mStorageReferenceVideo = FirebaseStorage.getInstance().getReference("posts").child("videos");
 
+        DatabaseReference mDatabaseReferencePostsDSGuru = FirebaseDatabase.getInstance().getReference("users").child(GURU_UID_USER).child("userPosts");
+
         if (mSelectedGurus != null && mSelectedGurus.size() > 0) {
+
+            mDatabaseReferencePostsDSGuru.orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                    mStorageReference = FirebaseStorage.getInstance().getReference("posts").child("images");
+
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+
+                        if (!isDone.containsKey(postSnapshot.getKey())) {
+
+                            if (postSnapshot.child("type").getValue().equals("status")) {
+                                Log.d(TAG, "onDataChange: DATA trooguru");
+                                Status statusSnap = postSnapshot.getValue(Status.class);
+                                statusSnap.setPostUid(postSnapshot.getKey());
+
+                                isDone.put(postSnapshot.getKey(), (long) 1);
+                                items.add(statusSnap);
+
+                                Log.d(TAG, "onDataChange: trooguru "+items+" "+isDone+" "+statusSnap.getStatus());
+                            } else if (postSnapshot.child("type").getValue().equals("photo")) {
+                                Photo photoSnap = postSnapshot.getValue(Photo.class);
+                                photoSnap.setPostUid(postSnapshot.getKey());
+                                photoSnap.setStorageReference(mStorageReference.child(postSnapshot.getKey()));
+                                isDone.put(postSnapshot.getKey(), (long) 1);
+
+                                items.add(photoSnap);
+                            } else if (postSnapshot.child("type").getValue().equals("video")) {
+                                final CustomVideo videoSnap = postSnapshot.getValue(CustomVideo.class);
+                                if (mStorageReferenceVideo.child(postSnapshot.getKey()) != null) {
+                                    videoSnap.setPostUid(postSnapshot.getKey());
+                                    isDone.put(postSnapshot.getKey(), (long) 1);
+                                    items.add(videoSnap);
+                                    videoSnap.setStorageReference(mStorageReferenceVideo.child(postSnapshot.getKey()));
+                                    mStorageReferenceVideo.child(postSnapshot.getKey()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                        @Override
+                                        public void onSuccess(Uri uri) {
+                                            videoSnap.setVideoURI(uri.toString());
+                                        }
+                                    });
+                                }
+                            }
+                            mAdapter.notifyDataSetChanged();
+                        }
+                        mAdapter.notifyDataSetChanged();
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.d(TAG, "onCancelled: " + databaseError.getMessage());
+                }
+            });
 
             for (String guru : mSelectedGurus) {
 

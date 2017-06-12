@@ -1,6 +1,7 @@
 package com.example.sasuke.dailysuvichar.activity;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -236,21 +237,27 @@ public class ProfileActivity extends BaseActivity {
                 }
                 if(dataSnapshot.child("photoUrl").getValue()!=null) {
 
-                    Glide.with(ProfileActivity.this).
-                            using(new FirebaseImageLoader())
-                            .load(mStorageReferenceDP.child(dataSnapshot.getKey()))
-                            .centerCrop()
-                            .diskCacheStrategy(DiskCacheStrategy.ALL)
-                            .into(userProfilePic);
+                    Activity a = ProfileActivity.this;
+                    if(!a.isDestroyed()) {
+                        Glide.with(a).
+                                using(new FirebaseImageLoader())
+                                .load(mStorageReferenceDP.child(dataSnapshot.getKey()))
+                                .centerCrop()
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .into(userProfilePic);
+                    }
                 }
                 if(dataSnapshot.child("coverUrl").getValue()!=null) {
 
-                    Glide.with(ProfileActivity.this).
-                            using(new FirebaseImageLoader())
-                            .load(mStorageReferenceCover.child(dataSnapshot.getKey()))
-                            .centerCrop()
-                            .diskCacheStrategy(DiskCacheStrategy.ALL)
-                            .into(userCoverPic);
+                    Activity a = ProfileActivity.this;
+                    if(!a.isDestroyed()) {
+                        Glide.with(a).
+                                using(new FirebaseImageLoader())
+                                .load(mStorageReferenceCover.child(dataSnapshot.getKey()))
+                                .centerCrop()
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .into(userCoverPic);
+                    }
                 }
             }
             @Override
@@ -263,8 +270,11 @@ public class ProfileActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+        Log.d(TAG, "onActivityResult: "+requestCode+" "+resultCode+" "+data);
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
             dpPath = data.getData();
+            Log.d(TAG, "onActivityResult: "+dpPath);
             String[] filePathColumn = { MediaStore.Images.Media.DATA };
 
             Cursor cursor = getContentResolver().query(dpPath,
@@ -747,7 +757,35 @@ public class ProfileActivity extends BaseActivity {
         if(userType.getText().equals(getString(R.string.standard_caps))){
             if(code==1){
                 if(checkValidate(getString(R.string.standard_caps))){
-                    writetoFirebase();
+                    Log.d(TAG, "save: "+userName.getText());
+                    if(dpPath!=null) {
+                        mUsersDatabase.child(mFirebaseUser.getUid()).child("photoUrl").setValue(dpPath);
+                    }
+                    if(coverPath!=null) {
+                        mUsersDatabase.child(mFirebaseUser.getUid()).child("coverUrl").setValue(coverPath);
+                    }
+                    if(userName!=null && userName.getText().length()>0) {
+                        mUsersDatabase.child(mFirebaseUser.getUid()).child("userName").setValue(userName.getText().toString());
+                    }
+                    if(gender!=null && gender.getText().length()>0) {
+                        mUsersDatabase.child(mFirebaseUser.getUid()).child("gender").setValue(gender.getText().toString());
+                    }
+                    if(name!=null && name.getText().length()>0) {
+                        mUsersDatabase.child(mFirebaseUser.getUid()).child("name").setValue(name.getText().toString());
+                    }
+                    if(bio!=null && bio.getText().length()>0) {
+                        mUsersDatabase.child(mFirebaseUser.getUid()).child("bio").setValue(bio.getText().toString());
+                    }
+                    if(userType!=null && userType.getText().length()>0) {
+                        mUsersDatabase.child(mFirebaseUser.getUid()).child("userType").setValue(userType.getText().toString());
+                    }
+                    if(language!=null && language.getText().length()>0) {
+                        mUsersDatabase.child(mFirebaseUser.getUid()).child("language").setValue(language.getText().toString());
+                    }
+                    if(DOB!=null && DOB.getText().length()>0) {
+                        mUsersDatabase.child(mFirebaseUser.getUid()).child("dob").setValue(DOB.getText().toString());
+                    }
+//                    writetoFirebase();
                     finish();
                     Toast.makeText(getApplicationContext(), R.string.successfully, Toast.LENGTH_SHORT).show();
                 }
