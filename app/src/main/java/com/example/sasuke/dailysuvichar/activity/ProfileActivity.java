@@ -11,6 +11,7 @@ import android.database.Cursor;
 import android.icu.util.Calendar;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -28,6 +29,7 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.newactivities.NewMainActivity;
 import com.example.sasuke.dailysuvichar.utils.SharedPrefs;
@@ -254,7 +256,7 @@ public class ProfileActivity extends BaseActivity {
                                 using(new FirebaseImageLoader())
                                 .load(mStorageReferenceDP.child(dataSnapshot.getKey()))
                                 .centerCrop()
-//                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .diskCacheStrategy(DiskCacheStrategy.NONE)
                                 .into(userProfilePic);
                     }
                 }
@@ -266,7 +268,7 @@ public class ProfileActivity extends BaseActivity {
                                 using(new FirebaseImageLoader())
                                 .load(mStorageReferenceCover.child(dataSnapshot.getKey()))
                                 .centerCrop()
-//                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .diskCacheStrategy(DiskCacheStrategy.NONE)
                                 .into(userCoverPic);
                     }
                 }
@@ -302,6 +304,7 @@ public class ProfileActivity extends BaseActivity {
                     .load(picturePath)
                     .crossFade()
                     .centerCrop()
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .into(userProfilePic);
             Log.e("REQUEST AFTER", picturePath);
 
@@ -356,6 +359,7 @@ public class ProfileActivity extends BaseActivity {
                     .load(picturePath)
                     .crossFade()
                     .centerCrop()
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .into(userCoverPic);
 
             String coverPathDB=null;
@@ -406,6 +410,7 @@ public class ProfileActivity extends BaseActivity {
                     .load(picturePath)
                     .crossFade()
                     .centerCrop()
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .into(govID);
 
 
@@ -451,6 +456,7 @@ public class ProfileActivity extends BaseActivity {
                     .load(picturePath)
                     .crossFade()
                     .centerCrop()
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .into(specID);
 
             if(specPath!=null){
@@ -771,36 +777,39 @@ public class ProfileActivity extends BaseActivity {
         if(userType.getText().equals(getString(R.string.standard_caps))){
             if(code==1){
                 if(checkValidate(getString(R.string.standard_caps))){
-                    Log.d(TAG, "save: "+userName.getText());
-                    if(dpPath!=null) {
-                        mUsersDatabase.child(mFirebaseUser.getUid()).child("photoUrl").setValue(dpPath);
-                    }
-                    if(coverPath!=null) {
-                        mUsersDatabase.child(mFirebaseUser.getUid()).child("coverUrl").setValue(coverPath);
-                    }
-                    if(userName!=null && userName.getText().length()>0) {
-                        mUsersDatabase.child(mFirebaseUser.getUid()).child("userName").setValue(userName.getText().toString());
-                    }
-                    if(gender!=null && gender.getText().length()>0) {
-                        mUsersDatabase.child(mFirebaseUser.getUid()).child("gender").setValue(gender.getText().toString());
-                    }
-                    if(name!=null && name.getText().length()>0) {
-                        mUsersDatabase.child(mFirebaseUser.getUid()).child("name").setValue(name.getText().toString());
-                    }
-                    if(bio!=null && bio.getText().length()>0) {
-                        mUsersDatabase.child(mFirebaseUser.getUid()).child("bio").setValue(bio.getText().toString());
-                    }
-                    if(userType!=null && userType.getText().length()>0) {
-                        mUsersDatabase.child(mFirebaseUser.getUid()).child("userType").setValue(userType.getText().toString());
-                    }
-                    if(language!=null && language.getText().length()>0) {
-                        mUsersDatabase.child(mFirebaseUser.getUid()).child("language").setValue(language.getText().toString());
-                    }
-                    if(DOB!=null && DOB.getText().length()>0) {
-                        mUsersDatabase.child(mFirebaseUser.getUid()).child("dob").setValue(DOB.getText().toString());
-                    }
-//                    writetoFirebase();
-                    finish();
+                    Handler handler = new Handler();
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            if(dpPath!=null) {
+                                mUsersDatabase.child(mFirebaseUser.getUid()).child("photoUrl").setValue(dpPath);
+                            }
+                            if(coverPath!=null) {
+                                mUsersDatabase.child(mFirebaseUser.getUid()).child("coverUrl").setValue(coverPath);
+                            }
+                            if(userName!=null && userName.getText().length()>0) {
+                                mUsersDatabase.child(mFirebaseUser.getUid()).child("userName").setValue(userName.getText().toString());
+                            }
+                            if(gender!=null && gender.getText().length()>0) {
+                                mUsersDatabase.child(mFirebaseUser.getUid()).child("gender").setValue(gender.getText().toString());
+                            }
+                            if(name!=null && name.getText().length()>0) {
+                                mUsersDatabase.child(mFirebaseUser.getUid()).child("name").setValue(name.getText().toString());
+                            }
+                            if(bio!=null && bio.getText().length()>0) {
+                                mUsersDatabase.child(mFirebaseUser.getUid()).child("bio").setValue(bio.getText().toString());
+                            }
+                            if(userType!=null && userType.getText().length()>0) {
+                                mUsersDatabase.child(mFirebaseUser.getUid()).child("userType").setValue(userType.getText().toString());
+                            }
+                            if(language!=null && language.getText().length()>0) {
+                                mUsersDatabase.child(mFirebaseUser.getUid()).child("language").setValue(language.getText().toString());
+                            }
+                            if(DOB!=null && DOB.getText().length()>0) {
+                                mUsersDatabase.child(mFirebaseUser.getUid()).child("dob").setValue(DOB.getText().toString());
+                            }
+                        }
+                    });
                     Toast.makeText(getApplicationContext(), R.string.successfully, Toast.LENGTH_SHORT).show();
                 }
                 else {
@@ -993,7 +1002,7 @@ public class ProfileActivity extends BaseActivity {
                 }
             }
         }
-        else if(type.equals("GURU")){
+        else if(type.equals(getString(R.string.guru_caps))){
             //VALIDATE FOR GURU
             check = new boolean[]{false, false, false, false, false, false, false, false, false, false, false, false, false};
             if(!name.getText().equals(getString(R.string.ns_fullname))){

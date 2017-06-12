@@ -294,7 +294,7 @@
     <string name="uploading">Uploading</string>
     <string name="please_atleast">Please Select Atleast One Subcategory.</string>
     <string name="failure">Upload Failed. Please Try Again!</string>
-    <string name="uploaded">File Uploaded</string>
+    <string name="uploaded">File Uploaded; Changes will be reflected in subsequent launches</string>
     <string name="success">Post successful!</string>
     <string name="caption">Write a caption</string>
     <string name="no_file">No file chosen</string>
