@@ -15,6 +15,7 @@ public class SharedPrefs {
     private static final String IS_INTERESTS_SELECTED = "true_or_false_interest";
     private static final String IS_SUBINTERESTS_SELECTED = "true_or_false_subinterest";
     private static  final String IS_LANGUAGE_SET = "true_or_false_languageset";
+    private static final String IS_COACHMARK_SHOWED_ONETIME = "true_or_false_coachmark_done";
 
 //    public static void setDefaults(){
 //        if(getIsLoggedIn()==null){
@@ -30,6 +31,12 @@ public class SharedPrefs {
 //            setIsInterestsSelected("FALSE");
 //        }
 //    }
+
+    public static void setIsCoachmarkShowedOnetime(String token){
+        SharedPreferences.Editor editor = getPrefrences().edit();
+        editor.putString(IS_COACHMARK_SHOWED_ONETIME, token);
+        editor.apply();
+    }
 
     public static void setIsLanguageSet(String token){
         SharedPreferences.Editor editor = getPrefrences().edit();
@@ -59,6 +66,10 @@ public class SharedPrefs {
         SharedPreferences.Editor editor = getPrefrences().edit();
         editor.putString(IS_SUBINTERESTS_SELECTED, token);
         editor.apply();
+    }
+
+    public static String getIsCoachmarkShowedOnetime(){
+        return getPrefrences().getString(IS_COACHMARK_SHOWED_ONETIME, null);
     }
 
     public static String getIsLoggedIn() {
