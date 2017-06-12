@@ -157,6 +157,10 @@ public class ProfileActivity extends BaseActivity {
             saveButton.setText(R.string.back);
             Log.d(TAG, "onCreate: yfydfkuggjcgkjjkgc");
 
+            specialization.setVisibility(View.VISIBLE);
+            specID.setVisibility(View.VISIBLE);
+            govID.setVisibility(View.VISIBLE);
+
             if(isFetchedData) {
                 fetchData();
                 Log.d(TAG, "onCreate: isf "+isFetchedData);
@@ -319,7 +323,7 @@ public class ProfileActivity extends BaseActivity {
                         .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                Toast.makeText(ProfileActivity.this, getString(R.string.uploaded), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ProfileActivity.this, getString(R.string.shortly), Toast.LENGTH_SHORT).show();
 //                                fetchData();
                             }
                         })
@@ -374,7 +378,7 @@ public class ProfileActivity extends BaseActivity {
                         .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                Toast.makeText(ProfileActivity.this, getString(R.string.uploaded), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ProfileActivity.this, getString(R.string.shortly), Toast.LENGTH_SHORT).show();
 //                                fetchData();
                             }
                         })
@@ -423,7 +427,7 @@ public class ProfileActivity extends BaseActivity {
                         .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                Toast.makeText(ProfileActivity.this, R.string.file_uploaded, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ProfileActivity.this, R.string.shortly, Toast.LENGTH_SHORT).show();
 //                                fetchData();
                             }
                         })
@@ -468,7 +472,7 @@ public class ProfileActivity extends BaseActivity {
                         .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                Toast.makeText(ProfileActivity.this, R.string.file_uploaded, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ProfileActivity.this, R.string.shortly, Toast.LENGTH_SHORT).show();
 //                                fetchData();
                             }
                         })
