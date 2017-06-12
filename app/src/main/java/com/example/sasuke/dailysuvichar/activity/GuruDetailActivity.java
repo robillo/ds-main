@@ -194,6 +194,7 @@ public class GuruDetailActivity extends BaseActivity{
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
 //                User user = dataSnapshot.getValue(User.class);
+                    Log.d(TAG, "onDataChange: USERR "+dataSnapshot);
                     if (dataSnapshot.child("name").getValue() != null) {
                         name.setText(dataSnapshot.child("name").getValue().toString());
                     }
@@ -203,7 +204,6 @@ public class GuruDetailActivity extends BaseActivity{
                     if(dataSnapshot.child("specialization").getValue()!=null){
                         spec.setText(dataSnapshot.child("specialization").getValue().toString());
                     }
-
                 }
 
                 @Override

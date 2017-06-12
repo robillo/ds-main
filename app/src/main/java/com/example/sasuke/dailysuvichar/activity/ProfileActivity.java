@@ -31,7 +31,6 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.sasuke.dailysuvichar.R;
-import com.example.sasuke.dailysuvichar.newactivities.NewMainActivity;
 import com.example.sasuke.dailysuvichar.utils.SharedPrefs;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -1256,8 +1255,8 @@ public class ProfileActivity extends BaseActivity {
                 mUsersDatabase.child(mFirebaseUser.getUid()).child("userType").setValue(usertypeDB);
                 mGurusDatabase.child(mFirebaseUser.getUid()).child("age").setValue(ageDB);
                 mGurusDatabase.child(mFirebaseUser.getUid()).child("uid").setValue(mFirebaseUser.getUid());
-                if(special!=null){
-                    mGurusDatabase.child(mFirebaseUser.getUid()).child("specialization").setValue(special);
+                if(specialization!=null && specialization.getText().length()>0){
+                    mGurusDatabase.child(mFirebaseUser.getUid()).child("specialization").setValue(specialization.getText().toString());
                 }
             }
         }
