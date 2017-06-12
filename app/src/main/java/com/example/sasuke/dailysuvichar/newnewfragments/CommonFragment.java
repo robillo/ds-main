@@ -1096,7 +1096,7 @@ public class CommonFragment extends Fragment {
                 break;
             }
 //            case R.id.action_sort:{
-//
+
 //                new MaterialDialog.Builder(getActivity())
 //                        .title(R.string.sort_by)
 //                        .items(new String[]{getString(R.string.most_recent),getString(R.string.popularity)})
@@ -1158,7 +1158,7 @@ public class CommonFragment extends Fragment {
 //                        })
 //                        .positiveText(R.string.choose)
 //                        .show();
-//
+
 //                break;
 //            }
         }
