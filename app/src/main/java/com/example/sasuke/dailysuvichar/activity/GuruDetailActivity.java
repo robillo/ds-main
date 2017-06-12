@@ -183,7 +183,7 @@ public class GuruDetailActivity extends BaseActivity{
                                 using(new FirebaseImageLoader())
                                 .load(mStorageReference.child("dp").child(uid))
                                 .centerCrop()
-                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .diskCacheStrategy(DiskCacheStrategy.NONE)
                                 .into(dp);
                     }
         if(cover!=null) {
@@ -193,7 +193,7 @@ public class GuruDetailActivity extends BaseActivity{
                                 using(new FirebaseImageLoader())
                                 .load(mStorageReference.child("cover").child(uid))
                                 .centerCrop()
-                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .diskCacheStrategy(DiskCacheStrategy.NONE)
                                 .into(cover);
         }
 

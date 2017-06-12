@@ -119,7 +119,7 @@ public class ProfileActivity extends BaseActivity {
 
         code = getIntent().getIntExtra("fromHome", 0);
 
-        Log.d(TAG, "onCreate: CODE "+code);
+        Log.e(TAG, "onCreate: CODE "+code);
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
@@ -154,13 +154,20 @@ public class ProfileActivity extends BaseActivity {
 //        loadCOVER(SharedPrefs.getFacebookToken());
 
         if(code==1) {
+            saveButton.setText(R.string.back);
             Log.d(TAG, "onCreate: yfydfkuggjcgkjjkgc");
+
+            specialization.setVisibility(View.VISIBLE);
+            specID.setVisibility(View.VISIBLE);
+            govID.setVisibility(View.VISIBLE);
 
             if(isFetchedData) {
                 fetchData();
                 Log.d(TAG, "onCreate: isf "+isFetchedData);
                 isFetchedData=false;
             }
+
+
         }
         else if(code == 0){
             if(SharedPrefs.getIsProfileSet()!=null){
@@ -316,7 +323,7 @@ public class ProfileActivity extends BaseActivity {
                         .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                Toast.makeText(ProfileActivity.this, getString(R.string.uploaded), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ProfileActivity.this, getString(R.string.shortly), Toast.LENGTH_SHORT).show();
 //                                fetchData();
                             }
                         })
@@ -371,7 +378,7 @@ public class ProfileActivity extends BaseActivity {
                         .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                Toast.makeText(ProfileActivity.this, getString(R.string.uploaded), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ProfileActivity.this, getString(R.string.shortly), Toast.LENGTH_SHORT).show();
 //                                fetchData();
                             }
                         })
@@ -420,7 +427,7 @@ public class ProfileActivity extends BaseActivity {
                         .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                Toast.makeText(ProfileActivity.this, R.string.file_uploaded, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ProfileActivity.this, R.string.shortly, Toast.LENGTH_SHORT).show();
 //                                fetchData();
                             }
                         })
@@ -465,7 +472,7 @@ public class ProfileActivity extends BaseActivity {
                         .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                Toast.makeText(ProfileActivity.this, R.string.file_uploaded, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ProfileActivity.this, R.string.shortly, Toast.LENGTH_SHORT).show();
 //                                fetchData();
                             }
                         })
@@ -498,6 +505,10 @@ public class ProfileActivity extends BaseActivity {
                     public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
                         name.setText(input);
                         b[0] =true;
+                        if(name!=null && name.getText().length()>0) {
+                            mUsersDatabase.child(mFirebaseUser.getUid()).child("name").setValue(name.getText().toString());
+                            Toast.makeText(getApplicationContext(), "Name", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }).show();
 //        if(name.getText()!=null){
@@ -517,6 +528,10 @@ public class ProfileActivity extends BaseActivity {
                     public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
                         bio.setText(getString(R.string.bio) + input);
                         b[0] =true;
+                        if(bio!=null && bio.getText().length()>0) {
+                            mUsersDatabase.child(mFirebaseUser.getUid()).child("bio").setValue(bio.getText().toString());
+                            Toast.makeText(getApplicationContext(), "Bio Updated", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }).show();
 //        if(bio.getText()!=null){
@@ -536,6 +551,10 @@ public class ProfileActivity extends BaseActivity {
                     public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
                         userName.setText(input);
                         b[0] =true;
+                        if(userName!=null && userName.getText().length()>0) {
+                            mUsersDatabase.child(mFirebaseUser.getUid()).child("userName").setValue(userName.getText().toString());
+                            Toast.makeText(getApplicationContext(), "Username Updated", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }).show();
 //        if(userName.getText()!=null){
@@ -555,10 +574,18 @@ public class ProfileActivity extends BaseActivity {
                         switch (which){
                             case 0:{
                                 language.setText(R.string.english_lang);
+                                if(language!=null && language.getText().length()>0) {
+                                    mUsersDatabase.child(mFirebaseUser.getUid()).child("language").setValue(language.getText().toString());
+                                    Toast.makeText(getApplicationContext(), "Language Updated", Toast.LENGTH_SHORT).show();
+                                }
                                 break;
                             }
                             case 1:{
                                 language.setText(R.string.hindi_lang);
+                                if(language!=null && language.getText().length()>0) {
+                                    mUsersDatabase.child(mFirebaseUser.getUid()).child("language").setValue(language.getText().toString());
+                                    Toast.makeText(getApplicationContext(), "Language Updated", Toast.LENGTH_SHORT).show();
+                                }
                                 break;
                             }
                         }
@@ -597,6 +624,10 @@ public class ProfileActivity extends BaseActivity {
                                         notSelected.remove(getString(R.string.ns_special));
                                     }
                                 }
+                                if(userType!=null && userType.getText().length()>0) {
+                                    mUsersDatabase.child(mFirebaseUser.getUid()).child("userType").setValue(userType.getText().toString());
+                                    Toast.makeText(getApplicationContext(), "Usertype set", Toast.LENGTH_SHORT).show();
+                                }
                                 break;
                             }
                             case 1:{
@@ -605,6 +636,10 @@ public class ProfileActivity extends BaseActivity {
                                     mLinearLayout.setVisibility(View.VISIBLE);
                                     specialization.setVisibility(View.VISIBLE);
                                     userTypeInput = getString(R.string.guru_caps);
+                                    if(userType!=null && userType.getText().length()>0) {
+                                        mUsersDatabase.child(mFirebaseUser.getUid()).child("userType").setValue(userType.getText().toString());
+                                        Toast.makeText(getApplicationContext(), "Usertype set", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
                                 break;
                             }
@@ -635,10 +670,18 @@ public class ProfileActivity extends BaseActivity {
                         switch (which){
                             case 0:{
                                 gender.setText(R.string.male_caps);
+                                if(gender!=null && gender.getText().length()>0) {
+                                    mUsersDatabase.child(mFirebaseUser.getUid()).child("gender").setValue(gender.getText().toString());
+                                    Toast.makeText(getApplicationContext(), "GENDER UPDATED", Toast.LENGTH_SHORT).show();
+                                }
                                 break;
                             }
                             case 1:{
                                 gender.setText(R.string.female_caps);
+                                if(gender!=null && gender.getText().length()>0) {
+                                    mUsersDatabase.child(mFirebaseUser.getUid()).child("gender").setValue(gender.getText().toString());
+                                    Toast.makeText(getApplicationContext(), "GENDER UPDATED", Toast.LENGTH_SHORT).show();
+                                }
                                 break;
                             }
                         }
@@ -760,6 +803,10 @@ public class ProfileActivity extends BaseActivity {
                     age.setText(" " + ageInt);
                     mUsersDatabase.child(mFirebaseUser.getUid()).child("dob").setValue(DOB.getText());
                     mUsersDatabase.child(mFirebaseUser.getUid()).child("age").setValue(ageInt);
+                    if(DOB!=null && DOB.getText().length()>0) {
+                        mUsersDatabase.child(mFirebaseUser.getUid()).child("dob").setValue(DOB.getText().toString());
+                        Toast.makeText(getApplicationContext(), "DOB Updated", Toast.LENGTH_SHORT).show();
+                    }
 
                 }
             };
@@ -775,52 +822,60 @@ public class ProfileActivity extends BaseActivity {
     public void save(){
         if(userType.getText().equals(getString(R.string.standard_caps))){
             if(code==1){
-                if(checkValidate(getString(R.string.standard_caps))){
-                    Handler handler = new Handler();
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            if(dpPath!=null) {
-                                mUsersDatabase.child(mFirebaseUser.getUid()).child("photoUrl").setValue(dpPath);
-                            }
-                            if(coverPath!=null) {
-                                mUsersDatabase.child(mFirebaseUser.getUid()).child("coverUrl").setValue(coverPath);
-                            }
-                            if(userName!=null && userName.getText().length()>0) {
-                                mUsersDatabase.child(mFirebaseUser.getUid()).child("userName").setValue(userName.getText().toString());
-                            }
-                            if(gender!=null && gender.getText().length()>0) {
-                                mUsersDatabase.child(mFirebaseUser.getUid()).child("gender").setValue(gender.getText().toString());
-                            }
-                            if(name!=null && name.getText().length()>0) {
-                                mUsersDatabase.child(mFirebaseUser.getUid()).child("name").setValue(name.getText().toString());
-                            }
-                            if(bio!=null && bio.getText().length()>0) {
-                                mUsersDatabase.child(mFirebaseUser.getUid()).child("bio").setValue(bio.getText().toString());
-                            }
-                            if(userType!=null && userType.getText().length()>0) {
-                                mUsersDatabase.child(mFirebaseUser.getUid()).child("userType").setValue(userType.getText().toString());
-                            }
-                            if(language!=null && language.getText().length()>0) {
-                                mUsersDatabase.child(mFirebaseUser.getUid()).child("language").setValue(language.getText().toString());
-                            }
-                            if(DOB!=null && DOB.getText().length()>0) {
-                                mUsersDatabase.child(mFirebaseUser.getUid()).child("dob").setValue(DOB.getText().toString());
-                            }
-                        }
-                    });
-                    Handler handler1 = new Handler();
-                    handler1.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            finish();
-                        }
-                    }, 1500);
-                    Toast.makeText(getApplicationContext(), R.string.successfully, Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    Toast.makeText(getApplicationContext(), R.string.make_changes, Toast.LENGTH_SHORT).show();
-                }
+                Toast.makeText(getApplicationContext(), "Profile Updated Successfully", Toast.LENGTH_SHORT).show();
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        finish();
+                    }
+                }, 500);
+//                if(checkValidate(getString(R.string.standard_caps))){
+//                    Handler handler = new Handler();
+//                    handler.post(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            if(dpPath!=null) {
+//                                mUsersDatabase.child(mFirebaseUser.getUid()).child("photoUrl").setValue(dpPath);
+//                            }
+//                            if(coverPath!=null) {
+//                                mUsersDatabase.child(mFirebaseUser.getUid()).child("coverUrl").setValue(coverPath);
+//                            }
+//                            if(userName!=null && userName.getText().length()>0) {
+//                                mUsersDatabase.child(mFirebaseUser.getUid()).child("userName").setValue(userName.getText().toString());
+//                            }
+//                            if(gender!=null && gender.getText().length()>0) {
+//                                mUsersDatabase.child(mFirebaseUser.getUid()).child("gender").setValue(gender.getText().toString());
+//                            }
+//                            if(name!=null && name.getText().length()>0) {
+//                                mUsersDatabase.child(mFirebaseUser.getUid()).child("name").setValue(name.getText().toString());
+//                            }
+//                            if(bio!=null && bio.getText().length()>0) {
+//                                mUsersDatabase.child(mFirebaseUser.getUid()).child("bio").setValue(bio.getText().toString());
+//                            }
+//                            if(userType!=null && userType.getText().length()>0) {
+//                                mUsersDatabase.child(mFirebaseUser.getUid()).child("userType").setValue(userType.getText().toString());
+//                            }
+//                            if(language!=null && language.getText().length()>0) {
+//                                mUsersDatabase.child(mFirebaseUser.getUid()).child("language").setValue(language.getText().toString());
+//                            }
+//                            if(DOB!=null && DOB.getText().length()>0) {
+//                                mUsersDatabase.child(mFirebaseUser.getUid()).child("dob").setValue(DOB.getText().toString());
+//                            }
+//                        }
+//                    });
+//                    Handler handler1 = new Handler();
+//                    handler1.postDelayed(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            finish();
+//                        }
+//                    }, 1500);
+//                    Toast.makeText(getApplicationContext(), R.string.successfully, Toast.LENGTH_SHORT).show();
+//                }
+//                else {
+//                    Toast.makeText(getApplicationContext(), R.string.make_changes, Toast.LENGTH_SHORT).show();
+//                }
             }
             else {
                 if(checkValidate(getString(R.string.standard_caps))){
@@ -839,14 +894,22 @@ public class ProfileActivity extends BaseActivity {
         }
         else if(userType.getText().equals(getString(R.string.guru_caps))){
             if(code==1){
-                if(checkValidate(getString(R.string.guru_caps))){
-                    writetoFirebase();
-                    finish();
-                    Toast.makeText(getApplicationContext(), R.string.successfully, Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    Toast.makeText(getApplicationContext(), R.string.make_changes, Toast.LENGTH_SHORT).show();
-                }
+                Toast.makeText(getApplicationContext(), "Profile Updated Successfully", Toast.LENGTH_SHORT).show();
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        finish();
+                    }
+                }, 500);
+//                if(checkValidate(getString(R.string.guru_caps))){
+//                    writetoFirebase();
+//                    finish();
+//                    Toast.makeText(getApplicationContext(), R.string.successfully, Toast.LENGTH_SHORT).show();
+//                }
+//                else {
+//                    Toast.makeText(getApplicationContext(), R.string.make_changes, Toast.LENGTH_SHORT).show();
+//                }
             }
             else {
                 if(checkValidate(getString(R.string.guru_caps))){
