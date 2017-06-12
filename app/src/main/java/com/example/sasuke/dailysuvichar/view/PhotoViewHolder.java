@@ -3,6 +3,7 @@ package com.example.sasuke.dailysuvichar.view;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -14,6 +15,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.activity.FullScreenActivity;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -23,6 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -102,20 +105,31 @@ public class PhotoViewHolder extends RecyclerView.ViewHolder {
 //        });
     }
 
-    public void setImage(StorageReference storageReference, Context ctx) {
-//        Picasso.with(itemView.getContext()).load(photo).fit().into(mIvPhoto);
+    public void setImage(StorageReference storageReference, final Context ctx) {
         Log.d(TAG, "setImage: NOTNULL");
         Activity a = (Activity) context;
 
-        if(storageReference!=null&&ctx!=null&& !a.isDestroyed()) {
+        if(storageReference!=null && !a.isDestroyed()){
             this.storageReference = storageReference;
-            Glide.with(ctx).
-                    using(new FirebaseImageLoader())
-                    .load(storageReference)
-                    .centerCrop()
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(mIvPhoto);
+            storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    Picasso.with(ctx)
+                            .load(uri)
+                            .into(mIvPhoto);
+                }
+            });
         }
+//
+//        if(storageReference!=null&&ctx!=null&& !a.isDestroyed()) {
+//            this.storageReference = storageReference;
+//            Glide.with(ctx).
+//                    using(new FirebaseImageLoader())
+//                    .load(storageReference)
+//                    .centerCrop()
+//                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+//                    .into(mIvPhoto);
+//        }
     }
 
 
@@ -164,10 +178,12 @@ public class PhotoViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void fullScreenIntent(){
-        Intent i = new Intent(context, FullScreenActivity.class);
-        i.putExtra("path", storageReference.toString());
-        Log.e("Storage Reference", storageReference.toString());
-        context.startActivity(i);
+        if(storageReference!=null){
+            Intent i = new Intent(context, FullScreenActivity.class);
+            i.putExtra("path", storageReference.toString());
+            Log.e("Storage Reference", storageReference.toString());
+            context.startActivity(i);
+        }
     }
 
 //    public void setLikedUser(String authorUid,String uid, final boolean liked, ArrayList<String> likedUsers) {
