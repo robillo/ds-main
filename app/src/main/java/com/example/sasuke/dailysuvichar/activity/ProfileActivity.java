@@ -810,6 +810,13 @@ public class ProfileActivity extends BaseActivity {
                             }
                         }
                     });
+                    Handler handler1 = new Handler();
+                    handler1.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            finish();
+                        }
+                    }, 1500);
                     Toast.makeText(getApplicationContext(), R.string.successfully, Toast.LENGTH_SHORT).show();
                 }
                 else {
@@ -1259,7 +1266,8 @@ public class ProfileActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         if(code==1){
-            startActivity(new Intent(this, NewMainActivity.class));
+//            startActivity(new Intent(this, NewMainActivity.class));
+            finish();
         }
     }
 
