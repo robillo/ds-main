@@ -28,7 +28,6 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.newactivities.NewMainActivity;
 import com.example.sasuke.dailysuvichar.utils.SharedPrefs;
@@ -100,6 +99,8 @@ public class ProfileActivity extends BaseActivity {
     ImageView specID;
     @BindView(R.id.btnSave)
     Button saveButton;
+    boolean isFetchedData=true;
+
 
     private List<String> notSelected;
 
@@ -153,7 +154,12 @@ public class ProfileActivity extends BaseActivity {
 
         if(code==1) {
             Log.d(TAG, "onCreate: yfydfkuggjcgkjjkgc");
-            fetchData();
+
+            if(isFetchedData) {
+                fetchData();
+                Log.d(TAG, "onCreate: isf "+isFetchedData);
+                isFetchedData=false;
+            }
         }
         else if(code == 0){
             if(SharedPrefs.getIsProfileSet()!=null){
@@ -209,6 +215,8 @@ public class ProfileActivity extends BaseActivity {
     }
 
     private void fetchData() {
+
+
         mUsersDatabase.child(mFirebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -237,13 +245,16 @@ public class ProfileActivity extends BaseActivity {
                 }
                 if(dataSnapshot.child("photoUrl").getValue()!=null) {
 
+                    Log.d(TAG, "onDataChange: "+mStorageReferenceDP.child(dataSnapshot.getKey()));
+
                     Activity a = ProfileActivity.this;
                     if(!a.isDestroyed()) {
+                        Log.d(TAG, "onDataChange: kihkbklbj");
                         Glide.with(a).
                                 using(new FirebaseImageLoader())
                                 .load(mStorageReferenceDP.child(dataSnapshot.getKey()))
                                 .centerCrop()
-                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+//                                .diskCacheStrategy(DiskCacheStrategy.ALL)
                                 .into(userProfilePic);
                     }
                 }
@@ -255,7 +266,7 @@ public class ProfileActivity extends BaseActivity {
                                 using(new FirebaseImageLoader())
                                 .load(mStorageReferenceCover.child(dataSnapshot.getKey()))
                                 .centerCrop()
-                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+//                                .diskCacheStrategy(DiskCacheStrategy.ALL)
                                 .into(userCoverPic);
                     }
                 }
@@ -273,8 +284,9 @@ public class ProfileActivity extends BaseActivity {
 
         Log.d(TAG, "onActivityResult: "+requestCode+" "+resultCode+" "+data);
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
+            dpPath=null;
             dpPath = data.getData();
-            Log.d(TAG, "onActivityResult: "+dpPath);
+            Log.d(TAG, "onActivityResult: dp "+dpPath);
             String[] filePathColumn = { MediaStore.Images.Media.DATA };
 
             Cursor cursor = getContentResolver().query(dpPath,
@@ -327,7 +339,9 @@ public class ProfileActivity extends BaseActivity {
 
         }
         else if(requestCode == RESULT_LOAD_COVER && resultCode == RESULT_OK && null != data){
+            coverPath=null;
             coverPath = data.getData();
+            Log.d(TAG, "onActivityResult: cover "+coverPath);
             String[] filePathColumn = { MediaStore.Images.Media.DATA };
 
             Cursor cursor = getContentResolver().query(coverPath,

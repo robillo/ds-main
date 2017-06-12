@@ -50,6 +50,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -123,10 +124,10 @@ public class CommonFragment extends Fragment {
 
         setHasOptionsMenu(true);
 
-        if(sort==0){
-            sortBy="timestamp";
-        }else{
-            sortBy="likes";
+        if (sort == 0) {
+            sortBy = "timestamp";
+        } else {
+            sortBy = "likes";
         }
 
         String from = getArguments().getString("from");
@@ -185,7 +186,7 @@ public class CommonFragment extends Fragment {
                             mSelectedGurus.addAll((Collection<? extends String>) dataSnapshot.child("following").getValue());
                         }
                         fetchGuruPostsFromFirebase(sortBy);
-                        Log.d(TAG, "onDataChange: SELGURU "+mSelectedGurus);
+                        Log.d(TAG, "onDataChange: SELGURU " + mSelectedGurus);
                         alternateLayout.setVisibility(View.INVISIBLE);
                     }
 
@@ -207,26 +208,26 @@ public class CommonFragment extends Fragment {
 
 //                if(bool) {
 
-                    mDatabaseReference = FirebaseDatabase.getInstance().getReference("users");
-                    Log.e(TAG, uid);
-                    Log.e(TAG, mDatabaseReference.toString());
-                    bool = false;
+                mDatabaseReference = FirebaseDatabase.getInstance().getReference("users");
+                Log.e(TAG, uid);
+                Log.e(TAG, mDatabaseReference.toString());
+                bool = false;
 
-                    mDatabaseReference.child(mFirebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            if (dataSnapshot.child("mAllInterests").getValue() != null) {
+                mDatabaseReference.child(mFirebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.child("mAllInterests").getValue() != null) {
 //                            mSelectedSubInterests.addAll((Collection<? extends String>) dataSnapshot.child("mSelectedSubInterests").getValue());
-                                mAllInterests.putAll((Map<? extends String, ? extends ArrayList<String>>) dataSnapshot.child("mAllInterests").getValue());
-                            }
-                            fetchExplorePostsFromFirebase(sortBy);
-                            alternateLayout.setVisibility(View.INVISIBLE);
+                            mAllInterests.putAll((Map<? extends String, ? extends ArrayList<String>>) dataSnapshot.child("mAllInterests").getValue());
                         }
+                        fetchExplorePostsFromFirebase(sortBy);
+                        alternateLayout.setVisibility(View.INVISIBLE);
+                    }
 
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-                        }
-                    });
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
 //                }
                 fetchExplorePostsFromFirebase(sortBy);
 
@@ -274,7 +275,7 @@ public class CommonFragment extends Fragment {
                                 isDone.put(postSnapshot.getKey(), (long) 1);
                                 items.add(statusSnap);
 
-                                Log.d(TAG, "onDataChange: trooguru "+items+" "+isDone+" "+statusSnap.getStatus());
+                                Log.d(TAG, "onDataChange: trooguru " + items + " " + isDone + " " + statusSnap.getStatus());
                             } else if (postSnapshot.child("type").getValue().equals("photo")) {
                                 Photo photoSnap = postSnapshot.getValue(Photo.class);
                                 photoSnap.setPostUid(postSnapshot.getKey());
@@ -457,36 +458,42 @@ public class CommonFragment extends Fragment {
                         Log.d(TAG, "onDataChange: DATA " + postSnapshot.child("type"));
 
                         if (!isDone.containsKey(postSnapshot.getKey())) {
-                            if(!Collections.disjoint(interests, (Collection<?>) postSnapshot.child("tags").getValue())) {
+                            if (!Collections.disjoint(interests, (Collection<?>) postSnapshot.child("tags").getValue())) {
                                 if (postSnapshot.child("type").getValue().equals("status")) {
                                     Log.d(TAG, "onDataChange: DATA troo");
                                     Status statusSnap = postSnapshot.getValue(Status.class);
-                                    statusSnap.setPostUid(postSnapshot.getKey());
-                                    isDone.put(postSnapshot.getKey(), (long) 1);
-                                    items.add(statusSnap);
+                                    if (!Objects.equals(statusSnap.getUid(), GURU_UID_USER)) {
+                                        statusSnap.setPostUid(postSnapshot.getKey());
+                                        isDone.put(postSnapshot.getKey(), (long) 1);
+                                        items.add(statusSnap);
+                                    }
                                 } else if (postSnapshot.child("type").getValue().equals("photo")) {
                                     Photo photoSnap = postSnapshot.getValue(Photo.class);
-                                    photoSnap.setPostUid(postSnapshot.getKey());
-                                    photoSnap.setStorageReference(mStorageReference.child(postSnapshot.getKey()));
-                                    isDone.put(postSnapshot.getKey(), (long) 1);
-
+                                    if (!Objects.equals(photoSnap.getUid(), GURU_UID_USER)) {
+                                        photoSnap.setPostUid(postSnapshot.getKey());
+                                        photoSnap.setStorageReference(mStorageReference.child(postSnapshot.getKey()));
+                                        isDone.put(postSnapshot.getKey(), (long) 1);
+                                    }
                                     items.add(photoSnap);
                                 } else if (postSnapshot.child("type").getValue().equals("video")) {
                                     final CustomVideo videoSnap = postSnapshot.getValue(CustomVideo.class);
-                                    if (mStorageReferenceVideo.child(postSnapshot.getKey()) != null) {
-                                        videoSnap.setPostUid(postSnapshot.getKey());
-                                        isDone.put(postSnapshot.getKey(), (long) 1);
-                                        items.add(videoSnap);
-                                        videoSnap.setStorageReference(mStorageReferenceVideo.child(postSnapshot.getKey()));
-                                        mStorageReferenceVideo.child(postSnapshot.getKey()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                            @Override
-                                            public void onSuccess(Uri uri) {
-                                                videoSnap.setVideoURI(uri.toString());
-                                            }
-                                        });
+                                    if (!Objects.equals(videoSnap.getUid(), GURU_UID_USER)) {
+                                        if (mStorageReferenceVideo.child(postSnapshot.getKey()) != null) {
+                                            videoSnap.setPostUid(postSnapshot.getKey());
+                                            isDone.put(postSnapshot.getKey(), (long) 1);
+                                            items.add(videoSnap);
+                                            videoSnap.setStorageReference(mStorageReferenceVideo.child(postSnapshot.getKey()));
+                                            mStorageReferenceVideo.child(postSnapshot.getKey()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                                @Override
+                                                public void onSuccess(Uri uri) {
+                                                    videoSnap.setVideoURI(uri.toString());
+                                                }
+                                            });
+                                        }
                                     }
                                 }
                                 mAdapter.notifyDataSetChanged();
+
                             }
                         } else {
 
@@ -607,7 +614,7 @@ public class CommonFragment extends Fragment {
 
                     mStorageReference = FirebaseStorage.getInstance().getReference("posts").child("images");
 
-                    if(postSnapshot.child("language").exists()&&postSnapshot.child("language").getValue().equals("english")){
+                    if (postSnapshot.child("language").exists() && postSnapshot.child("language").getValue().equals("english")) {
 
                         if (!isDone.containsKey(postSnapshot.getKey())) {
 
@@ -680,39 +687,47 @@ public class CommonFragment extends Fragment {
                         Log.d(TAG, "onDataChange: DATA " + postSnapshot);
                         Log.d(TAG, "onDataChange: DATA " + postSnapshot.child("type"));
 
-                        if(postSnapshot.child("language").exists()&&postSnapshot.child("language").getValue().equals("english")){
+                        if (postSnapshot.child("language").exists() && postSnapshot.child("language").getValue().equals("english")) {
 
                             if (!isDone.containsKey(postSnapshot.getKey())) {
 
-                                if(!Collections.disjoint(interests, (Collection<?>) postSnapshot.child("tags").getValue())) {
+                                if (!Collections.disjoint(interests, (Collection<?>) postSnapshot.child("tags").getValue())) {
 
 
                                     if (postSnapshot.child("type").getValue().equals("status")) {
                                         Log.d(TAG, "onDataChange: DATA troo");
                                         Status statusSnap = postSnapshot.getValue(Status.class);
-                                        statusSnap.setPostUid(postSnapshot.getKey());
-                                        isDone.put(postSnapshot.getKey(), (long) 1);
-                                        items.add(statusSnap);
+                                        if (!Objects.equals(statusSnap.getUid(), GURU_UID_USER)) {
+                                            statusSnap.setPostUid(postSnapshot.getKey());
+                                            isDone.put(postSnapshot.getKey(), (long) 1);
+                                            items.add(statusSnap);
+                                        }
                                     } else if (postSnapshot.child("type").getValue().equals("photo")) {
                                         Photo photoSnap = postSnapshot.getValue(Photo.class);
-                                        photoSnap.setPostUid(postSnapshot.getKey());
-                                        photoSnap.setStorageReference(mStorageReference.child(postSnapshot.getKey()));
-                                        isDone.put(postSnapshot.getKey(), (long) 1);
+                                        if (!Objects.equals(photoSnap.getUid(), GURU_UID_USER)) {
 
-                                        items.add(photoSnap);
+                                            photoSnap.setPostUid(postSnapshot.getKey());
+                                            photoSnap.setStorageReference(mStorageReference.child(postSnapshot.getKey()));
+                                            isDone.put(postSnapshot.getKey(), (long) 1);
+
+                                            items.add(photoSnap);
+                                        }
                                     } else if (postSnapshot.child("type").getValue().equals("video")) {
                                         final CustomVideo videoSnap = postSnapshot.getValue(CustomVideo.class);
-                                        if (mStorageReferenceVideo.child(postSnapshot.getKey()) != null) {
-                                            videoSnap.setPostUid(postSnapshot.getKey());
-                                            isDone.put(postSnapshot.getKey(), (long) 1);
-                                            items.add(videoSnap);
-                                            videoSnap.setStorageReference(mStorageReferenceVideo.child(postSnapshot.getKey()));
-                                            mStorageReferenceVideo.child(postSnapshot.getKey()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                                @Override
-                                                public void onSuccess(Uri uri) {
-                                                    videoSnap.setVideoURI(uri.toString());
-                                                }
-                                            });
+                                        if (!Objects.equals(videoSnap.getUid(), GURU_UID_USER)) {
+
+                                            if (mStorageReferenceVideo.child(postSnapshot.getKey()) != null) {
+                                                videoSnap.setPostUid(postSnapshot.getKey());
+                                                isDone.put(postSnapshot.getKey(), (long) 1);
+                                                items.add(videoSnap);
+                                                videoSnap.setStorageReference(mStorageReferenceVideo.child(postSnapshot.getKey()));
+                                                mStorageReferenceVideo.child(postSnapshot.getKey()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                                    @Override
+                                                    public void onSuccess(Uri uri) {
+                                                        videoSnap.setVideoURI(uri.toString());
+                                                    }
+                                                });
+                                            }
                                         }
                                     }
                                     mAdapter.notifyDataSetChanged();
@@ -746,7 +761,62 @@ public class CommonFragment extends Fragment {
 
         final StorageReference mStorageReferenceVideo = FirebaseStorage.getInstance().getReference("posts").child("videos");
 
+        DatabaseReference mDatabaseReferencePostsDSGuru = FirebaseDatabase.getInstance().getReference("users").child(GURU_UID_USER).child("userPosts");
+
         if (mSelectedGurus != null && mSelectedGurus.size() > 0) {
+
+            mDatabaseReferencePostsDSGuru.orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                    mStorageReference = FirebaseStorage.getInstance().getReference("posts").child("images");
+
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+
+                        if (!isDone.containsKey(postSnapshot.getKey())) {
+
+                            if (postSnapshot.child("type").getValue().equals("status")) {
+                                Log.d(TAG, "onDataChange: DATA trooguru");
+                                Status statusSnap = postSnapshot.getValue(Status.class);
+                                statusSnap.setPostUid(postSnapshot.getKey());
+
+                                isDone.put(postSnapshot.getKey(), (long) 1);
+                                items.add(statusSnap);
+
+                                Log.d(TAG, "onDataChange: trooguru " + items + " " + isDone + " " + statusSnap.getStatus());
+                            } else if (postSnapshot.child("type").getValue().equals("photo")) {
+                                Photo photoSnap = postSnapshot.getValue(Photo.class);
+                                photoSnap.setPostUid(postSnapshot.getKey());
+                                photoSnap.setStorageReference(mStorageReference.child(postSnapshot.getKey()));
+                                isDone.put(postSnapshot.getKey(), (long) 1);
+
+                                items.add(photoSnap);
+                            } else if (postSnapshot.child("type").getValue().equals("video")) {
+                                final CustomVideo videoSnap = postSnapshot.getValue(CustomVideo.class);
+                                if (mStorageReferenceVideo.child(postSnapshot.getKey()) != null) {
+                                    videoSnap.setPostUid(postSnapshot.getKey());
+                                    isDone.put(postSnapshot.getKey(), (long) 1);
+                                    items.add(videoSnap);
+                                    videoSnap.setStorageReference(mStorageReferenceVideo.child(postSnapshot.getKey()));
+                                    mStorageReferenceVideo.child(postSnapshot.getKey()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                        @Override
+                                        public void onSuccess(Uri uri) {
+                                            videoSnap.setVideoURI(uri.toString());
+                                        }
+                                    });
+                                }
+                            }
+                            mAdapter.notifyDataSetChanged();
+                        }
+                        mAdapter.notifyDataSetChanged();
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.d(TAG, "onCancelled: " + databaseError.getMessage());
+                }
+            });
 
             for (String guru : mSelectedGurus) {
 
@@ -760,7 +830,7 @@ public class CommonFragment extends Fragment {
 
                         for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
 
-                            if(postSnapshot.child("language").exists()&&postSnapshot.child("language").getValue().equals("english")){
+                            if (postSnapshot.child("language").exists() && postSnapshot.child("language").getValue().equals("english")) {
 
                                 if (!isDone.containsKey(postSnapshot.getKey())) {
 
@@ -832,7 +902,7 @@ public class CommonFragment extends Fragment {
 
                     mStorageReference = FirebaseStorage.getInstance().getReference("posts").child("images");
 
-                    if(postSnapshot.child("language").exists()&&postSnapshot.child("language").getValue().equals("hindi")){
+                    if (postSnapshot.child("language").exists() && postSnapshot.child("language").getValue().equals("hindi")) {
 
                         if (!isDone.containsKey(postSnapshot.getKey())) {
 
@@ -908,39 +978,48 @@ public class CommonFragment extends Fragment {
                         Log.d(TAG, "onDataChange: DATA " + postSnapshot);
                         Log.d(TAG, "onDataChange: DATA " + postSnapshot.child("type"));
 
-                        if(postSnapshot.child("language").exists()&&postSnapshot.child("language").getValue().equals("hindi")){
+                        if (postSnapshot.child("language").exists() && postSnapshot.child("language").getValue().equals("hindi")) {
 
                             if (!isDone.containsKey(postSnapshot.getKey())) {
 
-                                if(!Collections.disjoint(interests, (Collection<?>) postSnapshot.child("tags").getValue())) {
+                                if (!Collections.disjoint(interests, (Collection<?>) postSnapshot.child("tags").getValue())) {
 
                                     if (postSnapshot.child("type").getValue().equals("status")) {
                                         Log.d(TAG, "onDataChange: DATA troo");
                                         Status statusSnap = postSnapshot.getValue(Status.class);
-                                        statusSnap.setPostUid(postSnapshot.getKey());
+                                        if (!Objects.equals(statusSnap.getUid(), GURU_UID_USER)) {
 
-                                        isDone.put(postSnapshot.getKey(), (long) 1);
-                                        items.add(statusSnap);
+                                            statusSnap.setPostUid(postSnapshot.getKey());
+
+                                            isDone.put(postSnapshot.getKey(), (long) 1);
+                                            items.add(statusSnap);
+                                        }
                                     } else if (postSnapshot.child("type").getValue().equals("photo")) {
                                         Photo photoSnap = postSnapshot.getValue(Photo.class);
-                                        photoSnap.setPostUid(postSnapshot.getKey());
-                                        photoSnap.setStorageReference(mStorageReference.child(postSnapshot.getKey()));
-                                        isDone.put(postSnapshot.getKey(), (long) 1);
+                                        if (!Objects.equals(photoSnap.getUid(), GURU_UID_USER)) {
+
+                                            photoSnap.setPostUid(postSnapshot.getKey());
+                                            photoSnap.setStorageReference(mStorageReference.child(postSnapshot.getKey()));
+                                            isDone.put(postSnapshot.getKey(), (long) 1);
+                                        }
 
                                         items.add(photoSnap);
                                     } else if (postSnapshot.child("type").getValue().equals("video")) {
                                         final CustomVideo videoSnap = postSnapshot.getValue(CustomVideo.class);
-                                        if (mStorageReferenceVideo.child(postSnapshot.getKey()) != null) {
-                                            videoSnap.setPostUid(postSnapshot.getKey());
-                                            isDone.put(postSnapshot.getKey(), (long) 1);
-                                            items.add(videoSnap);
-                                            videoSnap.setStorageReference(mStorageReferenceVideo.child(postSnapshot.getKey()));
-                                            mStorageReferenceVideo.child(postSnapshot.getKey()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                                @Override
-                                                public void onSuccess(Uri uri) {
-                                                    videoSnap.setVideoURI(uri.toString());
-                                                }
-                                            });
+                                        if (!Objects.equals(videoSnap.getUid(), GURU_UID_USER)) {
+
+                                            if (mStorageReferenceVideo.child(postSnapshot.getKey()) != null) {
+                                                videoSnap.setPostUid(postSnapshot.getKey());
+                                                isDone.put(postSnapshot.getKey(), (long) 1);
+                                                items.add(videoSnap);
+                                                videoSnap.setStorageReference(mStorageReferenceVideo.child(postSnapshot.getKey()));
+                                                mStorageReferenceVideo.child(postSnapshot.getKey()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                                    @Override
+                                                    public void onSuccess(Uri uri) {
+                                                        videoSnap.setVideoURI(uri.toString());
+                                                    }
+                                                });
+                                            }
                                         }
                                     }
                                     mAdapter.notifyDataSetChanged();
@@ -975,7 +1054,62 @@ public class CommonFragment extends Fragment {
 
         final StorageReference mStorageReferenceVideo = FirebaseStorage.getInstance().getReference("posts").child("videos");
 
+        DatabaseReference mDatabaseReferencePostsDSGuru = FirebaseDatabase.getInstance().getReference("users").child(GURU_UID_USER).child("userPosts");
+
         if (mSelectedGurus != null && mSelectedGurus.size() > 0) {
+
+            mDatabaseReferencePostsDSGuru.orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                    mStorageReference = FirebaseStorage.getInstance().getReference("posts").child("images");
+
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+
+                        if (!isDone.containsKey(postSnapshot.getKey())) {
+
+                            if (postSnapshot.child("type").getValue().equals("status")) {
+                                Log.d(TAG, "onDataChange: DATA trooguru");
+                                Status statusSnap = postSnapshot.getValue(Status.class);
+                                statusSnap.setPostUid(postSnapshot.getKey());
+
+                                isDone.put(postSnapshot.getKey(), (long) 1);
+                                items.add(statusSnap);
+
+                                Log.d(TAG, "onDataChange: trooguru " + items + " " + isDone + " " + statusSnap.getStatus());
+                            } else if (postSnapshot.child("type").getValue().equals("photo")) {
+                                Photo photoSnap = postSnapshot.getValue(Photo.class);
+                                photoSnap.setPostUid(postSnapshot.getKey());
+                                photoSnap.setStorageReference(mStorageReference.child(postSnapshot.getKey()));
+                                isDone.put(postSnapshot.getKey(), (long) 1);
+
+                                items.add(photoSnap);
+                            } else if (postSnapshot.child("type").getValue().equals("video")) {
+                                final CustomVideo videoSnap = postSnapshot.getValue(CustomVideo.class);
+                                if (mStorageReferenceVideo.child(postSnapshot.getKey()) != null) {
+                                    videoSnap.setPostUid(postSnapshot.getKey());
+                                    isDone.put(postSnapshot.getKey(), (long) 1);
+                                    items.add(videoSnap);
+                                    videoSnap.setStorageReference(mStorageReferenceVideo.child(postSnapshot.getKey()));
+                                    mStorageReferenceVideo.child(postSnapshot.getKey()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                        @Override
+                                        public void onSuccess(Uri uri) {
+                                            videoSnap.setVideoURI(uri.toString());
+                                        }
+                                    });
+                                }
+                            }
+                            mAdapter.notifyDataSetChanged();
+                        }
+                        mAdapter.notifyDataSetChanged();
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.d(TAG, "onCancelled: " + databaseError.getMessage());
+                }
+            });
 
             for (String guru : mSelectedGurus) {
 
