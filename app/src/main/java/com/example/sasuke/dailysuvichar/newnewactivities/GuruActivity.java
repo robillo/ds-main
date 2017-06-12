@@ -340,6 +340,15 @@ public class GuruActivity extends AppCompatActivity {
         builder.show();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        sortGuru("All", true, true);
+        mRvGuruAdapter.notifyDataSetChanged();
+        rv.setAdapter(mRvGuruAdapter);
+    }
+
     public void refreshDB() {
 
     }
