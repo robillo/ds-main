@@ -177,6 +177,7 @@ public class NewMainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setIcon(R.mipmap.ic_launcher);
 
         from = getString(R.string.title_home);
 

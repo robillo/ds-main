@@ -8,12 +8,12 @@
 
     <item
         android:id="@+id/navigation_guru"
-        android:icon="@drawable/ic_nature_people_black_24dp"
+        android:icon="@drawable/ic_local_library_black_24dp"
         android:title="Guru List" />
 
     <item
         android:id="@+id/navigation_explore"
-        android:icon="@drawable/ic_donut_large_black_24dp"
+        android:icon="@drawable/ic_whatshot_black_24dp"
         android:title="@string/explore" />
 
     <item
