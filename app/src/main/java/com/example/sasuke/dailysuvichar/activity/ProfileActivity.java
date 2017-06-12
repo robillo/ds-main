@@ -158,8 +158,7 @@ public class ProfileActivity extends BaseActivity {
             Log.d(TAG, "onCreate: yfydfkuggjcgkjjkgc");
 
             specialization.setVisibility(View.VISIBLE);
-            specID.setVisibility(View.VISIBLE);
-            govID.setVisibility(View.VISIBLE);
+            mLinearLayout.setVisibility(View.VISIBLE);
 
             if(isFetchedData) {
                 fetchData();
