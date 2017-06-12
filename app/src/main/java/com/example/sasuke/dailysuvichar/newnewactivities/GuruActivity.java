@@ -38,6 +38,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import butterknife.BindView;
@@ -72,6 +73,9 @@ public class GuruActivity extends AppCompatActivity {
     @BindView(R.id.recyclerview)
     public RecyclerView rv;
 
+    String GURU_UID = "-KmPWw8K65No638al-5_";
+    String GURU_UID_USER = "KKdovrQ6nla0E6Npx7nEzmcm3Bh2F";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,21 +109,24 @@ public class GuruActivity extends AppCompatActivity {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
 
-                        Guru guru = postSnapshot.getValue(Guru.class);
-                        guru.setGuruUid(postSnapshot.getKey());
-                        guru.setStorageReference(mStorageReference.child(guru.getUid()));
-                        if (guruMap.containsKey(postSnapshot.getKey())) {
-                            guruList.set(guruMap.get(postSnapshot.getKey()), guru);
-                        } else {
-                            guruList.add(guru);
-                            guruMap.put(postSnapshot.getKey(), guruList.indexOf(guru));
-                        }
-                        Log.d(TAG, "onDataChange: count " + guru.getFollowersCount());
+                        if(!Objects.equals(postSnapshot.getKey(), GURU_UID)) {
+                            Guru guru = postSnapshot.getValue(Guru.class);
+                            guru.setGuruUid(postSnapshot.getKey());
+                            guru.setStorageReference(mStorageReference.child(guru.getUid()));
+                            if (guruMap.containsKey(postSnapshot.getKey())) {
+                                guruList.set(guruMap.get(postSnapshot.getKey()), guru);
+                            } else {
+                                Log.d(TAG, "onDataChange: GURU UID : "+postSnapshot.getKey());
+                                guruList.add(guru);
+                                guruMap.put(postSnapshot.getKey(), guruList.indexOf(guru));
+                            }
+                            Log.d(TAG, "onDataChange: count " + guru.getFollowersCount());
 //                    if(postSnapshot.child("followers").getValue()!=null){
 //                        guruFollowers.addAll((Collection<? extends String>) postSnapshot.child("followers").getValue());
 //                    }
 //                    videoSnap.setStorageReference(mStorageReferenceVideo.child(postSnapshot.getKey()));
-                        mRvGuruAdapter.notifyDataSetChanged();
+                            mRvGuruAdapter.notifyDataSetChanged();
+                        }
                     }
                 }
                 @Override
@@ -145,11 +152,27 @@ public class GuruActivity extends AppCompatActivity {
                 public void onCancelled(DatabaseError databaseError) {
                 }
             });
+            setDSasGuru(GURU_UID_USER);
         } else {
             Toast.makeText(this, R.string.no_inter, Toast.LENGTH_SHORT).show();
         }
 
         rv.setAdapter(mRvGuruAdapter);
+    }
+
+    public void setDSasGuru(String guru_uid){
+        DatabaseReference mDatabaseReferenceUser = FirebaseDatabase.getInstance().getReference("users").child(mFirebaseUser.getUid());
+        if (following!=null && !following.contains(guru_uid)) {
+
+            following.add(guru_uid);
+
+            Set<String> set = new HashSet<>();
+            set.addAll(following);
+            following.clear();
+            following.addAll(set);
+
+            mDatabaseReferenceUser.child("following").setValue(following);
+        }
     }
 
     public static void setFollowing(ArrayList<String> guruFollowers, String uid, boolean isFollowing, String guruUid) {
