@@ -2,6 +2,7 @@ package com.example.sasuke.dailysuvichar.view;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -13,8 +14,10 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.sasuke.dailysuvichar.R;
 import com.example.sasuke.dailysuvichar.activity.GuruDetailActivity;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.StorageReference;
 import com.readystatesoftware.viewbadger.BadgeView;
+import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,15 +50,26 @@ public class VHGurus extends RecyclerView.ViewHolder{
     }
 
 
-    public void setImage(StorageReference storageReference, Context ctx) {
+    public void setImage(StorageReference storageReference, final Context ctx) {
 //        Picasso.with(itemView.getContext()).load(photo).fit().into(mIvPhoto);
-        if(storageReference!=null) {
-            Glide.with(ctx).
-                    using(new FirebaseImageLoader())
-                    .load(storageReference)
-                    .centerCrop()
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(imageView1);
+//        if(storageReference!=null) {
+//            Glide.with(ctx).
+//                    using(new FirebaseImageLoader())
+//                    .load(storageReference)
+//                    .centerCrop()
+//                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+//                    .into(imageView1);
+//
+//        }
+        if(storageReference!=null){
+            storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    Picasso.with(ctx)
+                            .load(uri)
+                            .into(imageView1);
+                }
+            });
         }
     }
 
