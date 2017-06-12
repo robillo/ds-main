@@ -223,10 +223,12 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
             android:background="@color/black"
+            android:padding="10sp"
+            android:alpha="0.6"
             android:fontFamily="sans-serif-condensed"
             android:textStyle="bold"
             android:text="@string/save"
             android:textColor="@color/white"
-            android:textSize="20dp" />
+            android:textSize="15dp" />
     </RelativeLayout>
 </ScrollView>
