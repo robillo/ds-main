@@ -45,6 +45,8 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -473,24 +475,40 @@ public class GuruDetailActivity extends BaseActivity{
     private void setFollower(boolean follow){
 
         Log.d(TAG, "setFollower: "+guruUid);
-        Log.d(TAG, "setFollower: "+guruFollowers);
-        if(follow && guruUid!=null){
-            if(!guruFollowers.contains(mFirebaseUser.getUid())) {
+        Log.d(TAG, "setFollower: "+following);
+        if(follow ){
+            if(!following.contains(uid)){
+                following.add(uid);
+                mDatabaseReferenceUsers.child("following").setValue(following);
+            }
+            if (!guruFollowers.contains(mFirebaseUser.getUid())) {
+
                 guruFollowers.add(mFirebaseUser.getUid());
-                mGuruRef.child(guruUid).child("followers").setValue(guruFollowers);
+
+                Set<String> set = new HashSet<>();
+                set.addAll(guruFollowers);
+                guruFollowers.clear();
+                guruFollowers.addAll(set);
+
+                mGuruRef.child(guruUid).child("followers").setValue(following);
             }
-            if(!following.contains(guruUid)){
-                following.add(guruUid);
+
+        }else if(!follow){
+
+            if(following.contains(uid)){
+                following.remove(uid);
                 mDatabaseReferenceUsers.child("following").setValue(following);
             }
-        }else if(!follow && guruUid!=null){
-            if(guruFollowers.contains(mFirebaseUser.getUid())){
+            if (guruFollowers.contains(mFirebaseUser.getUid())) {
+
                 guruFollowers.remove(mFirebaseUser.getUid());
-                mGuruRef.child(guruUid).child("followers").setValue(guruFollowers);
-            }
-            if(following.contains(guruUid)){
-                following.remove(guruUid);
-                mDatabaseReferenceUsers.child("following").setValue(following);
+
+                Set<String> set = new HashSet<>();
+                set.addAll(guruFollowers);
+                guruFollowers.clear();
+                guruFollowers.addAll(set);
+
+                mGuruRef.child(guruUid).child("followers").setValue(following);
             }
         }
     }
