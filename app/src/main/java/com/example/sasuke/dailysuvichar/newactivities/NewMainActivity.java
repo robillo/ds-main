@@ -12,7 +12,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -188,36 +187,36 @@ public class NewMainActivity extends AppCompatActivity {
         if(SharedPrefs.getIsCoachmarkShowedOnetime()==null){
             new MaterialTapTargetPrompt.Builder(this)
                     .setTarget(findViewById(R.id.navigation_home))
-                    .setPrimaryText("ROBILLO")
-                    .setSecondaryText("IS TESTING FOR PROMPT")
+                    .setPrimaryText(getString(R.string.home))
+                    .setSecondaryText(getString(R.string.homed))
                     .setOnHidePromptListener(new MaterialTapTargetPrompt.OnHidePromptListener() {
                         @Override
                         public void onHidePrompt(MotionEvent event, boolean tappedTarget) {
                             new MaterialTapTargetPrompt.Builder(NewMainActivity.this)
                                     .setTarget(findViewById(R.id.navigation_explore))
-                                    .setPrimaryText("ROBILLO")
-                                    .setSecondaryText("IS TESTING FOR PROMPT")
+                                    .setPrimaryText(getString(R.string.explore))
+                                    .setSecondaryText(getString(R.string.explored))
                                     .setOnHidePromptListener(new MaterialTapTargetPrompt.OnHidePromptListener() {
                                         @Override
                                         public void onHidePrompt(MotionEvent event, boolean tappedTarget) {
                                             new MaterialTapTargetPrompt.Builder(NewMainActivity.this)
                                                     .setTarget(findViewById(R.id.navigation_guru))
-                                                    .setPrimaryText("ROBILLO")
-                                                    .setSecondaryText("IS TESTING FOR PROMPT")
+                                                    .setPrimaryText(getString(R.string.gurus))
+                                                    .setSecondaryText(getString(R.string.gurud))
                                                     .setOnHidePromptListener(new MaterialTapTargetPrompt.OnHidePromptListener() {
                                                         @Override
                                                         public void onHidePrompt(MotionEvent event, boolean tappedTarget) {
                                                             new MaterialTapTargetPrompt.Builder(NewMainActivity.this)
                                                                     .setTarget(findViewById(R.id.navigation_your_feeds))
-                                                                    .setPrimaryText("ROBILLO")
-                                                                    .setSecondaryText("IS TESTING FOR PROMPT")
+                                                                    .setPrimaryText(getString(R.string.your_feedsss))
+                                                                    .setSecondaryText(getString(R.string.see_what))
                                                                     .setOnHidePromptListener(new MaterialTapTargetPrompt.OnHidePromptListener() {
                                                                         @Override
                                                                         public void onHidePrompt(MotionEvent event, boolean tappedTarget) {
                                                                             new MaterialTapTargetPrompt.Builder(NewMainActivity.this)
                                                                                     .setTarget(findViewById(R.id.navigation_profile))
-                                                                                    .setPrimaryText("ROBILLO")
-                                                                                    .setSecondaryText("IS TESTING FOR PROMPT")
+                                                                                    .setPrimaryText(getString(R.string.profile))
+                                                                                    .setSecondaryText(R.string.profile_desc)
                                                                                     .setOnHidePromptListener(new MaterialTapTargetPrompt.OnHidePromptListener() {
                                                                                         @Override
                                                                                         public void onHidePrompt(MotionEvent event, boolean tappedTarget) {

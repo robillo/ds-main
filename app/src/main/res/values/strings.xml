@@ -406,4 +406,5 @@ Happy Discovering!</string>
     <string name="ns_cover">Cover not selected</string>
     <string name="ns_govid">GOV ID not selected</string>
     <string name="ns_specid">Specialization ID not selected</string>
+    <string name="profile_desc">View or edit your profile.</string>
 </resources>
