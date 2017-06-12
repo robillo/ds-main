@@ -46,6 +46,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -158,7 +159,7 @@ public class ProfileActivity extends BaseActivity {
             Log.d(TAG, "onCreate: yfydfkuggjcgkjjkgc");
 
             specialization.setVisibility(View.VISIBLE);
-            mLinearLayout.setVisibility(View.VISIBLE);
+//            mLinearLayout.setVisibility(View.VISIBLE);
 
             if(isFetchedData) {
                 fetchData();
@@ -257,24 +258,41 @@ public class ProfileActivity extends BaseActivity {
                     Activity a = ProfileActivity.this;
                     if(!a.isDestroyed()) {
                         Log.d(TAG, "onDataChange: kihkbklbj");
-                        Glide.with(a).
-                                using(new FirebaseImageLoader())
-                                .load(mStorageReferenceDP.child(dataSnapshot.getKey()))
-                                .centerCrop()
-                                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                                .into(userProfilePic);
+//                        Glide.with(a).
+//                                using(new FirebaseImageLoader())
+//                                .load(mStorageReferenceDP.child(dataSnapshot.getKey()))
+//                                .centerCrop()
+//                                .diskCacheStrategy(DiskCacheStrategy.NONE)
+//                                .into(userProfilePic);
+                        mStorageReferenceDP.child(dataSnapshot.getKey()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                Picasso.with(getApplicationContext())
+                                        .load(uri)
+                                        .into(userProfilePic);
+                            }
+                        });
+
                     }
                 }
                 if(dataSnapshot.child("coverUrl").getValue()!=null) {
 
                     Activity a = ProfileActivity.this;
                     if(!a.isDestroyed()) {
-                        Glide.with(a).
-                                using(new FirebaseImageLoader())
-                                .load(mStorageReferenceCover.child(dataSnapshot.getKey()))
-                                .centerCrop()
-                                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                                .into(userCoverPic);
+//                        Glide.with(a).
+//                                using(new FirebaseImageLoader())
+//                                .load(mStorageReferenceCover.child(dataSnapshot.getKey()))
+//                                .centerCrop()
+//                                .diskCacheStrategy(DiskCacheStrategy.NONE)
+//                                .into(userCoverPic);
+                        mStorageReferenceCover.child(dataSnapshot.getKey()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                Picasso.with(getApplicationContext())
+                                        .load(uri)
+                                        .into(userCoverPic);
+                            }
+                        });
                     }
                 }
             }
@@ -305,12 +323,17 @@ public class ProfileActivity extends BaseActivity {
             cursor.close();
 
             Log.e("REQUEST BEFORE", picturePath);
-            Glide.with(this)
+//            Glide.with(this)
+//                    .load(picturePath)
+//                    .crossFade()
+//                    .centerCrop()
+//                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+//                    .into(userProfilePic);
+
+            Picasso.with(getApplicationContext())
                     .load(picturePath)
-                    .crossFade()
-                    .centerCrop()
-                    .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .into(userProfilePic);
+
             Log.e("REQUEST AFTER", picturePath);
 
             String dpPathDB = null;
@@ -360,11 +383,15 @@ public class ProfileActivity extends BaseActivity {
             String picturePath = cursor.getString(columnIndex);
             cursor.close();
 
-            Glide.with(this)
+//            Glide.with(this)
+//                    .load(picturePath)
+//                    .crossFade()
+//                    .centerCrop()
+//                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+//                    .into(userCoverPic);
+
+            Picasso.with(this)
                     .load(picturePath)
-                    .crossFade()
-                    .centerCrop()
-                    .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .into(userCoverPic);
 
             String coverPathDB=null;
@@ -411,11 +438,15 @@ public class ProfileActivity extends BaseActivity {
             String picturePath = cursor.getString(columnIndex);
             cursor.close();
 
-            Glide.with(this)
+//            Glide.with(this)
+//                    .load(picturePath)
+//                    .crossFade()
+//                    .centerCrop()
+//                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+//                    .into(govID);
+
+            Picasso.with(this)
                     .load(picturePath)
-                    .crossFade()
-                    .centerCrop()
-                    .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .into(govID);
 
 
@@ -457,11 +488,15 @@ public class ProfileActivity extends BaseActivity {
             String picturePath = cursor.getString(columnIndex);
             cursor.close();
 
-            Glide.with(this)
+//            Glide.with(this)
+//                    .load(picturePath)
+//                    .crossFade()
+//                    .centerCrop()
+//                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+//                    .into(specID);
+
+            Picasso.with(this)
                     .load(picturePath)
-                    .crossFade()
-                    .centerCrop()
-                    .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .into(specID);
 
             if(specPath!=null){
