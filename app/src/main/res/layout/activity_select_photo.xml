@@ -120,45 +120,29 @@
             android:layout_weight="6"
             android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/upload"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="0sp"
-                android:layout_weight="5"
-                android:scaleType="fitCenter"
-                android:contentDescription="@string/app_name" />
+                android:layout_height="wrap_content">
+
+                <include layout="@layout/new_include_layout"/>
+
+            </FrameLayout>
 
             <EditText
                 android:id="@+id/etCaption"
                 android:layout_width="match_parent"
-                android:layout_height="0sp"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:minHeight="50sp"
                 android:hint="@string/caption" />
 
+            <ImageView
+                android:id="@+id/upload"
+                android:layout_width="match_parent"
+                android:layout_height="200sp"
+                android:scaleType="fitCenter"
+                android:contentDescription="@string/app_name" />
+
         </LinearLayout>
-
-
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:fontFamily="sans-serif-smallcaps"
-            android:paddingBottom="5dp"
-            android:paddingTop="5dp"
-            android:text="@string/select_tags"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textSize="15sp"
-            android:textStyle="bold" />
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="0sp"
-            android:layout_weight="4">
-
-            <include layout="@layout/include_layout"/>
-
-        </FrameLayout>
 
     </LinearLayout>
 

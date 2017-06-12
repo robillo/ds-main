@@ -69,10 +69,10 @@ public class SelectPhotoActivity extends BaseActivity{
     TextView astrology;
 //    @BindView(R.id.next)
 //    Button next;
-    @BindView(R.id.grid)
-    GridLayout grid;
-    @BindView(R.id.recyclerview)
-    RecyclerView recyclerView;
+//    @BindView(R.id.grid)
+//    GridLayout grid;
+//    @BindView(R.id.recyclerview)
+//    RecyclerView recyclerView;
     @BindView(R.id.etCaption)
     EditText etCaption;
     @BindView(R.id.switch_lang)

@@ -97,6 +97,14 @@ android:fitsSystemWindows="true">
 
         </LinearLayout>
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <include layout="@layout/new_include_layout"/>
+
+        </FrameLayout>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -123,26 +131,6 @@ android:fitsSystemWindows="true">
             android:textSize="18dp">
 
         </EditText>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/black"
-            android:fontFamily="sans-serif-smallcaps"
-            android:paddingBottom="5dp"
-            android:paddingTop="5dp"
-            android:text="@string/select_tags"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textSize="15sp"
-            android:textStyle="bold" />
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="0sp"
-            android:layout_weight="4">
-
-            <include layout="@layout/include_layout"/>
-
-        </FrameLayout>
 
     </LinearLayout>
 
