@@ -152,12 +152,14 @@ public class GuruActivity extends AppCompatActivity {
                 public void onCancelled(DatabaseError databaseError) {
                 }
             });
-            setDSasGuru(GURU_UID_USER);
         } else {
             Toast.makeText(this, R.string.no_inter, Toast.LENGTH_SHORT).show();
         }
 
         rv.setAdapter(mRvGuruAdapter);
+        Log.d(TAG, "onCreate: "+following);
+        Log.d(TAG, "onCreate: "+followingMap);
+        //setDSasGuru(GURU_UID_USER);
     }
 
     public void setDSasGuru(String guru_uid){

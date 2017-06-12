@@ -26,7 +26,6 @@ import com.example.sasuke.dailysuvichar.models.CustomVideo;
 import com.example.sasuke.dailysuvichar.models.Photo;
 import com.example.sasuke.dailysuvichar.models.Status;
 import com.example.sasuke.dailysuvichar.models.Video;
-import com.example.sasuke.dailysuvichar.newnewactivities.GuruActivity;
 import com.example.sasuke.dailysuvichar.view.adapter.CustomVideoAdapter;
 import com.example.sasuke.dailysuvichar.view.adapter.PhotoItemAdapter;
 import com.example.sasuke.dailysuvichar.view.adapter.StatusItemAdapter;
@@ -76,7 +75,7 @@ public class GuruDetailActivity extends BaseActivity{
     private boolean isFollowing = false;
     private String uid;
     private HashMap<String,Long> isDone;
-    private DatabaseReference mDatabaseReference, mDatabaseReferencePosts;
+    private DatabaseReference mDatabaseReference, mDatabaseReferencePosts,mDatabaseReferenceG;
     private StorageReference mStorageReference;
     private FirebaseUser mFirebaseUser;
     private LinearLayoutManager mLayoutManager;
@@ -85,6 +84,7 @@ public class GuruDetailActivity extends BaseActivity{
 
     private MultiTypeAdapter mAdapter;
     CustomVideoAdapter customVideoAdapter;
+    private ArrayList<String> followers;
     private DatabaseReference mDatabaseReferenceUsers;
 
 
@@ -101,11 +101,37 @@ public class GuruDetailActivity extends BaseActivity{
         mDatabaseReferenceUsers = FirebaseDatabase.getInstance().getReference("users").child(mFirebaseUser.getUid());
         mStorageReference = FirebaseStorage.getInstance().getReference("profile").child("user");
         mDatabaseReference = FirebaseDatabase.getInstance().getReference("users");
+        mDatabaseReferenceG = FirebaseDatabase.getInstance().getReference("gurus").child("official");
 
         Intent i = getIntent();
         isFollowing = i.getBooleanExtra("isfollowing", false);
         uid = i.getStringExtra("uid");
         following=new ArrayList<>();
+        followers=new ArrayList<>();
+
+//        mDatabaseReferenceG.child(uid).addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+//
+////                    if(!Objects.equals(postSnapshot.getKey(), GURU_UID)) {
+//                        Guru guru = postSnapshot.getValue(Guru.class);
+//                        guru.setGuruUid(postSnapshot.getKey());
+//                        guru.setStorageReference(mStorageReference.child(guru.getUid()));
+//                        followers.addAll(guru.getFollowers());
+//                        Log.d(TAG, "onDataChange: count " + guru.getFollowersCount());
+////                    if(postSnapshot.child("followers").getValue()!=null){
+////                        guruFollowers.addAll((Collection<? extends String>) postSnapshot.child("followers").getValue());
+////                    }
+////                    videoSnap.setStorageReference(mStorageReferenceVideo.child(postSnapshot.getKey()));
+////                        mRvGuruAdapter.notifyDataSetChanged();
+//
+//                }
+//            }
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//            }
+//        });
 
         mDatabaseReferenceUsers.child("following").addValueEventListener(new ValueEventListener() {
             @Override
@@ -338,10 +364,14 @@ public class GuruDetailActivity extends BaseActivity{
         if(follow.getText().equals(getString(R.string.follow_caps))){
             follow.setText(getString(R.string.following_caps));
             follow.setBackgroundColor(getResources().getColor(R.color.green));
+//            GuruActivity.setFollowing(followers, mFirebaseUser.getUid(),true,uid);
+
         }
         else {
             follow.setText(getString(R.string.follow_caps));
             follow.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+//            GuruActivity.setFollowing(followers, mFirebaseUser.getUid(),false,uid);
+
         }
     }
 
