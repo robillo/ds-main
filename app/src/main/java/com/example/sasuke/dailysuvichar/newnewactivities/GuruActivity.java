@@ -9,6 +9,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -43,6 +44,7 @@ import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
 
@@ -72,6 +74,8 @@ public class GuruActivity extends AppCompatActivity {
     private static Integer getFollowerCount;
     @BindView(R.id.recyclerview)
     public RecyclerView rv;
+    @BindView(R.id.cardView)
+    CardView cardView;
 
     String GURU_UID = "-KmPWw8K65No638al-5_";
     String GURU_UID_USER = "KKdovrQ6nla0E6Npx7nEzmcm3Bh2F";
@@ -85,6 +89,7 @@ public class GuruActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         toolbar.setNavigationIcon(R.drawable.ic_clear_black_24dp);
 
         mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -469,5 +474,10 @@ public class GuruActivity extends AppCompatActivity {
                 (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
         return netInfo != null && netInfo.isConnectedOrConnecting();
+    }
+
+    @OnClick(R.id.cardView)
+    public void showToast(){
+        Toast.makeText(getApplicationContext(), "Daily Suvichar Cannor Be Unfollowed.", Toast.LENGTH_SHORT).show();
     }
 }
