@@ -141,17 +141,20 @@ public class GuruDetailActivity extends BaseActivity{
         mGuruRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.d(TAG, "onDataChange: "+dataSnapshot);
-                guruUid = dataSnapshot.getKey();
-                Log.d(TAG, "onDataChange: key "+dataSnapshot.getKey());
-                Log.d(TAG, "onDataChange: spec "+dataSnapshot.child("specialization").getValue());
-                Log.d(TAG, "onDataChange: follow "+dataSnapshot.child("followers").getValue());
-                if(dataSnapshot.child("specialization").getValue()!=null) {
-                    Log.d(TAG, "onDataChange: hohoho");
-                    spec.setText(dataSnapshot.child("specialization").getValue().toString());
-                }
-                if(dataSnapshot.child("followers").getValue()!=null) {
-                    guruFollowers.addAll((Collection<? extends String>) dataSnapshot.child("followers").getValue());
+
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    Log.d(TAG, "onDataChange: "+postSnapshot);
+                    guruUid = postSnapshot.getKey();
+                    Log.d(TAG, "onDataChange: key "+postSnapshot.getKey());
+                    Log.d(TAG, "onDataChange: spec "+postSnapshot.child("specialization").getValue());
+                    Log.d(TAG, "onDataChange: follow "+postSnapshot.child("followers").getValue());
+                    if(postSnapshot.child("specialization").getValue()!=null) {
+                        Log.d(TAG, "onDataChange: hohoho");
+                        spec.setText(postSnapshot.child("specialization").getValue().toString());
+                    }
+                    if(postSnapshot.child("followers").getValue()!=null) {
+                        guruFollowers.addAll((Collection<? extends String>) postSnapshot.child("followers").getValue());
+                    }
                 }
             }
             @Override

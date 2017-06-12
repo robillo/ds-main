@@ -109,6 +109,7 @@ public class CommonFragment extends Fragment {
     private int sort = 0;
     private String sortBy = "timestamp";
     boolean bool = true;
+    CustomVideoAdapter customVideoAdapter;
 
 
     public CommonFragment() {
@@ -154,7 +155,7 @@ public class CommonFragment extends Fragment {
 
         slide_down = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_down);
         slide_up = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_up);
-//        customVideoAdapter = new CustomVideoAdapter();
+        customVideoAdapter = new CustomVideoAdapter();
 
         mLayoutManager = new LinearLayoutManager(getActivity());
         mLayoutManager.setItemPrefetchEnabled(true);
@@ -757,6 +758,7 @@ public class CommonFragment extends Fragment {
 
     }
 
+
     private void fetchGuruPostsFromFirebaseEnglish(String sortOption) {
 
         final StorageReference mStorageReferenceVideo = FirebaseStorage.getInstance().getReference("posts").child("videos");
@@ -1356,6 +1358,15 @@ public class CommonFragment extends Fragment {
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onPause() {
+        if (customVideoAdapter != null) {
+            customVideoAdapter.releaseVideo();
+        }
+        super.onPause();
+    }
+
 
     public boolean isOnline() {
         ConnectivityManager cm =

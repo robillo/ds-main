@@ -335,6 +335,7 @@ public class CustomVideoVH extends RecyclerView.ViewHolder implements View.OnCli
         }
         return sb.toString();
     }
+
     private void scanGallery(final Context cntx, String path) {
         try {
             MediaScannerConnection.scanFile(cntx, new String[] { path },null, new MediaScannerConnection.OnScanCompletedListener() {
