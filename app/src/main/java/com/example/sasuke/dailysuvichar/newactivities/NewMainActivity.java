@@ -222,8 +222,8 @@ public class NewMainActivity extends AppCompatActivity {
                                                                                         public void onHidePrompt(MotionEvent event, boolean tappedTarget) {
                                                                                             new MaterialTapTargetPrompt.Builder(NewMainActivity.this)
                                                                                                     .setTarget(findViewById(R.id.action_language))
-                                                                                                    .setPrimaryText("ROBILLO")
-                                                                                                    .setSecondaryText("IS TESTING FOR PROMPT")
+                                                                                                    .setPrimaryText(R.string.translate)
+                                                                                                    .setSecondaryText(R.string.view_in_horen)
                                                                                                     .setOnHidePromptListener(new MaterialTapTargetPrompt.OnHidePromptListener() {
                                                                                                         @Override
                                                                                                         public void onHidePrompt(MotionEvent event, boolean tappedTarget) {
