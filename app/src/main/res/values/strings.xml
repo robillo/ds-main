@@ -1,13 +1,13 @@
 <resources>
     <string name="app_name">Daily Suvichar</string>
-    <string name="click_back_again_to_exit">Click back again to exit</string>
-    <string name="validation_successful">Validation Successful</string>
-    <string name="registered_successfully">Registered Successfully</string>
-    <string name="registration_unsuccessfully">Registration Unsuccessfully</string>
+    <string name="click_back_again_to_exit"> बाहर निकलने के लिए वापस जाएं </string>
+    <string name="validation_successful"> मान्य किया गया </string>
+    <string name="registered_successfully"> सफलतापूर्वक पंजीकृत </string>
+    <string name="registration_unsuccessfully"> पंजीकृत असफल </string>
     <string name="divider">Divider</string>
-    <string name="logo">Logo</string>
-    <string name="tab">tab</string>
-    <string name="seperator">Seperator</string>
+    <string name="logo"> लोगो </string>
+    <string name="tab"> टैब </string>
+    <string name="separator">Separator</string>
 
     <!-- Login Activity -->
     <string name="login_activity_title">Login</string>
@@ -17,7 +17,7 @@
     <string name="redirect_to_register">Don\'t have an Account? Register Here</string>
     <string name="logout">Logout</string>
     <string name="forgot_password">Forgot your Password?</string>
-    <string name="please_wait">Please wait...</string>
+    <string name="please_wait">Please wait..</string>
 
     <!--Register Activity -->
     <string name="password_again">Re-Enter Password</string>
@@ -51,7 +51,7 @@
     <string name="menu">Menu</string>
 
     <!-- Home Menu -->
-    <string name="share_your_suvichar">Share your suvichar</string>
+    <string name="share_your_suvichar">#merasuvichar</string>
     <string name="status">Status</string>
     <string name="photo">Photo</string>
     <string name="video">Video</string>
@@ -239,7 +239,7 @@
 
     <string name="hindi_text">English Text Accessed</string>
     <string name="select_tags">SELECT TAGS</string>
-    <string name="write_something">Write something here...</string>
+    <string name="write_something">Write something here..</string>
     <string name="your_feeds">Your Feeds</string>
 
     <!-- TODO: Remove or change this placeholder text -->
@@ -250,14 +250,14 @@
     <string name="file_uploaded">File Uploaded!</string>
     <string name="set_name">Set Your Name</string>
     <string name="full_name">First Name + Last Name</string>
-    <string name="enter_name">Enter your name...</string>
+    <string name="enter_name">Enter your name..</string>
     <string name="set_bio">Set Your Bio</string>
-    <string name="short_desc">A Short Descripton About Yourself.</string>
-    <string name="enter_bio_here">Enter bio here...</string>
+    <string name="short_desc">A Short Description About Yourself.</string>
+    <string name="enter_bio_here">Enter bio here..</string>
     <string name="bio">Bio:</string>
     <string name="set_username">Set Your Username</string>
     <string name="represent">A Short Name YouRepresent.</string>
-    <string name="enter_username">Enter username here...</string>
+    <string name="enter_username">Enter username here..</string>
     <string name="preference">Set Your Language Preference</string>
     <string name="english_lang">English</string>
     <string name="hindi_lang">Hindi</string>
@@ -294,7 +294,7 @@
     <string name="uploading">Uploading</string>
     <string name="please_atleast">Please Select Atleast One Subcategory.</string>
     <string name="failure">Upload Failed. Please Try Again!</string>
-    <string name="uploaded">File Uploaded; Changes will be reflected in subsequent launches</string>
+    <string name="uploaded">File Uploaded</string>
     <string name="success">Post successful!</string>
     <string name="caption">Write a caption</string>
     <string name="no_file">No file chosen</string>
@@ -398,7 +398,8 @@ Happy Discovering!</string>
     <string name="both_lang">Both</string>
     <string name="make_changes">Please make atleast one change.</string>
     <string name="successfully">Profile Updated Successfully.</string>
-    <string name="shortly">Image Uploaded. Changes will be reflected in subsequent launches.</string>
+    <string name="shortly">Image Uploaded. Changes will be reflected in subsequent launches.
+.</string>
     <string name="sort_by">Sort by:</string>
     <string name="popularity">Popularity</string>
     <string name="most_recent">Most Recent</string>

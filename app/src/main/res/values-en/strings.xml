@@ -1,13 +1,13 @@
 <resources>
     <string name="app_name">Daily Suvichar</string>
-    <string name="click_back_again_to_exit">Click back again to exit</string>
-    <string name="validation_successful">Validation Successful</string>
-    <string name="registered_successfully">Registered Successfully</string>
-    <string name="registration_unsuccessfully">Registration Unsuccessfully</string>
+    <string name="click_back_again_to_exit"> बाहर निकलने के लिए वापस जाएं </string>
+    <string name="validation_successful"> मान्य किया गया </string>
+    <string name="registered_successfully"> सफलतापूर्वक पंजीकृत </string>
+    <string name="registration_unsuccessfully"> पंजीकृत असफल </string>
     <string name="divider">Divider</string>
-    <string name="logo">Logo</string>
-    <string name="tab">tab</string>
-    <string name="seperator">Seperator</string>
+    <string name="logo"> लोगो </string>
+    <string name="tab"> टैब </string>
+    <string name="separator">Separator</string>
 
     <!-- Login Activity -->
     <string name="login_activity_title">Login</string>
@@ -17,7 +17,7 @@
     <string name="redirect_to_register">Don\'t have an Account? Register Here</string>
     <string name="logout">Logout</string>
     <string name="forgot_password">Forgot your Password?</string>
-    <string name="please_wait">Please wait...</string>
+    <string name="please_wait">Please wait..</string>
 
     <!--Register Activity -->
     <string name="password_again">Re-Enter Password</string>
@@ -51,12 +51,14 @@
     <string name="menu">Menu</string>
 
     <!-- Home Menu -->
-    <string name="share_your_suvichar">Share your suvichar</string>
+    <string name="share_your_suvichar">#merasuvichar</string>
     <string name="status">Status</string>
     <string name="photo">Photo</string>
     <string name="video">Video</string>
 
     <!--LoginFragment-->
+    <string name="facebook_app_id" translatable="false">298302307256927</string>
+    <string name="fb_login_protocol_scheme" translatable="false">fb298302307256927</string>
     <string name="sign_in_failed">Sign In Failed</string>
     <string name="play_services_error">PLAY SERVICES ERROR</string>
     <string name="authentication_failed">Authentication failed</string>
@@ -237,7 +239,7 @@
 
     <string name="hindi_text">English Text Accessed</string>
     <string name="select_tags">SELECT TAGS</string>
-    <string name="write_something">Write something here...</string>
+    <string name="write_something">Write something here..</string>
     <string name="your_feeds">Your Feeds</string>
 
     <!-- TODO: Remove or change this placeholder text -->
@@ -248,14 +250,14 @@
     <string name="file_uploaded">File Uploaded!</string>
     <string name="set_name">Set Your Name</string>
     <string name="full_name">First Name + Last Name</string>
-    <string name="enter_name">Enter your name...</string>
+    <string name="enter_name">Enter your name..</string>
     <string name="set_bio">Set Your Bio</string>
-    <string name="short_desc">A Short Descripton About Yourself.</string>
-    <string name="enter_bio_here">Enter bio here...</string>
+    <string name="short_desc">A Short Description About Yourself.</string>
+    <string name="enter_bio_here">Enter bio here..</string>
     <string name="bio">Bio:</string>
     <string name="set_username">Set Your Username</string>
     <string name="represent">A Short Name YouRepresent.</string>
-    <string name="enter_username">Enter username here...</string>
+    <string name="enter_username">Enter username here..</string>
     <string name="preference">Set Your Language Preference</string>
     <string name="english_lang">English</string>
     <string name="hindi_lang">Hindi</string>
@@ -268,8 +270,6 @@
     <string name="gender">Gender:</string>
     <string name="male">Male</string>
     <string name="female">Female</string>
-    <string name="pause">pause</string>
-    <string name="download_video">Download</string>
     <string name="male_caps">MALE</string>
     <string name="female_caps">FEMALE</string>
     <string name="astrology_">Astrology Guru</string>
@@ -280,7 +280,7 @@
     <string name="set_spec">Set Your Specialization:</string>
     <string name="descc">Spiritual Skill You Majorly Specialize In.</string>
     <string name="please_correct">Please Enter Correct Date Of Birth</string>
-    <string name="please">PLEASE ENTER FULL DETAILS</string>
+    <string name="please">PLEASE ENTER FULL DETAILS:</string>
     <string name="please_user">PLEASE SELECT USER TYPE</string>
     <string name="ns_fullname">(Full Name: Not Selected)</string>
     <string name="ns_username">Username: Not Selected</string>
@@ -315,6 +315,8 @@
     <string name="selectt">Select Picture</string>
     <string name="selecto">Select Video</string>
     <string name="play">play</string>
+    <string name="pause">pause</string>
+    <string name="download_video">Download</string>
     <string name="subinterest_text">Subinterest Text</string>
     <string name="light">LIGHT</string>
     <string name="baba_ramdev">Baba Ramdev</string>
@@ -396,7 +398,8 @@ Happy Discovering!</string>
     <string name="both_lang">Both</string>
     <string name="make_changes">Please make atleast one change.</string>
     <string name="successfully">Profile Updated Successfully.</string>
-    <string name="shortly">Please Wait.. Image Will be updated shortly..</string>
+    <string name="shortly">Image Uploaded. Changes will be reflected in subsequent launches.
+.</string>
     <string name="sort_by">Sort by:</string>
     <string name="popularity">Popularity</string>
     <string name="most_recent">Most Recent</string>
@@ -407,4 +410,5 @@ Happy Discovering!</string>
     <string name="profile_desc">View or edit your profile.</string>
     <string name="translate">Translate</string>
     <string name="view_in_horen">View The Posts in Hindi or in English.</string>
+    <string name="back">Save and Exit</string>
 </resources>

@@ -158,7 +158,7 @@ public class ProfileActivity extends BaseActivity {
             saveButton.setText(R.string.back);
             Log.d(TAG, "onCreate: yfydfkuggjcgkjjkgc");
 
-            specialization.setVisibility(View.VISIBLE);
+//            specialization.setVisibility(View.VISIBLE);
 //            mLinearLayout.setVisibility(View.VISIBLE);
 
             if(isFetchedData) {
