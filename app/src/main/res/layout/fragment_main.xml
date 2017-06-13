@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="60dp" />
 
-    <com.example.sasuke.dailysuvichar.view.TabBar
+    <com.robillo.sasuke.dailysuvichar.view.TabBar
         android:id="@+id/tab_bar"
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -22,7 +22,7 @@
         app:select_color="@color/blue_dark"
         app:text_size="@dimen/tabbar_text_size">
 
-        <com.example.sasuke.dailysuvichar.view.Tab
+        <com.robillo.sasuke.dailysuvichar.view.Tab
             android:id="@+id/tab_home"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -31,7 +31,7 @@
             app:image_drawable="@drawable/ic_home"
             app:name="@string/home" />
 
-        <com.example.sasuke.dailysuvichar.view.Tab
+        <com.robillo.sasuke.dailysuvichar.view.Tab
             android:id="@+id/tab_gurus"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -40,7 +40,7 @@
             app:image_drawable="@drawable/ic_guru"
             app:name="@string/gurus" />
 
-        <com.example.sasuke.dailysuvichar.view.Tab
+        <com.robillo.sasuke.dailysuvichar.view.Tab
             android:id="@+id/tab_trending"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -49,7 +49,7 @@
             app:image_drawable="@drawable/ic_settings"
             app:name="@string/trending" />
 
-        <com.example.sasuke.dailysuvichar.view.Tab
+        <com.robillo.sasuke.dailysuvichar.view.Tab
             android:id="@+id/tab_explore"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -58,6 +58,6 @@
             app:image_drawable="@drawable/ic_settings"
             app:name="Explore" />
 
-    </com.example.sasuke.dailysuvichar.view.TabBar>
+    </com.robillo.sasuke.dailysuvichar.view.TabBar>
 
 </RelativeLayout>

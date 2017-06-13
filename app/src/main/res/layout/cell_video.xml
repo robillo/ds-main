@@ -42,7 +42,7 @@ android:layout_margin="8sp">
             android:layout_marginBottom="4sp"
             android:background="@color/black" />
 
-        <com.example.sasuke.dailysuvichar.view.YoutubeWebView
+        <com.robillo.sasuke.dailysuvichar.view.YoutubeWebView
             android:id="@+id/webview"
             android:layout_width="match_parent"
             android:layout_height="250dp"

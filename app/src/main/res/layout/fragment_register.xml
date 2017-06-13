@@ -7,7 +7,7 @@
     android:background="@color/white"
     android:orientation="vertical"
     android:gravity="center_vertical"
-    tools:context="com.example.sasuke.dailysuvichar.activity.MainActivity">
+    tools:context="com.robillo.sasuke.dailysuvichar.activity.MainActivity">
 
     <ScrollView
         android:layout_width="match_parent"

@@ -1,13 +1,14 @@
 <resources>
     <string name="app_name">Daily Suvichar</string>
-    <string name="click_back_again_to_exit"> बाहर निकलने के लिए वापस जाएं </string>
-    <string name="validation_successful"> मान्य किया गया </string>
-    <string name="registered_successfully"> सफलतापूर्वक पंजीकृत </string>
-    <string name="registration_unsuccessfully"> पंजीकृत असफल </string>
+    <string name="click_back_again_to_exit"> Click BACK Again to exit</string>
+    <string name="validation_successful"> Validation Successful</string>
+    <string name="registered_successfully"> Registration Successful</string>
+    <string name="registration_unsuccessfully"> Registration Unsuccessful</string>
     <string name="divider">Divider</string>
-    <string name="logo"> लोगो </string>
-    <string name="tab"> टैब </string>
+    <string name="logo"> Logo</string>
+    <string name="tab">Tab</string>
     <string name="separator">Separator</string>
+    <string name="seperator">Separator</string>
 
     <!-- Login Activity -->
     <string name="login_activity_title">Login</string>
@@ -57,8 +58,6 @@
     <string name="video">Video</string>
 
     <!--LoginFragment-->
-    <string name="facebook_app_id" translatable="false">298302307256927</string>
-    <string name="fb_login_protocol_scheme" translatable="false">fb298302307256927</string>
     <string name="sign_in_failed">Sign In Failed</string>
     <string name="play_services_error">PLAY SERVICES ERROR</string>
     <string name="authentication_failed">Authentication failed</string>

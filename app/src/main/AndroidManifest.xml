@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.sasuke.dailysuvichar">
+    package="com.robillo.sasuke.dailysuvichar">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -34,7 +34,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.LoginActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:exported="true"
+            android:label="@string/app_name"
             android:screenOrientation="portrait">
             <intent-filter>
                 <data android:scheme="@string/fb_login_protocol_scheme" />
@@ -55,22 +57,22 @@
         <!-- android:hardwareAccelerated="true" /> -->
         <activity
             android:name=".activity.SelectStatusActivity"
+            android:parentActivityName=".newactivities.NewMainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan"
-            android:parentActivityName=".newactivities.NewMainActivity"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.SelectPhotoActivity"
+            android:parentActivityName=".newactivities.NewMainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan"
-            android:parentActivityName=".newactivities.NewMainActivity" />
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.SelectVideoActivity"
+            android:parentActivityName=".newactivities.NewMainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan"
-            android:parentActivityName=".newactivities.NewMainActivity"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.FullScreenActivity"
             android:screenOrientation="portrait"
@@ -109,8 +111,18 @@
         <activity
             android:name=".activity.AboutActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".newnewactivities.GuruActivity"
-            android:parentActivityName=".newactivities.NewMainActivity"/>
+        <activity
+            android:name=".newnewactivities.GuruActivity"
+            android:parentActivityName=".newactivities.NewMainActivity" />
+        <activity android:name=".activity.CustomTabActivity">
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="@string/fb_login_protocol_scheme" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

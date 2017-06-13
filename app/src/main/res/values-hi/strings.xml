@@ -1,154 +1,50 @@
 <resources>
     <string name="app_name">Daily Suvichar</string>
-
-
     <string name="click_back_again_to_exit">वापस दबायें App बंद करने के लिए </string>
-
-
     <string name="validation_successful">पुष्टि संपूर्ण</string>
-
-
     <string name="registered_successfully">पंजीकरण संपूर्ण </string>
-
-
     <string name="registration_unsuccessfully"> पुष्टिकरण असफल </string>
-
-
     <string name="divider"> भाजक </string>
-
-
     <string name="logo"> लोगो </string>
-
-
     <string name="tab"> टैब </string>
-
-
     <string name="seperator"> भाजक </string>
-
-
-
-
+    <string name="separator"> भाजक </string>
     <string name="login_activity_title"> लॉगिन </string>
-
-
     <string name="email_number">ईमेल/ फोन</string>
-
-
     <string name="password"> पासवर्ड </string>
-
-
     <string name="login"> लॉगिन </string>
-
-
     <string name="redirect_to_register"> अकाउंट नही है? यहा रिजिस्टर करें </string>
-
-
     <string name="logout"> लोग आउट </string>
-
-
     <string name="forgot_password"> पासवर्ड भूल गये??</string>
-
-
     <string name="please_wait"> प्रतीक्षा करें</string>
-
-
-
-
     <string name="password_again"> पासवर्ड फिर से दर्ज करें </string>
-
-
     <string name="register"> रिजिस्टर करें </string>
-
-
     <string name="redirect_to_login"> अकाउंट पहले से है??</string>
-
-
     <string name="invalid_email"> अमान्य ईमेल </string>
-
-
     <string name="invalid_password"> पासवर्ड की लंबाई > 6</string>
-
-
     <string name="invalid_password_again"> पासवर्ड मेल नही हुआ </string>
-
-
     <string name="sign_up_failed"> साइन अप असफल ! दोबारा कोशिश करें </string>
-
-
     <string name="sign_up_successful"> साइन अप सफल !</string>
-
-
-
-
-
     <string name="choose_language"> भाषा चुनें -</string>
-
-
     <string name="english"> अँग्रेज़ी </string>
-
-
     <string name="hindi"> हिन्दी </string>
-
-
     <string name="next"> नेक्स्ट </string>
-
-
-
-
     <string name="Feeds"> फीड </string>
-
-
     <string name="home"> होम </string>
-
-
     <string name="settings"> सेटिंग </string>
-
-
     <string name="profile"> प्रोफ़ाइल </string>
-
-
     <string name="updates"> अपडेट </string>
-
-
-
-
     <string name="trending"> ट्रेन्डिंग </string>
-
-
     <string name="gurus"> गुरु </string>
-
-
     <string name="search_for_gurus"> गुरु ढूंडे </string>
-
-
     <string name="suggested"> प्रस्तावित गुरु </string>
-
-
     <string name="menu"> मेनू </string>
-
-
-
-
     <string name="share_your_suvichar"> # मेरासुविचार </string>
-
-
     <string name="status"> स्टेटस </string>
-
-
     <string name="photo"> छवि </string>
-
-
     <string name="video"> वीडियो </string>
-
-
-
-
     <string name="sign_in_failed"> साइन अप असफल </string>
-
-
     <string name="play_services_error"> गूगल प्ले सर्विस एरर </string>
-
-
     <string name="authentication_failed"> प्रमाणीकरण असफल </string>
 
 
